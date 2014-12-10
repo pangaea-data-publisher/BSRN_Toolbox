@@ -1,0 +1,1191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DownloadManagerDialog</class>
+ <widget class="QDialog" name="DownloadManagerDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>689</width>
+    <height>746</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Download manager</string>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_8">
+   <item row="0" column="0">
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="OptionsTab">
+      <attribute name="title">
+       <string>Options</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_7">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="SelectStation_groupBox">
+         <property name="title">
+          <string>Select station</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0" colspan="3">
+           <layout class="QGridLayout" name="gridLayout">
+            <item row="0" column="0">
+             <widget class="QCheckBox" name="ALE_checkBox">
+              <property name="text">
+               <string>ALE</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QCheckBox" name="ASP_checkBox">
+              <property name="text">
+               <string>ASP</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QCheckBox" name="BAR_checkBox">
+              <property name="text">
+               <string>BAR</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QCheckBox" name="BER_checkBox">
+              <property name="text">
+               <string>BER</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="4">
+             <widget class="QCheckBox" name="BIL_checkBox">
+              <property name="text">
+               <string>BIL</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="5">
+             <widget class="QCheckBox" name="BON_checkBox">
+              <property name="text">
+               <string>BON</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="6">
+             <widget class="QCheckBox" name="BOS_checkBox">
+              <property name="text">
+               <string>BOS</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="7">
+             <widget class="QCheckBox" name="BOU_checkBox">
+              <property name="text">
+               <string>BOU</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="8">
+             <widget class="QCheckBox" name="BRB_checkBox">
+              <property name="text">
+               <string>BRB</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="9">
+             <widget class="QCheckBox" name="BUD_checkBox">
+              <property name="text">
+               <string>BUD</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QCheckBox" name="CAB_checkBox">
+              <property name="text">
+               <string>CAB</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QCheckBox" name="CAM_checkBox">
+              <property name="text">
+               <string>CAM</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QCheckBox" name="CAR_checkBox">
+              <property name="text">
+               <string>CAR</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <widget class="QCheckBox" name="CLH_checkBox">
+              <property name="text">
+               <string>CLH</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="4">
+             <widget class="QCheckBox" name="CNR_checkBox">
+              <property name="text">
+               <string>CNR</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="5">
+             <widget class="QCheckBox" name="COC_checkBox">
+              <property name="text">
+               <string>COC</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="6">
+             <widget class="QCheckBox" name="DAA_checkBox">
+              <property name="text">
+               <string>DAA</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="7">
+             <widget class="QCheckBox" name="DAR_checkBox">
+              <property name="text">
+               <string>DAR</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="8">
+             <widget class="QCheckBox" name="DOM_checkBox">
+              <property name="text">
+               <string>DOM</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="9">
+             <widget class="QCheckBox" name="DRA_checkBox">
+              <property name="text">
+               <string>DRA</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QCheckBox" name="DWN_checkBox">
+              <property name="text">
+               <string>DWN</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QCheckBox" name="E13_checkBox">
+              <property name="text">
+               <string>E13</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QCheckBox" name="EUR_checkBox">
+              <property name="text">
+               <string>EUR</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="3">
+             <widget class="QCheckBox" name="FLO_checkBox">
+              <property name="text">
+               <string>FLO</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="4">
+             <widget class="QCheckBox" name="FPE_checkBox">
+              <property name="text">
+               <string>FPE</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="5">
+             <widget class="QCheckBox" name="FUA_checkBox">
+              <property name="text">
+               <string>FUA</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="6">
+             <widget class="QCheckBox" name="GCR_checkBox">
+              <property name="text">
+               <string>GCR</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="7">
+             <widget class="QCheckBox" name="GOB_checkBox">
+              <property name="text">
+               <string>GOB</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="8">
+             <widget class="QCheckBox" name="GVN_checkBox">
+              <property name="text">
+               <string>GVN</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="9">
+             <widget class="QCheckBox" name="ILO_checkBox">
+              <property name="text">
+               <string>ILO</string>
+              </property>
+             </widget>
+            </item>
+
+            <item row="3" column="0">
+             <widget class="QCheckBox" name="ISH_checkBox">
+              <property name="text">
+               <string>ISH</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QCheckBox" name="IZA_checkBox">
+              <property name="text">
+               <string>IZA</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QCheckBox" name="KWA_checkBox">
+              <property name="text">
+               <string>KWA</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="3">
+             <widget class="QCheckBox" name="LAU_checkBox">
+              <property name="text">
+               <string>LAU</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="4">
+             <widget class="QCheckBox" name="LER_checkBox">
+              <property name="text">
+               <string>LER</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="5">
+             <widget class="QCheckBox" name="LIN_checkBox">
+              <property name="text">
+               <string>LIN</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="6">
+             <widget class="QCheckBox" name="MAN_checkBox">
+              <property name="text">
+               <string>MAN</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="7">
+             <widget class="QCheckBox" name="MNM_checkBox">
+              <property name="text">
+               <string>MNM</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="8">
+             <widget class="QCheckBox" name="NAU_checkBox">
+              <property name="text">
+               <string>NAU</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="9">
+             <widget class="QCheckBox" name="NYA_checkBox">
+              <property name="text">
+               <string>NYA</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QCheckBox" name="PAL_checkBox">
+              <property name="text">
+               <string>PAL</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QCheckBox" name="PAY_checkBox">
+              <property name="text">
+               <string>PAY</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="2">
+             <widget class="QCheckBox" name="PSA_checkBox">
+              <property name="text">
+               <string>PSA</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="3">
+             <widget class="QCheckBox" name="PSU_checkBox">
+              <property name="text">
+               <string>PSU</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="4">
+             <widget class="QCheckBox" name="PTR_checkBox">
+              <property name="text">
+               <string>PTR</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="5">
+             <widget class="QCheckBox" name="REG_checkBox">
+              <property name="text">
+               <string>REG</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="6">
+             <widget class="QCheckBox" name="RLM_checkBox">
+              <property name="text">
+               <string>RLM</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="7">
+             <widget class="QCheckBox" name="SAP_checkBox">
+              <property name="text">
+               <string>SAP</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="8">
+             <widget class="QCheckBox" name="SBO_checkBox">
+              <property name="text">
+               <string>SBO</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="9">
+             <widget class="QCheckBox" name="SMS_checkBox">
+              <property name="text">
+               <string>SMS</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0">
+             <widget class="QCheckBox" name="SON_checkBox">
+              <property name="text">
+               <string>SON</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <widget class="QCheckBox" name="SOV_checkBox">
+              <property name="text">
+               <string>SOV</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="2">
+             <widget class="QCheckBox" name="SPO_checkBox">
+              <property name="text">
+               <string>SPO</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="3">
+             <widget class="QCheckBox" name="SXF_checkBox">
+              <property name="text">
+               <string>SXF</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="4">
+             <widget class="QCheckBox" name="SYO_checkBox">
+              <property name="text">
+               <string>SYO</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="5">
+             <widget class="QCheckBox" name="TAM_checkBox">
+              <property name="text">
+               <string>TAM</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="6">
+             <widget class="QCheckBox" name="TAT_checkBox">
+              <property name="text">
+               <string>TAT</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="7">
+             <widget class="QCheckBox" name="TIK_checkBox">
+              <property name="text">
+               <string>TIK</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="8">
+             <widget class="QCheckBox" name="TOR_checkBox">
+              <property name="text">
+               <string>TOR</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="9">
+             <widget class="QCheckBox" name="XIA_checkBox">
+              <property name="text">
+               <string>XIA</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QCheckBox" name="ZVE_checkBox">
+              <property name="text">
+               <string>ZVE</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="SelectAllStations_pushButton">
+            <property name="text">
+             <string>Select all</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QPushButton" name="SelectNoneStation_pushButton">
+            <property name="text">
+             <string>Select none</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <spacer>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>151</width>
+              <height>26</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QGroupBox" name="SelectMonth_groupBox">
+         <property name="title">
+          <string>Select month</string>
+         </property>
+         <layout class="QGridLayout">
+          <item row="0" column="0" colspan="3">
+           <layout class="QGridLayout">
+            <item row="0" column="0">
+             <widget class="QCheckBox" name="January_checkBox">
+              <property name="text">
+               <string>January</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QCheckBox" name="February_checkBox">
+              <property name="text">
+               <string>February</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QCheckBox" name="March_checkBox">
+              <property name="text">
+               <string>March</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QCheckBox" name="April_checkBox">
+              <property name="text">
+               <string>April</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="4">
+             <widget class="QCheckBox" name="May_checkBox">
+              <property name="text">
+               <string>May</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="5">
+             <widget class="QCheckBox" name="June_checkBox">
+              <property name="text">
+               <string>June</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QCheckBox" name="July_checkBox">
+              <property name="text">
+               <string>July</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QCheckBox" name="August_checkBox">
+              <property name="text">
+               <string>August</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QCheckBox" name="September_checkBox">
+              <property name="text">
+               <string>September</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <widget class="QCheckBox" name="October_checkBox">
+              <property name="text">
+               <string>October</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="4">
+             <widget class="QCheckBox" name="November_checkBox">
+              <property name="text">
+               <string>November</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="5">
+             <widget class="QCheckBox" name="December_checkBox">
+              <property name="text">
+               <string>December</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="SelectAllMonth_pushButton">
+            <property name="text">
+             <string>Select all</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QPushButton" name="SelectNoneMonth_pushButton">
+            <property name="text">
+             <string>Select none</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <spacer>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>181</width>
+              <height>26</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QGroupBox" name="SelectYear_groupBox">
+         <property name="title">
+          <string>Select year</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="0" colspan="3">
+           <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="2">
+             <widget class="QCheckBox" name="Year1992_checkBox">
+              <property name="text">
+               <string>1992</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QCheckBox" name="Year1993_checkBox">
+              <property name="text">
+               <string>1993</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="4">
+             <widget class="QCheckBox" name="Year1994_checkBox">
+              <property name="text">
+               <string>1994</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="5">
+             <widget class="QCheckBox" name="Year1995_checkBox">
+              <property name="text">
+               <string>1995</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="6">
+             <widget class="QCheckBox" name="Year1996_checkBox">
+              <property name="text">
+               <string>1996</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="7">
+             <widget class="QCheckBox" name="Year1997_checkBox">
+              <property name="text">
+               <string>1997</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="8">
+             <widget class="QCheckBox" name="Year1998_checkBox">
+              <property name="text">
+               <string>1998</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="9">
+             <widget class="QCheckBox" name="Year1999_checkBox">
+              <property name="text">
+               <string>1999</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QCheckBox" name="Year2000_checkBox">
+              <property name="text">
+               <string>2000</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QCheckBox" name="Year2001_checkBox">
+              <property name="text">
+               <string>2001</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QCheckBox" name="Year2002_checkBox">
+              <property name="text">
+               <string>2002</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <widget class="QCheckBox" name="Year2003_checkBox">
+              <property name="text">
+               <string>2003</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="4">
+             <widget class="QCheckBox" name="Year2004_checkBox">
+              <property name="text">
+               <string>2004</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="5">
+             <widget class="QCheckBox" name="Year2005_checkBox">
+              <property name="text">
+               <string>2005</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="6">
+             <widget class="QCheckBox" name="Year2006_checkBox">
+              <property name="text">
+               <string>2006</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="7">
+             <widget class="QCheckBox" name="Year2007_checkBox">
+              <property name="text">
+               <string>2007</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="8">
+             <widget class="QCheckBox" name="Year2008_checkBox">
+              <property name="text">
+               <string>2008</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="9">
+             <widget class="QCheckBox" name="Year2009_checkBox">
+              <property name="text">
+               <string>2009</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QCheckBox" name="Year2010_checkBox">
+              <property name="text">
+               <string>2010</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QCheckBox" name="Year2011_checkBox">
+              <property name="text">
+               <string>2011</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QCheckBox" name="Year2012_checkBox">
+              <property name="text">
+               <string>2012</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="3">
+             <widget class="QCheckBox" name="Year2013_checkBox">
+              <property name="text">
+               <string>2013</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="4">
+             <widget class="QCheckBox" name="Year2014_checkBox">
+              <property name="text">
+               <string>2014</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="5">
+             <widget class="QCheckBox" name="Year2015_checkBox">
+              <property name="text">
+               <string>2015</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="6">
+             <widget class="QCheckBox" name="Year2016_checkBox">
+              <property name="text">
+               <string>2016</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="7">
+             <widget class="QCheckBox" name="Year2017_checkBox">
+              <property name="text">
+               <string>2017</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="8">
+             <widget class="QCheckBox" name="Year2018_checkBox">
+              <property name="text">
+               <string>2018</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="9">
+             <widget class="QCheckBox" name="Year2019_checkBox">
+              <property name="text">
+               <string>2019</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="SelectAllYears_pushButton">
+            <property name="text">
+             <string>Select all</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QPushButton" name="SelectNoneYear_pushButton">
+            <property name="text">
+             <string>Select none</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <spacer>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>171</width>
+              <height>26</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QGroupBox" name="DownloadDirectory_groupBox">
+         <property name="title">
+          <string>Download directory</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="DownloadDirectory_lineEdit">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="BrowseDownloadDirectory_pushButton">
+            <property name="text">
+             <string>Browse ...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QGroupBox" name="Options_groupBox">
+         <property name="title">
+          <string>Options</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="DecompressFiles_checkBox">
+            <property name="text">
+             <string>Decompress</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QCheckBox" name="CheckFiles_checkBox">
+            <property name="text">
+             <string>Check after download</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QCheckBox" name="CheckAvailability_checkBox">
+            <property name="text">
+             <string>Check availability only</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="AccountTab">
+      <attribute name="title">
+       <string>Account</string>
+      </attribute>
+      <layout class="QGridLayout">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>FTP server</string>
+         </property>
+         <layout class="QGridLayout">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="FTPServer_lineEdit"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QGroupBox" name="Account_groupBox">
+         <property name="title">
+          <string>Account</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_9">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>&amp;User</string>
+            </property>
+            <property name="buddy">
+             <cstring>User_lineEdit</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="User_lineEdit">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>404</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>&amp;Password</string>
+            </property>
+            <property name="buddy">
+             <cstring>Password_lineEdit</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="Password_lineEdit">
+            <property name="maximumSize">
+             <size>
+              <width>102</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="echoMode">
+             <enum>QLineEdit::PasswordEchoOnEdit</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>404</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <spacer>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>548</width>
+           <height>311</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout">
+     <item>
+      <spacer>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="OK_pushButton">
+       <property name="text">
+        <string>&amp;OK</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Cancel_pushButton">
+       <property name="text">
+        <string>&amp;Cancel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>ASP_checkBox</tabstop>
+  <tabstop>BAR_checkBox</tabstop>
+  <tabstop>BER_checkBox</tabstop>
+  <tabstop>BIL_checkBox</tabstop>
+  <tabstop>BON_checkBox</tabstop>
+  <tabstop>BOS_checkBox</tabstop>
+  <tabstop>BOU_checkBox</tabstop>
+  <tabstop>BRB_checkBox</tabstop>
+  <tabstop>BUD_checkBox</tabstop>
+  <tabstop>CAB_checkBox</tabstop>
+  <tabstop>CAM_checkBox</tabstop>
+  <tabstop>CAR_checkBox</tabstop>
+  <tabstop>CLH_checkBox</tabstop>
+  <tabstop>CNR_checkBox</tabstop>
+  <tabstop>COC_checkBox</tabstop>
+  <tabstop>DAA_checkBox</tabstop>
+  <tabstop>DAR_checkBox</tabstop>
+  <tabstop>DOM_checkBox</tabstop>
+  <tabstop>DRA_checkBox</tabstop>
+  <tabstop>DWN_checkBox</tabstop>
+  <tabstop>E13_checkBox</tabstop>
+  <tabstop>EUR_checkBox</tabstop>
+  <tabstop>FLO_checkBox</tabstop>
+  <tabstop>FPE_checkBox</tabstop>
+  <tabstop>FUA_checkBox</tabstop>
+  <tabstop>GCR_checkBox</tabstop>
+  <tabstop>GOB_checkBox</tabstop>
+  <tabstop>GVN_checkBox</tabstop>
+  <tabstop>ILO_checkBox</tabstop>
+  <tabstop>ISH_checkBox</tabstop>
+  <tabstop>IZA_checkBox</tabstop>
+  <tabstop>KWA_checkBox</tabstop>
+  <tabstop>LAU_checkBox</tabstop>
+  <tabstop>LER_checkBox</tabstop>
+  <tabstop>LIN_checkBox</tabstop>
+  <tabstop>MAN_checkBox</tabstop>
+  <tabstop>MNM_checkBox</tabstop>
+  <tabstop>NAU_checkBox</tabstop>
+  <tabstop>NYA_checkBox</tabstop>
+  <tabstop>PAL_checkBox</tabstop>
+  <tabstop>PAY_checkBox</tabstop>
+  <tabstop>PSA_checkBox</tabstop>
+  <tabstop>PSU_checkBox</tabstop>
+  <tabstop>PTR_checkBox</tabstop>
+  <tabstop>REG_checkBox</tabstop>
+  <tabstop>RLM_checkBox</tabstop>
+  <tabstop>SAP_checkBox</tabstop>
+  <tabstop>SBO_checkBox</tabstop>
+  <tabstop>SMS_checkBox</tabstop>
+  <tabstop>SON_checkBox</tabstop>
+  <tabstop>SOV_checkBox</tabstop>
+  <tabstop>SPO_checkBox</tabstop>
+  <tabstop>SXF_checkBox</tabstop>
+  <tabstop>SYO_checkBox</tabstop>
+  <tabstop>TAM_checkBox</tabstop>
+  <tabstop>TAT_checkBox</tabstop>
+  <tabstop>TIK_checkBox</tabstop>
+  <tabstop>TOR_checkBox</tabstop>
+  <tabstop>XIA_checkBox</tabstop>
+  <tabstop>ZVE_checkBox</tabstop>
+  <tabstop>SelectAllStations_pushButton</tabstop>
+  <tabstop>SelectNoneStation_pushButton</tabstop>
+  <tabstop>January_checkBox</tabstop>
+  <tabstop>February_checkBox</tabstop>
+  <tabstop>March_checkBox</tabstop>
+  <tabstop>April_checkBox</tabstop>
+  <tabstop>May_checkBox</tabstop>
+  <tabstop>June_checkBox</tabstop>
+  <tabstop>July_checkBox</tabstop>
+  <tabstop>August_checkBox</tabstop>
+  <tabstop>September_checkBox</tabstop>
+  <tabstop>October_checkBox</tabstop>
+  <tabstop>November_checkBox</tabstop>
+  <tabstop>December_checkBox</tabstop>
+  <tabstop>SelectAllMonth_pushButton</tabstop>
+  <tabstop>SelectNoneMonth_pushButton</tabstop>
+  <tabstop>Year1992_checkBox</tabstop>
+  <tabstop>Year1993_checkBox</tabstop>
+  <tabstop>Year1994_checkBox</tabstop>
+  <tabstop>Year1995_checkBox</tabstop>
+  <tabstop>Year1996_checkBox</tabstop>
+  <tabstop>Year1997_checkBox</tabstop>
+  <tabstop>Year1998_checkBox</tabstop>
+  <tabstop>Year1999_checkBox</tabstop>
+  <tabstop>Year2000_checkBox</tabstop>
+  <tabstop>Year2001_checkBox</tabstop>
+  <tabstop>Year2002_checkBox</tabstop>
+  <tabstop>Year2003_checkBox</tabstop>
+  <tabstop>Year2004_checkBox</tabstop>
+  <tabstop>Year2005_checkBox</tabstop>
+  <tabstop>Year2006_checkBox</tabstop>
+  <tabstop>Year2007_checkBox</tabstop>
+  <tabstop>Year2008_checkBox</tabstop>
+  <tabstop>Year2009_checkBox</tabstop>
+  <tabstop>Year2010_checkBox</tabstop>
+  <tabstop>Year2011_checkBox</tabstop>
+  <tabstop>Year2012_checkBox</tabstop>
+  <tabstop>Year2013_checkBox</tabstop>
+  <tabstop>Year2014_checkBox</tabstop>
+  <tabstop>Year2015_checkBox</tabstop>
+  <tabstop>Year2016_checkBox</tabstop>
+  <tabstop>Year2017_checkBox</tabstop>
+  <tabstop>Year2018_checkBox</tabstop>
+  <tabstop>Year2019_checkBox</tabstop>
+  <tabstop>SelectAllYears_pushButton</tabstop>
+  <tabstop>SelectNoneYear_pushButton</tabstop>
+  <tabstop>DownloadDirectory_lineEdit</tabstop>
+  <tabstop>BrowseDownloadDirectory_pushButton</tabstop>
+  <tabstop>DecompressFiles_checkBox</tabstop>
+  <tabstop>CheckFiles_checkBox</tabstop>
+  <tabstop>CheckAvailability_checkBox</tabstop>
+  <tabstop>OK_pushButton</tabstop>
+  <tabstop>Cancel_pushButton</tabstop>
+  <tabstop>FTPServer_lineEdit</tabstop>
+  <tabstop>User_lineEdit</tabstop>
+  <tabstop>Password_lineEdit</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

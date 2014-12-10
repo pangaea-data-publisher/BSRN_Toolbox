@@ -1,0 +1,13 @@
+LICENSE
+=======
+
+BSRN Toolbox is licensed under the GNU General Public License (GPL Version 3, see http://www.gnu.org/licenses/gpl-3.0.txt for details) and is therefore freely distributable. You can get the source-code at http://www.pangaea.de/Software/Source/BSRN_Toolbox_V2_src.zip
+
+BSRN Toolbox icon was downloaded from http://www.iconarchive.com/show/dragon-soft-icons-by-artua/Toolbox-icon.html Artist: Artua.com (Available for custom work) Iconset: Dragon Soft Icons (6 icons) License: Free for non-commercial use. Commercial usage: Not allowed
+
+Contact: 
+Dr. Rainer Sieger
+Alfred Wegener Institute
+Postfach 12 01 61
+D-27515 Bremerhaven
+mailto:rsieger@pangaea.de
