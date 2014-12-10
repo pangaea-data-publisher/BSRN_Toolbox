@@ -4,13 +4,9 @@ The information system PANGAEA and related software is operated by the Alfred We
 
 BSRN Toolbox is available for the scientific community and is distributed as Open Source program (see License.txt) for the operating systems Windows, MacOS X and Linux.
 
-Reference: SchmithŸsen, Holger; Sieger, Rainer & Kšnig-Langlo, Gert (2012) BSRN Toolbox - a tool to create quality checked output files from BSRN datasets and station-to-archive files, doi:10.1594/PANGAEA.774827
+Reference: Schmithüsen, Holger; Sieger, Rainer & König-Langlo, Gert (2012) BSRN Toolbox - a tool to create quality checked output files from BSRN datasets and station-to-archive files, doi:10.1594/PANGAEA.774827
 
 Alfred Wegener Institute for Polar and Marine Research (AWI)
 27515 Bremerhaven, Germany
-
-Center for Marine Environmental Sciences (MARUM)
-University of Bremen
-28334 Bremen, Germany
 
 e-mail: info@pangaea.de
