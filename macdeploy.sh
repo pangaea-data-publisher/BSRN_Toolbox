@@ -4,7 +4,7 @@ echo BSRN Toolbox
 
 echo - macdeployqt 
 
-cd ~/Development/aforge/bsrn_toolbox
+cd ~/Development/GitHub/BSRN_Toolbox
 
 rm -R '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app'
 cp -R './BSRN_Toolbox-build-Desktop_Qt_5_3_2_LLDB-Release/BSRN_Toolbox.app' '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app'
