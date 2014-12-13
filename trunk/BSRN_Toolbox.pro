@@ -4,13 +4,11 @@
 # last change: 2014-10-04
 
 macx {
-    message( "MacOS X" )
-
     # creating cache file
     cache()
 
     # Set SDK
-    QMAKE_MAC_SDK = macosx10.9
+    QMAKE_MAC_SDK = macosx10.10
 
     # Only Intel binaries are accepted so force this
     CONFIG += x86_64
@@ -33,14 +31,11 @@ macx {
 }
 
 win32 {
-    message( "Windows" )
-
     # Icon
     RC_FILE = ./Resources/Application.rc
 }
 
 linux-g++ {
-    message( "Linux" )
 }
 
 TARGET = BSRN_Toolbox

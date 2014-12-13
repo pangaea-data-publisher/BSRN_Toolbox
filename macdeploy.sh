@@ -7,17 +7,11 @@ echo - macdeployqt
 cd ~/Development/GitHub/BSRN_Toolbox
 
 rm -R '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app'
-cp -R './BSRN_Toolbox-build-Desktop_Qt_5_3_2_LLDB-Release/BSRN_Toolbox.app' '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app'
+cp -R './BSRN_Toolbox-build-Desktop_Qt_5_4_0_clang_64bit-Release/BSRN_Toolbox.app' '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app'
 cp './trunk/Tools/f_check/BSRN_fcheck_MacOS' '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app/Contents/MacOS/BSRN_fcheck'
 cp './trunk/Resources/Info.plist' '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app/Contents/Info.plist'
 
-/Developer/Qt/5.3/clang_64/bin/macdeployqt '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app'
-
-../patchQtFramework.sh '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app/Contents/Frameworks/QtCore.framework'
-../patchQtFramework.sh '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app/Contents/Frameworks/QtGui.framework'
-../patchQtFramework.sh '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app/Contents/Frameworks/QtNetwork.framework'
-../patchQtFramework.sh '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app/Contents/Frameworks/QtPrintSupport.framework'
-../patchQtFramework.sh '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app/Contents/Frameworks/QtWidgets.framework'
+/Developer/Qt/5.4/clang_64/bin/macdeployqt '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app'
 
 echo - code signing
 
@@ -29,7 +23,6 @@ codesign --force --verify --sign 'Developer ID Application: Alfred-Wegener-Insti
 codesign --force --verify --sign 'Developer ID Application: Alfred-Wegener-Institut fur Polar- und Meeresforschung (AWI)' '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app/Contents/Frameworks/QtPrintSupport.framework'
 codesign --force --verify --sign 'Developer ID Application: Alfred-Wegener-Institut fur Polar- und Meeresforschung (AWI)' '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app/Contents/Frameworks/QtWidgets.framework'
 
-codesign --force --verify --sign 'Developer ID Application: Alfred-Wegener-Institut fur Polar- und Meeresforschung (AWI)' '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app/Contents/PlugIns/accessible/libqtaccessiblewidgets.dylib'
 codesign --force --verify --sign 'Developer ID Application: Alfred-Wegener-Institut fur Polar- und Meeresforschung (AWI)' '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app/Contents/PlugIns/bearer/libqcorewlanbearer.dylib'
 codesign --force --verify --sign 'Developer ID Application: Alfred-Wegener-Institut fur Polar- und Meeresforschung (AWI)' '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app/Contents/PlugIns/bearer/libqgenericbearer.dylib'
 codesign --force --verify --sign 'Developer ID Application: Alfred-Wegener-Institut fur Polar- und Meeresforschung (AWI)' '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app/Contents/PlugIns/imageformats/libqdds.dylib'
@@ -64,7 +57,7 @@ cd ~/Development/Distribution
 
 echo - verify package
 
-codesign -dvv '/Volumes/BSRN Toolbox/BSRN_Toolbox.app'
+codesign -d '/Volumes/BSRN Toolbox/BSRN_Toolbox.app'
 
 echo
 hdiutil detach '/Volumes/BSRN Toolbox'
