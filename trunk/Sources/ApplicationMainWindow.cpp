@@ -79,26 +79,59 @@ void MainWindow::displayHelp()
 QString MainWindow::getVersion()
 {
     int             n                   = 0;
+    int             err                 = _NOERROR_;
 
-    QString         s_Version           = "";
+    QString         s_Version           = tr( "unknown" );
+
+    QString         s_Url               = "";
     QString         s_Version_Filename  = "";
 
     QStringList     sl_Input;
 
 // **********************************************************************************************
 
+    s_Url              = QLatin1String( "http://www.pangaea.de/software" ) + "/" + QCoreApplication::applicationName() + "/" + QCoreApplication::applicationName() + QLatin1String( "_version.txt" );
     s_Version_Filename = getDataLocation() + "/" + QCoreApplication::applicationName() + QLatin1String( "_version.txt" );
 
-    QFile outfile( s_Version_Filename );
+    err = downloadFile( s_Url, s_Version_Filename );
 
-    if ( outfile.exists() == true )
-        outfile.remove();
+    if ( err == _NOERROR_ )
+    {
+        n = readFile( s_Version_Filename, sl_Input, _SYSTEM_ ); // System encoding
 
-    if ( outfile.open( QIODevice::WriteOnly | QIODevice::Text ) == true )
+        if ( ( n >= 2) && ( sl_Input.at( 0 ).startsWith( "<!DOCTYPE") == false ) )
+            s_Version = sl_Input.at( 1 ).section( " ", 1, 1 );
+    }
+
+    return( s_Version );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+// 2015-01-10
+
+/*! @brief Download einer Datei von einem beliebigen Webserver. Ablage in eine locale Datei.
+*
+*   @param s_Message Nachricht, die in der Statusleiste angezeigt werden soll.
+*   @param s_Url, Link zur Datei auf Webserver
+*   @param s_absoluteFilePath, Verzeichnis und Name der lokalen Datei
+*
+*   @retval _NOERROR_ Es wurde eine oder mehrere Dateien ausgewaehlt.
+*   @retval _ERROR_ Auswahl von Dateien wurde abgebrochen.
+*/
+
+int MainWindow::downloadFile( const QString &s_Url, const QString &s_absoluteFilePath )
+{
+    int err = _ERROR_;
+
+    QFile fi( s_absoluteFilePath );
+
+    if ( fi.open( QIODevice::WriteOnly | QIODevice::Text ) == true )
     {
         webfile m_webfile;
 
-        m_webfile.setUrl( QLatin1String( "http://www.pangaea.de/software" ) + "/" + QCoreApplication::applicationName() + "/" + QCoreApplication::applicationName() + QLatin1String( "_version.txt" ) );
+        m_webfile.setUrl( s_Url );
 
         if ( m_webfile.open() == true )
         {
@@ -106,22 +139,17 @@ QString MainWindow::getVersion()
             qint64  nSize = 0;
 
             while ( ( nSize = m_webfile.read( buffer, sizeof( buffer ) ) ) > 0 )
-                outfile.write( buffer, nSize );
+                fi.write( buffer, nSize );
 
             m_webfile.close();
+
+            err = _NOERROR_;
         }
 
-        outfile.close();
-
-        n = readFile( s_Version_Filename, sl_Input, _SYSTEM_ ); // System encoding
+        fi.close();
     }
 
-    if ( ( n >= 2) && ( sl_Input.at( 0 ).startsWith( "<!DOCTYPE") == false ) )
-        s_Version = sl_Input.at( 1 ).section( " ", 1, 1 );
-    else
-        s_Version = tr( "unknown" );
-
-    return( s_Version );
+    return( err );
 }
 
 // **********************************************************************************************

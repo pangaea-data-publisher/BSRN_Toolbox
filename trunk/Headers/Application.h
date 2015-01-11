@@ -241,6 +241,7 @@ private:
     int incProgress( const int NumOfFiles, const int Step );
     int readFile( const QString &FilenameIn, QStringList &Input, const int Codec = -1, const int NumOfFiles = 0, const qint64 Bytes = 0 );
     int removeFile( const QString &Filename );
+    int downloadFile( const QString &Url, const QString &absoluteFilePath );
     unsigned int incProgress( const int NumOfFiles, const unsigned int filesize, const unsigned int length, const QString &InputStr );
     void appendItem( QStringList &List, const QString &Item, const QString &SS = "", const QString &RS = "" );
     void clearFilenameList( int &ActionNumber, QStringList &FilenameList );
