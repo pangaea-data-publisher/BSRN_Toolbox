@@ -88,62 +88,19 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent )
 
 // **********************************************************************************************
 
-    setStatusBar( tr( "Reading IDs - please wait." ) );
+    QFile fID( getDataLocation() + "/" + "BSRN_IDs.txt" );
 
-    QFileInfo fi( getDataLocation() );
+    if ( fID.exists() == true )
+        fID.copy( getDataLocation() + "/" + "BSRN_IDs_old.txt" );
 
 // **********************************************************************************************
+
+    setStatusBar( tr( "Reading IDs - please wait." ) );
 
     if ( b_downloadIDs == true )
     {
-        QFile fDatasetID( fi.absoluteFilePath() + "/" + "BSRN_Dataset_IDs.txt" );
-
-        if ( fDatasetID.open( QIODevice::WriteOnly | QIODevice::Text ) == true )
-        {
-            webfile m_webfile;
-
-            m_webfile.setUrl( QLatin1String( "http://www.pangaea.de/PHP/bsrn/BSRN_Dataset_IDs.txt" ) );
-
-            if ( m_webfile.open() == true )
-            {
-                char    buffer[1024];
-                qint64  nSize = 0;
-
-                while ( ( nSize = m_webfile.read( buffer, sizeof( buffer ) ) ) > 0 )
-                    fDatasetID.write( buffer, nSize );
-
-                m_webfile.close();
-            }
-
-            fDatasetID.close();
-        }
-
-// **********************************************************************************************
-
-        QFile fID( fi.absoluteFilePath() + "/" + "BSRN_IDs.txt" );
-
-        if ( fID.exists() == true )
-            fID.copy( fi.absoluteFilePath() + "/" + "BSRN_IDs_old.txt" );
-
-        if ( fID.open( QIODevice::WriteOnly | QIODevice::Text ) == true )
-        {
-            webfile m_webfile;
-
-            m_webfile.setUrl( QLatin1String( "http://www.pangaea.de/PHP/bsrn/BSRN_IDs.txt" ) );
-
-            if ( m_webfile.open() == true )
-            {
-                char    buffer[1024];
-                qint64  nSize = 0;
-
-                while ( ( nSize = m_webfile.read( buffer, sizeof( buffer ) ) ) > 0 )
-                    fID.write( buffer, nSize );
-
-                m_webfile.close();
-            }
-
-            fID.close();
-        }
+        downloadFile( QLatin1String( "http://www.pangaea.de/PHP/bsrn/BSRN_Dataset_IDs.txt" ), getDataLocation() + "/" + "BSRN_Dataset_IDs.txt" );
+        downloadFile( QLatin1String( "http://www.pangaea.de/PHP/bsrn/BSRN_IDs.txt" ), getDataLocation() + "/" + "BSRN_IDs.txt" );
     }
 
 // **********************************************************************************************
