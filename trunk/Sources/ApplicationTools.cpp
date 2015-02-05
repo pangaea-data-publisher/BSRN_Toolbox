@@ -535,6 +535,7 @@ int MainWindow::writeDefaultIDs( const QString& Filename )
     tout << "60\tLAU\tLauder\t2894" << endl;
     tout << "51\tLER\tLerwick\t2886" << endl;
     tout << "12\tLIN\tLindenberg\t2885" << endl;
+    tout << "49\tLRC\tLangley Research Center\t2891" << endl;
     tout << "29\tMAN\tMomote\t2888" << endl;
     tout << "8\tMNM\tMinamitorishima\t1671" << endl;
     tout << "30\tNAU\tNauru Island\t2888" << endl;

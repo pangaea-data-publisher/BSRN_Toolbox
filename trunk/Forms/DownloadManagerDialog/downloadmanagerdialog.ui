@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>689</width>
-    <height>746</height>
+    <width>633</width>
+    <height>683</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -254,7 +254,6 @@
               </property>
              </widget>
             </item>
-
             <item row="3" column="0">
              <widget class="QCheckBox" name="ISH_checkBox">
               <property name="text">
@@ -298,174 +297,181 @@
              </widget>
             </item>
             <item row="3" column="6">
+             <widget class="QCheckBox" name="LRC_checkBox">
+              <property name="text">
+               <string>LRC</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="7">
              <widget class="QCheckBox" name="MAN_checkBox">
               <property name="text">
                <string>MAN</string>
               </property>
              </widget>
             </item>
-            <item row="3" column="7">
+            <item row="3" column="8">
              <widget class="QCheckBox" name="MNM_checkBox">
               <property name="text">
                <string>MNM</string>
               </property>
              </widget>
             </item>
-            <item row="3" column="8">
+            <item row="3" column="9">
              <widget class="QCheckBox" name="NAU_checkBox">
               <property name="text">
                <string>NAU</string>
               </property>
              </widget>
             </item>
-            <item row="3" column="9">
+            <item row="4" column="0">
              <widget class="QCheckBox" name="NYA_checkBox">
               <property name="text">
                <string>NYA</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="0">
+            <item row="4" column="1">
              <widget class="QCheckBox" name="PAL_checkBox">
               <property name="text">
                <string>PAL</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="1">
+            <item row="4" column="2">
              <widget class="QCheckBox" name="PAY_checkBox">
               <property name="text">
                <string>PAY</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="2">
+            <item row="4" column="3">
              <widget class="QCheckBox" name="PSA_checkBox">
               <property name="text">
                <string>PSA</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="3">
+            <item row="4" column="4">
              <widget class="QCheckBox" name="PSU_checkBox">
               <property name="text">
                <string>PSU</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="4">
+            <item row="4" column="5">
              <widget class="QCheckBox" name="PTR_checkBox">
               <property name="text">
                <string>PTR</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="5">
+            <item row="4" column="6">
              <widget class="QCheckBox" name="REG_checkBox">
               <property name="text">
                <string>REG</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="6">
+            <item row="4" column="7">
              <widget class="QCheckBox" name="RLM_checkBox">
               <property name="text">
                <string>RLM</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="7">
+            <item row="4" column="8">
              <widget class="QCheckBox" name="SAP_checkBox">
               <property name="text">
                <string>SAP</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="8">
+            <item row="4" column="9">
              <widget class="QCheckBox" name="SBO_checkBox">
               <property name="text">
                <string>SBO</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="9">
+            <item row="5" column="0">
              <widget class="QCheckBox" name="SMS_checkBox">
               <property name="text">
                <string>SMS</string>
               </property>
              </widget>
             </item>
-            <item row="5" column="0">
+            <item row="5" column="1">
              <widget class="QCheckBox" name="SON_checkBox">
               <property name="text">
                <string>SON</string>
               </property>
              </widget>
             </item>
-            <item row="5" column="1">
+            <item row="5" column="2">
              <widget class="QCheckBox" name="SOV_checkBox">
               <property name="text">
                <string>SOV</string>
               </property>
              </widget>
             </item>
-            <item row="5" column="2">
+            <item row="5" column="3">
              <widget class="QCheckBox" name="SPO_checkBox">
               <property name="text">
                <string>SPO</string>
               </property>
              </widget>
             </item>
-            <item row="5" column="3">
+            <item row="5" column="4">
              <widget class="QCheckBox" name="SXF_checkBox">
               <property name="text">
                <string>SXF</string>
               </property>
              </widget>
             </item>
-            <item row="5" column="4">
+            <item row="5" column="5">
              <widget class="QCheckBox" name="SYO_checkBox">
               <property name="text">
                <string>SYO</string>
               </property>
              </widget>
             </item>
-            <item row="5" column="5">
+            <item row="5" column="6">
              <widget class="QCheckBox" name="TAM_checkBox">
               <property name="text">
                <string>TAM</string>
               </property>
              </widget>
             </item>
-            <item row="5" column="6">
+            <item row="5" column="7">
              <widget class="QCheckBox" name="TAT_checkBox">
               <property name="text">
                <string>TAT</string>
               </property>
              </widget>
             </item>
-            <item row="5" column="7">
+            <item row="5" column="8">
              <widget class="QCheckBox" name="TIK_checkBox">
               <property name="text">
                <string>TIK</string>
               </property>
              </widget>
             </item>
-            <item row="5" column="8">
+            <item row="5" column="9">
              <widget class="QCheckBox" name="TOR_checkBox">
               <property name="text">
                <string>TOR</string>
               </property>
              </widget>
             </item>
-            <item row="5" column="9">
+            <item row="6" column="0">
              <widget class="QCheckBox" name="XIA_checkBox">
               <property name="text">
                <string>XIA</string>
               </property>
              </widget>
             </item>
-            <item row="6" column="0">
+            <item row="6" column="1">
              <widget class="QCheckBox" name="ZVE_checkBox">
               <property name="text">
                <string>ZVE</string>
@@ -1069,6 +1075,7 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
+  <tabstop>ALE_checkBox</tabstop>  
   <tabstop>ASP_checkBox</tabstop>
   <tabstop>BAR_checkBox</tabstop>
   <tabstop>BER_checkBox</tabstop>
@@ -1104,6 +1111,7 @@
   <tabstop>LAU_checkBox</tabstop>
   <tabstop>LER_checkBox</tabstop>
   <tabstop>LIN_checkBox</tabstop>
+  <tabstop>LRC_checkBox</tabstop>
   <tabstop>MAN_checkBox</tabstop>
   <tabstop>MNM_checkBox</tabstop>
   <tabstop>NAU_checkBox</tabstop>

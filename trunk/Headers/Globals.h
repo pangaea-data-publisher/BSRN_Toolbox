@@ -19,7 +19,7 @@
     const QString   _PROGRAMDOI_        = "doi:10.1594/PANGAEA.774827";
     const QString   _PROGRAMREADME_     = "http://wiki.pangaea.de/wiki/BSRN_Toolbox";
 
-    const QString   _VERSION_           = "2.6";                        // Version number, 2014-09-09, Rainer Sieger
+    const QString   _VERSION_           = "2.7";                        // Version number, 2015-02-05, Amelie Driemel und Rainer Sieger
     const QString   _DOI_               = "doi:10.1594/PANGAEA.774827"; // Dataset
 
     // EOL
@@ -117,6 +117,7 @@
     const int   LAU = 60;
     const int   LER = 51;
     const int   LIN = 12;
+    const int   LRC = 49; // 2015-02-05
     const int   MAN = 29;
     const int   MNM =  8;
     const int   NAU = 30;
