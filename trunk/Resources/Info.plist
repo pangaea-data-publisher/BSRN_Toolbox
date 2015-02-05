@@ -2,31 +2,31 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>de_DE</string>
-	<key>CFBundleDisplayName</key>
-	<string>BSRN_Toolbox</string>
-	<key>CFBundleExecutable</key>
-	<string>BSRN_Toolbox</string>
-	<key>CFBundleIconFile</key>
-	<string>Application.icns</string>
-	<key>CFBundleIdentifier</key>
-	<string>de.pangaea.BSRN_Toolbox</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>BSRN_Toolbox</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>2.6</string>
-	<key>CFBundleVersion</key>
-	<string>2.6</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2012, Alfred Wegener Institute, PANGAEA</string>
-	<key>LSApplicationCategoryType</key>
-	<string>public.app-category.utilities</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>10.6.8</string>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>de_DE</string>
+    <key>CFBundleDisplayName</key>
+    <string>BSRN_Toolbox</string>
+    <key>CFBundleExecutable</key>
+    <string>BSRN_Toolbox</string>
+    <key>CFBundleIconFile</key>
+    <string>Application.icns</string>
+    <key>CFBundleIdentifier</key>
+    <string>de.pangaea.BSRN_Toolbox</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>BSRN_Toolbox</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>2.7</string>
+    <key>CFBundleVersion</key>
+    <string>2.7</string>
+    <key>NSHumanReadableCopyright</key>
+    <string>Copyright © 2012, Alfred Wegener Institute, PANGAEA</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.utilities</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>10.6.8</string>
 </dict>
 </plist>
