@@ -18,14 +18,16 @@
 *   @return Fehlercode
 */
 
-int MainWindow::CreateReferenceImportFile( const QString& s_FilenameIn, QStringList& sl_FilenameOut, const int i_NumOfFiles )
+int MainWindow::CreateReferenceImportFile( const QString& s_FilenameIn, QStringList& sl_FilenameOut, structStaff *Staff_ptr, structStation *Station_ptr, const int i_NumOfFiles )
 {
     int				i_Year			= 2000;
     int				i_Month			= 1;
     int				i_Day			= 1;
     int				i_StationNumber	= 0;
+    int				i_PiID			= 506;
 
     QString			InputStr		= "";
+
     QString			s_StationName	= "";
     QString			s_EventLabel	= "";
 
@@ -55,7 +57,7 @@ int MainWindow::CreateReferenceImportFile( const QString& s_FilenameIn, QStringL
 
 // ***********************************************************************************************************************
 
-    initProgress( i_NumOfFiles, s_FilenameIn, tr( "File ID converter working ..." ), 100 );
+    initProgress( i_NumOfFiles, s_FilenameIn, tr( "Creating reference import file ..." ), 100 );
 
 // ***********************************************************************************************************************
 
@@ -100,7 +102,7 @@ int MainWindow::CreateReferenceImportFile( const QString& s_FilenameIn, QStringL
 
 // ***********************************************************************************************************************
 
-    QFile fout( fi.absolutePath() + "/" + s_EventLabel + "_" + dt.toString( "yyyy-MM" ) + "_0001.txt" );
+    QFile fout( fi.absolutePath() + "/" + s_EventLabel + "_" + dt.toString( "yyyy-MM" ) + "_refImp.txt" );
 
     if ( fout.open( QIODevice::WriteOnly | QIODevice::Text ) == false )
     {
@@ -114,36 +116,33 @@ int MainWindow::CreateReferenceImportFile( const QString& s_FilenameIn, QStringL
     appendItem( sl_FilenameOut, fout.fileName() );
 
 // ***********************************************************************************************************************
-// LR0001
-
-    tout << "File name\tStation ID\tEvent label\tStation\tYYYY-MM\tParameter" << endl;
 
     while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
     {
-        // Station identification number
-        tout << s_EventLabel.toLower() << dt.toString( "MMyy" ) << ".dat" << "\t";
-        tout << i_StationNumber << "\t" << s_EventLabel << "\t" << s_StationName << "\t";
-        tout << dt.toString( "yyyy-MM" );
+        InputStr = tin.readLine();
+        ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
 
-        while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
+        if ( ( InputStr.startsWith( "*C0002" ) == true ) || ( InputStr.startsWith( "*U0002" ) == true ) )
         {
-            InputStr  = tin.readLine().simplified();
-            ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
+            // Station scientist
+            InputStr = tin.readLine();
+            ui_length	= incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
 
-            if ( InputStr.startsWith( "*" ) == false )
-            {
-                InputStr.replace( " ", "\t" );
-                InputStr.replace( "-1", "" );
-                tout << "\t" << InputStr;
-            }
-            else
-                b_Stop = true;
+            InputStr = tin.readLine();
+            ui_length	= incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
+
+            i_PiID = findPiId( InputStr.left( 38 ).simplified(), Staff_ptr );
+
+            b_Stop = true;
         }
 
         // Abort if first data record reached
         if ( ( InputStr.startsWith( "*C0100" ) == true ) || ( InputStr.startsWith( "*U0100" ) == true ) )
             b_Stop = true;
     }
+
+    tout << tr( "Author(s)" ) << "\t" << tr( "Year" ) << "\t" << tr( "Title" ) << "\t" << tr( "URI" ) << endl;
+    tout << ReferenceImportFile( s_EventLabel, dt, i_PiID, s_StationName ) << endl;
 
 //---------------------------------------------------------------------------------------------------
 
@@ -161,7 +160,7 @@ int MainWindow::CreateReferenceImportFile( const QString& s_FilenameIn, QStringL
 // **********************************************************************************************
 // **********************************************************************************************
 // **********************************************************************************************
-// 02.08.2003
+// 2015-06-23
 
 /*! @brief Steuerung fuer Create reference import file */
 
@@ -183,7 +182,7 @@ void MainWindow::doCreateReferenceImportFile()
 
         while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( stopProgress != _APPBREAK_ ) )
         {
-            err = CreateReferenceImportFile( gsl_FilenameList.at( i ), sl_FilenameOut, gsl_FilenameList.count() );
+            err = CreateReferenceImportFile( gsl_FilenameList.at( i ), sl_FilenameOut, g_Staff_ptr, g_Station_ptr,  gsl_FilenameList.count() );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }

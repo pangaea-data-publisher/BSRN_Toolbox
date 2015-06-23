@@ -665,7 +665,7 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
         tout << "Status:\t4" << eol;
         tout << "User:\t1144" << eol;
         tout << "Login:\t3" << eol;
-        tout << ReferenceOtherVersion( s_EventLabel, dt, i_PIID, s_StationName ) << eol;
+        tout << ReferenceOtherVersion( s_EventLabel, dt ) << eol;
 
         if ( b_overwriteDataset == true )
         {

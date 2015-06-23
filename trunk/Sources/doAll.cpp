@@ -82,6 +82,10 @@ void MainWindow::doAllMetadataConverter()
             if ( err == _NOERROR_ )
                 err = AssignmentConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Method_ptr, g_Station_ptr, gsl_FilenameList.count() );
 
+// Reference import file
+            if ( err == _NOERROR_ )
+                err = CreateReferenceImportFile( gsl_FilenameList.at( i ), sl_FilenameOut, g_Staff_ptr, g_Station_ptr,  gsl_FilenameList.count() );
+
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }
 
@@ -117,6 +121,9 @@ void MainWindow::doAllMetadataConverter()
 
             if ( copyStringList( sl_FilenameOut, gsl_FilenameList, "_0009" ) > 0 )
                 err = concatenateFiles( gs_Path + "/" + "BSRN_LR0009.txt", gsl_FilenameList, tr( "Building LR0009 file..." ), 1, true );
+
+            if ( copyStringList( sl_FilenameOut, gsl_FilenameList, "_refImp" ) > 0 )
+                err = concatenateFiles( gs_Path + "/" + "BSRN_RefImp.txt", gsl_FilenameList, tr( "Building reference import file..." ), 1, true );
 
             copyStringList( sl_FilenameSave, gsl_FilenameList );
         }

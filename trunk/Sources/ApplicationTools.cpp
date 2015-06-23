@@ -10,25 +10,43 @@ const QString PrefDate = "BSRN Toolbox, 2008-05-20";
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::ReferenceOtherVersion( const QString& s_EventLabel, const QDateTime dt, const int i_PIID, const QString& s_StationName )
+QString MainWindow::ReferenceOtherVersion( const QString& s_EventLabel, const QDateTime dt )
 {
     QString s_ReferenceStr = "Reference:\t";
-    QString s_URL          = "ftp://ftp.bsrn.awi.de/" + s_EventLabel.toLower() + "/" + s_EventLabel.toLower() + dt.toString( "MMyy" ) + ".dat.gz";
+    QString s_URI          = "ftp://ftp.bsrn.awi.de/" + s_EventLabel.toLower() + "/" + s_EventLabel.toLower() + dt.toString( "MMyy" ) + ".dat.gz";
     QString s_Relationtype = QString( " * RELATIONTYPE: %1" ).arg( _RELATIONTYPE_ );
-    QString s_Authors      = QString( " * AUTHORS: %1" ).arg( i_PIID );
-    QString s_Year         = QString( " * YEAR: %1" ).arg( dt.toString( "yyyy") );
-    QString s_Title        = " * TITLE: BSRN Station-to-archive file for ";
+
+// **********************************************************************************************
+
+    s_ReferenceStr.append( s_URI );
+    s_ReferenceStr.append( s_Relationtype );
+
+    return( s_ReferenceStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::ReferenceImportFile( const QString& s_EventLabel, const QDateTime dt, const int i_PIID, const QString& s_StationName )
+{
+    QString s_ReferenceStr = "";
+    QString s_Authors      = QString( "%1\t" ).arg( i_PIID );
+    QString s_Year         = QString( "%1\t" ).arg( dt.toString( "yyyy") );
+    QString s_Title        = "BSRN Station-to-archive file for ";
+    QString s_URI          = "ftp://ftp.bsrn.awi.de/" + s_EventLabel.toLower() + "/" + s_EventLabel.toLower() + dt.toString( "MMyy" ) + ".dat.gz";
+
+// **********************************************************************************************
 
     if ( s_StationName.endsWith( "Station" ) == false )
         s_Title.append( "station " );
 
-    s_Title.append( s_StationName + " (" + dt.toString( "yyyy-MM" ) + ")" );
+    s_Title.append( s_StationName + " (" + dt.toString( "yyyy-MM" ) + ")\t" );
 
-    s_ReferenceStr.append( s_URL );
-    s_ReferenceStr.append( s_Relationtype );
     s_ReferenceStr.append( s_Authors );
     s_ReferenceStr.append( s_Year );
     s_ReferenceStr.append( s_Title );
+    s_ReferenceStr.append( s_URI );
 
     return( s_ReferenceStr );
 }

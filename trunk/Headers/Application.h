@@ -293,7 +293,7 @@ private:
     int StationHistoryConverter( const QString& FilenameIn, QStringList& FilenameOut, structStation *Station_ptr, const int NumOfFiles );
     int RadiationInstrumentsConverter(const QString& FilenameIn, QStringList& FilenameOut, structMethod *Method_ptr, structStation *Station_ptr, const int NumOfFiles );
     int AssignmentConverter(const QString& FilenameIn, QStringList& FilenameOut, structMethod *Method_ptr, structStation *Station_ptr, const int NumOfFiles );
-    int CreateReferenceImportFile( const QString& FilenameIn, QStringList& FilenameOut, const int NumOfFiles );
+    int CreateReferenceImportFile(const QString& FilenameIn, QStringList& FilenameOut, structStaff *Staff_ptr, structStation *Station_ptr, const int NumOfFiles );
 
 // Data
     int BasicMeasurementsTest( const QString& FilenameIn, int *P, const int NumOfFiles );
@@ -319,7 +319,8 @@ private:
     int doFormatFormattedOptionsDialog( int &FieldAlignment, int &FieldWidth, QString &MissingValue );
 
 // Tools
-    QString ReferenceOtherVersion(const QString& EventLabel, const QDateTime dt , const int PIID, const QString &StationName );
+    QString ReferenceOtherVersion(const QString& EventLabel, const QDateTime dt );
+    QString ReferenceImportFile(const QString& EventLabel, const QDateTime dt , const int PIID, const QString &StationName );
 
     QString findEventLabel( const int StationNumber, structStation *Station_ptr );
     QString findStationName( const int StationNumber, structStation *Station_ptr );
