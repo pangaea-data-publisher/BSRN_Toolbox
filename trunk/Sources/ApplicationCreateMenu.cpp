@@ -79,6 +79,9 @@ void MainWindow::createActions()
     assignmentAction = new QAction(tr("Assig&nment of radiation quantities, LR 0009"), this);
     connect(assignmentAction, SIGNAL(triggered()), this, SLOT(doAssignmentConverter()));
 
+    createRefFileAction = new QAction(tr("Create reference import file"), this);
+    connect(createRefFileAction, SIGNAL(triggered()), this, SLOT(doCreateReferenceImportFile()));
+
     doAllMetadataAction = new QAction(tr("Create all metadata files"), this);
     connect(doAllMetadataAction, SIGNAL(triggered()), this, SLOT(doAllMetadataConverter()));
 
@@ -288,6 +291,8 @@ void MainWindow::createMenus()
     metadataMenu->addAction( stationHistoryAction );
     metadataMenu->addAction( radiationInstrumentsAction );
     metadataMenu->addAction( assignmentAction );
+    metadataMenu->addSeparator();
+    metadataMenu->addAction( createRefFileAction );
     metadataMenu->addSeparator();
     metadataMenu->addAction( doAllMetadataAction );
 

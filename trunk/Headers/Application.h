@@ -183,6 +183,7 @@ private slots:
     void doStationHistoryConverter();
     void doRadiationInstrumentsConverter();
     void doAssignmentConverter();
+    void doCreateReferenceImportFile();
     void doAllMetadataConverter();
 
 //  Data
@@ -292,6 +293,7 @@ private:
     int StationHistoryConverter( const QString& FilenameIn, QStringList& FilenameOut, structStation *Station_ptr, const int NumOfFiles );
     int RadiationInstrumentsConverter(const QString& FilenameIn, QStringList& FilenameOut, structMethod *Method_ptr, structStation *Station_ptr, const int NumOfFiles );
     int AssignmentConverter(const QString& FilenameIn, QStringList& FilenameOut, structMethod *Method_ptr, structStation *Station_ptr, const int NumOfFiles );
+    int CreateReferenceImportFile( const QString& FilenameIn, QStringList& FilenameOut, const int NumOfFiles );
 
 // Data
     int BasicMeasurementsTest( const QString& FilenameIn, int *P, const int NumOfFiles );
@@ -377,6 +379,7 @@ private:
     QAction *stationHistoryAction;
     QAction *radiationInstrumentsAction;
     QAction *assignmentAction;
+    QAction *createRefFileAction;
 
     QAction *doAllDataAction;
     QAction *basicMeasurementsAction;

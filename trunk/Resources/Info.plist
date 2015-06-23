@@ -19,11 +19,11 @@
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.7</string>
+    <string>2.8</string>
     <key>CFBundleVersion</key>
-    <string>2.7</string>
+    <string>2.8</string>
     <key>NSHumanReadableCopyright</key>
-    <string>Copyright © 2012, Alfred Wegener Institute, PANGAEA</string>
+    <string>Copyright © 2015, Alfred Wegener Institute, PANGAEA</string>
     <key>LSApplicationCategoryType</key>
     <string>public.app-category.utilities</string>
     <key>LSMinimumSystemVersion</key>
