@@ -10,7 +10,7 @@ const QString PrefDate = "BSRN Toolbox, 2008-05-20";
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::ReferenceOtherVersion( const QString& s_EventLabel, const QDateTime dt )
+QString MainWindow::ReferenceOtherVersionClassic( const QString& s_EventLabel, const QDateTime dt )
 {
     QString s_ReferenceStr = "Reference:\t";
     QString s_URI          = "ftp://ftp.bsrn.awi.de/" + s_EventLabel.toLower() + "/" + s_EventLabel.toLower() + dt.toString( "MMyy" ) + ".dat.gz";
@@ -20,6 +20,7 @@ QString MainWindow::ReferenceOtherVersion( const QString& s_EventLabel, const QD
 
     s_ReferenceStr.append( s_URI );
     s_ReferenceStr.append( s_Relationtype );
+    s_ReferenceStr.append( "\n" );
 
     return( s_ReferenceStr );
 }
@@ -492,6 +493,7 @@ int MainWindow::readIDs()
 
     return( _NOERROR_ );
 }
+
 // **********************************************************************************************
 // **********************************************************************************************
 // **********************************************************************************************
@@ -503,9 +505,9 @@ int MainWindow::readIDs()
 *   @return Fehlercode
 */
 
-int MainWindow::writeDefaultIDs( const QString& Filename )
+int MainWindow::writeDefaultIDs( const QString& s_Filename )
 {
-    QFile fout( QDir::toNativeSeparators( Filename ) );
+    QFile fout( QDir::toNativeSeparators( s_Filename ) );
 
     if ( fout.open( QIODevice::WriteOnly | QIODevice::Text ) == false )
         return( -20 );
@@ -608,4 +610,341 @@ int MainWindow::writeDefaultIDs( const QString& Filename )
     fout.close();
 
     return( _NOERROR_ );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::OpenDataDescriptionHeader()
+{
+    QString s_OutputStr = "";
+
+    s_OutputStr.append( tr( "// METAHEADER - BSRN data import at " ) );
+    s_OutputStr.append( QDateTime::currentDateTime().toString( "yyyy-MM-ddThh:mm" ) );
+    s_OutputStr.append( "\n" );
+    s_OutputStr.append( "{" );
+    s_OutputStr.append( "\n" );
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::CloseDataDescriptionHeader()
+{
+    QString s_OutputStr = "";
+
+    s_OutputStr.append( "}" );
+    s_OutputStr.append( "\n" );
+    s_OutputStr.append( "//" );
+    s_OutputStr.append( "\n" );
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::DataSetID( const int i_DatasetID )
+{
+    QString s_OutputStr = "  ";
+
+    if ( i_DatasetID > 50000 )
+    {
+        s_OutputStr.append( "\"DataSetID\": " );
+        s_OutputStr.append( QString( "%1," ).arg( i_DatasetID ) );
+        s_OutputStr.append( "\n" );
+    }
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::DataSetID( const QString& s_Text )
+{
+    QString s_OutputStr = "";
+
+    if ( s_Text.isEmpty() == false )
+    {
+        s_OutputStr.append( "  " );
+        s_OutputStr.append( "\"DataSetID\": " );
+        s_OutputStr.append( QString( "@%1@," ).arg( s_Text ) );
+        s_OutputStr.append( "\n" );
+    }
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::AuthorIDs( const int i_PIID )
+{
+    QString s_OutputStr = "  ";
+
+    s_OutputStr.append( "\"AuthorIDs\": " );
+    s_OutputStr.append( QString( "[ %1 ]," ).arg( i_PIID ) );
+    s_OutputStr.append( "\n" );
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::SourceID( const int i_SourceID )
+{
+    QString s_OutputStr = "  ";
+
+    s_OutputStr.append( "\"SourceID\": " );
+    s_OutputStr.append( QString( "%1," ).arg( i_SourceID ) );
+    s_OutputStr.append( "\n" );
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::Title( const QString& s_Text, const QString& s_StationName, const QDateTime dt )
+{
+    QString s_OutputStr = "  ";
+
+    s_OutputStr.append( "\"Title\": \"" );
+    s_OutputStr.append( s_Text + " " );
+
+    if ( s_StationName.endsWith( "Station" ) == true )
+        s_OutputStr.append( s_StationName);
+    else
+        s_OutputStr.append( tr( "station " ) + s_StationName);
+
+    s_OutputStr.append( " (" + dt.toString( "yyyy-MM" ) + ")\"," );
+    s_OutputStr.append( "\n" );
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::ExportFilename( const QString& s_EventLabel, const QString& s_Text, const QDateTime dt )
+{
+    QString s_OutputStr = "  ";
+
+    s_OutputStr.append( "\"ExportFilename\": \"" );
+    s_OutputStr.append( s_EventLabel + "_" );
+    s_OutputStr.append( s_Text + "_" );
+    s_OutputStr.append( dt.toString( "yyyy-MM" ) + "\"," );
+    s_OutputStr.append( "\n" );
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::EventLabel( const QString& s_EventLabel )
+{
+    QString s_OutputStr = "  ";
+
+    s_OutputStr.append( "\"EventLabel\": \"" );
+    s_OutputStr.append( s_EventLabel + "\"," );
+    s_OutputStr.append( "\n" );
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::Parameter( const int i_ParameterID, const int i_PIID, const int i_MethodID, const QString& s_Format, const QString& s_Comment )
+{
+    QString s_OutputStr = "    ";
+
+    s_OutputStr.append( "{ \"ID\": " + QString( "%1" ).arg( i_ParameterID ) + ", " );
+    s_OutputStr.append( "\"PI_ID\": "  + QString( "%1" ).arg( i_PIID ) + ", " );
+    s_OutputStr.append( "\"MethodID\": "  + QString( "%1" ).arg( i_MethodID ) );
+
+    if ( s_Format.isEmpty() == false )
+        s_OutputStr.append( ", \"Format\": \""  + s_Format + "\"" );
+
+    if ( s_Comment.isEmpty() == false )
+        s_OutputStr.append( ", \"Comment\": \""  + s_Comment + "\"" );
+
+    s_OutputStr.append( " },");
+    s_OutputStr.append( "\n" );
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::ParameterFirst( const int i_ParameterID, const int i_PIID, const int i_MethodID, const QString& s_Format, const QString& s_Comment )
+{
+    QString s_OutputStr = "  ";
+
+    s_OutputStr.append( "\"ParameterIDs\": [" );
+    s_OutputStr.append( "\n" );
+    s_OutputStr.append( "    { \"ID\": " + QString( "%1" ).arg( i_ParameterID ) + ", " );
+    s_OutputStr.append( "\"PI_ID\": "  + QString( "%1" ).arg( i_PIID ) + ", " );
+    s_OutputStr.append( "\"MethodID\": "  + QString( "%1" ).arg( i_MethodID ) );
+
+    if ( s_Format.isEmpty() == false )
+        s_OutputStr.append( ", \"Format\": \""  + s_Format + "\"" );
+
+    if ( s_Comment.isEmpty() == false )
+        s_OutputStr.append( ", \"Comment\": \""  + s_Comment + "\"" );
+
+    s_OutputStr.append( " },");
+    s_OutputStr.append( "\n" );
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::ParameterLast( const int i_ParameterID, const int i_PIID, const int i_MethodID, const QString& s_Format, const QString& s_Comment )
+{
+    QString s_OutputStr = "    ";
+
+    s_OutputStr.append( "{ \"ID\": " + QString( "%1" ).arg( i_ParameterID ) + ", " );
+    s_OutputStr.append( "\"PI_ID\": "  + QString( "%1" ).arg( i_PIID ) + ", " );
+    s_OutputStr.append( "\"MethodID\": "  + QString( "%1" ).arg( i_MethodID ) );
+
+    if ( s_Format.isEmpty() == false )
+        s_OutputStr.append( ", \"Format\": \""  + s_Format + "\"" );
+
+    if ( s_Comment.isEmpty() == false )
+        s_OutputStr.append( ", \"Comment\": \""  + s_Comment + "\"" );
+
+    s_OutputStr.append( " } ],");
+    s_OutputStr.append( "\n" );
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::DatasetComment( const QString& s_DatasetComment )
+{
+    QString s_OutputStr = "  ";
+
+    if ( s_DatasetComment.isEmpty() == false )
+    {
+        s_OutputStr.append( "\"DataSetComment\": \"" );
+        s_OutputStr.append( s_DatasetComment + "\"," );
+        s_OutputStr.append( "\n" );
+    }
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::ProjectIDs( const int i_ProjectID )
+{
+    QString s_OutputStr = "  ";
+
+    s_OutputStr.append( "\"ProjectIDs\": " );
+    s_OutputStr.append( QString( "[ %1 ]," ).arg( i_ProjectID ) );
+    s_OutputStr.append( "\n" );
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::TopologicTypeID( const int i_TopologicTypeID )
+{
+    QString s_OutputStr = "  ";
+
+    s_OutputStr.append( "\"TopologicTypeID\": " );
+    s_OutputStr.append( QString( "%1," ).arg( i_TopologicTypeID ) );
+    s_OutputStr.append( "\n" );
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::StatusID( const int i_StatusID )
+{
+    QString s_OutputStr = "  ";
+
+    s_OutputStr.append( "\"StatusID\": " );
+    s_OutputStr.append( QString( "%1," ).arg( i_StatusID ) );
+    s_OutputStr.append( "\n" );
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::UserIDs( const int i_UserID )
+{
+    QString s_OutputStr = "  ";
+
+    s_OutputStr.append( "\"UserIDs\": " );
+    s_OutputStr.append( QString( "[ %1 ]," ).arg( i_UserID ) );
+    s_OutputStr.append( "\n" );
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::LoginID( const int i_LoginID )
+{
+    QString s_OutputStr = "  ";
+
+    s_OutputStr.append( "\"LoginID\": " );
+    s_OutputStr.append( QString( "%1" ).arg( i_LoginID ) ); // no comma at the end!
+    s_OutputStr.append( "\n" );
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::ReferenceOtherVersion( const QString& s_EventLabel, const QDateTime dt )
+{
+    QString s_OutputStr = "  ";
+
+    s_OutputStr.append( "\"ReferenceIDs\": [" );
+    s_OutputStr.append( "\n" );
+    s_OutputStr.append( "    { \"ID\": ftp://ftp.bsrn.awi.de/" + s_EventLabel.toLower() + "/" + s_EventLabel.toLower() + dt.toString( "MMyy" ) + ".dat.gz, \"RelationTypeID\": 13 } ]," );
+    s_OutputStr.append( "\n" );
+
+    return( s_OutputStr );
 }

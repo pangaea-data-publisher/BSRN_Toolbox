@@ -91,7 +91,7 @@ class MainWindow : public QMainWindow
         int InstituteID;			//!< Institut ID
     };
 
-/* @brief Array fuer die Verwaltung der Datenstze */
+/* @brief Array fuer die Verwaltung der Datensaetze */
 
     struct structDataset
     {
@@ -319,8 +319,28 @@ private:
     int doFormatFormattedOptionsDialog( int &FieldAlignment, int &FieldWidth, QString &MissingValue );
 
 // Tools
+    QString ReferenceOtherVersionClassic( const QString& s_EventLabel, const QDateTime dt );
     QString ReferenceOtherVersion(const QString& EventLabel, const QDateTime dt );
     QString ReferenceImportFile(const QString& EventLabel, const QDateTime dt , const int PIID, const QString &StationName );
+
+    QString OpenDataDescriptionHeader();
+    QString CloseDataDescriptionHeader();
+    QString DataSetID( const int DatasetID );
+    QString DataSetID(const QString& Text = "" );
+    QString AuthorIDs( const int PIID );
+    QString SourceID( const int SourceID );
+    QString Title( const QString& Text, const QString& StationName, const QDateTime dt );
+    QString ExportFilename(const QString& EventLabel, const QString& Text, const QDateTime dt );
+    QString EventLabel( const QString& EventLabel );
+    QString Parameter( const int ParameterID, const int PIID = 506, const int MethodID = 43, const QString& Format = "", const QString& Comment = "" );
+    QString ParameterFirst( const int ParameterID, const int PIID = 506, const int MethodID = 43, const QString& Format = "", const QString& Comment = "" );
+    QString ParameterLast( const int ParameterID, const int PIID = 506, const int MethodID = 43, const QString& Format = "", const QString& Comment = "" );
+    QString DatasetComment( const QString& Comment );
+    QString ProjectIDs( const int ProjectID );
+    QString TopologicTypeID( const int TopologicTypeID );
+    QString StatusID( const int StatusID );
+    QString UserIDs( const int UserID );
+    QString LoginID( const int LoginID );
 
     QString findEventLabel( const int StationNumber, structStation *Station_ptr );
     QString findStationName( const int StationNumber, structStation *Station_ptr );

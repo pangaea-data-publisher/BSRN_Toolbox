@@ -13,13 +13,13 @@
    #endif
 
    #if defined(Q_OS_MAC)
-       const char eol = '\r';
+       const char eol = '\n'; // umgestellt von \r auf \n am 2015-06-23
    #endif
 
     const QString   _PROGRAMDOI_        = "doi:10.1594/PANGAEA.774827";
     const QString   _PROGRAMREADME_     = "http://wiki.pangaea.de/wiki/BSRN_Toolbox";
 
-    const QString   _VERSION_           = "2.8";                        // Version number, 2015-06-23
+    const QString   _VERSION_           = "2.9";                        // Version number, 2015-06-23
     const QString   _DOI_               = "doi:10.1594/PANGAEA.774827"; // Dataset
 
     // EOL

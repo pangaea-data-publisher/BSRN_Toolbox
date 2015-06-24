@@ -903,7 +903,7 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
         tout << "User:\t1144" << eol;
         tout << "Login:\t3" << eol;
 
-        tout << ReferenceOtherVersion( s_EventLabel, dt ) << eol;
+        tout << ReferenceOtherVersionClassic( s_EventLabel, dt );
 
         if ( b_overwriteDataset == true )
         {
