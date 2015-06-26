@@ -649,33 +649,16 @@ QString MainWindow::CloseDataDescriptionHeader()
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::DataSetID( const int i_DatasetID )
-{
-    QString s_OutputStr = "  ";
-
-    if ( i_DatasetID > 50000 )
-    {
-        s_OutputStr.append( "\"DataSetID\": " );
-        s_OutputStr.append( QString( "%1," ).arg( i_DatasetID ) );
-        s_OutputStr.append( eol );
-    }
-
-    return( s_OutputStr );
-}
-
-// **********************************************************************************************
-// **********************************************************************************************
-// **********************************************************************************************
-
-QString MainWindow::DataSetID( const QString& s_Text )
+QString MainWindow::ParentID( const QString& s_ParentID )
 {
     QString s_OutputStr = "";
 
-    if ( s_Text.isEmpty() == false )
+    if ( s_ParentID.isEmpty() == false )
     {
-        s_OutputStr.append( "  " );
-        s_OutputStr.append( "\"DataSetID\": " );
-        s_OutputStr.append( QString( "@%1@," ).arg( s_Text ) );
+        s_OutputStr = "  ";
+        s_OutputStr.append( "\"ParentID\": " );
+        s_OutputStr.append( s_ParentID );
+        s_OutputStr.append( "," );
         s_OutputStr.append( eol );
     }
 
@@ -686,13 +669,18 @@ QString MainWindow::DataSetID( const QString& s_Text )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::AuthorIDs( const int i_PIID )
+QString MainWindow::DataSetID( const QString& s_DatasetID )
 {
-    QString s_OutputStr = "  ";
+    QString s_OutputStr = "";
 
-    s_OutputStr.append( "\"AuthorIDs\": " );
-    s_OutputStr.append( QString( "[ %1 ]," ).arg( i_PIID ) );
-    s_OutputStr.append( eol );
+    if ( s_DatasetID.isEmpty() == false )
+    {
+        s_OutputStr = "  ";
+        s_OutputStr.append( "\"DataSetID\": " );
+        s_OutputStr.append( s_DatasetID );
+        s_OutputStr.append( "," );
+        s_OutputStr.append( eol );
+    }
 
     return( s_OutputStr );
 }
@@ -701,13 +689,18 @@ QString MainWindow::AuthorIDs( const int i_PIID )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::SourceID( const int i_SourceID )
+QString MainWindow::AuthorIDs( const QString& s_AuthorIDs )
 {
-    QString s_OutputStr = "  ";
+    QString s_OutputStr = "";
 
-    s_OutputStr.append( "\"SourceID\": " );
-    s_OutputStr.append( QString( "%1," ).arg( i_SourceID ) );
-    s_OutputStr.append( eol );
+    if ( s_AuthorIDs.isEmpty() == false )
+    {
+        s_OutputStr = "  ";
+        s_OutputStr.append( "\"AuthorIDs\": " );
+        s_OutputStr.append( "[ "+ s_AuthorIDs + " ]" );
+        s_OutputStr.append( "," );
+        s_OutputStr.append( eol );
+    }
 
     return( s_OutputStr );
 }
@@ -716,20 +709,63 @@ QString MainWindow::SourceID( const int i_SourceID )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::Title( const QString& s_Text, const QString& s_StationName, const QDateTime dt )
+QString MainWindow::SourceID( const QString& s_SourceID )
+{
+    QString s_OutputStr = "";
+
+    if ( s_SourceID.isEmpty() == false )
+    {
+        s_OutputStr = "  ";
+        s_OutputStr.append( "\"SourceID\": " );
+        s_OutputStr.append( s_SourceID );
+        s_OutputStr.append( "," );
+        s_OutputStr.append( eol );
+    }
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::DatasetTitle( const QString& s_Text, const QString& s_StationName, const QDateTime dt )
 {
     QString s_OutputStr = "  ";
+    QString sd_Text     = s_Text;
 
-    s_OutputStr.append( "\"Title\": \"" );
-    s_OutputStr.append( s_Text + " " );
+    if ( ( s_Text.isEmpty() == false ) && ( s_StationName.isEmpty() == false ) )
+    {
+        sd_Text.replace( "\"", "\\\"" );
+        sd_Text.replace( "\\\\", "\\" );
 
-    if ( s_StationName.endsWith( "Station" ) == true )
-        s_OutputStr.append( s_StationName);
+        s_OutputStr.append( "\"Title\": \"" );
+        s_OutputStr.append( sd_Text + " " );
+
+        if ( s_StationName.endsWith( "Station" ) == true )
+            s_OutputStr.append( s_StationName);
+        else
+            s_OutputStr.append( tr( "station " ) + s_StationName);
+
+        s_OutputStr.append( " (" + dt.toString( "yyyy-MM" ) + ")\"," );
+        s_OutputStr.append( eol );
+    }
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::ReferenceID( const QString& s_ReferenceID, const int i_RelationTypeID, const QString& s_ReferenceType, const QString& s_EventLabel )
+{
+    QString s_OutputStr = "";
+
+    if ( s_ReferenceID == "999999" )
+        s_OutputStr = "    { \"ID\": @" + s_ReferenceType + "@" + s_EventLabel + "@" + ", \"RelationTypeID\": " + QString( "%1" ).arg( i_RelationTypeID ) + " }";
     else
-        s_OutputStr.append( tr( "station " ) + s_StationName);
-
-    s_OutputStr.append( " (" + dt.toString( "yyyy-MM" ) + ")\"," );
-    s_OutputStr.append( eol );
+        s_OutputStr = "    { \"ID\": " + s_ReferenceID + ", \"RelationTypeID\": " + QString( "%1" ).arg( i_RelationTypeID ) + " }";
 
     return( s_OutputStr );
 }
@@ -742,11 +778,14 @@ QString MainWindow::ExportFilename( const QString& s_EventLabel, const QString& 
 {
     QString s_OutputStr = "  ";
 
-    s_OutputStr.append( "\"ExportFilename\": \"" );
-    s_OutputStr.append( s_EventLabel + "_" );
-    s_OutputStr.append( s_Text + "_" );
-    s_OutputStr.append( dt.toString( "yyyy-MM" ) + "\"," );
-    s_OutputStr.append( eol );
+    if ( ( s_EventLabel.isEmpty() == false ) && ( s_Text.isEmpty() == false ) )
+    {
+        s_OutputStr.append( "\"ExportFilename\": \"" );
+        s_OutputStr.append( s_EventLabel + "_" );
+        s_OutputStr.append( s_Text + "_" );
+        s_OutputStr.append( dt.toString( "yyyy-MM" ) + "\"," );
+        s_OutputStr.append( eol );
+    }
 
     return( s_OutputStr );
 }
@@ -759,9 +798,14 @@ QString MainWindow::EventLabel( const QString& s_EventLabel )
 {
     QString s_OutputStr = "  ";
 
-    s_OutputStr.append( "\"EventLabel\": \"" );
-    s_OutputStr.append( s_EventLabel + "\"," );
-    s_OutputStr.append( eol );
+    if ( s_EventLabel.isEmpty() == false )
+    {
+        s_OutputStr = "  ";
+        s_OutputStr.append( "\"EventLabel\": \"" );
+        s_OutputStr.append( s_EventLabel );
+        s_OutputStr.append( "\"," );
+        s_OutputStr.append( eol );
+    }
 
     return( s_OutputStr );
 }
@@ -846,12 +890,18 @@ QString MainWindow::ParameterLast( const int i_ParameterID, const int i_PIID, co
 
 QString MainWindow::DatasetComment( const QString& s_DatasetComment )
 {
-    QString s_OutputStr = "  ";
+    QString s_OutputStr = "";
+    QString sd_DatasetComment = s_DatasetComment;
 
     if ( s_DatasetComment.isEmpty() == false )
     {
+        sd_DatasetComment.replace( "\"", "\\\"" );
+        sd_DatasetComment.replace( "\\\\", "\\" );
+
+        s_OutputStr = "  ";
         s_OutputStr.append( "\"DataSetComment\": \"" );
-        s_OutputStr.append( s_DatasetComment + "\"," );
+        s_OutputStr.append( sd_DatasetComment );
+        s_OutputStr.append( "\"," );
         s_OutputStr.append( eol );
     }
 
@@ -862,13 +912,18 @@ QString MainWindow::DatasetComment( const QString& s_DatasetComment )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::ProjectIDs( const int i_ProjectID )
+QString MainWindow::ProjectIDs( const QString& s_ProjectIDs )
 {
-    QString s_OutputStr = "  ";
+    QString s_OutputStr = "";
 
-    s_OutputStr.append( "\"ProjectIDs\": " );
-    s_OutputStr.append( QString( "[ %1 ]," ).arg( i_ProjectID ) );
-    s_OutputStr.append( eol );
+    if ( s_ProjectIDs.isEmpty() == false )
+    {
+        s_OutputStr = "  ";
+        s_OutputStr.append( "\"ProjectIDs\": " );
+        s_OutputStr.append( "[ "+ s_ProjectIDs + " ]" );
+        s_OutputStr.append( "," );
+        s_OutputStr.append( eol );
+    }
 
     return( s_OutputStr );
 }
@@ -907,13 +962,18 @@ QString MainWindow::StatusID( const int i_StatusID )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::UserIDs( const int i_UserID )
+QString MainWindow::UserIDs( const QString& s_UserIDs )
 {
-    QString s_OutputStr = "  ";
+    QString s_OutputStr = "";
 
-    s_OutputStr.append( "\"UserIDs\": " );
-    s_OutputStr.append( QString( "[ %1 ]," ).arg( i_UserID ) );
-    s_OutputStr.append( eol );
+    if ( s_UserIDs.isEmpty() == false )
+    {
+        s_OutputStr = "  ";
+        s_OutputStr.append( "\"UserIDs\": " );
+        s_OutputStr.append( "[ "+ s_UserIDs + " ]" );
+        s_OutputStr.append( "," );
+        s_OutputStr.append( eol );
+    }
 
     return( s_OutputStr );
 }

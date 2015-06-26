@@ -325,21 +325,22 @@ private:
 
     QString OpenDataDescriptionHeader();
     QString CloseDataDescriptionHeader();
-    QString DataSetID( const int DatasetID );
-    QString DataSetID(const QString& Text = "" );
-    QString AuthorIDs( const int PIID );
-    QString SourceID( const int SourceID );
-    QString Title( const QString& Text, const QString& StationName, const QDateTime dt );
+    QString ParentID( const QString& ParentID = "" );
+    QString DataSetID( const QString& DataSetID = "" );
+    QString AuthorIDs( const QString& AuthorIDs = "" );
+    QString SourceID( const QString& SourceID = "" );
+    QString DatasetTitle( const QString& Text, const QString& StationName, const QDateTime dt );
+    QString ReferenceID( const QString &ReferenceID, const int RelationTypeID, const QString &ReferenceType, const QString& EventLabel = "" );
     QString ExportFilename(const QString& EventLabel, const QString& Text, const QDateTime dt );
-    QString EventLabel( const QString& EventLabel );
+    QString EventLabel( const QString& EventLabel = "" );
     QString Parameter( const int ParameterID, const int PIID = 506, const int MethodID = 43, const QString& Format = "", const QString& Comment = "" );
     QString ParameterFirst( const int ParameterID, const int PIID = 506, const int MethodID = 43, const QString& Format = "", const QString& Comment = "" );
     QString ParameterLast( const int ParameterID, const int PIID = 506, const int MethodID = 43, const QString& Format = "", const QString& Comment = "" );
-    QString DatasetComment( const QString& Comment );
-    QString ProjectIDs( const int ProjectID );
+    QString DatasetComment( const QString& DatasetComment );
+    QString ProjectIDs( const QString& ProjectIDs );
     QString TopologicTypeID( const int TopologicTypeID );
     QString StatusID( const int StatusID );
-    QString UserIDs( const int UserID );
+    QString UserIDs( const QString& UserIDs = "" );
     QString LoginID( const int LoginID );
 
     QString findEventLabel( const int StationNumber, structStation *Station_ptr );

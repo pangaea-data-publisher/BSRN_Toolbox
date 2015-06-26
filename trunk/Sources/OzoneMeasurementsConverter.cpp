@@ -253,7 +253,7 @@ int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& 
                 int i_DatasetID = findDatasetId( s_EventLabel + tr( "_Ozone_" ) + dt.toString( "yyyy-MM" ), Dataset_ptr );
 
                 if ( i_DatasetID > 0 )
-                    s_DatasetID = DataSetID( i_DatasetID );
+                    s_DatasetID = DataSetID( QString( "%1" ).arg( i_DatasetID ) );
                 else
                     s_DatasetID = DataSetID( s_EventLabel + tr( "_Ozone_" ) + dt.toString( "yyyy-MM" ) );
             }
@@ -279,19 +279,19 @@ int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& 
 
             tout << OpenDataDescriptionHeader();
             tout << DataSetID( s_DatasetID );
-            tout << AuthorIDs( i_PIID );
-            tout << SourceID( i_SourceID );
-            tout << Title( tr( "Ozone measurements from" ), s_StationName, dt );
+            tout << AuthorIDs( QString( "%1" ).arg( i_PIID ) );
+            tout << SourceID( QString( "%1" ).arg( i_SourceID ) );
+            tout << DatasetTitle( tr( "Ozone measurements from" ), s_StationName, dt );
             tout << ReferenceOtherVersion( s_EventLabel, dt );
             tout << ExportFilename( s_EventLabel, "Ozone", dt );
             tout << EventLabel( s_EventLabel );
-            tout << ParameterFirst( 1599, i_PIID, 43, "yyyy-MM-dd'T'HH:mm", "" );
+            tout << ParameterFirst( 1599, i_PIID, 43, "yyyy-MM-dd'T'HH:mm" );
             tout << ParameterLast( 49377, i_PIID, i_MethodID, "###0" );
             tout << DatasetComment( s_DatasetComment );
-            tout << ProjectIDs( 4094 );
+            tout << ProjectIDs( tr( "4094" ) );
             tout << TopologicTypeID( 8 );
             tout << StatusID( 4 );
-            tout << UserIDs( 1144 );
+            tout << UserIDs( tr( "1144" ) );
             tout << LoginID( 3 );
             tout << CloseDataDescriptionHeader();
         }
