@@ -13,7 +13,7 @@
    #endif
 
    #if defined(Q_OS_MAC)
-       const char eol = '\n'; // umgestellt von \r auf \n am 2015-06-23
+       const char eol = '\r';
    #endif
 
     const QString   _PROGRAMDOI_        = "doi:10.1594/PANGAEA.774827";
