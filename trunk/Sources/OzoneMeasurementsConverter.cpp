@@ -278,15 +278,15 @@ int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& 
             }
 
             tout << OpenDataDescriptionHeader();
-            tout << DataSetID( s_DatasetID );
+            tout << s_DatasetID;
             tout << AuthorIDs( QString( "%1" ).arg( i_PIID ) );
             tout << SourceID( QString( "%1" ).arg( i_SourceID ) );
             tout << DatasetTitle( tr( "Ozone measurements from" ), s_StationName, dt );
             tout << ReferenceOtherVersion( s_EventLabel, dt );
-            tout << ExportFilename( s_EventLabel, "Ozone", dt );
+            tout << ExportFilename( s_EventLabel, tr( "Ozone" ), dt );
             tout << EventLabel( s_EventLabel );
-            tout << ParameterFirst( 1599, i_PIID, 43, "yyyy-MM-dd'T'HH:mm" );
-            tout << ParameterLast( 49377, i_PIID, i_MethodID, "###0" );
+            tout << ParameterFirst( 1599, i_PIID, 43, tr( "yyyy-MM-dd'T'HH:mm" ) );
+            tout << ParameterLast( 49377, i_PIID, i_MethodID, tr( "###0" ) );
             tout << DatasetComment( s_DatasetComment );
             tout << ProjectIDs( tr( "4094" ) );
             tout << TopologicTypeID( 8 );

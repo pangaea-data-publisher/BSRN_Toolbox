@@ -888,6 +888,55 @@ QString MainWindow::ParameterLast( const int i_ParameterID, const int i_PIID, co
 // **********************************************************************************************
 // **********************************************************************************************
 
+QString MainWindow::Parameter( const QString& s_Parameter )
+{
+    QString s_OutputStr = "";
+
+    if ( s_Parameter.isEmpty() == false )
+        s_OutputStr.append( s_Parameter );
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::ParameterFirst( const QString& s_Parameter )
+{
+    QString s_OutputStr = "  ";
+
+    s_OutputStr.append( "\"ParameterIDs\": [" );
+    s_OutputStr.append( eol );
+
+    if ( s_Parameter.isEmpty() == false )
+        s_OutputStr.append( s_Parameter );
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::ParameterLast( const QString& s_Parameter )
+{
+    QString s_OutputStr = "";
+
+    if ( s_Parameter.isEmpty() == false )
+    {
+        s_OutputStr.append( s_Parameter.section( "},", 0, 0 ) );
+        s_OutputStr.append( "} ],");
+        s_OutputStr.append( eol );
+    }
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
 QString MainWindow::DatasetComment( const QString& s_DatasetComment )
 {
     QString s_OutputStr = "";

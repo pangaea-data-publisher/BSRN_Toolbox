@@ -334,8 +334,11 @@ private:
     QString ExportFilename(const QString& EventLabel, const QString& Text, const QDateTime dt );
     QString EventLabel( const QString& EventLabel = "" );
     QString Parameter( const int ParameterID, const int PIID = 506, const int MethodID = 43, const QString& Format = "", const QString& Comment = "" );
+    QString Parameter( const QString& Parameter = "" );
     QString ParameterFirst( const int ParameterID, const int PIID = 506, const int MethodID = 43, const QString& Format = "", const QString& Comment = "" );
+    QString ParameterFirst( const QString& Parameter = "" );
     QString ParameterLast( const int ParameterID, const int PIID = 506, const int MethodID = 43, const QString& Format = "", const QString& Comment = "" );
+    QString ParameterLast( const QString& Parameter = "" );
     QString DatasetComment( const QString& DatasetComment );
     QString ProjectIDs( const QString& ProjectIDs );
     QString TopologicTypeID( const int TopologicTypeID );
