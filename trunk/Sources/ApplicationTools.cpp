@@ -888,6 +888,38 @@ QString MainWindow::ParameterLast( const int i_ParameterID, const int i_PIID, co
 // **********************************************************************************************
 // **********************************************************************************************
 
+QString MainWindow::Parameter( const QStringList sl_Parameter )
+{
+    int     NumOfParameters = sl_Parameter.count() - 1;
+
+    QString s_OutputStr     = "";
+
+// **********************************************************************************************
+
+    if ( NumOfParameters + 1 > 1 )
+    {
+        s_OutputStr.append( ParameterFirst( sl_Parameter.first() ) );
+
+        for ( int i=1; i<NumOfParameters; i++ )
+            s_OutputStr.append( Parameter( sl_Parameter.at( i ) ) );
+
+        s_OutputStr.append( ParameterLast( sl_Parameter.last() ) );
+    }
+    else
+    {
+        s_OutputStr.append( "\"ParameterIDs\": [ " );
+        s_OutputStr.append( sl_Parameter.first().section( "    ", 1, 1 ).section( "},", 0, 0 ) );
+        s_OutputStr.append( "} ],");
+        s_OutputStr.append( eol );
+    }
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
 QString MainWindow::Parameter( const QString& s_Parameter )
 {
     QString s_OutputStr = "";

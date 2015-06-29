@@ -53,6 +53,8 @@ int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& 
     QString         s_DatasetComment                = "";
     QString         s_DatasetID                     = "";
 
+    QStringList     sl_Parameter;
+
     unsigned int	ui_length					= 1;
     unsigned int	ui_filesize					= 1;
 
@@ -246,6 +248,9 @@ int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& 
     {
         b_Stop = false;
 
+// ***********************************************************************************************************************
+// build data description header
+
         if ( b_Import == true )
         {
             if ( b_overwriteDataset == true )
@@ -277,6 +282,15 @@ int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& 
                     s_DatasetComment.append( s_Remarks );
             }
 
+            sl_Parameter.append( Parameter( 1599, i_PIID, 43, tr( "yyyy-MM-dd'T'HH:mm" ) ) );
+            sl_Parameter.append( Parameter( 49377, i_PIID, 43, tr( "###0" ) ) );
+        }
+
+// ***********************************************************************************************************************
+// write data description header
+
+        if ( ( b_Import == true ) && ( sl_Parameter.count() > 1 ) )
+        {
             tout << OpenDataDescriptionHeader();
             tout << s_DatasetID;
             tout << AuthorIDs( QString( "%1" ).arg( i_PIID ) );
@@ -285,8 +299,7 @@ int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& 
             tout << ReferenceOtherVersion( s_EventLabel, dt );
             tout << ExportFilename( s_EventLabel, tr( "Ozone" ), dt );
             tout << EventLabel( s_EventLabel );
-            tout << ParameterFirst( 1599, i_PIID, 43, tr( "yyyy-MM-dd'T'HH:mm" ) );
-            tout << ParameterLast( 49377, i_PIID, i_MethodID, tr( "###0" ) );
+            tout << Parameter( sl_Parameter );
             tout << DatasetComment( s_DatasetComment );
             tout << ProjectIDs( tr( "4094" ) );
             tout << TopologicTypeID( 8 );
@@ -295,47 +308,52 @@ int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& 
             tout << LoginID( 3 );
             tout << CloseDataDescriptionHeader();
         }
-    }
 
-    while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
-    {
-        InputStr  = tin.readLine();
-        ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
+// ***********************************************************************************************************************
+// write data
 
-        if ( ( InputStr.startsWith( SearchString5 ) == true ) || ( InputStr.startsWith( SearchString6 ) == true ) )
+        while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
         {
-            if ( b_Import == true )
-                tout << "1599\t49377" << eol;
-            else
-                tout << "Station\tDate/Time\tLatitude\tLongitude\tOzone total [DU]" << eol;
+            InputStr  = tin.readLine();
+            ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
 
-            while ( ( tin.atEnd() == false ) && ( b_Stop == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) )
+            if ( ( InputStr.startsWith( SearchString5 ) == true ) || ( InputStr.startsWith( SearchString6 ) == true ) )
             {
-                InputStr	= tin.readLine();
-                ui_length	= incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
+                if ( b_Import == true )
+                    tout << "1599\t49377" << eol;
+                else
+                    tout << "Station\tDate/Time\tLatitude\tLongitude\tOzone total [DU]" << eol;
 
-                if ( InputStr.startsWith( "*" ) == false )
+                while ( ( tin.atEnd() == false ) && ( b_Stop == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) )
                 {
-                    if ( InputStr.mid( 9, 6 ).simplified() != "-999" )
+                    InputStr	= tin.readLine();
+                    ui_length	= incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
+
+                    if ( InputStr.startsWith( "*" ) == false )
                     {
-                        i_Day		= InputStr.mid( 1, 2 ).toInt();
-                        i_Minute	= InputStr.mid( 4, 4 ).toInt();
+                        if ( InputStr.mid( 9, 6 ).simplified() != "-999" )
+                        {
+                            i_Day		= InputStr.mid( 1, 2 ).toInt();
+                            i_Minute	= InputStr.mid( 4, 4 ).toInt();
 
-                        dt.setDate( QDate( i_Year, i_Month, i_Day ) );
-                        dt.setTime( QTime( 0, 0, 0 ) );
-                        dt = dt.addSecs( i_Minute*60 );
+                            dt.setDate( QDate( i_Year, i_Month, i_Day ) );
+                            dt.setTime( QTime( 0, 0, 0 ) );
+                            dt = dt.addSecs( i_Minute*60 );
 
-                        if ( b_Import == false )
-                            tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" << QString( "%1" ).arg( f_Latitude ) << "\t" << QString( "%1" ).arg( f_Longitude ) + "\t";
-                        else
-                            tout << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t";
+                            if ( b_Import == false )
+                                tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" << QString( "%1" ).arg( f_Latitude ) << "\t" << QString( "%1" ).arg( f_Longitude ) + "\t";
+                            else
+                                tout << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t";
 
-                        tout << InputStr.mid( 9, 6 ).simplified(); // Ozone total [DU]
-                        tout << eol;
+                            tout << InputStr.mid( 9, 6 ).simplified(); // Ozone total [DU]
+                            tout << eol;
+                        }
+                    }
+                    else
+                    {
+                        b_Stop = true;
                     }
                 }
-                else
-                    b_Stop = true;
             }
         }
     }

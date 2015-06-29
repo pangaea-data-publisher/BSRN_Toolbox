@@ -1177,7 +1177,7 @@ bool MainWindow::buildFilename( const int i_ActionNumber, const QString &s_Filen
 *   @param s_WindowTitle Der Fenstertitel
 */
 
-void MainWindow::setWTitle( const int i_ActionNumber, const QString &s_FilenameFormat, const int i_Extension, const QStringList &sl_FilenameList )
+void MainWindow::setWTitle(const int i_ActionNumber, const QString &s_FilenameFormat, const int i_Extension, const QStringList sl_FilenameList )
 {
     QString   s_FilenameIn    = "";
     QString   s_FilenameOut   = "";

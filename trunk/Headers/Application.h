@@ -263,7 +263,7 @@ private:
     void setNormalCursor();
     void setStatusBar( const QString &Message = "", const int seconds = 0 );
     void setStatusBarFileInProgress( const QString &Filename, const QString &Message = "", const int i_seconds = 0 );
-    void setWTitle( const int ActionNumber, const QString &FilenameFormat, const int Extension, const QStringList &sl_FilenameList );
+    void setWTitle( const int ActionNumber, const QString &FilenameFormat, const int Extension, const QStringList sl_FilenameList );
     void setWaitCursor();
     void showFilenameList( const int ActionNumber, const QString &FilenameFormat, const int Extension, const QStringList FilenameList );
     void showList( const QStringList List );
@@ -278,7 +278,7 @@ private:
     QString setEOLChar( const int EOL );
     QString setExtension( const int Extension );
 
-    bool warning(const QString & Message, const QString & Title = tr("Warning"));
+    bool warning( const QString & Message, const QString & Title = tr("Warning"));
 
 // Station-to-archive
     int downloadStationToArchiveFiles( structStation *Station_ptr, const QString& FilenameOut, const QString& FTPServer, const QString& User, const QString& Password, const bool DecompressFiles, const bool CheckFiles, const bool CheckAvailability, bool Station[MAX_NUM_OF_STATION+1], bool Month[MAX_NUM_OF_MONTH+1], bool Year[MAX_NUM_OF_YEAR+1] );
@@ -291,9 +291,9 @@ private:
     int RadiosondeEquipmentConverter( const QString& FilenameIn, QStringList& FilenameOut, structMethod *Method_ptr, structStation *Station_ptr, const int NumOfFiles );
     int OzoneEquipmentConverter( const QString& FilenameIn, QStringList& FilenameOut, structMethod *Method_ptr, structStation *Station_ptr, const int NumOfFiles );
     int StationHistoryConverter( const QString& FilenameIn, QStringList& FilenameOut, structStation *Station_ptr, const int NumOfFiles );
-    int RadiationInstrumentsConverter(const QString& FilenameIn, QStringList& FilenameOut, structMethod *Method_ptr, structStation *Station_ptr, const int NumOfFiles );
-    int AssignmentConverter(const QString& FilenameIn, QStringList& FilenameOut, structMethod *Method_ptr, structStation *Station_ptr, const int NumOfFiles );
-    int CreateReferenceImportFile(const QString& FilenameIn, QStringList& FilenameOut, structStaff *Staff_ptr, structStation *Station_ptr, const int NumOfFiles );
+    int RadiationInstrumentsConverter( const QString& FilenameIn, QStringList& FilenameOut, structMethod *Method_ptr, structStation *Station_ptr, const int NumOfFiles );
+    int AssignmentConverter( const QString& FilenameIn, QStringList& FilenameOut, structMethod *Method_ptr, structStation *Station_ptr, const int NumOfFiles );
+    int CreateReferenceImportFile( const QString& FilenameIn, QStringList& FilenameOut, structStaff *Staff_ptr, structStation *Station_ptr, const int NumOfFiles );
 
 // Data
     int BasicMeasurementsTest( const QString& FilenameIn, int *P, const int NumOfFiles );
@@ -314,14 +314,14 @@ private:
 // Dialogs
     int doConcatenateOptionsDialog( int &SkipNFirstLines, bool &deleteOriginalFiles );
     int doDownloadManagerDialog( QString &DownloadPath, QString &FTPServer, QString &User, QString &Password, bool &DecompressFiles, bool &CheckFiles, bool &CheckAvailability, bool Station[MAX_NUM_OF_STATION+1], bool Month[MAX_NUM_OF_MONTH+1], bool Year[MAX_NUM_OF_YEAR+1] );
-    int doQualityCheckRecommendedV20OptionsDialog(bool & b_CheckPhysicallyPossibleLimits, bool & b_CheckExtremelyRareLimits, bool & b_CheckComparisons, QString & s_AuxiliaryDataAlgorithm, bool & b_OutputCodes, bool & b_OutputCleanedValues, bool & b_OutputOriginalValues, bool & b_OutputAuxiliaryData, bool & b_OutputOneFile);
+    int doQualityCheckRecommendedV20OptionsDialog( bool & b_CheckPhysicallyPossibleLimits, bool & b_CheckExtremelyRareLimits, bool & b_CheckComparisons, QString & s_AuxiliaryDataAlgorithm, bool & b_OutputCodes, bool & b_OutputCleanedValues, bool & b_OutputOriginalValues, bool & b_OutputAuxiliaryData, bool & b_OutputOneFile);
     int doFormatUnformattedOptionsDialog( QString &MissingValue, int &FieldDelimiter );
     int doFormatFormattedOptionsDialog( int &FieldAlignment, int &FieldWidth, QString &MissingValue );
 
 // Tools
     QString ReferenceOtherVersionClassic( const QString& s_EventLabel, const QDateTime dt );
-    QString ReferenceOtherVersion(const QString& EventLabel, const QDateTime dt );
-    QString ReferenceImportFile(const QString& EventLabel, const QDateTime dt , const int PIID, const QString &StationName );
+    QString ReferenceOtherVersion( const QString& EventLabel, const QDateTime dt );
+    QString ReferenceImportFile( const QString& EventLabel, const QDateTime dt , const int PIID, const QString &StationName );
 
     QString OpenDataDescriptionHeader();
     QString CloseDataDescriptionHeader();
@@ -331,10 +331,11 @@ private:
     QString SourceID( const QString& SourceID = "" );
     QString DatasetTitle( const QString& Text, const QString& StationName, const QDateTime dt );
     QString ReferenceID( const QString &ReferenceID, const int RelationTypeID, const QString &ReferenceType, const QString& EventLabel = "" );
-    QString ExportFilename(const QString& EventLabel, const QString& Text, const QDateTime dt );
+    QString ExportFilename( const QString& EventLabel, const QString& Text, const QDateTime dt );
     QString EventLabel( const QString& EventLabel = "" );
     QString Parameter( const int ParameterID, const int PIID = 506, const int MethodID = 43, const QString& Format = "", const QString& Comment = "" );
     QString Parameter( const QString& Parameter = "" );
+    QString Parameter( const QStringList Parameter );
     QString ParameterFirst( const int ParameterID, const int PIID = 506, const int MethodID = 43, const QString& Format = "", const QString& Comment = "" );
     QString ParameterFirst( const QString& Parameter = "" );
     QString ParameterLast( const int ParameterID, const int PIID = 506, const int MethodID = 43, const QString& Format = "", const QString& Comment = "" );
@@ -367,7 +368,7 @@ private:
     float calcGeopotentialHeight( const QString& ahhh );
 
 //  Quality check
-    int QualityCheckRecommendedV20(const QString & FileNameIn, const bool & b_CheckPhysicallyPossibleLimits, const bool & b_CheckExtremelyRareLimits, const bool & b_CheckComparisons, const QString & s_AuxiliaryDataAlgorithm, const bool & b_OutputCodes, const bool & b_OutputCleanedValues, const bool & b_OutputOriginalValues, const bool & b_OutputAuxiliaryData, const bool & b_OutputOneFile);
+    int QualityCheckRecommendedV20( const QString & FileNameIn, const bool & b_CheckPhysicallyPossibleLimits, const bool & b_CheckExtremelyRareLimits, const bool & b_CheckComparisons, const QString & s_AuxiliaryDataAlgorithm, const bool & b_OutputCodes, const bool & b_OutputCleanedValues, const bool & b_OutputOriginalValues, const bool & b_OutputAuxiliaryData, const bool & b_OutputOneFile);
     //int QualityCheckTechnicalReport1( const QString& FilenameIn );
     //int QualityCheckUserDefined( const QString& FilenameIn );
 

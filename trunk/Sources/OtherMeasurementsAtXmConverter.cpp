@@ -484,10 +484,11 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
     }
 
 // ***********************************************************************************************************************
+// build data description header
 
     b_Stop = false;
 
-    if ( b_Import == true ) // Data description header
+    if ( b_Import == true )
     {
         if ( b_overwriteDataset == true )
         {
@@ -612,27 +613,6 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
         if ( P[18] > 0 )
             sl_Parameter.append( Parameter( 2219, i_PIID, 5039, tr( "###0.0" ) ) );
 
-        if ( sl_Parameter.count() > 2 )
-        {
-            tout << OpenDataDescriptionHeader();
-            tout << s_DatasetID;
-            tout << AuthorIDs( QString( "%1" ).arg( i_PIID ) );
-            tout << SourceID( QString( "%1" ).arg( i_SourceID ) );
-            tout << DatasetTitle( QString( "Other measurements at %1 m from" ).arg( i_Height ), s_StationName, dt );
-            tout << ReferenceOtherVersion( s_EventLabel, dt );
-            tout << ExportFilename( s_EventLabel, QString( "radiation_%1m" ).arg( i_Height ), dt );
-            tout << EventLabel( s_EventLabel );
-            tout << ParameterFirst( sl_Parameter.first() );
-            for ( int i=1; i<sl_Parameter.count()-1; i++ ) tout << Parameter( sl_Parameter.at( i ) );
-            tout << ParameterLast( sl_Parameter.last() );
-            tout << ProjectIDs( tr( "4094" ) );
-            tout << TopologicTypeID( 8 );
-            tout << StatusID( 4 );
-            tout << UserIDs( tr( "1144" ) );
-            tout << LoginID( 3 );
-            tout << CloseDataDescriptionHeader();
-        }
-
         b_gr		= false;
         b_swu		= false;
         b_lwd		= false;
@@ -640,12 +620,37 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
     }
 
 // ***********************************************************************************************************************
-// Data
+// write data description header
+
+    if ( ( b_Import == true ) && ( sl_Parameter.count() > 2 ) )
+    {
+        tout << OpenDataDescriptionHeader();
+        tout << s_DatasetID;
+        tout << AuthorIDs( QString( "%1" ).arg( i_PIID ) );
+        tout << SourceID( QString( "%1" ).arg( i_SourceID ) );
+        tout << DatasetTitle( QString( "Other measurements at %1 m from" ).arg( i_Height ), s_StationName, dt );
+        tout << ReferenceOtherVersion( s_EventLabel, dt );
+        tout << ExportFilename( s_EventLabel, QString( "radiation_%1m" ).arg( i_Height ), dt );
+        tout << EventLabel( s_EventLabel );
+        tout << Parameter( sl_Parameter );
+        tout << ProjectIDs( tr( "4094" ) );
+        tout << TopologicTypeID( 8 );
+        tout << StatusID( 4 );
+        tout << UserIDs( tr( "1144" ) );
+        tout << LoginID( 3 );
+        tout << CloseDataDescriptionHeader();
+    }
+
+// ***********************************************************************************************************************
+// write data header
 
     if ( b_Import == true )
         tout << "1599\t56349"; // Date/Time, Height
     else
         tout << "Station\tDate/Time\tLatitude\tLongitude\tHeight above ground [m]";
+
+// ***********************************************************************************************************************
+// write data
 
     for ( int i=1; i<=n; ++i )
     {
