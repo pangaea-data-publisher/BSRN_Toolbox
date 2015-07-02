@@ -1093,7 +1093,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                         dt = dt.addSecs( i_Hour*3600 );
 
                         if ( b_Import == false )
-                            OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + QString( "%1" ).arg( f_Latitude ) + "\t" + QString( "%1" ).arg( f_Longitude ); // Station Date/Time Latitude Longitude
+                            OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + num2str( f_Latitude ) + "\t" + num2str( f_Longitude ); // Station Date/Time Latitude Longitude
                         else
                             OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ); // Station Date/Time
 
@@ -1330,7 +1330,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                         dt = dt.addSecs( i_Minute*60 );
 
                         if ( b_Import == false )
-                            tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" << QString( "%1" ).arg( f_Latitude ) << "\t" << QString( "%1" ).arg( f_Longitude );
+                            tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" << num2str( f_Latitude ) << "\t" << num2str( f_Longitude );
                         else
                             tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" );
 
@@ -1477,7 +1477,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                         dt = dt.addSecs( i_Hour*3600 );
 
                         if ( b_Import == false )
-                            OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + QString( "%1" ).arg( f_Latitude ) + "\t" + QString( "%1" ).arg( f_Longitude ); // Station Date/Time Latitude Longitude
+                            OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + num2str( f_Latitude ) + "\t" + num2str( f_Longitude ); // Station Date/Time Latitude Longitude
                         else
                             OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ); // Station Date/Time
 
@@ -1728,7 +1728,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                         dt = dt.addSecs( i_Hour*3600 );
 
                         if ( b_Import == false )
-                            OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + QString( "%1" ).arg( f_Latitude ) + "\t" + QString( "%1" ).arg( f_Longitude ); // Station Date/Time Latitude Longitude
+                            OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + num2str( f_Latitude ) + "\t" + num2str( f_Longitude ); // Station Date/Time Latitude Longitude
                         else
                             OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ); // Station Date/Time
 
@@ -1984,7 +1984,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                         dt = dt.addSecs( i_Hour*3600 );
 
                         if ( b_Import == false )
-                            OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + QString( "%1" ).arg( f_Latitude ) + "\t" + QString( "%1" ).arg( f_Longitude ); // Station Date/Time Latitude Longitude
+                            OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + num2str( f_Latitude ) + "\t" + num2str( f_Longitude ); // Station Date/Time Latitude Longitude
                         else
                             OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ); // Station Date/Time
 

@@ -213,9 +213,9 @@ int MainWindow::OtherMinuteMeasurementsConverter( const bool b_Import, const QSt
                     dt = dt.addSecs( i_Minute*60 );
 
                     if ( b_Import == false )
-                        tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" << QString( "%1" ).arg( f_Latitude ) << "\t" << QString( "%1" ).arg( f_Longitude ) << "\t" << QString( "%1" ).arg( 2 ) << "\t";
+                        tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" << num2str( f_Latitude ) << "\t" << num2str( f_Longitude ) << "\t" << tr( "2" ) << "\t";
                     else
-                        tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" + QString( "%1" ).arg( 2 ) << "\t";
+                        tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" + tr( "2" ) << "\t";
 
                     //   1    0 123456 12345 1234 1234 123456 12345 1234 1234 123456 12345 1234 1234 9 9 9 9 5 9 9
 

@@ -810,9 +810,9 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
                     b_Out = false;
 
                     if ( b_Import == false )
-                        OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + QString( "%1" ).arg( f_Latitude ) + "\t" + QString( "%1" ).arg( f_Longitude ) + "\t" + QString( "%1" ).arg( 2 );
+                        OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + num2str( f_Latitude ) + "\t" + num2str( f_Longitude ) + "\t" + tr( "2" );
                     else
-                        OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + QString( "%1" ).arg( 2 );
+                        OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + tr( "2" );
 
                     if ( b_UV_a_g == true )
                     {

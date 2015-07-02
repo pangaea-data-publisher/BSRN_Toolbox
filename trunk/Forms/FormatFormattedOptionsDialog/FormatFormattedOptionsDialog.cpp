@@ -35,7 +35,7 @@ int MainWindow::doFormatFormattedOptionsDialog( int &i_FieldAlignment, int &i_Fi
             break;
     }
 
-    dialog.fieldWidth_lineEdit->setText( QString( "%1" ).arg( i_FieldWidth ) );
+    dialog.fieldWidth_lineEdit->setText( num2str( i_FieldWidth ) );
     dialog.missingValue_lineEdit->setText( s_MissingValue );
     dialog.fieldWidth_lineEdit->selectAll();
 

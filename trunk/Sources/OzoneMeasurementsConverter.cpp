@@ -258,7 +258,7 @@ int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& 
                 int i_DatasetID = findDatasetId( s_EventLabel + tr( "_Ozone_" ) + dt.toString( "yyyy-MM" ), Dataset_ptr );
 
                 if ( i_DatasetID > 0 )
-                    s_DatasetID = DataSetID( QString( "%1" ).arg( i_DatasetID ) );
+                    s_DatasetID = DataSetID( num2str( i_DatasetID ) );
                 else
                     s_DatasetID = DataSetID( s_EventLabel + tr( "_Ozone_" ) + dt.toString( "yyyy-MM" ) );
             }
@@ -282,8 +282,8 @@ int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& 
                     s_DatasetComment.append( s_Remarks );
             }
 
-            sl_Parameter.append( Parameter( 1599, i_PIID, 43, tr( "yyyy-MM-dd'T'HH:mm" ) ) );
-            sl_Parameter.append( Parameter( 49377, i_PIID, 43, tr( "###0" ) ) );
+            sl_Parameter.append( Parameter( num2str( 1599 ), num2str( i_PIID ), num2str( 43 ), tr( "yyyy-MM-dd'T'HH:mm" ) ) );
+            sl_Parameter.append( Parameter( num2str( 49377 ), num2str( i_PIID ), num2str( 43 ), tr( "###0" ) ) );
         }
 
 // ***********************************************************************************************************************
@@ -293,19 +293,19 @@ int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& 
         {
             tout << OpenDataDescriptionHeader();
             tout << s_DatasetID;
-            tout << AuthorIDs( QString( "%1" ).arg( i_PIID ) );
-            tout << SourceID( QString( "%1" ).arg( i_SourceID ) );
+            tout << AuthorIDs( num2str( i_PIID ) );
+            tout << SourceID( num2str( i_SourceID ) );
             tout << DatasetTitle( tr( "Ozone measurements from" ), s_StationName, dt );
             tout << ReferenceOtherVersion( s_EventLabel, dt );
             tout << ExportFilename( s_EventLabel, tr( "Ozone" ), dt );
             tout << EventLabel( s_EventLabel );
             tout << Parameter( sl_Parameter );
             tout << DatasetComment( s_DatasetComment );
-            tout << ProjectIDs( tr( "4094" ) );
-            tout << TopologicTypeID( 8 );
-            tout << StatusID( 4 );
-            tout << UserIDs( tr( "1144" ) );
-            tout << LoginID( 3 );
+            tout << ProjectIDs( num2str( 4094 ) );
+            tout << TopologicTypeID( num2str( 8 ) );
+            tout << StatusID( num2str( 4 ) );
+            tout << UserIDs( num2str( 1144 ) );
+            tout << LoginID( num2str( 3 ) );
             tout << CloseDataDescriptionHeader();
         }
 
@@ -341,7 +341,7 @@ int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& 
                             dt = dt.addSecs( i_Minute*60 );
 
                             if ( b_Import == false )
-                                tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" << QString( "%1" ).arg( f_Latitude ) << "\t" << QString( "%1" ).arg( f_Longitude ) + "\t";
+                                tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" << num2str( f_Latitude ) << "\t" << num2str( f_Longitude ) + "\t";
                             else
                                 tout << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t";
 

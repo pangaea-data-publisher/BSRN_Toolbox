@@ -325,27 +325,26 @@ private:
 
     QString OpenDataDescriptionHeader();
     QString CloseDataDescriptionHeader();
-    QString ParentID( const QString& ParentID = "" );
-    QString DataSetID( const QString& DataSetID = "" );
-    QString AuthorIDs( const QString& AuthorIDs = "" );
-    QString SourceID( const QString& SourceID = "" );
+    QString ParentID( const QString& ParentID = "-999" );
+    QString DataSetID( const QString& DatasetID = "-999" );
+    QString AuthorIDs( const QString& AuthorIDs = "-999" );
+    QString SourceID( const QString& SourceID = "-999" );
     QString DatasetTitle( const QString& Text, const QString& StationName, const QDateTime dt );
-    QString ReferenceID( const QString &ReferenceID, const int RelationTypeID, const QString &ReferenceType, const QString& EventLabel = "" );
+    QString Reference( const QString &ReferenceID = "-999", const QString& RelationTypeID = "-999", const QString &ReferenceType = "-999", const QString& EventLabel = "" );
     QString ExportFilename( const QString& EventLabel, const QString& Text, const QDateTime dt );
     QString EventLabel( const QString& EventLabel = "" );
-    QString Parameter( const int ParameterID, const int PIID = 506, const int MethodID = 43, const QString& Format = "", const QString& Comment = "" );
-    QString Parameter( const QString& Parameter = "" );
+    QString Parameter( const QString& ParameterID = "-999", const QString& PIID = "506", const QString& MethodID = "43", const QString& Format = "", const QString& Comment = "" );
     QString Parameter( const QStringList Parameter );
-    QString ParameterFirst( const int ParameterID, const int PIID = 506, const int MethodID = 43, const QString& Format = "", const QString& Comment = "" );
-    QString ParameterFirst( const QString& Parameter = "" );
-    QString ParameterLast( const int ParameterID, const int PIID = 506, const int MethodID = 43, const QString& Format = "", const QString& Comment = "" );
-    QString ParameterLast( const QString& Parameter = "" );
-    QString DatasetComment( const QString& DatasetComment );
-    QString ProjectIDs( const QString& ProjectIDs );
-    QString TopologicTypeID( const int TopologicTypeID );
-    QString StatusID( const int StatusID );
-    QString UserIDs( const QString& UserIDs = "" );
-    QString LoginID( const int LoginID );
+    QString DatasetComment( const QString& DatasetComment = "" );
+    QString ProjectIDs( const QString& ProjectID = "-999" );
+    QString TopologicTypeID( const QString& TopologicTypeID = "-999" );
+    QString StatusID( const QString& StatusID = "-999" );
+    QString UserIDs( const QString& UserIDs = "-999" );
+    QString LoginID( const QString& LoginID = "-999" );
+
+    QString num2str( const int num ) { return( QString::number( num ) ); }
+    QString num2str( const float num ) { return( QString::number( num ) ); }
+    QString num2str( const double num ) { return( QString::number( num ) ); }
 
     QString findEventLabel( const int StationNumber, structStation *Station_ptr );
     QString findStationName( const int StationNumber, structStation *Station_ptr );

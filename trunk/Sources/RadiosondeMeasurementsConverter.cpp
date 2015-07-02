@@ -552,7 +552,7 @@ int MainWindow::RadiosondeMeasurementsConverter( const bool b_Import, const QStr
                     dt = dt.addSecs( i_Minute*60 );
 
                     if ( b_Import == false )
-                        tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" << QString( "%1" ).arg( f_Latitude ) << "\t" << QString( "%1" ).arg( f_Longitude ) << "\t" << InputStr.mid( 21, 5 ).simplified();
+                        tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" << num2str( f_Latitude ) << "\t" << num2str( f_Longitude ) << "\t" << InputStr.mid( 21, 5 ).simplified();
                     else
                         tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" << InputStr.mid( 21, 5 ).simplified();
 

@@ -25,7 +25,7 @@ int MainWindow::doConcatenateOptionsDialog( int &i_SkipNFirstLines, bool &b_dele
 
     ConcatenateOptionsDialog dialog( this );
 
-    dialog.skipNFirstLines_lineEdit->setText( QString( "%1" ).arg( i_SkipNFirstLines ) );
+    dialog.skipNFirstLines_lineEdit->setText( num2str( i_SkipNFirstLines ) );
     dialog.deleteOriginalFiles_checkBox->setChecked( b_deleteOriginalFiles );
     dialog.skipNFirstLines_lineEdit->selectAll();
 

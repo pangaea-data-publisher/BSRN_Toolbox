@@ -57,7 +57,7 @@ int MainWindow::OtherMeasurementsAtXmTest( const QString& s_FilenameIn, int *P, 
 
 // ***********************************************************************************************************************
 
-    initProgress( i_NumOfFiles, s_FilenameIn, tr( "Other measurements at " ) + QString( "%1" ).arg( i_Height ) + tr( " m converter working (Testing)..." ), 100 );
+    initProgress( i_NumOfFiles, s_FilenameIn, tr( "Other measurements at " ) + num2str( i_Height ) + tr( " m converter working (Testing)..." ), 100 );
 
     setStatusBarFileInProgress( s_FilenameIn, tr( " - Testing" ) );
 
@@ -495,13 +495,13 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
             int i_DatasetID = findDatasetId( QString( "%1_radiation_%2m_%3" ).arg( s_EventLabel ).arg( i_Height ).arg( dt.toString( "yyyy-MM" ) ), Dataset_ptr );
 
             if ( i_DatasetID > 0 )
-                s_DatasetID = DataSetID( QString( "%1" ).arg( i_DatasetID ) );
+                s_DatasetID = DataSetID( num2str( i_DatasetID ) );
             else
                 s_DatasetID = DataSetID( QString( "%1_radiation_%2m_%3" ).arg( s_EventLabel ).arg( i_Height ).arg( dt.toString( "yyyy-MM" ) ) );
         }
 
-        sl_Parameter.append( Parameter( 1599, i_PIID, 43, tr( "yyyy-MM-dd'T'HH:mm" ) ) );
-        sl_Parameter.append( Parameter( 56349, i_PIID, 43, tr( "###0" ) ) );
+        sl_Parameter.append( Parameter( num2str( 1599 ), num2str( i_PIID ), num2str( 43 ), tr( "yyyy-MM-dd'T'HH:mm" ) ) );
+        sl_Parameter.append( Parameter( num2str( 56349 ), num2str( i_PIID ), num2str( 43 ), tr( "###0" ) ) );
 
         for ( int i=1; i<=n; ++i )
         {
@@ -517,13 +517,13 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
                     s_Comment = tr( "Changed to WRMC No. " ) + Parameter_0009[k].MethodID + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
 
                 if ( P[1] > 0 )
-                    sl_Parameter.append( Parameter( 31460, i_PIID, i_MethodID, tr( "###0" ),   s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 31460 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0" ),   s_Comment ) );
                 if ( P[2] > 0 )
-                    sl_Parameter.append( Parameter( 55905, i_PIID, i_MethodID, tr( "###0.0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55905 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
                 if ( P[3] > 0 )
-                    sl_Parameter.append( Parameter( 55906, i_PIID, i_MethodID, tr( "###0" ),   s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55906 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0" ),   s_Comment ) );
                 if ( P[4] > 0 )
-                    sl_Parameter.append( Parameter( 55907, i_PIID, i_MethodID, tr( "###0" ),   s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55907 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0" ),   s_Comment ) );
 
                 b_gr = true;
             }
@@ -543,13 +543,13 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
                     s_Comment = tr( "Changed to WRMC No. " ) + Parameter_0009[k].MethodID + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
 
                 if ( P[5] > 0 )
-                    sl_Parameter.append( Parameter( 55911, i_PIID, i_MethodID, tr( "###0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55911 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0" ), s_Comment ) );
                 if ( P[6] > 0 )
-                    sl_Parameter.append( Parameter( 55912, i_PIID, i_MethodID, tr( "###0.0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55912 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
                 if ( P[7] > 0 )
-                    sl_Parameter.append( Parameter( 55913, i_PIID, i_MethodID, tr( "###0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55913 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0" ), s_Comment ) );
                 if ( P[8] > 0 )
-                    sl_Parameter.append( Parameter( 55914, i_PIID, i_MethodID, tr( "###0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55914 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0" ), s_Comment ) );
 
                 b_swu = true;
             }
@@ -569,13 +569,13 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
                     s_Comment = tr( "Changed to WRMC No. " ) + Parameter_0009[k].MethodID + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
 
                 if ( P[9] > 0 )
-                    sl_Parameter.append( Parameter( 45298, i_PIID, i_MethodID, tr( "###0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 45298 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0" ), s_Comment ) );
                 if ( P[10] > 0 )
-                    sl_Parameter.append( Parameter( 55908, i_PIID, i_MethodID, tr( "###0.0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55908 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
                 if ( P[11] > 0 )
-                    sl_Parameter.append( Parameter( 55909, i_PIID, i_MethodID, tr( "###0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55909 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0" ), s_Comment ) );
                 if ( P[12] > 0 )
-                    sl_Parameter.append( Parameter( 55910, i_PIID, i_MethodID, tr( "###0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55910 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0" ), s_Comment ) );
 
                 b_lwd = true;
             }
@@ -595,23 +595,23 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
                     s_Comment = tr( "Changed to WRMC No. " ) + Parameter_0009[k].MethodID + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
 
                 if ( P[13] > 0 )
-                    sl_Parameter.append( Parameter( 45299, i_PIID, i_MethodID, tr( "###0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 45299 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0" ), s_Comment ) );
                 if ( P[14] > 0 )
-                    sl_Parameter.append( Parameter( 55915, i_PIID, i_MethodID, tr( "###0.0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55915 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
                 if ( P[15] > 0 )
-                    sl_Parameter.append( Parameter( 55916, i_PIID, i_MethodID, tr( "###0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55916 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0" ), s_Comment ) );
                 if ( P[16] > 0 )
-                    sl_Parameter.append( Parameter( 55917, i_PIID, i_MethodID, tr( "###0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55917 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0" ), s_Comment ) );
 
                 b_lwu = true;
             }
         }
 
         if ( P[17] > 0 )
-            sl_Parameter.append( Parameter( 4610, i_PIID, 4722, tr( "###0.0" ) ) );
+            sl_Parameter.append( Parameter( num2str( 4610 ), num2str( i_PIID ), tr( "4722" ), tr( "###0.0" ) ) );
 
         if ( P[18] > 0 )
-            sl_Parameter.append( Parameter( 2219, i_PIID, 5039, tr( "###0.0" ) ) );
+            sl_Parameter.append( Parameter( num2str( 2219 ), num2str( i_PIID ), tr( "5039" ), tr( "###0.0" ) ) );
 
         b_gr		= false;
         b_swu		= false;
@@ -626,18 +626,18 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
     {
         tout << OpenDataDescriptionHeader();
         tout << s_DatasetID;
-        tout << AuthorIDs( QString( "%1" ).arg( i_PIID ) );
-        tout << SourceID( QString( "%1" ).arg( i_SourceID ) );
+        tout << AuthorIDs( num2str( i_PIID ) );
+        tout << SourceID( num2str( i_SourceID ) );
         tout << DatasetTitle( QString( "Other measurements at %1 m from" ).arg( i_Height ), s_StationName, dt );
         tout << ReferenceOtherVersion( s_EventLabel, dt );
         tout << ExportFilename( s_EventLabel, QString( "radiation_%1m" ).arg( i_Height ), dt );
         tout << EventLabel( s_EventLabel );
         tout << Parameter( sl_Parameter );
-        tout << ProjectIDs( tr( "4094" ) );
-        tout << TopologicTypeID( 8 );
-        tout << StatusID( 4 );
-        tout << UserIDs( tr( "1144" ) );
-        tout << LoginID( 3 );
+        tout << ProjectIDs( num2str( 4094 ) );
+        tout << TopologicTypeID( num2str( 8 ) );
+        tout << StatusID( num2str( 4 ) );
+        tout << UserIDs( num2str( 1144 ) );
+        tout << LoginID( num2str( 3 ) );
         tout << CloseDataDescriptionHeader();
     }
 
@@ -786,9 +786,9 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
                     b_Out = false;
 
                     if ( b_Import == false )
-                        OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + QString( "%1" ).arg( f_Latitude ) + "\t" + QString( "%1" ).arg( f_Longitude ) + "\t" + QString( "%1" ).arg( i_Height );
+                        OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + num2str( f_Latitude ) + "\t" + num2str( f_Longitude ) + "\t" + num2str( i_Height );
                     else
-                        OutputStr = dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + QString( "%1" ).arg( i_Height );
+                        OutputStr = dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + num2str( i_Height );
 
                     if ( b_gr == true )
                     {

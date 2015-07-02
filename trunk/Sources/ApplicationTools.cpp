@@ -657,7 +657,7 @@ QString MainWindow::ParentID( const QString& s_ParentID )
     {
         s_OutputStr = "  ";
         s_OutputStr.append( "\"ParentID\": " );
-        s_OutputStr.append( s_ParentID );
+        s_OutputStr.append( s_ParentID);
         s_OutputStr.append( "," );
         s_OutputStr.append( eol );
     }
@@ -758,14 +758,14 @@ QString MainWindow::DatasetTitle( const QString& s_Text, const QString& s_Statio
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::ReferenceID( const QString& s_ReferenceID, const int i_RelationTypeID, const QString& s_ReferenceType, const QString& s_EventLabel )
+QString MainWindow::Reference( const QString& s_ReferenceID, const QString& s_RelationTypeID, const QString& s_ReferenceType, const QString& s_EventLabel )
 {
     QString s_OutputStr = "";
 
     if ( s_ReferenceID == "999999" )
-        s_OutputStr = "    { \"ID\": @" + s_ReferenceType + "@" + s_EventLabel + "@" + ", \"RelationTypeID\": " + QString( "%1" ).arg( i_RelationTypeID ) + " }";
+        s_OutputStr = "    { \"ID\": @" + s_ReferenceType + "@" + s_EventLabel + "@" + ", \"RelationTypeID\": " + s_RelationTypeID + " }";
     else
-        s_OutputStr = "    { \"ID\": " + s_ReferenceID + ", \"RelationTypeID\": " + QString( "%1" ).arg( i_RelationTypeID ) + " }";
+        s_OutputStr = "    { \"ID\": " + s_ReferenceID + ", \"RelationTypeID\": " + s_RelationTypeID + " }";
 
     return( s_OutputStr );
 }
@@ -776,10 +776,11 @@ QString MainWindow::ReferenceID( const QString& s_ReferenceID, const int i_Relat
 
 QString MainWindow::ExportFilename( const QString& s_EventLabel, const QString& s_Text, const QDateTime dt )
 {
-    QString s_OutputStr = "  ";
+    QString s_OutputStr = "";
 
     if ( ( s_EventLabel.isEmpty() == false ) && ( s_Text.isEmpty() == false ) )
     {
+        s_OutputStr = "  ";
         s_OutputStr.append( "\"ExportFilename\": \"" );
         s_OutputStr.append( s_EventLabel + "_" );
         s_OutputStr.append( s_Text + "_" );
@@ -796,7 +797,7 @@ QString MainWindow::ExportFilename( const QString& s_EventLabel, const QString& 
 
 QString MainWindow::EventLabel( const QString& s_EventLabel )
 {
-    QString s_OutputStr = "  ";
+    QString s_OutputStr = "";
 
     if ( s_EventLabel.isEmpty() == false )
     {
@@ -814,72 +815,26 @@ QString MainWindow::EventLabel( const QString& s_EventLabel )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::Parameter( const int i_ParameterID, const int i_PIID, const int i_MethodID, const QString& s_Format, const QString& s_Comment )
+QString MainWindow::Parameter( const QString& s_ParameterID, const QString& s_PIID, const QString& s_MethodID, const QString& s_Format, const QString& s_Comment )
 {
-    QString s_OutputStr = "    ";
+    QString s_OutputStr = "";
 
-    s_OutputStr.append( "{ \"ID\": " + QString( "%1" ).arg( i_ParameterID ) + ", " );
-    s_OutputStr.append( "\"PI_ID\": "  + QString( "%1" ).arg( i_PIID ) + ", " );
-    s_OutputStr.append( "\"MethodID\": "  + QString( "%1" ).arg( i_MethodID ) );
+    if ( s_ParameterID.isEmpty() == false )
+    {
+        s_OutputStr = "    ";
+        s_OutputStr.append( "{ \"ID\": " + s_ParameterID + ", " );
+        s_OutputStr.append( "\"PI_ID\": "  + s_PIID + ", " );
+        s_OutputStr.append( "\"MethodID\": "  + s_MethodID );
 
-    if ( s_Format.isEmpty() == false )
-        s_OutputStr.append( ", \"Format\": \""  + s_Format + "\"" );
+        if ( s_Format.isEmpty() == false )
+            s_OutputStr.append( ", \"Format\": \""  + s_Format + "\"" );
 
-    if ( s_Comment.isEmpty() == false )
-        s_OutputStr.append( ", \"Comment\": \""  + s_Comment + "\"" );
+        if ( s_Comment.isEmpty() == false )
+            s_OutputStr.append( ", \"Comment\": \""  + s_Comment + "\"" );
 
-    s_OutputStr.append( " },");
-    s_OutputStr.append( eol );
-
-    return( s_OutputStr );
-}
-
-// **********************************************************************************************
-// **********************************************************************************************
-// **********************************************************************************************
-
-QString MainWindow::ParameterFirst( const int i_ParameterID, const int i_PIID, const int i_MethodID, const QString& s_Format, const QString& s_Comment )
-{
-    QString s_OutputStr = "  ";
-
-    s_OutputStr.append( "\"ParameterIDs\": [" );
-    s_OutputStr.append( eol );
-    s_OutputStr.append( "    { \"ID\": " + QString( "%1" ).arg( i_ParameterID ) + ", " );
-    s_OutputStr.append( "\"PI_ID\": "  + QString( "%1" ).arg( i_PIID ) + ", " );
-    s_OutputStr.append( "\"MethodID\": "  + QString( "%1" ).arg( i_MethodID ) );
-
-    if ( s_Format.isEmpty() == false )
-        s_OutputStr.append( ", \"Format\": \""  + s_Format + "\"" );
-
-    if ( s_Comment.isEmpty() == false )
-        s_OutputStr.append( ", \"Comment\": \""  + s_Comment + "\"" );
-
-    s_OutputStr.append( " },");
-    s_OutputStr.append( eol );
-
-    return( s_OutputStr );
-}
-
-// **********************************************************************************************
-// **********************************************************************************************
-// **********************************************************************************************
-
-QString MainWindow::ParameterLast( const int i_ParameterID, const int i_PIID, const int i_MethodID, const QString& s_Format, const QString& s_Comment )
-{
-    QString s_OutputStr = "    ";
-
-    s_OutputStr.append( "{ \"ID\": " + QString( "%1" ).arg( i_ParameterID ) + ", " );
-    s_OutputStr.append( "\"PI_ID\": "  + QString( "%1" ).arg( i_PIID ) + ", " );
-    s_OutputStr.append( "\"MethodID\": "  + QString( "%1" ).arg( i_MethodID ) );
-
-    if ( s_Format.isEmpty() == false )
-        s_OutputStr.append( ", \"Format\": \""  + s_Format + "\"" );
-
-    if ( s_Comment.isEmpty() == false )
-        s_OutputStr.append( ", \"Comment\": \""  + s_Comment + "\"" );
-
-    s_OutputStr.append( " } ],");
-    s_OutputStr.append( eol );
+        s_OutputStr.append( " },");
+        s_OutputStr.append( eol );
+    }
 
     return( s_OutputStr );
 }
@@ -892,72 +847,28 @@ QString MainWindow::Parameter( const QStringList sl_Parameter )
 {
     int     NumOfParameters = sl_Parameter.count() - 1;
 
-    QString s_OutputStr     = "";
+    QString s_OutputStr     = "  ";
 
 // **********************************************************************************************
 
     if ( NumOfParameters + 1 > 1 )
     {
-        s_OutputStr.append( ParameterFirst( sl_Parameter.first() ) );
+        s_OutputStr.append( "\"ParameterIDs\": [ " );
+        s_OutputStr.append( eol );
+        s_OutputStr.append( sl_Parameter.first() );
 
         for ( int i=1; i<NumOfParameters; i++ )
-            s_OutputStr.append( Parameter( sl_Parameter.at( i ) ) );
+            s_OutputStr.append( sl_Parameter.at( i ) );
 
-        s_OutputStr.append( ParameterLast( sl_Parameter.last() ) );
-    }
-    else
-    {
-        s_OutputStr.append( "\"ParameterIDs\": [ " );
-        s_OutputStr.append( sl_Parameter.first().section( "    ", 1, 1 ).section( "},", 0, 0 ) );
+        s_OutputStr.append( sl_Parameter.last().section( "},", 0, 0 ) );
         s_OutputStr.append( "} ],");
         s_OutputStr.append( eol );
     }
-
-    return( s_OutputStr );
-}
-
-// **********************************************************************************************
-// **********************************************************************************************
-// **********************************************************************************************
-
-QString MainWindow::Parameter( const QString& s_Parameter )
-{
-    QString s_OutputStr = "";
-
-    if ( s_Parameter.isEmpty() == false )
-        s_OutputStr.append( s_Parameter );
-
-    return( s_OutputStr );
-}
-
-// **********************************************************************************************
-// **********************************************************************************************
-// **********************************************************************************************
-
-QString MainWindow::ParameterFirst( const QString& s_Parameter )
-{
-    QString s_OutputStr = "  ";
-
-    s_OutputStr.append( "\"ParameterIDs\": [" );
-    s_OutputStr.append( eol );
-
-    if ( s_Parameter.isEmpty() == false )
-        s_OutputStr.append( s_Parameter );
-
-    return( s_OutputStr );
-}
-
-// **********************************************************************************************
-// **********************************************************************************************
-// **********************************************************************************************
-
-QString MainWindow::ParameterLast( const QString& s_Parameter )
-{
-    QString s_OutputStr = "";
-
-    if ( s_Parameter.isEmpty() == false )
+    else
     {
-        s_OutputStr.append( s_Parameter.section( "},", 0, 0 ) );
+        s_OutputStr = "  ";
+        s_OutputStr.append( "\"ParameterIDs\": [ " );
+        s_OutputStr.append( sl_Parameter.first().section( "    ", 1, 1 ).section( "},", 0, 0 ) );
         s_OutputStr.append( "} ],");
         s_OutputStr.append( eol );
     }
@@ -1013,12 +924,13 @@ QString MainWindow::ProjectIDs( const QString& s_ProjectIDs )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::TopologicTypeID( const int i_TopologicTypeID )
+QString MainWindow::TopologicTypeID( const QString& s_TopologicTypeID )
 {
     QString s_OutputStr = "  ";
 
     s_OutputStr.append( "\"TopologicTypeID\": " );
-    s_OutputStr.append( QString( "%1," ).arg( i_TopologicTypeID ) );
+    s_OutputStr.append( s_TopologicTypeID );
+    s_OutputStr.append( "," );
     s_OutputStr.append( eol );
 
     return( s_OutputStr );
@@ -1028,12 +940,13 @@ QString MainWindow::TopologicTypeID( const int i_TopologicTypeID )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::StatusID( const int i_StatusID )
+QString MainWindow::StatusID( const QString& s_StatusID )
 {
     QString s_OutputStr = "  ";
 
     s_OutputStr.append( "\"StatusID\": " );
-    s_OutputStr.append( QString( "%1," ).arg( i_StatusID ) );
+    s_OutputStr.append( s_StatusID );
+    s_OutputStr.append( "," );
     s_OutputStr.append( eol );
 
     return( s_OutputStr );
@@ -1063,12 +976,12 @@ QString MainWindow::UserIDs( const QString& s_UserIDs )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::LoginID( const int i_LoginID )
+QString MainWindow::LoginID( const QString& s_LoginID )
 {
     QString s_OutputStr = "  ";
 
     s_OutputStr.append( "\"LoginID\": " );
-    s_OutputStr.append( QString( "%1" ).arg( i_LoginID ) ); // no comma at the end!
+    s_OutputStr.append( s_LoginID ); // no comma at the end!
     s_OutputStr.append( eol );
 
     return( s_OutputStr );
