@@ -213,7 +213,7 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
     int				i				= 0;
     int				j				= 1;
     int				k				= 0;
-    int				n			= 0;
+    int				n			    = 0;
 
     int				i_PIID			= 506;
     int				i_SourceID		= 17;
@@ -514,7 +514,7 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
                 if ( k == 0 )
                     s_Comment.clear();
                 else
-                    s_Comment = tr( "Changed to WRMC No. " ) + Parameter_0009[k].MethodID + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
+                    s_Comment = tr( "Changed to WRMC No. " ) + num2str( Parameter_0009[k].MethodID ) + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
 
                 if ( P[1] > 0 )
                     sl_Parameter.append( Parameter( num2str( 31460 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0" ),   s_Comment ) );
@@ -540,7 +540,7 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
                 if ( k == 0 )
                     s_Comment.clear();
                 else
-                    s_Comment = tr( "Changed to WRMC No. " ) + Parameter_0009[k].MethodID + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
+                    s_Comment = tr( "Changed to WRMC No. " ) + num2str( Parameter_0009[k].MethodID ) + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
 
                 if ( P[5] > 0 )
                     sl_Parameter.append( Parameter( num2str( 55911 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0" ), s_Comment ) );
@@ -566,7 +566,7 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
                 if ( k == 0 )
                     s_Comment.clear();
                 else
-                    s_Comment = tr( "Changed to WRMC No. " ) + Parameter_0009[k].MethodID + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
+                    s_Comment = tr( "Changed to WRMC No. " ) + num2str( Parameter_0009[k].MethodID ) + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
 
                 if ( P[9] > 0 )
                     sl_Parameter.append( Parameter( num2str( 45298 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0" ), s_Comment ) );
@@ -592,7 +592,7 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
                 if ( k == 0 )
                     s_Comment.clear();
                 else
-                    s_Comment = tr( "Changed to WRMC No. " ) + Parameter_0009[k].MethodID + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
+                    s_Comment = tr( "Changed to WRMC No. " ) + num2str( Parameter_0009[k].MethodID ) + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
 
                 if ( P[13] > 0 )
                     sl_Parameter.append( Parameter( num2str( 45299 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0" ), s_Comment ) );
@@ -645,7 +645,7 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
 // write data header
 
     if ( b_Import == true )
-        tout << "1599\t56349"; // Date/Time, Height
+        tout << "1599\t56349";  // Date/Time and Height above ground = X m
     else
         tout << "Station\tDate/Time\tLatitude\tLongitude\tHeight above ground [m]";
 
@@ -1016,8 +1016,8 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
         }
         else
         {
-            InputStr	= tin.readLine();
-            ui_length	= incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
+            InputStr  = tin.readLine();
+            ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
         }
     }
 

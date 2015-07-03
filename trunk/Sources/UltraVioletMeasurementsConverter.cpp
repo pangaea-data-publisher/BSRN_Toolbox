@@ -168,7 +168,6 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
     int				j				= 1;
     int				k				= 0;
     int				n				= 0;
-    int				n_P9			= 0;
 
     int				i_PIID			= 506;
     int				i_SourceID		= 17;
@@ -195,6 +194,10 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
 
     QString			s_StationName	= "";
     QString			s_EventLabel	= "";
+    QString         s_DatasetID     = "";
+    QString         s_Comment       = "";
+
+    QStringList     sl_Parameter;
 
     unsigned int	ui_length		= 1;
     unsigned int	ui_filesize		= 1;
@@ -314,10 +317,7 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
                 i_ParameterID = InputStr.section( "\t", i, i ).toInt();
 
                 if ( i_ParameterID > 0 )
-                {
                     Parameter_0001[i+j].ParameterID = i_ParameterID;
-                    ++n;
-                }
             }
 
             j += 8;
@@ -431,7 +431,7 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
                         Parameter_0009[i].DateTime.setDate( QDate( i_Year, i_Month, i_Day ) );
                         Parameter_0009[i].DateTime.setTime( QTime( i_Hour, i_Minute, 0 ) );
 
-                        n_P9++;
+                        n++;
                     }
                 }
                 else
@@ -449,192 +449,144 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
 
     if ( b_Import == true )
     {
-        tout << "/* DATA DESCRIPTION:" << eol;
-        tout << "Author:\t" << i_PIID << eol;
-        tout << "Source:\t" << i_SourceID << eol;
+        if ( b_overwriteDataset == true )
+        {
+            int i_DatasetID = findDatasetId( QString( "%1_Ultra-violet_%2" ).arg( s_EventLabel ).arg( dt.toString( "yyyy-MM" ) ), Dataset_ptr );
 
-        if ( s_StationName.endsWith( "Station" ) == true )
-            tout << "Title:\tUltra-violet measurements from " << s_StationName << " (" << dt.toString( "yyyy-MM" ) << ")" << eol;
-        else
-            tout << "Title:\tUltra-violet measurements from station " << s_StationName << " (" << dt.toString( "yyyy-MM" ) << ")" << eol;
+            if ( i_DatasetID > 0 )
+                s_DatasetID = DataSetID( num2str( i_DatasetID ) );
+            else
+                s_DatasetID = DataSetID( QString( "%1_Ultra-violet_%2" ).arg( s_EventLabel ).arg( dt.toString( "yyyy-MM" ) ) );
+        }
 
-        tout << "Export Filename:\t" << s_EventLabel << "_Ultra-violet_" << dt.toString( "yyyy-MM" ) << eol;
-        tout << "Event:\t" << s_EventLabel << eol;
-        tout << "PI:\t" << i_PIID << eol;
-        tout << "Parameter:";
-        tout << "\t1599 * PI: "   << i_PIID << " * METHOD: 43 * FORMAT: yyyy-MM-dd'T'HH:mm" << eol;
-        tout << "\t56349 * PI: "  << i_PIID << " * METHOD: 43 * FORMAT: ####0" << eol;
+        sl_Parameter.append( Parameter( num2str( 1599 ), num2str( i_PIID ), num2str( 43 ), tr( "yyyy-MM-dd'T'HH:mm" ) ) );
+        sl_Parameter.append( Parameter( num2str( 56349 ), num2str( i_PIID ), num2str( 43 ), tr( "###0" ) ) );
 
-        for ( int i=1; i<=n_P9; ++i )
+        for ( int i=1; i<=n; ++i )
         {
             if ( ( Parameter_0009[i].ParameterID == 121 ) && ( b_UV_a_g == false ) ) // UV-a global
             {
-                k = 0; for ( j=i+1; j<=n_P9; ++j ) if ( Parameter_0009[j].ParameterID == 121 ) k = j;
+                k = 0; for ( j=i+1; j<=n; ++j ) if ( Parameter_0009[j].ParameterID == 121 ) k = j;
 
                 i_MethodID = findMethodID( i_StationNumber, Parameter_0009[i].MethodID, Method_ptr );
 
-                if ( k > 0 )
-                {
-                    if ( P[1] > 0 )
-                        tout << "\t55922 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                    if ( P[2] > 0 )
-                        tout << "\t55923 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                    if ( P[3] > 0 )
-                        tout << "\t55924 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                    if ( P[4] > 0 )
-                        tout << "\t55925 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                }
+                if ( k == 0 )
+                    s_Comment.clear();
                 else
-                {
-                    if ( P[1] > 0 )
-                        tout << "\t55922 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                    if ( P[2] > 0 )
-                        tout << "\t55923 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                    if ( P[3] > 0 )
-                        tout << "\t55924 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                    if ( P[4] > 0 )
-                        tout << "\t55925 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                }
+                    s_Comment = tr( "Changed to WRMC No. " ) + num2str( Parameter_0009[k].MethodID ) + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
+
+                if ( P[1] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55922 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                if ( P[2] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55923 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                if ( P[3] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55924 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                if ( P[4] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55925 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
 
                 b_UV_a_g = true;
             }
         }
 
-        for ( int i=1; i<=n_P9; ++i )
+        for ( int i=1; i<=n; ++i )
         {
             if ( ( Parameter_0009[i].ParameterID == 122 ) && ( b_UV_b_d == false ) ) // UV-b direct
             {
-                k = 0; for ( j=i+1; j<=n_P9; ++j ) if ( Parameter_0009[j].ParameterID == 122 ) k = j;
+                k = 0; for ( j=i+1; j<=n; ++j ) if ( Parameter_0009[j].ParameterID == 122 ) k = j;
 
                 i_MethodID = findMethodID( i_StationNumber, Parameter_0009[i].MethodID, Method_ptr );
 
-                if ( k > 0 )
-                {
-                    if ( P[5] > 0 )
-                        tout << "\t55926 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                    if ( P[6] > 0 )
-                        tout << "\t55927 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                    if ( P[7] > 0 )
-                        tout << "\t55928 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                    if ( P[8] > 0 )
-                        tout << "\t55929 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                }
+                if ( k == 0 )
+                    s_Comment.clear();
                 else
-                {
-                    if ( P[5] > 0 )
-                        tout << "\t55926 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                    if ( P[6] > 0 )
-                        tout << "\t55927 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                    if ( P[7] > 0 )
-                        tout << "\t55928 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                    if ( P[8] > 0 )
-                        tout << "\t55929 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                }
+                    s_Comment = tr( "Changed to WRMC No. " ) + num2str( Parameter_0009[k].MethodID ) + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
+
+                if ( P[5] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55926 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                if ( P[6] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55927 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                if ( P[7] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55928 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                if ( P[8] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55929 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
 
                 b_UV_b_d = true;
             }
         }
 
-        for ( int i=1; i<=n_P9; ++i )
+        for ( int i=1; i<=n; ++i )
         {
             if ( ( Parameter_0009[i].ParameterID == 123 ) && ( b_UV_b_g == false ) ) // UV-b global
             {
-                k = 0; for ( j=i+1; j<=n_P9; ++j ) if ( Parameter_0009[j].ParameterID == 123 ) k = j;
+                k = 0; for ( j=i+1; j<=n; ++j ) if ( Parameter_0009[j].ParameterID == 123 ) k = j;
 
                 i_MethodID = findMethodID( i_StationNumber, Parameter_0009[i].MethodID, Method_ptr );
 
-                if ( k > 0 )
-                {
-                    if ( P[9] > 0 )
-                        tout << "\t55930 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                    if ( P[10] > 0 )
-                        tout << "\t55931 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                    if ( P[11] > 0 )
-                        tout << "\t55932 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                    if ( P[12] > 0 )
-                        tout << "\t55933 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                }
+                if ( k == 0 )
+                    s_Comment.clear();
                 else
-                {
-                    if ( P[9] > 0 )
-                        tout << "\t55930 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                    if ( P[10] > 0 )
-                        tout << "\t55931 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                    if ( P[11] > 0 )
-                        tout << "\t55932 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                    if ( P[12] > 0 )
-                        tout << "\t55933 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                }
+                    s_Comment = tr( "Changed to WRMC No. " ) + num2str( Parameter_0009[k].MethodID ) + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
+
+                if ( P[9] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55930 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                if ( P[10] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55931 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                if ( P[11] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55932 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                if ( P[12] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55933 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
 
                 b_UV_b_g = true;
             }
         }
 
-        for ( int i=1; i<=n_P9; ++i )
+        for ( int i=1; i<=n; ++i )
         {
             if ( ( Parameter_0009[i].ParameterID == 124 ) && ( b_UV_b_diff == false ) ) // UV-b diffuse
             {
-                k = 0; for ( j=i+1; j<=n_P9; ++j ) if ( Parameter_0009[j].ParameterID == 124 ) k = j;
+                k = 0; for ( j=i+1; j<=n; ++j ) if ( Parameter_0009[j].ParameterID == 124 ) k = j;
 
                 i_MethodID = findMethodID( i_StationNumber, Parameter_0009[i].MethodID, Method_ptr );
 
-                if ( k > 0 )
-                {
-                    if ( P[13] > 0 )
-                        tout << "\t55934 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                    if ( P[14] > 0 )
-                        tout << "\t55935 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                    if ( P[15] > 0 )
-                        tout << "\t55936 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                    if ( P[16] > 0 )
-                        tout << "\t55937 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                }
+                if ( k == 0 )
+                    s_Comment.clear();
                 else
-                {
-                    if ( P[13] > 0 )
-                        tout << "\t55934 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                    if ( P[14] > 0 )
-                        tout << "\t55935 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                    if ( P[15] > 0 )
-                        tout << "\t55936 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                    if ( P[16] > 0 )
-                        tout << "\t55937 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                }
+                    s_Comment = tr( "Changed to WRMC No. " ) + num2str( Parameter_0009[k].MethodID ) + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
+
+                if ( P[13] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55934 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                if ( P[14] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55935 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                if ( P[15] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55936 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                if ( P[16] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55937 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
 
                 b_UV_b_diff = true;
             }
         }
 
-        for ( int i=1; i<=n_P9; ++i )
+        for ( int i=1; i<=n; ++i )
         {
             if ( ( Parameter_0009[i].ParameterID == 125 ) && ( b_UV_up_r == false ) ) // UV upward reflected
             {
-                k = 0; for ( j=i+1; j<=n_P9; ++j ) if ( Parameter_0009[j].ParameterID == 125 ) k = j;
+                k = 0; for ( j=i+1; j<=n; ++j ) if ( Parameter_0009[j].ParameterID == 125 ) k = j;
 
                 i_MethodID = findMethodID( i_StationNumber, Parameter_0009[i].MethodID, Method_ptr );
 
-                if ( k > 0 )
-                {
-                    if ( P[17] > 0 )
-                        tout << "\t55938 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                    if ( P[18] > 0 )
-                        tout << "\t55939 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                    if ( P[19] > 0 )
-                        tout << "\t55940 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                    if ( P[20] > 0 )
-                        tout << "\t55941 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0 * Comment: Changed to WRMC No. " << Parameter_0009[k].MethodID << " at " << Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" ) << eol;
-                }
+                if ( k == 0 )
+                    s_Comment.clear();
                 else
-                {
-                    if ( P[17] > 0 )
-                        tout << "\t55938 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                    if ( P[18] > 0 )
-                        tout << "\t55939 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                    if ( P[19] > 0 )
-                        tout << "\t55940 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                    if ( P[20] > 0 )
-                        tout << "\t55941 * PI: " << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ###0.0" << eol;
-                }
+                    s_Comment = tr( "Changed to WRMC No. " ) + num2str( Parameter_0009[k].MethodID ) + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
+
+                if ( P[17] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55938 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                if ( P[18] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55939 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                if ( P[19] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55940 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                if ( P[20] > 0 )
+                    sl_Parameter.append( Parameter( num2str( 55941 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
 
                 b_UV_up_r = true;
             }
@@ -645,31 +597,39 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
         b_UV_b_g	= false;
         b_UV_b_diff	= false;
         b_UV_up_r	= false;
-
-        tout << "Project:\t4094" << eol;
-        tout << "Topologic Type:\t8" << eol;
-        tout << "Status:\t4" << eol;
-        tout << "User:\t1144" << eol;
-        tout << "Login:\t3" << eol;
-        tout << ReferenceOtherVersionClassic( s_EventLabel, dt );
-
-        if ( b_overwriteDataset == true )
-        {
-            int i_DatasetID = findDatasetId( s_EventLabel + "_Ultra-violet_" + dt.toString( "yyyy-MM" ), Dataset_ptr );
-
-            if ( i_DatasetID > 0 )
-                tout << "DataSet ID:\t" << i_DatasetID << eol;
-        }
-
-        tout << "*/" << eol;
     }
 
+// ***********************************************************************************************************************
+// write data description header
+
+    if ( ( b_Import == true ) && ( sl_Parameter.count() > 2 ) )
+    {
+        tout << OpenDataDescriptionHeader();
+        tout << s_DatasetID;
+        tout << AuthorIDs( num2str( i_PIID ) );
+        tout << SourceID( num2str( i_SourceID ) );
+        tout << DatasetTitle( QString( "Ultra-violet measurements from" ), s_StationName, dt );
+        tout << ReferenceOtherVersion( s_EventLabel, dt );
+        tout << ExportFilename( s_EventLabel, tr( "Ultra-violet" ), dt );
+        tout << EventLabel( s_EventLabel );
+        tout << Parameter( sl_Parameter );
+        tout << ProjectIDs( num2str( 4094 ) );
+        tout << TopologicTypeID( num2str( 8 ) );
+        tout << StatusID( num2str( 4 ) );
+        tout << UserIDs( num2str( 1144 ) );
+        tout << LoginID( num2str( 3 ) );
+        tout << CloseDataDescriptionHeader();
+    }
+
+// ***********************************************************************************************************************
+// write data header
+
     if ( b_Import == true )
-        tout << "Event label\t1599\t56349";			// Event label, Date/Time, Height
+        tout << "1599\t56349";  // Date/Time and Height above ground = 2 m
     else
         tout << "Station\tDate/Time\tLatitude\tLongitude\tHeight above ground [m]";
 
-    for ( int i=1; i<=n_P9; ++i )
+    for ( int i=1; i<=n; ++i )
     {
         if ( ( Parameter_0009[i].ParameterID == 121 ) && ( b_UV_a_g == false ) )
         {
@@ -692,7 +652,7 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
         }
     }
 
-    for ( int i=1; i<=n_P9; ++i )
+    for ( int i=1; i<=n; ++i )
     {
         if ( ( Parameter_0009[i].ParameterID == 122 ) && ( b_UV_b_d == false ) )
         {
@@ -715,7 +675,7 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
         }
     }
 
-    for ( int i=1; i<=n_P9; ++i )
+    for ( int i=1; i<=n; ++i )
     {
         if ( ( Parameter_0009[i].ParameterID == 123 ) && ( b_UV_b_g == false ) )
         {
@@ -738,7 +698,7 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
         }
     }
 
-    for ( int i=1; i<=n_P9; ++i )
+    for ( int i=1; i<=n; ++i )
     {
         if ( ( Parameter_0009[i].ParameterID == 124 ) && ( b_UV_b_diff == false ) )
         {
@@ -761,7 +721,7 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
         }
     }
 
-    for ( int i=1; i<=n_P9; ++i )
+    for ( int i=1; i<=n; ++i )
     {
         if ( ( Parameter_0009[i].ParameterID == 125 ) && ( b_UV_up_r == false ) )
         {
@@ -812,7 +772,7 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
                     if ( b_Import == false )
                         OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + num2str( f_Latitude ) + "\t" + num2str( f_Longitude ) + "\t" + tr( "2" );
                     else
-                        OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + tr( "2" );
+                        OutputStr = dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + tr( "2" );
 
                     if ( b_UV_a_g == true )
                     {
