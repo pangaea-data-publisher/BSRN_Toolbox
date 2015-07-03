@@ -42,8 +42,8 @@ int MainWindow::QualityCheckRecommendedV20(const QString & FileNameIn, const boo
     //   Essential parameter
     if (Measurements.size() <= 0) return _NODATAFOUND_;
     if (Measurements.Parameters.contains("Date/Time") == false) return DATETIMENOTFOUND;
-    if (isnan(Measurements.Longitude)) return LONGITUDENOTFOUND;
-    if (isnan(Measurements.Latitude) ) return LATITUDENOTFOUND;
+    if (std::isnan(Measurements.Longitude)) return LONGITUDENOTFOUND;
+    if (std::isnan(Measurements.Latitude) ) return LATITUDENOTFOUND;
 
     //   Parameter needed for "Solpos with Refraction"
     if (s_AuxiliaryDataAlgorithm == "Solpos with Refraction")
@@ -251,13 +251,13 @@ int MainWindow::QualityCheckRecommendedV20(const QString & FileNameIn, const boo
             //     "Swup Comparison"
             if (Measurements.Values.contains("SWU") && Measurements.Values.contains("SWD"))
             {
-                if (Measurements.Values["SWU"][i] >      AuxData.Values["SumSW"][i] &&      AuxData.Values["SumSW"][i] > 50 && !isnan(AuxData.Values["SumSW"][i]) && QcCodes.Values["DIR"][i] == 0 && QcCodes.Values["DIF"][i] == 0)
+                if (Measurements.Values["SWU"][i] > AuxData.Values["SumSW"][i] &&  AuxData.Values["SumSW"][i] > 50 && !std::isnan(AuxData.Values["SumSW"][i]) && QcCodes.Values["DIR"][i] == 0 && QcCodes.Values["DIF"][i] == 0)
                 {
                     QcCodes.Values["SWU"][i] = (qreal) ((quint32) QcCodes.Values["SWU"][i] | (1 << GT_COMPARISON));
                     QcCodes.Values["DIF"][i] = (qreal) ((quint32) QcCodes.Values["DIF"][i] | (1 << LT_COMPARISON));
                     QcCodes.Values["DIR"][i] = (qreal) ((quint32) QcCodes.Values["DIR"][i] | (1 << LT_COMPARISON));
                 }
-                if (Measurements.Values["SWU"][i] > Measurements.Values["SWD"  ][i] && Measurements.Values["SWD"  ][i] > 50 &&  isnan(AuxData.Values["SumSW"][i]) && QcCodes.Values["SWD"][i] == 0                               )
+                if (Measurements.Values["SWU"][i] > Measurements.Values["SWD"  ][i] && Measurements.Values["SWD"  ][i] > 50 &&  std::isnan(AuxData.Values["SumSW"][i]) && QcCodes.Values["SWD"][i] == 0                               )
                 {
                     QcCodes.Values["SWU"][i] = (qreal) ((quint32) QcCodes.Values["SWU"][i] | (1 << GT_COMPARISON));
                     QcCodes.Values["SWD"][i] = (qreal) ((quint32) QcCodes.Values["SWD"][i] | (1 << LT_COMPARISON));
@@ -266,7 +266,7 @@ int MainWindow::QualityCheckRecommendedV20(const QString & FileNameIn, const boo
             //     "LWdn to Air Temperature comparison
             if (Measurements.Values.contains("LWD") && Measurements.Values.contains("T2"))
             {
-                if (Measurements.Values["LWD"][i] <= 0.4 * AuxData.Sigma * qPow(Measurements.Values["T2"][i], 4)      && QcCodes.Values["T2"][i] == 0)
+                if (Measurements.Values["LWD"][i] <= 0.4 * AuxData.Sigma * qPow(Measurements.Values["T2"][i], 4) && QcCodes.Values["T2"][i] == 0)
                 {
                     QcCodes.Values["LWD"][i] = (qreal) ((quint32) QcCodes.Values["LWD"][i] | (1 << LT_COMPARISON));
                     QcCodes.Values["T2" ][i] = (qreal) ((quint32) QcCodes.Values["T2" ][i] | (1 << GT_COMPARISON));

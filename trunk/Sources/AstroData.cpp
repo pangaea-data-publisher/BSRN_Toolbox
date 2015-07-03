@@ -120,11 +120,11 @@ void AstroData::calculate (const QString &AlgorithmIn)
             PosData->timezone      = 0;
             if (Algorithm == "Solpos with Refraction")
             {
-                if (isnan(Values["PoPoPoPo"][i]) == false)
+                if (std::isnan(Values["PoPoPoPo"][i]) == false)
                     PosData->press = Values["PoPoPoPo"][i]/100;
                 else
                     PosData->press = -999.9;
-                if (isnan(Values["T2"][i]) == false)
+                if (std::isnan(Values["T2"][i]) == false)
                     PosData->temp  = Values["T2"][i]-273.15;
                 else
                     PosData->temp  = -999.9;

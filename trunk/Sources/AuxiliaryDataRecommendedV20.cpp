@@ -21,7 +21,7 @@ void AuxiliaryDataRecommendedV20::calculate(const QString & AlgorithmIn)
     renameKey("SolarZenithAngle", "SZA");
 
     //   Other scalar values
-    if (isnan(S0))
+    if (std::isnan(S0))
     {
         S0 = 1368;
         DataDescription["Solar constant"] = QStringList(QString::number(SolarConstant) + " W/m**2");
@@ -39,7 +39,7 @@ void AuxiliaryDataRecommendedV20::calculate(const QString & AlgorithmIn)
 
     for (qint32 i = 0; i<size(); i++)
     {
-        if (!isnan(Values["SZA"][i]))
+        if (!std::isnan(Values["SZA"][i]))
             if (Values["SZA"][i] <= 90)
                 Values["Mu0"][i] = cos(Values["SZA"][i]*M_PI/180.0);
             else

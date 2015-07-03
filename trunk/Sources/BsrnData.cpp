@@ -195,9 +195,9 @@ void BsrnData::readFromStringList(const QStringList & sl_Input)
 
 
     //   Extract coordinates from field data if necessary
-    if (isnan(Latitude ) && Values.contains("Latitude" )) Latitude  = Values["Latitude" ].at(1);
-    if (isnan(Longitude) && Values.contains("Longitude")) Longitude = Values["Longitude"].at(1);
-    if (isnan(Elevation) && Values.contains("Elevation")) Elevation = Values["Elevation"].at(1);
+    if (std::isnan(Latitude ) && Values.contains("Latitude" )) Latitude  = Values["Latitude" ].at(1);
+    if (std::isnan(Longitude) && Values.contains("Longitude")) Longitude = Values["Longitude"].at(1);
+    if (std::isnan(Elevation) && Values.contains("Elevation")) Elevation = Values["Elevation"].at(1);
 
 
     //   Check if coordinates in field data are consistent
