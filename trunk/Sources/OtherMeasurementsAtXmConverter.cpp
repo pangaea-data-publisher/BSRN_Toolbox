@@ -626,10 +626,10 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
     {
         tout << OpenDataDescriptionHeader();
         tout << s_DatasetID;
+        tout << ReferenceOtherVersion( s_EventLabel, dt );
         tout << AuthorIDs( num2str( i_PIID ) );
         tout << SourceID( num2str( i_SourceID ) );
         tout << DatasetTitle( QString( "Other measurements at %1 m from" ).arg( i_Height ), s_StationName, dt );
-        tout << ReferenceOtherVersion( s_EventLabel, dt );
         tout << ExportFilename( s_EventLabel, QString( "radiation_%1m" ).arg( i_Height ), dt );
         tout << EventLabel( s_EventLabel );
         tout << Parameter( sl_Parameter );
@@ -796,44 +796,44 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
                         {
                             if ( InputStr.mid( 11, 4 ).simplified().toInt() > -90 )
                             {
-                                OutputStr += "\t" + InputStr.mid( 11, 4 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 11, 4 ).simplified() );
                                 b_Out = true;
                             }
                             else
-                                OutputStr += "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[2] > 0 )
                         {
                             if ( InputStr.mid( 16, 5 ).simplified().toFloat() > -90. )
                             {
-                                OutputStr += "\t" + InputStr.mid( 16, 5 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 16, 5 ).simplified() );
                                 b_Out = true;
                             }
                             else
-                                OutputStr += "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[3] > 0 )
                         {
                             if ( InputStr.mid( 22, 4 ).simplified().toInt() > -90 )
                             {
-                                OutputStr += "\t" + InputStr.mid( 12, 4 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 12, 4 ).simplified() );
                                 b_Out = true;
                             }
                             else
-                                OutputStr += "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[4] > 0 )
                         {
                             if ( InputStr.mid( 27, 4 ).simplified().toInt() > -90 )
                             {
-                                OutputStr += "\t" + InputStr.mid( 27, 4 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 27, 4 ).simplified() );
                                 b_Out = true;
                             }
                             else
-                                OutputStr += "\t";
+                                OutputStr.append( "\t" );
                         }
                     }
 
@@ -843,44 +843,44 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
                         {
                             if ( InputStr.mid( 34, 4 ).simplified().toInt() > -90 )
                             {
-                                OutputStr += "\t" + InputStr.mid( 34, 4 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 34, 4 ).simplified() );
                                 b_Out = true;
                             }
                             else
-                                OutputStr += "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[6] > 0 )
                         {
                             if ( InputStr.mid( 39, 5 ).simplified().toFloat() > -90. )
                             {
-                                OutputStr += "\t" + InputStr.mid( 39, 5 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 39, 5 ).simplified() );
                                 b_Out = true;
                             }
                             else
-                                OutputStr += "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[7] > 0 )
                         {
                             if ( InputStr.mid( 45, 4 ).simplified().toInt() > -90 )
                             {
-                                OutputStr += "\t" + InputStr.mid( 45, 4 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 45, 4 ).simplified() );
                                 b_Out = true;
                             }
                             else
-                                OutputStr += "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[8] > 0 )
                         {
                             if ( InputStr.mid( 50, 4 ).simplified().toInt() > -90 )
                             {
-                                OutputStr += "\t" + InputStr.mid( 50, 4 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 50, 4 ).simplified() );
                                 b_Out = true;
                             }
                             else
-                                OutputStr += "\t";
+                                OutputStr.append( "\t" );
                         }
                     }
 
@@ -893,44 +893,44 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
                         {
                             if ( InputStr.mid( 11, 4 ).simplified().toInt() > -90 )
                             {
-                                OutputStr += "\t" + InputStr.mid( 11, 4 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 11, 4 ).simplified() );
                                 b_Out = true;
                             }
                             else
-                                OutputStr += "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[10] > 0 )
                         {
                             if ( InputStr.mid( 16, 5 ).simplified().toFloat() > -90. )
                             {
-                                OutputStr += "\t" + InputStr.mid( 16, 5 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 16, 5 ).simplified() );
                                 b_Out = true;
                             }
                             else
-                                OutputStr += "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[11] > 0 )
                         {
                             if ( InputStr.mid( 22, 4 ).simplified().toInt() > -90 )
                             {
-                                OutputStr += "\t" + InputStr.mid( 12, 4 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 12, 4 ).simplified() );
                                 b_Out = true;
                             }
                             else
-                                OutputStr += "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[12] > 0 )
                         {
                             if ( InputStr.mid( 27, 4 ).simplified().toInt() > -90 )
                             {
-                                OutputStr += "\t" + InputStr.mid( 27, 4 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 27, 4 ).simplified() );
                                 b_Out = true;
                             }
                             else
-                                OutputStr += "\t";
+                                OutputStr.append( "\t" );
                         }
                     }
 
@@ -940,44 +940,44 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
                         {
                             if ( InputStr.mid( 34, 4 ).simplified().toInt() > -90 )
                             {
-                                OutputStr += "\t" + InputStr.mid( 34, 4 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 34, 4 ).simplified() );
                                 b_Out = true;
                             }
                             else
-                                OutputStr += "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[14] > 0 )
                         {
                             if ( InputStr.mid( 39, 5 ).simplified().toFloat() > -90. )
                             {
-                                OutputStr += "\t" + InputStr.mid( 39, 5 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 39, 5 ).simplified() );
                                 b_Out = true;
                             }
                             else
-                                OutputStr += "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[15] > 0 )
                         {
                             if ( InputStr.mid( 45, 4 ).simplified().toInt() > -90 )
                             {
-                                OutputStr += "\t" + InputStr.mid( 45, 4 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 45, 4 ).simplified() );
                                 b_Out = true;
                             }
                             else
-                                OutputStr += "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[16] > 0 )
                         {
                             if ( InputStr.mid( 50, 4 ).simplified().toInt() > -90 )
                             {
-                                OutputStr += "\t" + InputStr.mid( 50, 4 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 50, 4 ).simplified() );
                                 b_Out = true;
                             }
                             else
-                                OutputStr += "\t";
+                                OutputStr.append( "\t" );
                         }
                     }
 
@@ -985,22 +985,22 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
                     {
                         if ( InputStr.mid( 58, 5 ).simplified().toFloat() > -90. )
                         {
-                            OutputStr += "\t" + InputStr.mid( 58, 5 ).simplified();
+                            OutputStr.append( "\t" + InputStr.mid( 58, 5 ).simplified() );
                             b_Out = true;
                         }
                         else
-                            OutputStr += "\t";
+                            OutputStr.append( "\t" );
                     }
 
                     if ( P[18] > 0 ) // Humidity, relative [%]
                     {
                         if ( InputStr.mid( 64, 5 ).simplified().toFloat() > -90. )
                         {
-                            OutputStr += "\t" + InputStr.mid( 64, 5 ).simplified();
+                            OutputStr.append( "\t" + InputStr.mid( 64, 5 ).simplified() );
                             b_Out = true;
                         }
                         else
-                            OutputStr += "\t";
+                            OutputStr.append( "\t" );
                     }
 
                     if ( b_Out == true )

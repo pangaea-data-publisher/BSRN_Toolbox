@@ -155,27 +155,30 @@ int MainWindow::ExpandedMeasurementsConverter( const bool b_Import, const QStrin
     int				i_CloudBaseHeightMethodID				= 43;
     int				i_CloudLiquidWaterMethodID				= 43;
     int				i_SpectralAerosolOpticalDepthMethodtID	= 43;
-//  int				i_WaterVaporPressureMethodtID			= 43;
 
-    float           f_Latitude      = 0.;
-    float           f_Longitude     = 0.;
+    float           f_Latitude                              = 0.;
+    float           f_Longitude                             = 0.;
 
-    QString			OutputStr		= "";
-    QString			InputStr		= "";
+    QString			OutputStr                               = "";
+    QString			InputStr                                = "";
 
-    QString			SearchString1	= "*C0007";
-    QString			SearchString2	= "*U0007";
-    QString			SearchString3	= "*C1300";
-    QString			SearchString4	= "*U1300";
+    QString			SearchString1                           = "*C0007";
+    QString			SearchString2                           = "*U0007";
+    QString			SearchString3                           = "*C1300";
+    QString			SearchString4                           = "*U1300";
 
-    QString			s_StationName				= "";
-    QString			s_EventLabel				= "";
+    QString			s_StationName                           = "";
+    QString			s_EventLabel                            = "";
+    QString         s_DatasetID                             = "";
+    QString         s_Comment                               = "";
 
-    unsigned int	ui_length					= 1;
-    unsigned int	ui_filesize					= 1;
+    QStringList     sl_Parameter;
 
-    bool			b_Stop						= false;
-    bool			b_Out						= false;
+    unsigned int	ui_length                               = 1;
+    unsigned int	ui_filesize                             = 1;
+
+    bool			b_Stop                                  = false;
+    bool			b_Out                                   = false;
 
     int				P[MAX_NUM_OF_PARAMETER+1];
 
@@ -354,77 +357,64 @@ int MainWindow::ExpandedMeasurementsConverter( const bool b_Import, const QStrin
             if ( InputStr != "XXX" )
                 i_SpectralAerosolOpticalDepthMethodtID = findMethodID( InputStr, Method_ptr );
 
-/*
-            InputStr = tin.readLine().simplified();
-            ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
-
-            if ( InputStr != "XXX" )
-                i_WaterVaporPressureMethodtID = findMethodID( InputStr, Method_ptr );
-*/
-
             b_Stop = true;
         }
     }
 
 // ***********************************************************************************************************************
-// LR 1300
+// LR1300 - build data description header
 
     b_Stop = false;
 
     if ( b_Import == true )
     {
-        tout << "/* DATA DESCRIPTION:" << eol;
-        tout << "Author:\t" << i_PIID << eol;
-        tout << "Source:\t" << i_SourceID << eol;
-
-        if ( s_StationName.endsWith( "Station" ) == true )
-            tout << "Title:\tExpanded measurements from " << s_StationName << " (" << dt.toString( "yyyy-MM" ) << ")" << eol;
-        else
-            tout << "Title:\tExpanded measurements from station " << s_StationName << " (" << dt.toString( "yyyy-MM" ) << ")" << eol;
-
-        tout << "Export Filename:\t" << s_EventLabel << "_expanded_" << dt.toString( "yyyy-MM" ) << eol;
-        tout << "Event:\t" << s_EventLabel << eol;
-        tout << "PI:\t" << i_PIID << eol;
-        tout << "Parameter:";
-        tout << "\t1599 * PI: "   << i_PIID << " * METHOD: 43 * FORMAT: yyyy-MM-dd'T'HH:mm" << eol;
-
-        if ( P[1] > 0 )
-            tout << "\t55942 * PI: "  << i_PIID << " * METHOD: " << i_TotalCloudAmountMethodID << " * FORMAT: ####0" << eol;
-
-        if ( P[2] > 0 )
-            tout << "\t45287 * PI: "  << i_PIID << " * METHOD: " << i_CloudBaseHeightMethodID << " * FORMAT: ####0" << eol;
-
-        if ( P[3] > 0 )
-            tout << "\t55943 * PI: "  << i_PIID << " * METHOD: " << i_CloudLiquidWaterMethodID << " * FORMAT: ##0.0" << eol;
-
-        if ( P[4] > 0 )
-            tout << "\t55944 * PI: "  << i_PIID << " * METHOD: " << i_SpectralAerosolOpticalDepthMethodtID << " * FORMAT: ##0.000" << eol;
-
-        if ( P[5] > 0 )
-            tout << "\t55945 * PI: "  << i_PIID << " * METHOD: " << i_SpectralAerosolOpticalDepthMethodtID << " * FORMAT: ##0.000" << eol;
-
-        if ( P[6] > 0 )
-            tout << "\t55946 * PI: "  << i_PIID << " * METHOD: " << i_SpectralAerosolOpticalDepthMethodtID << " * FORMAT: ##0.000" << eol;
-
-        tout << "DataSet Comment:\t99999: No clouds detected" << eol;
-
-        tout << "Project:\t4094" << eol;
-        tout << "Topologic Type:\t8" << eol;
-        tout << "Status:\t4" << eol;
-        tout << "User:\t1144" << eol;
-        tout << "Login:\t3" << eol;
-        tout << ReferenceOtherVersionClassic( s_EventLabel, dt );
-
         if ( b_overwriteDataset == true )
         {
-            int i_DatasetID = findDatasetId( s_EventLabel + "_expanded_" + dt.toString( "yyyy-MM" ), Dataset_ptr );
+            int i_DatasetID = findDatasetId( QString( "%1_expanded_%2" ).arg( s_EventLabel ).arg( dt.toString( "yyyy-MM" ) ), Dataset_ptr );
 
             if ( i_DatasetID > 0 )
-                tout << "DataSet ID:\t" << i_DatasetID << eol;
+                s_DatasetID = DataSetID( num2str( i_DatasetID ) );
+            else
+                s_DatasetID = DataSetID( QString( "%1_expanded_%2" ).arg( s_EventLabel ).arg( dt.toString( "yyyy-MM" ) ) );
         }
 
-        tout << "*/" << eol;
+        sl_Parameter.append( Parameter( num2str( 1599 ), num2str( i_PIID ), num2str( 43 ), tr( "yyyy-MM-dd'T'HH:mm" ) ) );
+
+        if ( P[1] > 0 ) sl_Parameter.append( Parameter( num2str( 55942 ), num2str( i_PIID ), num2str( i_TotalCloudAmountMethodID ), tr( "####0" ) ) );
+        if ( P[2] > 0 ) sl_Parameter.append( Parameter( num2str( 45287 ), num2str( i_PIID ), num2str( i_CloudBaseHeightMethodID ), tr( "####0" ) ) );
+        if ( P[3] > 0 ) sl_Parameter.append( Parameter( num2str( 55943 ), num2str( i_PIID ), num2str( i_CloudLiquidWaterMethodID ), tr( "##0.0" ) ) );
+        if ( P[4] > 0 ) sl_Parameter.append( Parameter( num2str( 55944 ), num2str( i_PIID ), num2str( i_SpectralAerosolOpticalDepthMethodtID ), tr( "##0.000" ) ) );
+        if ( P[5] > 0 ) sl_Parameter.append( Parameter( num2str( 55945 ), num2str( i_PIID ), num2str( i_SpectralAerosolOpticalDepthMethodtID ), tr( "##0.000" ) ) );
+        if ( P[6] > 0 ) sl_Parameter.append( Parameter( num2str( 55946 ), num2str( i_PIID ), num2str( i_SpectralAerosolOpticalDepthMethodtID ), tr( "##0.000" ) ) );
+
+        s_Comment = tr( "99999: No clouds detected" );
     }
+
+// ***********************************************************************************************************************
+// write data description header
+
+    if ( ( b_Import == true ) && ( sl_Parameter.count() > 1 ) )
+    {
+        tout << OpenDataDescriptionHeader();
+        tout << s_DatasetID;
+        tout << ReferenceOtherVersion( s_EventLabel, dt );
+        tout << AuthorIDs( num2str( i_PIID ) );
+        tout << SourceID( num2str( i_SourceID ) );
+        tout << DatasetTitle( tr( "Expanded measurements from" ), s_StationName, dt );
+        tout << ExportFilename( s_EventLabel, tr( "expanded" ), dt );
+        tout << EventLabel( s_EventLabel );
+        tout << Parameter( sl_Parameter );
+        tout << DatasetComment( s_Comment );
+        tout << ProjectIDs( num2str( 4094 ) );
+        tout << TopologicTypeID( num2str( 8 ) );
+        tout << StatusID( num2str( 4 ) );
+        tout << UserIDs( num2str( 1144 ) );
+        tout << LoginID( num2str( 3 ) );
+        tout << CloseDataDescriptionHeader();
+    }
+
+// ***********************************************************************************************************************
+// write data header
 
     while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
     {
@@ -435,7 +425,7 @@ int MainWindow::ExpandedMeasurementsConverter( const bool b_Import, const QStrin
         {
             if ( b_Import == true )
             {
-                tout << "Event label\t1599";
+                tout << "1599";
 
                 if ( P[1] > 0 )
                     tout << "\t55942";
@@ -501,18 +491,18 @@ int MainWindow::ExpandedMeasurementsConverter( const bool b_Import, const QStrin
                     if ( b_Import == false )
                         OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + num2str( f_Latitude ) + "\t" + num2str( f_Longitude );
                     else
-                        OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" );
+                        OutputStr = dt.toString( "yyyy-MM-ddThh:mm" );
 
                     if ( P[1] > 0 )
                     {
                         if ( InputStr.mid( 9, 4 ).simplified().toInt() > -9 )
                         {
-                            OutputStr += "\t" + InputStr.mid( 9, 4 ).simplified(); // Total cloud amount with instrument [%]
+                            OutputStr.append( "\t" + InputStr.mid( 9, 4 ).simplified() ); // Total cloud amount with instrument [%]
                             b_Out = true;
 
                         }
                         else
-                            OutputStr += "\t";
+                            OutputStr.append( "\t" );
                     }
 
                     if ( P[2] > 0 )
@@ -522,56 +512,56 @@ int MainWindow::ExpandedMeasurementsConverter( const bool b_Import, const QStrin
                             if ( InputStr.mid( 14, 5 ).simplified().toInt() == 10000 )
                                 OutputStr += "\t99999";
                             else
-                                OutputStr += "\t" + InputStr.mid( 14, 5 ).simplified(); // cloud base height [m]
+                                OutputStr.append( "\t" + InputStr.mid( 14, 5 ).simplified() ); // cloud base height [m]
 
                             b_Out = true;
                         }
                         else
-                            OutputStr += "\t";
+                            OutputStr.append( "\t" );
                     }
 
                     if ( P[3] > 0 )
                     {
                         if ( InputStr.mid( 20, 5 ).simplified().toFloat() > -9.8 )
                         {
-                            OutputStr += "\t" + InputStr.mid( 20, 5 ).simplified(); // cloud liquid water [mm]
+                            OutputStr.append( "\t" + InputStr.mid( 20, 5 ).simplified() ); // cloud liquid water [mm]
                             b_Out = true;
                         }
                         else
-                            OutputStr += "\t";
+                            OutputStr.append( "\t" );
                     }
 
                     if ( P[4] > 0 )
                     {
                         if ( InputStr.mid( 28, 6 ).simplified().toFloat() > -9.998 )
                         {
-                            OutputStr += "\t" + InputStr.mid( 28, 6 ).simplified(); // spectral aerosol optical depth at wavelength 1
+                            OutputStr.append( "\t" + InputStr.mid( 28, 6 ).simplified() ); // spectral aerosol optical depth at wavelength 1
                             b_Out = true;
                         }
                         else
-                            OutputStr += "\t";
+                            OutputStr.append( "\t" );
                     }
 
                     if ( P[5] > 0 )
                     {
                         if ( InputStr.mid( 35, 6 ).simplified().toFloat() > -9.998 )
                         {
-                            OutputStr += "\t" + InputStr.mid( 35, 6 ).simplified(); // spectral aerosol optical depth at wavelength 2
+                            OutputStr.append( "\t" + InputStr.mid( 35, 6 ).simplified() ); // spectral aerosol optical depth at wavelength 2
                             b_Out = true;
                         }
                         else
-                            OutputStr += "\t";
+                            OutputStr.append( "\t" );
                     }
 
                     if ( P[6] > 0 )
                     {
                         if ( InputStr.mid( 42, 6 ).simplified().toFloat() > -9.998 )
                         {
-                            OutputStr += "\t" + InputStr.mid( 42, 6 ).simplified(); // spectral aerosol optical depth at wavelength 3
+                            OutputStr.append( "\t" + InputStr.mid( 42, 6 ).simplified() ); // spectral aerosol optical depth at wavelength 3
                             b_Out = true;
                         }
                         else
-                            OutputStr += "\t";
+                            OutputStr.append( "\t" );
                     }
 
                     if ( b_Out == true )

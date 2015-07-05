@@ -443,7 +443,7 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
     }
 
 // ***********************************************************************************************************************
-// 0500
+// 0500 - build data description header
 
     b_Stop = false;
 
@@ -606,10 +606,10 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
     {
         tout << OpenDataDescriptionHeader();
         tout << s_DatasetID;
+        tout << ReferenceOtherVersion( s_EventLabel, dt );
         tout << AuthorIDs( num2str( i_PIID ) );
         tout << SourceID( num2str( i_SourceID ) );
         tout << DatasetTitle( QString( "Ultra-violet measurements from" ), s_StationName, dt );
-        tout << ReferenceOtherVersion( s_EventLabel, dt );
         tout << ExportFilename( s_EventLabel, tr( "Ultra-violet" ), dt );
         tout << EventLabel( s_EventLabel );
         tout << Parameter( sl_Parameter );
@@ -782,11 +782,11 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
                             {
                                 if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
                                 {
-                                    OutputStr += "\t" + InputStr.mid( i*6+3, 5 ).simplified();
+                                    OutputStr.append( "\t" + InputStr.mid( i*6+3, 5 ).simplified() );
                                     b_Out = true;
                                 }
                                 else
-                                    OutputStr += "\t";
+                                    OutputStr.append( "\t" );
                             }
                         }
                     }
@@ -799,11 +799,11 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
                             {
                                 if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
                                 {
-                                    OutputStr += "\t" + InputStr.mid( i*6+3, 5 ).simplified();
+                                    OutputStr.append( "\t" + InputStr.mid( i*6+3, 5 ).simplified() );
                                     b_Out = true;
                                 }
                                 else
-                                    OutputStr += "\t";
+                                    OutputStr.append( "\t" );
                             }
                         }
                     }
@@ -819,11 +819,11 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
                             {
                                 if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
                                 {
-                                    OutputStr += "\t" + InputStr.mid( i*6+3, 5 ).simplified();
+                                    OutputStr.append( "\t" + InputStr.mid( i*6+3, 5 ).simplified() );
                                     b_Out = true;
                                 }
                                 else
-                                    OutputStr += "\t";
+                                    OutputStr.append( "\t" );
                             }
                         }
                     }
@@ -836,11 +836,11 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
                             {
                                 if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
                                 {
-                                    OutputStr += "\t" + InputStr.mid( i*6+3, 5 ).simplified();
+                                    OutputStr.append( "\t" + InputStr.mid( i*6+3, 5 ).simplified() );
                                     b_Out = true;
                                 }
                                 else
-                                    OutputStr += "\t";
+                                    OutputStr.append( "\t" );
                             }
                         }
                     }
@@ -853,11 +853,11 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
                             {
                                 if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
                                 {
-                                    OutputStr += "\t" + InputStr.mid( i*6+3, 5 ).simplified();
+                                    OutputStr.append( "\t" + InputStr.mid( i*6+3, 5 ).simplified() );
                                     b_Out = true;
                                 }
                                 else
-                                    OutputStr += "\t";
+                                    OutputStr.append( "\t" );
                             }
                         }
                     }

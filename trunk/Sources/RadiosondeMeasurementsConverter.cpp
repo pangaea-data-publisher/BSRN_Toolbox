@@ -193,13 +193,16 @@ int MainWindow::RadiosondeMeasurementsConverter( const bool b_Import, const QStr
     QString			s_Remarks					= "";
     QString			s_RadiosondeIdentification	= "";
     QString			s_Location					= "";
+    QString         s_DatasetID                 = "";
+    QString         s_Comment                   = "";
+
+    QStringList     sl_Parameter;
 
     unsigned int	ui_length					= 1;
     unsigned int	ui_filesize					= 1;
 
     bool			b_RadiosondeMeasurements	= false;
     bool			b_Stop						= false;
-    bool			b_Comment					= false;
 
     int				P[MAX_NUM_OF_PARAMETER+1];
 
@@ -388,7 +391,7 @@ int MainWindow::RadiosondeMeasurementsConverter( const bool b_Import, const QStr
     }
 
 // ***********************************************************************************************************************
-// 1100
+// 1100 - build data description header
 
     if ( b_RadiosondeMeasurements == true )
     {
@@ -396,90 +399,74 @@ int MainWindow::RadiosondeMeasurementsConverter( const bool b_Import, const QStr
 
         if ( b_Import == true )
         {
-            tout << "/* DATA DESCRIPTION:" << eol;
-            tout << "Author:\t" << i_PIID << eol;
-            tout << "Source:\t" << i_SourceID << eol;
-
-            if ( s_EventLabel == "BIL" )
-                tout << "Title:\tRadiosonde measurements from station S. Great Plains (" << dt.toString( "yyyy-MM" ) << ")" << eol;
-            else
+            if ( b_overwriteDataset == true )
             {
-                if ( s_StationName.endsWith( "Station" ) == true )
-                    tout << "Title:\tRadiosonde measurements from " << s_StationName << " (" << dt.toString( "yyyy-MM" ) << ")" << eol;
+                int i_DatasetID = findDatasetId( QString( "%1_radiosonde_%2" ).arg( s_EventLabel ).arg( dt.toString( "yyyy-MM" ) ), Dataset_ptr );
+
+                if ( i_DatasetID > 0 )
+                    s_DatasetID = DataSetID( num2str( i_DatasetID ) );
                 else
-                    tout << "Title:\tRadiosonde measurements from station " << s_StationName << " (" << dt.toString( "yyyy-MM" ) << ")" << eol;
+                    s_DatasetID = DataSetID( QString( "%1_radiosonde_%2" ).arg( s_EventLabel ).arg( dt.toString( "yyyy-MM" ) ) );
             }
 
-            tout << "Export Filename:\t" << s_EventLabel << "_radiosonde_" << dt.toString( "yyyy-MM" ) << eol;
-            tout << "Event:\t" << s_EventLabel << eol;
-            tout << "PI:\t" << i_PIID << eol;
-            tout << "Parameter:";
-            tout << "\t1599 * PI: "  << i_PIID << " * METHOD: 43 * FORMAT: yyyy-MM-dd'T'HH:mm" << eol;
-            tout << "\t4607 * PI: "  << i_PIID << " * METHOD: 43 * FORMAT: ####0" << eol;
+            sl_Parameter.append( Parameter( num2str( 1599 ), num2str( i_PIID ), num2str( 43 ), tr( "yyyy-MM-dd'T'HH:mm" ) ) );
+            sl_Parameter.append( Parameter( num2str( 4607 ), num2str( i_PIID ), num2str( 43 ), tr( "####0" ) ) );
 
-            if ( P[1] > 0 )
-                tout << "\t49378 * PI: "  << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ####0" << eol;
-
-            if ( P[2] > 0 )
-                tout << "\t4610 * PI: "  << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ##0.0" << eol;
-
-            if ( P[3] > 0 )
-                tout << "\t4611 * PI: "  << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ##0.0" << eol;
-
-            if ( P[4] > 0 )
-                tout << "\t2221 * PI: "  << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ##0" << eol;
-
-            if ( P[5] > 0 )
-                tout << "\t18906 * PI: "  << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ##0" << eol;
-
-            if ( P[6] > 0 )
-                tout << "\t45289 * PI: "  << i_PIID << " * METHOD: " << i_MethodID << " * FORMAT: ##0.0" << eol;
+            if ( P[1] > 0 ) sl_Parameter.append( Parameter( num2str( 49378 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "#####0" ) ) );
+            if ( P[2] > 0 ) sl_Parameter.append( Parameter( num2str( 4610 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "##0.0" ) ) );
+            if ( P[3] > 0 ) sl_Parameter.append( Parameter( num2str( 4611 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "##0.0" ) ) );
+            if ( P[4] > 0 ) sl_Parameter.append( Parameter( num2str( 2221 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "##0" ) ) );
+            if ( P[5] > 0 ) sl_Parameter.append( Parameter( num2str( 18906 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "##0" ) ) );
+            if ( P[6] > 0 ) sl_Parameter.append( Parameter( num2str( 45289 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "##0.0" ) ) );
 
             if ( i_Distance > 0 )
-            {
-                b_Comment = true;
-                tout << "DataSet Comment:\tStart location: " << s_Location << "; Distance from radiation site: " << i_Distance << " km";
-            }
+                s_Comment = QString( "Start location: %1; Distance from radiation site: %2 km" ).arg( s_Location ).arg(i_Distance );
 
             if ( s_Remarks.isEmpty() == false )
             {
-                if ( b_Comment == true )
-                    tout << "; " << s_Remarks;
+                if ( s_Comment.isEmpty() == false )
+                    s_Comment.append( "; " + s_Remarks );
                 else
-                    tout << "DataSet Comment:\t" << s_Remarks;
-
-                b_Comment = true;
+                    s_Comment = s_Remarks;
             }
 
             if ( ( s_EventLabel == "E13" ) || ( s_EventLabel == "BIL" ) )
             {
+                s_StationName = tr( "Southern Great Plains" );
+
                 if ( s_Remarks.isEmpty() == false )
-                    tout << ". ";
+                    s_Comment.append( ". " );
 
-                tout << "The radiosonde measurements from station S. Great Plains are used for Billings and E13";
+                s_Comment.append( tr( "The radiosonde measurements from station Southern Great Plains are used for Billings and E13" ) );
             }
-
-            if ( b_Comment == true )
-                tout << eol;
-
-            tout << "Project:\t4094" << eol;
-            tout << "Topologic Type:\t5" << eol;
-            tout << "Status:\t4" << eol;
-            tout << "User:\t1144" << eol;
-            tout << "Login:\t3" << eol;
-            tout << ReferenceOtherVersionClassic( s_EventLabel, dt );
-
-            if ( b_overwriteDataset == true )
-            {
-                int i_DatasetID = findDatasetId( s_EventLabel + "_radiosonde_" + dt.toString( "yyyy-MM" ), Dataset_ptr );
-
-                if ( i_DatasetID > 0 )
-                    tout << "DataSet ID:\t" << i_DatasetID << eol;
-            }
-
-            tout << "*/" << eol;
         }
     }
+
+// ***********************************************************************************************************************
+// write data description header
+
+    if ( ( b_Import == true ) && ( sl_Parameter.count() > 2 ) )
+    {
+        tout << OpenDataDescriptionHeader();
+        tout << s_DatasetID;
+        tout << ReferenceOtherVersion( s_EventLabel, dt );
+        tout << AuthorIDs( num2str( i_PIID ) );
+        tout << SourceID( num2str( i_SourceID ) );
+        tout << DatasetTitle( tr( "Radiosonde measurements from" ), s_StationName, dt );
+        tout << ExportFilename( s_EventLabel, tr( "radiosonde" ), dt );
+        tout << EventLabel( s_EventLabel );
+        tout << Parameter( sl_Parameter );
+        tout << DatasetComment( s_Comment );
+        tout << ProjectIDs( num2str( 4094 ) );
+        tout << TopologicTypeID( num2str( 8 ) );
+        tout << StatusID( num2str( 4 ) );
+        tout << UserIDs( num2str( 1144 ) );
+        tout << LoginID( num2str( 3 ) );
+        tout << CloseDataDescriptionHeader();
+    }
+
+// ***********************************************************************************************************************
+// write data header
 
     while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
     {
@@ -490,7 +477,7 @@ int MainWindow::RadiosondeMeasurementsConverter( const bool b_Import, const QStr
         {
             if ( b_Import == true )
             {
-                tout << "Event label\t1599\t4607";
+                tout << "1599\t4607";
 
                 if ( P[1] > 0 )
                     tout << "\t49378";
@@ -554,7 +541,7 @@ int MainWindow::RadiosondeMeasurementsConverter( const bool b_Import, const QStr
                     if ( b_Import == false )
                         tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" << num2str( f_Latitude ) << "\t" << num2str( f_Longitude ) << "\t" << InputStr.mid( 21, 5 ).simplified();
                     else
-                        tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" << InputStr.mid( 21, 5 ).simplified();
+                        tout << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" << InputStr.mid( 21, 5 ).simplified();
 
                     if ( P[1] > 0 )
                     {

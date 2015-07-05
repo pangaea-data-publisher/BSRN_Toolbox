@@ -293,10 +293,10 @@ int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& 
         {
             tout << OpenDataDescriptionHeader();
             tout << s_DatasetID;
+            tout << ReferenceOtherVersion( s_EventLabel, dt );
             tout << AuthorIDs( num2str( i_PIID ) );
             tout << SourceID( num2str( i_SourceID ) );
             tout << DatasetTitle( tr( "Ozone measurements from" ), s_StationName, dt );
-            tout << ReferenceOtherVersion( s_EventLabel, dt );
             tout << ExportFilename( s_EventLabel, tr( "Ozone" ), dt );
             tout << EventLabel( s_EventLabel );
             tout << Parameter( sl_Parameter );

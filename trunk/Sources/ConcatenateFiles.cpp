@@ -24,10 +24,12 @@ int MainWindow::concatenateFiles( const QString& s_FilenameOut, const QStringLis
                                     const QString& s_ProgressMessage, const int i_SkipNFirstLines,
                                     const bool b_deleteOriginalFiles )
 {
-    int		i				= 0;
-    int		j				= 1;
+    int   i				   = 0;
+    int   j				   = 1;
 
-    int		stopProgress	= 0;
+    int   stopProgress	   = 0;
+
+    bool  b_isMetadataFile = false;
 
     QFile fin;
 
@@ -38,9 +40,17 @@ int MainWindow::concatenateFiles( const QString& s_FilenameOut, const QStringLis
     if ( fout.open( QIODevice::WriteOnly | QIODevice::Text) == false )
         return( -20 );
 
-    initFileProgress( sl_FilenameList.count(), sl_FilenameList.at( 0 ), s_ProgressMessage );
-
     QTextStream tout( &fout );
+
+// ************************************************************************************************
+
+    if ( ( s_FilenameOut.contains( "BSRN_LR000" ) == true ) || ( s_FilenameOut.endsWith( "BSRN_RefImp.txt" ) == true ) )
+        b_isMetadataFile = true;
+
+    if ( b_isMetadataFile == false )
+        initFileProgress( sl_FilenameList.count(), sl_FilenameList.at( 0 ), s_ProgressMessage );
+
+// ************************************************************************************************
 
     while ( ( i < sl_FilenameList.count() ) && ( stopProgress != _APPBREAK_ ) )
     {
@@ -73,12 +83,18 @@ int MainWindow::concatenateFiles( const QString& s_FilenameOut, const QStringLis
             stopProgress = _APPBREAK_;
         }
 
-        stopProgress = incFileProgress( sl_FilenameList.count(), ++i );
+        if ( b_isMetadataFile == false )
+            stopProgress = incFileProgress( sl_FilenameList.count(), ++i );
+        else
+            i++;
     }
+
+// ************************************************************************************************
 
     fout.close();
 
-    resetFileProgress( sl_FilenameList.count() );
+    if ( b_isMetadataFile == false )
+        resetFileProgress( sl_FilenameList.count() );
 
     if ( stopProgress == _APPBREAK_ )
         return( _APPBREAK_ );

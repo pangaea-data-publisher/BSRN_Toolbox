@@ -185,7 +185,7 @@ int MainWindow::OtherMinuteMeasurementsConverter( const bool b_Import, const QSt
 
             if ( b_Import == true )
             {
-                tout << "Event label\t1599\t56349";  // Height above ground = 2 m
+                tout << "1599\t56349";  // Height above ground = 2 m
                 tout << "\t55911\t55912\t55913\t55914";
                 tout << "\t45299\t55915\t55916\t55917";
                 tout << "\t55918\t55919\t55920\t55921" << endl;
@@ -215,9 +215,7 @@ int MainWindow::OtherMinuteMeasurementsConverter( const bool b_Import, const QSt
                     if ( b_Import == false )
                         tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" << num2str( f_Latitude ) << "\t" << num2str( f_Longitude ) << "\t" << tr( "2" ) << "\t";
                     else
-                        tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" + tr( "2" ) << "\t";
-
-                    //   1    0 123456 12345 1234 1234 123456 12345 1234 1234 123456 12345 1234 1234 9 9 9 9 5 9 9
+                        tout << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t";
 
                     if ( InputStr.mid( 9, 6 ).toFloat() > -99. )
                     {

@@ -449,6 +449,9 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
 
     QString			s_StationName	= "";
     QString			s_EventLabel	= "";
+    QString         s_DatasetID     = "";
+
+    QStringList     sl_Parameter;
 
     unsigned int	ui_length		= 1;
     unsigned int	ui_filesize		= 1;
@@ -592,187 +595,192 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
     QTextStream tout( &fout );
 
 // ***********************************************************************************************************************
-// LR 1000
+// LR1000 - build data description header
 
     b_Stop = false;
 
     if ( b_Import == true )
     {
-        tout << "/* DATA DESCRIPTION:" << eol;
-        tout << "Author:\t" << i_PIID << eol;
-        tout << "Source:\t" << i_SourceID << eol;
+        if ( b_overwriteDataset == true )
+        {
+            int i_DatasetID = findDatasetId( QString( "%1_SYNOP_%2" ).arg( s_EventLabel ).arg( dt.toString( "yyyy-MM" ) ), Dataset_ptr );
 
-        if ( s_StationName.endsWith( "Station" ) == true )
-            tout << "Title:\tMeteorological synoptical observations from " << s_StationName << " (" << dt.toString( "yyyy-MM" ) << ")" << eol;
-        else
-            tout << "Title:\tMeteorological synoptical observations from station " << s_StationName << " (" << dt.toString( "yyyy-MM" ) << ")" << eol;
+            if ( i_DatasetID > 0 )
+                s_DatasetID = DataSetID( num2str( i_DatasetID ) );
+            else
+                s_DatasetID = DataSetID( QString( "%1_SYNOP_%2" ).arg( s_EventLabel ).arg( dt.toString( "yyyy-MM" ) ) );
+        }
 
-        tout << "Export Filename:\t" << s_EventLabel << "_SYNOP_" << dt.toString( "yyyy-MM" ) << eol;
-        tout << "Event:\t" << s_EventLabel << eol;
-        tout << "PI:\t" << i_PIID << eol;
-        tout << "Parameter:";
-        tout << "\t1599 * PI: "  << i_PIID << " * METHOD: 43 * FORMAT: yyyy-MM-dd'T'HH:mm" << eol;
+        sl_Parameter.append( Parameter( num2str( 1599 ), num2str( i_PIID ), num2str( 43 ), tr( "yyyy-MM-dd'T'HH:mm" ) ) );
 
         switch ( i_Format )
         {
         case 1: // LIN
-            if ( P[1]  == 1 ) tout << "\t45267 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Total cloud amount
-            if ( P[2]  == 1 ) tout << "\t2221 * PI: "   << i_PIID << " * METHOD: 5038 * FORMAT: ###0"   << eol;  // Wind direction [deg]
-            if ( P[3]  == 1 ) tout << "\t18906 * PI: "  << i_PIID << " * METHOD: 5038 * FORMAT: #0"     << eol;  // Wind speed [m/sec]
-            if ( P[4]  == 1 ) tout << "\t4610 * PI: "   << i_PIID << " * METHOD: 4722 * FORMAT: ###0.0" << eol;  // Temperature, air [deg C]
-            if ( P[5]  == 1 ) tout << "\t4611 * PI: "   << i_PIID << " * METHOD: 5039 * FORMAT: ###0.0" << eol;  // Dew/frost point [deg C]
-            if ( P[6]  == 1 ) tout << "\t48823 * PI: "  << i_PIID << " * METHOD: 359 * FORMAT: ###0"    << eol;  // Station Pressure [hPa]
-            if ( P[7]  == 1 ) tout << "\t2224 * PI: "   << i_PIID << " * METHOD: 359 * FORMAT: ###0"    << eol;  // Pressure, atmospheric [hPa]
-            if ( P[8]  == 1 ) tout << "\t45261 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Present weather [code]
-            if ( P[9]  == 1 ) tout << "\t45262 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Past weather1 [code]
-            if ( P[10] == 1 ) tout << "\t45263 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Past weather2 [code]
-            if ( P[11] == 1 ) tout << "\t45268 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Low/middle cloud amount [code]
-            if ( P[12] == 1 ) tout << "\t45264 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Low cloud [code]
-            if ( P[13] == 1 ) tout << "\t45265 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Middle cloud [code]
-            if ( P[14] == 1 ) tout << "\t45266 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // High cloud [code]
-            if ( P[15] == 1 ) tout << "\t57649 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Ns 1 [code]
-            if ( P[16] == 1 ) tout << "\t57652 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // C 1 [code]
-            if ( P[17] == 1 ) tout << "\t57655 * PI: "  << i_PIID << " * METHOD: 5037 * FORMAT: #0"     << eol;  // hshs 1 [code]
-            if ( P[18] == 1 ) tout << "\t57650 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Ns 2 [code]
-            if ( P[19] == 1 ) tout << "\t57653 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // C 2 [code]
-            if ( P[20] == 1 ) tout << "\t57656 * PI: "  << i_PIID << " * METHOD: 5037 * FORMAT: #0"     << eol;  // hshs 2 [code]
-            if ( P[21] == 1 ) tout << "\t57651 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Ns 3 [code]
-            if ( P[22] == 1 ) tout << "\t57654 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // C 3 [code]
-            if ( P[23] == 1 ) tout << "\t57657 * PI: "  << i_PIID << " * METHOD: 5037 * FORMAT: #0"     << eol;  // hshs 3 [code]
+            if ( P[1]  == 1 ) sl_Parameter.append( Parameter( num2str( 45267 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Total cloud amount
+            if ( P[2]  == 1 ) sl_Parameter.append( Parameter( num2str( 2221 ), num2str( i_PIID ), num2str( 5038 ), tr( "###0" ) ) );    // Wind direction [deg]
+            if ( P[3]  == 1 ) sl_Parameter.append( Parameter( num2str( 18906 ), num2str( i_PIID ), num2str( 5038 ), tr( "#0" ) ) );     // Wind speed [m/sec]
+            if ( P[4]  == 1 ) sl_Parameter.append( Parameter( num2str( 4610 ), num2str( i_PIID ), num2str( 4722 ), tr( "###0.0" ) ) );  // Temperature, air [deg C]
+            if ( P[5]  == 1 ) sl_Parameter.append( Parameter( num2str( 4611 ), num2str( i_PIID ), num2str( 5039 ), tr( "###0.0" ) ) );  // Dew/frost point [deg C]
+            if ( P[6]  == 1 ) sl_Parameter.append( Parameter( num2str( 48823 ), num2str( i_PIID ), num2str( 359 ), tr( "###0" ) ) );    // Station Pressure [hPa]
+            if ( P[7]  == 1 ) sl_Parameter.append( Parameter( num2str( 2224 ), num2str( i_PIID ), num2str( 359 ), tr( "###0" ) ) );     // Pressure, atmospheric [hPa]
+            if ( P[8]  == 1 ) sl_Parameter.append( Parameter( num2str( 45261 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Present weather [code]
+            if ( P[9]  == 1 ) sl_Parameter.append( Parameter( num2str( 45262 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Past weather1 [code]
+            if ( P[10] == 1 ) sl_Parameter.append( Parameter( num2str( 45263 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Past weather2 [code]
+            if ( P[11] == 1 ) sl_Parameter.append( Parameter( num2str( 45268 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Low/middle cloud amount [code]
+            if ( P[12] == 1 ) sl_Parameter.append( Parameter( num2str( 45264 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Low cloud [code]
+            if ( P[13] == 1 ) sl_Parameter.append( Parameter( num2str( 45265 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Middle cloud [code]
+            if ( P[14] == 1 ) sl_Parameter.append( Parameter( num2str( 45266 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // High cloud [code]
+            if ( P[15] == 1 ) sl_Parameter.append( Parameter( num2str( 57649 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Ns 1 [code]
+            if ( P[16] == 1 ) sl_Parameter.append( Parameter( num2str( 57652 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 1 [code]
+            if ( P[17] == 1 ) sl_Parameter.append( Parameter( num2str( 57655 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 1 [code]
+            if ( P[18] == 1 ) sl_Parameter.append( Parameter( num2str( 57650 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Ns 2 [code]
+            if ( P[19] == 1 ) sl_Parameter.append( Parameter( num2str( 57653 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 2 [code]
+            if ( P[20] == 1 ) sl_Parameter.append( Parameter( num2str( 57656 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 2 [code]
+            if ( P[21] == 1 ) sl_Parameter.append( Parameter( num2str( 57651 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Ns 3 [code]
+            if ( P[22] == 1 ) sl_Parameter.append( Parameter( num2str( 57654 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 3 [code]
+            if ( P[23] == 1 ) sl_Parameter.append( Parameter( num2str( 57657 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 3 [code]
 
-            tout << "\t50007 * PI: "  << i_PIID << " * COMMENT: YYGG9 IIiii Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" << eol;
+            sl_Parameter.append( Parameter( num2str( 50007 ), num2str( i_PIID ), num2str( 43 ), tr( "" ), tr( "YYGG9 IIiii Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" ) ) );
 
             break;
 
         case 2: // GVN and NYA
-            if ( P[1] == 1 ) tout << "\t4610 * PI: "  << i_PIID << " * METHOD: 4722 * FORMAT: ###0.0" << eol;  // Temperature, air [deg C]
-            if ( P[2] == 1 ) tout << "\t2224 * PI: "  << i_PIID << " * METHOD: 359 * FORMAT: ###0 * COMMENT: Station pressure reduced to sea level" << eol;  // Pressure, atmospheric [hPa]
-            if ( P[3] == 1 ) tout << "\t4611 * PI: "  << i_PIID << " * METHOD: 5039 * FORMAT: ###0.0" << eol;  // Dew/frost point [deg C]
-            if ( P[4] == 1 ) tout << "\t2221 * PI: "  << i_PIID << " * METHOD: 5038 * FORMAT: ###0" << eol;    // Wind direction [deg]
-            if ( P[5] == 1 ) tout << "\t18906 * PI: "  << i_PIID << " * METHOD: 5038 * FORMAT: #0" << eol;     // Wind speed [m/sec]
-            if ( P[6] == 1 ) tout << "\t45262 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0" << eol;      // Past weather1 [code]
-            if ( P[7] == 1 ) tout << "\t45261 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0" << eol;      // Present weather [code]
-            if ( P[8] == 1 ) tout << "\t45267 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0" << eol;      // Total cloud amount
-            if ( P[9] == 1 ) tout << "\t45268 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0" << eol;      // Low/middle cloud amount [code]
-            if ( P[10] == 1 ) tout << "\t45264 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0" << eol;     // Low cloud [code]
-            if ( P[11] == 1 ) tout << "\t45265 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0" << eol;     // Middle cloud [code]
-            if ( P[12] == 1 ) tout << "\t45266 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0" << eol;     // High cloud [code]
-            if ( P[13] == 1 ) tout << "\t45259 * PI: "  << i_PIID << " * METHOD: 5036 * FORMAT: #0" << eol;    // Cloud base height [code]
-            if ( P[14] == 1 ) tout << "\t45307 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0" << eol;     // Present blowing snow [code]
-            if ( P[15] == 1 ) tout << "\t45308 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0" << eol;     // Past blowing snow [code]
-            if ( P[16] == 1 ) tout << "\t45260 * PI: "  << i_PIID << " * METHOD: 5037 * FORMAT: #0" << eol;    // Horizontal visibility [code]
+            if ( P[1] == 1 ) sl_Parameter.append( Parameter( num2str( 4610 ), num2str( i_PIID ), num2str( 4722 ), tr( "###0.0" ) ) );   // Temperature, air [deg C]
+            if ( P[2] == 1 ) sl_Parameter.append( Parameter( num2str( 2224 ), num2str( i_PIID ), num2str( 359 ), tr( "###0" ), tr( "Station pressure reduced to sea level" ) ) );   // Pressure, atmospheric [hPa]
+            if ( P[3] == 1 ) sl_Parameter.append( Parameter( num2str( 4611 ), num2str( i_PIID ), num2str( 5039 ), tr( "###0.0" ) ) );   // Dew/frost point [deg C]
+            if ( P[4] == 1 ) sl_Parameter.append( Parameter( num2str( 2221 ), num2str( i_PIID ), num2str( 5038 ), tr( "###0" ) ) );     // Wind direction [deg]
+            if ( P[5] == 1 ) sl_Parameter.append( Parameter( num2str( 18906 ), num2str( i_PIID ), num2str( 5038 ), tr( "#0" ) ) );      // Wind speed [m/sec]
+            if ( P[6] == 1 ) sl_Parameter.append( Parameter( num2str( 45262 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );       // Past weather1 [code]
+            if ( P[7] == 1 ) sl_Parameter.append( Parameter( num2str( 45261 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );       // Present weather [code]
+            if ( P[8] == 1 ) sl_Parameter.append( Parameter( num2str( 45267 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );       // Total cloud amount
+            if ( P[9] == 1 ) sl_Parameter.append( Parameter( num2str( 45268 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );       // Low/middle cloud amount [code]
+            if ( P[10] == 1 ) sl_Parameter.append( Parameter( num2str( 45264 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Low cloud [code]
+            if ( P[11] == 1 ) sl_Parameter.append( Parameter( num2str( 45265 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Middle cloud [code]
+            if ( P[12] == 1 ) sl_Parameter.append( Parameter( num2str( 45266 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // High cloud [code]
+            if ( P[13] == 1 ) sl_Parameter.append( Parameter( num2str( 45259 ), num2str( i_PIID ), num2str( 5036 ), tr( "#0" ) ) );     // Cloud base height [code]
+            if ( P[14] == 1 ) sl_Parameter.append( Parameter( num2str( 45307 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Present blowing snow [code]
+            if ( P[15] == 1 ) sl_Parameter.append( Parameter( num2str( 45308 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Past blowing snow [code]
+            if ( P[16] == 1 ) sl_Parameter.append( Parameter( num2str( 45260 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // Horizontal visibility [code]
 
             break;
 
         case 3: // TAM
-            if ( P[1]  == 1 ) tout << "\t45259 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Cloud base height
-            if ( P[2]  == 1 ) tout << "\t45260 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Horizontal visibility
-            if ( P[3]  == 1 ) tout << "\t45267 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Total cloud amount
-            if ( P[4]  == 1 ) tout << "\t2221 * PI: "   << i_PIID << " * METHOD: 5038 * FORMAT: ###0"   << eol;  // Wind direction [deg]
-            if ( P[5]  == 1 ) tout << "\t18906 * PI: "  << i_PIID << " * METHOD: 5038 * FORMAT: #0"     << eol;  // Wind speed [m/sec]
-            if ( P[6]  == 1 ) tout << "\t4610 * PI: "   << i_PIID << " * METHOD: 4722 * FORMAT: ###0.0" << eol;  // Temperature, air [deg C]
-            if ( P[7]  == 1 ) tout << "\t4611 * PI: "   << i_PIID << " * METHOD: 5039 * FORMAT: ###0.0" << eol;  // Dew/frost point [deg C]
-            if ( P[8]  == 1 ) tout << "\t48823 * PI: "  << i_PIID << " * METHOD: 359 * FORMAT: ###0"    << eol;  // Station Pressure [hPa]
-            if ( P[9]  == 1 ) tout << "\t123640 * PI: " << i_PIID << " * METHOD: 50 * FORMAT: ###0"     << eol;  // Geopotential height [m]
-            if ( P[10] == 1 ) tout << "\t45261 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Present weather [code]
-            if ( P[11] == 1 ) tout << "\t45262 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Past weather1 [code]
-            if ( P[12] == 1 ) tout << "\t45263 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Past weather2 [code]
-            if ( P[13] == 1 ) tout << "\t45268 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Low/middle cloud amount [code]
-            if ( P[14] == 1 ) tout << "\t45264 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Low cloud [code]
-            if ( P[15] == 1 ) tout << "\t45265 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Middle cloud [code]
-            if ( P[16] == 1 ) tout << "\t45266 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // High cloud [code]
-            if ( P[17] == 1 ) tout << "\t57649 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Ns 1 [code]
-            if ( P[18] == 1 ) tout << "\t57652 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // C 1 [code]
-            if ( P[19] == 1 ) tout << "\t57655 * PI: "  << i_PIID << " * METHOD: 5037 * FORMAT: #0"     << eol;  // hshs 1 [code]
-            if ( P[20] == 1 ) tout << "\t57650 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Ns 2 [code]
-            if ( P[21] == 1 ) tout << "\t57653 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // C 2 [code]
-            if ( P[22] == 1 ) tout << "\t57656 * PI: "  << i_PIID << " * METHOD: 5037 * FORMAT: #0"     << eol;  // hshs 2 [code]
-            if ( P[23] == 1 ) tout << "\t57651 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Ns 3 [code]
-            if ( P[24] == 1 ) tout << "\t57654 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // C 3 [code]
-            if ( P[25] == 1 ) tout << "\t57657 * PI: "  << i_PIID << " * METHOD: 5037 * FORMAT: #0"     << eol;  // hshs 3 [code]
+            if ( P[1]  == 1 ) sl_Parameter.append( Parameter( num2str( 45259 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Cloud base height
+            if ( P[2]  == 1 ) sl_Parameter.append( Parameter( num2str( 45260 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Horizontal visibility
+            if ( P[3]  == 1 ) sl_Parameter.append( Parameter( num2str( 45267 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Total cloud amount
+            if ( P[4]  == 1 ) sl_Parameter.append( Parameter( num2str( 2221 ), num2str( i_PIID ), num2str( 5038 ), tr( "###0" ) ) );    // Wind direction [deg]
+            if ( P[5]  == 1 ) sl_Parameter.append( Parameter( num2str( 18906 ), num2str( i_PIID ), num2str( 5038 ), tr( "#0" ) ) );     // Wind speed [m/sec]
+            if ( P[6]  == 1 ) sl_Parameter.append( Parameter( num2str( 4610 ), num2str( i_PIID ), num2str( 4722 ), tr( "###0.0" ) ) );  // Temperature, air [deg C]
+            if ( P[7]  == 1 ) sl_Parameter.append( Parameter( num2str( 4611 ), num2str( i_PIID ), num2str( 5039 ), tr( "###0.0" ) ) );  // Dew/frost point [deg C]
+            if ( P[8]  == 1 ) sl_Parameter.append( Parameter( num2str( 48823 ), num2str( i_PIID ), num2str( 359 ), tr( "###0" ) ) );    // Station Pressure [hPa]
+            if ( P[9]  == 1 ) sl_Parameter.append( Parameter( num2str( 123640 ), num2str( i_PIID ), num2str( 50 ), tr( "###0" ) ) );    // Geopotential height [m]
+            if ( P[10] == 1 ) sl_Parameter.append( Parameter( num2str( 45261 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Present weather [code]
+            if ( P[11] == 1 ) sl_Parameter.append( Parameter( num2str( 45262 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Past weather1 [code]
+            if ( P[12] == 1 ) sl_Parameter.append( Parameter( num2str( 45263 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Past weather2 [code]
+            if ( P[13] == 1 ) sl_Parameter.append( Parameter( num2str( 45268 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Low/middle cloud amount [code]
+            if ( P[14] == 1 ) sl_Parameter.append( Parameter( num2str( 45264 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Low cloud [code]
+            if ( P[15] == 1 ) sl_Parameter.append( Parameter( num2str( 45265 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Middle cloud [code]
+            if ( P[16] == 1 ) sl_Parameter.append( Parameter( num2str( 45266 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // High cloud [code]
+            if ( P[17] == 1 ) sl_Parameter.append( Parameter( num2str( 57649 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Ns 1 [code]
+            if ( P[18] == 1 ) sl_Parameter.append( Parameter( num2str( 57652 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 1 [code]
+            if ( P[19] == 1 ) sl_Parameter.append( Parameter( num2str( 57655 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 1 [code]
+            if ( P[20] == 1 ) sl_Parameter.append( Parameter( num2str( 57650 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Ns 2 [code]
+            if ( P[21] == 1 ) sl_Parameter.append( Parameter( num2str( 57653 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 2 [code]
+            if ( P[22] == 1 ) sl_Parameter.append( Parameter( num2str( 57656 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 2 [code]
+            if ( P[23] == 1 ) sl_Parameter.append( Parameter( num2str( 57651 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Ns 3 [code]
+            if ( P[24] == 1 ) sl_Parameter.append( Parameter( num2str( 57654 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 3 [code]
+            if ( P[25] == 1 ) sl_Parameter.append( Parameter( num2str( 57657 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 3 [code]
 
-            tout << "\t50007 * PI: "  << i_PIID << " * COMMENT: YYGG9 IIiii iRixhVV Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" << eol;
+            sl_Parameter.append( Parameter( num2str( 50007 ), num2str( i_PIID ), num2str( 43 ), tr( "" ), tr( "YYGG9 IIiii iRixhVV Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" ) ) );
 
             break;
 
         case 4: // PAY
-            if ( P[1]  == 1 ) tout << "\t45259 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Cloud base height
-            if ( P[2]  == 1 ) tout << "\t45260 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Horizontal visibility
-            if ( P[3]  == 1 ) tout << "\t45267 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Total cloud amount
-            if ( P[4]  == 1 ) tout << "\t2221 * PI: "   << i_PIID << " * METHOD: 5038 * FORMAT: ###0"   << eol;  // Wind direction [deg]
-            if ( P[5]  == 1 ) tout << "\t18906 * PI: "  << i_PIID << " * METHOD: 5038 * FORMAT: #0"     << eol;  // Wind speed [m/sec]
-            if ( P[6]  == 1 ) tout << "\t4610 * PI: "   << i_PIID << " * METHOD: 4722 * FORMAT: ###0.0" << eol;  // Temperature, air [deg C]
-            if ( P[7]  == 1 ) tout << "\t4611 * PI: "   << i_PIID << " * METHOD: 5039 * FORMAT: ###0.0" << eol;  // Dew/frost point [deg C]
-            if ( P[8]  == 1 ) tout << "\t48823 * PI: "  << i_PIID << " * METHOD: 359 * FORMAT: ###0"    << eol;  // Station Pressure [hPa]
-            if ( P[9]  == 1 ) tout << "\t2224 * PI: "   << i_PIID << " * METHOD: 359 * FORMAT: ###0"    << eol;  // Pressure, atmospheric [hPa]
-            if ( P[10] == 1 ) tout << "\t45261 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Present weather [code]
-            if ( P[11] == 1 ) tout << "\t45262 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Past weather1 [code]
-            if ( P[12] == 1 ) tout << "\t45263 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Past weather2 [code]
-            if ( P[13] == 1 ) tout << "\t45268 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Low/middle cloud amount [code]
-            if ( P[14] == 1 ) tout << "\t45264 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Low cloud [code]
-            if ( P[15] == 1 ) tout << "\t45265 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Middle cloud [code]
-            if ( P[16] == 1 ) tout << "\t45266 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // High cloud [code]
-            if ( P[17] == 1 ) tout << "\t57649 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Ns 1 [code]
-            if ( P[18] == 1 ) tout << "\t57652 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // C 1 [code]
-            if ( P[19] == 1 ) tout << "\t57655 * PI: "  << i_PIID << " * METHOD: 5037 * FORMAT: #0"     << eol;  // hshs 1 [code]
-            if ( P[20] == 1 ) tout << "\t57650 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Ns 2 [code]
-            if ( P[21] == 1 ) tout << "\t57653 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // C 2 [code]
-            if ( P[22] == 1 ) tout << "\t57656 * PI: "  << i_PIID << " * METHOD: 5037 * FORMAT: #0"     << eol;  // hshs 2 [code]
-            if ( P[23] == 1 ) tout << "\t57651 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Ns 3 [code]
-            if ( P[24] == 1 ) tout << "\t57654 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // C 3 [code]
-            if ( P[25] == 1 ) tout << "\t57657 * PI: "  << i_PIID << " * METHOD: 5037 * FORMAT: #0"     << eol;  // hshs 3 [code]
+            if ( P[1]  == 1 ) sl_Parameter.append( Parameter( num2str( 45259 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Cloud base height
+            if ( P[2]  == 1 ) sl_Parameter.append( Parameter( num2str( 45260 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Horizontal visibility
+            if ( P[3]  == 1 ) sl_Parameter.append( Parameter( num2str( 45267 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Total cloud amount
+            if ( P[4]  == 1 ) sl_Parameter.append( Parameter( num2str( 2221 ), num2str( i_PIID ), num2str( 5038 ), tr( "###0" ) ) );    // Wind direction [deg]
+            if ( P[5]  == 1 ) sl_Parameter.append( Parameter( num2str( 18906 ), num2str( i_PIID ), num2str( 5038 ), tr( "#0" ) ) );     // Wind speed [m/sec]
+            if ( P[6]  == 1 ) sl_Parameter.append( Parameter( num2str( 4610 ), num2str( i_PIID ), num2str( 4722 ), tr( "###0.0" ) ) );  // Temperature, air [deg C]
+            if ( P[7]  == 1 ) sl_Parameter.append( Parameter( num2str( 4611 ), num2str( i_PIID ), num2str( 5039 ), tr( "###0.0" ) ) );  // Dew/frost point [deg C]
+            if ( P[8]  == 1 ) sl_Parameter.append( Parameter( num2str( 48823 ), num2str( i_PIID ), num2str( 359 ), tr( "###0" ) ) );    // Station Pressure [hPa]
+            if ( P[9]  == 1 ) sl_Parameter.append( Parameter( num2str( 2224 ), num2str( i_PIID ), num2str( 359 ), tr( "###0" ) ) );     // Pressure, atmospheric [hPa]
+            if ( P[10] == 1 ) sl_Parameter.append( Parameter( num2str( 45261 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Present weather [code]
+            if ( P[11] == 1 ) sl_Parameter.append( Parameter( num2str( 45262 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Past weather1 [code]
+            if ( P[12] == 1 ) sl_Parameter.append( Parameter( num2str( 45263 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Past weather2 [code]
+            if ( P[13] == 1 ) sl_Parameter.append( Parameter( num2str( 45268 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Low/middle cloud amount [code]
+            if ( P[14] == 1 ) sl_Parameter.append( Parameter( num2str( 45264 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Low cloud [code]
+            if ( P[15] == 1 ) sl_Parameter.append( Parameter( num2str( 45265 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Middle cloud [code]
+            if ( P[16] == 1 ) sl_Parameter.append( Parameter( num2str( 45266 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // High cloud [code]
+            if ( P[17] == 1 ) sl_Parameter.append( Parameter( num2str( 57649 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Ns 1 [code]
+            if ( P[18] == 1 ) sl_Parameter.append( Parameter( num2str( 57652 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 1 [code]
+            if ( P[19] == 1 ) sl_Parameter.append( Parameter( num2str( 57655 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 1 [code]
+            if ( P[20] == 1 ) sl_Parameter.append( Parameter( num2str( 57650 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Ns 2 [code]
+            if ( P[21] == 1 ) sl_Parameter.append( Parameter( num2str( 57653 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 2 [code]
+            if ( P[22] == 1 ) sl_Parameter.append( Parameter( num2str( 57656 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 2 [code]
+            if ( P[23] == 1 ) sl_Parameter.append( Parameter( num2str( 57651 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Ns 3 [code]
+            if ( P[24] == 1 ) sl_Parameter.append( Parameter( num2str( 57654 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 3 [code]
+            if ( P[25] == 1 ) sl_Parameter.append( Parameter( num2str( 57657 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 3 [code]
 
-            tout << "\t50007 * PI: "  << i_PIID << " * COMMENT: YYGG9 iRixhVV Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" << eol;
+           sl_Parameter.append( Parameter( num2str( 50007 ), num2str( i_PIID ), num2str( 43 ), tr( "" ), tr( "YYGG9 iRixhVV Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" ) ) );
 
             break;
 
         case 5: // SON
-            if ( P[1]  == 1 ) tout << "\t45267 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Total cloud amount
-            if ( P[2]  == 1 ) tout << "\t2221 * PI: "   << i_PIID << " * METHOD: 5038 * FORMAT: ###0"   << eol;  // Wind direction [deg]
-            if ( P[3]  == 1 ) tout << "\t18906 * PI: "  << i_PIID << " * METHOD: 5038 * FORMAT: #0"     << eol;  // Wind speed [m/sec]
-            if ( P[4]  == 1 ) tout << "\t4610 * PI: "   << i_PIID << " * METHOD: 4722 * FORMAT: ###0.0" << eol;  // Temperature, air [deg C]
-            if ( P[5]  == 1 ) tout << "\t4611 * PI: "   << i_PIID << " * METHOD: 5039 * FORMAT: ###0.0" << eol;  // Dew/frost point [deg C]
-            if ( P[6]  == 1 ) tout << "\t48823 * PI: "  << i_PIID << " * METHOD: 359 * FORMAT: ###0"    << eol;  // Station Pressure [hPa]
-            if ( P[7]  == 1 ) tout << "\t123640 * PI: " << i_PIID << " * METHOD: 50 * FORMAT: ###0"     << eol;  // Geopotential height [m]
-            if ( P[8]  == 1 ) tout << "\t45261 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Present weather [code]
-            if ( P[9]  == 1 ) tout << "\t45262 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Past weather1 [code]
-            if ( P[10] == 1 ) tout << "\t45263 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Past weather2 [code]
-            if ( P[11] == 1 ) tout << "\t45268 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Low/middle cloud amount [code]
-            if ( P[12] == 1 ) tout << "\t45264 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Low cloud [code]
-            if ( P[13] == 1 ) tout << "\t45265 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Middle cloud [code]
-            if ( P[14] == 1 ) tout << "\t45266 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // High cloud [code]
-            if ( P[15] == 1 ) tout << "\t57649 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Ns 1 [code]
-            if ( P[16] == 1 ) tout << "\t57652 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // C 1 [code]
-            if ( P[17] == 1 ) tout << "\t57655 * PI: "  << i_PIID << " * METHOD: 5037 * FORMAT: #0"     << eol;  // hshs 1 [code]
-            if ( P[18] == 1 ) tout << "\t57650 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Ns 2 [code]
-            if ( P[19] == 1 ) tout << "\t57653 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // C 2 [code]
-            if ( P[20] == 1 ) tout << "\t57656 * PI: "  << i_PIID << " * METHOD: 5037 * FORMAT: #0"     << eol;  // hshs 2 [code]
-            if ( P[21] == 1 ) tout << "\t57651 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // Ns 3 [code]
-            if ( P[22] == 1 ) tout << "\t57654 * PI: "  << i_PIID << " * METHOD: 530 * FORMAT: #0"      << eol;  // C 3 [code]
-            if ( P[23] == 1 ) tout << "\t57657 * PI: "  << i_PIID << " * METHOD: 5037 * FORMAT: #0"     << eol;  // hshs 3 [code]
+            if ( P[1]  == 1 ) sl_Parameter.append( Parameter( num2str( 45267 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Total cloud amount
+            if ( P[2]  == 1 ) sl_Parameter.append( Parameter( num2str( 2221 ), num2str( i_PIID ), num2str( 5038 ), tr( "###0" ) ) );    // Wind direction [deg]
+            if ( P[3]  == 1 ) sl_Parameter.append( Parameter( num2str( 18906 ), num2str( i_PIID ), num2str( 5038 ), tr( "#0" ) ) );     // Wind speed [m/sec]
+            if ( P[4]  == 1 ) sl_Parameter.append( Parameter( num2str( 4610 ), num2str( i_PIID ), num2str( 4722 ), tr( "###0.0" ) ) );  // Temperature, air [deg C]
+            if ( P[5]  == 1 ) sl_Parameter.append( Parameter( num2str( 4611 ), num2str( i_PIID ), num2str( 5039 ), tr( "###0.0" ) ) );  // Dew/frost point [deg C]
+            if ( P[6]  == 1 ) sl_Parameter.append( Parameter( num2str( 48823 ), num2str( i_PIID ), num2str( 359 ), tr( "###0" ) ) );    // Station Pressure [hPa]
+            if ( P[7]  == 1 ) sl_Parameter.append( Parameter( num2str( 123640 ), num2str( i_PIID ), num2str( 50 ), tr( "###0" ) ) );    // Geopotential height [m]
+            if ( P[8]  == 1 ) sl_Parameter.append( Parameter( num2str( 45261 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Present weather [code]
+            if ( P[9]  == 1 ) sl_Parameter.append( Parameter( num2str( 45262 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Past weather1 [code]
+            if ( P[10] == 1 ) sl_Parameter.append( Parameter( num2str( 45263 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Past weather2 [code]
+            if ( P[11] == 1 ) sl_Parameter.append( Parameter( num2str( 45268 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Low/middle cloud amount [code]
+            if ( P[12] == 1 ) sl_Parameter.append( Parameter( num2str( 45264 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Low cloud [code]
+            if ( P[13] == 1 ) sl_Parameter.append( Parameter( num2str( 45265 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Middle cloud [code]
+            if ( P[14] == 1 ) sl_Parameter.append( Parameter( num2str( 45266 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // High cloud [code]
+            if ( P[15] == 1 ) sl_Parameter.append( Parameter( num2str( 57649 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Ns 1 [code]
+            if ( P[16] == 1 ) sl_Parameter.append( Parameter( num2str( 57652 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 1 [code]
+            if ( P[17] == 1 ) sl_Parameter.append( Parameter( num2str( 57655 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 1 [code]
+            if ( P[18] == 1 ) sl_Parameter.append( Parameter( num2str( 57650 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Ns 2 [code]
+            if ( P[19] == 1 ) sl_Parameter.append( Parameter( num2str( 57653 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 2 [code]
+            if ( P[20] == 1 ) sl_Parameter.append( Parameter( num2str( 57656 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 2 [code]
+            if ( P[21] == 1 ) sl_Parameter.append( Parameter( num2str( 57651 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Ns 3 [code]
+            if ( P[22] == 1 ) sl_Parameter.append( Parameter( num2str( 57654 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 3 [code]
+            if ( P[23] == 1 ) sl_Parameter.append( Parameter( num2str( 57657 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 3 [code]
 
-            tout << "\t50007 * PI: "  << i_PIID << " * COMMENT: YYGG9 IIiii Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" << eol;
+           sl_Parameter.append( Parameter( num2str( 50007 ), num2str( i_PIID ), num2str( 43 ), tr( "" ), tr( "YYGG9 IIiii Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" ) ) );
 
             break;
         }
-
-        tout << "Project:\t4094" << eol;
-        tout << "Topologic Type:\t8" << eol;
-        tout << "Status:\t4" << eol;
-        tout << "User:\t1144" << eol;
-        tout << "Login:\t3" << eol;
-        tout << ReferenceOtherVersionClassic( s_EventLabel, dt );
-
-        if ( b_overwriteDataset == true )
-        {
-            int i_DatasetID = findDatasetId( s_EventLabel + "_SYNOP_" + dt.toString( "yyyy-MM" ), Dataset_ptr );
-
-            if ( i_DatasetID > 0 )
-                tout << "DataSet ID:\t" << i_DatasetID << eol;
-        }
-
-        tout << "*/" << eol;
     }
+
+// ***********************************************************************************************************************
+// write data description header
+
+    if ( ( b_Import == true ) && ( sl_Parameter.count() > 1 ) )
+    {
+        tout << OpenDataDescriptionHeader();
+        tout << s_DatasetID;
+        tout << ReferenceOtherVersion( s_EventLabel, dt );
+        tout << AuthorIDs( num2str( i_PIID ) );
+        tout << SourceID( num2str( i_SourceID ) );
+        tout << DatasetTitle( QString( "Meteorological synoptical observations from" ), s_StationName, dt );
+        tout << ExportFilename( s_EventLabel, tr( "SYNOP" ), dt );
+        tout << EventLabel( s_EventLabel );
+        tout << Parameter( sl_Parameter );
+        tout << ProjectIDs( num2str( 4094 ) );
+        tout << TopologicTypeID( num2str( 8 ) );
+        tout << StatusID( num2str( 4 ) );
+        tout << UserIDs( num2str( 1144 ) );
+        tout << LoginID( num2str( 3 ) );
+        tout << CloseDataDescriptionHeader();
+    }
+
+// ***********************************************************************************************************************
+// write data header
 
     while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
     {
@@ -786,7 +794,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
             case 1: // LIN
                 if ( b_Import == true )
                 {
-                    tout << "Event label\t1599";
+                    tout << "1599"; // Date/Time
                     if ( P[1]  == 1 ) tout << "\t45267";
                     if ( P[2]  == 1 ) tout << "\t2221";
                     if ( P[3]  == 1 ) tout << "\t18906";
@@ -838,14 +846,14 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                     if ( P[21] == 1 ) tout << "\tNs 3 [code]";
                     if ( P[22] == 1 ) tout << "\tC 3 [code]";
                     if ( P[23] == 1 ) tout << "\thshs 3 [code]";
-                    tout << "\t" << "YYGG9 IIiii Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" << eol;
+                    tout << "\t" << tr( "YYGG9 IIiii Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" ) << eol;
                 }
                 break;
 
             case 2: // GVN and NYA
                 if ( b_Import == true )
                 {
-                    tout << "Event label\t1599";
+                    tout << "1599"; // Date/Time
                     if ( P[1]  == 1 ) tout << "\t4610";
                     if ( P[2]  == 1 ) tout << "\t2224";
                     if ( P[3]  == 1 ) tout << "\t4611";
@@ -890,7 +898,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
             case 3: // TAM
                 if ( b_Import == true )
                 {
-                    tout << "Event label\t1599";
+                    tout << "1599"; // Date/Time
                     if ( P[1]  == 1 ) tout << "\t45259";
                     if ( P[2]  == 1 ) tout << "\t45260";
                     if ( P[3]  == 1 ) tout << "\t45267";
@@ -946,14 +954,14 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                     if ( P[23] == 1 ) tout << "\tNs 3 [code]";
                     if ( P[24] == 1 ) tout << "\tC 3 [code]";
                     if ( P[25] == 1 ) tout << "\thshs 3 [code]";
-                    tout << "\t" << "YYGG9 IIiii iRixhVV Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" << eol;
+                    tout << "\t" << tr( "YYGG9 IIiii iRixhVV Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" ) << eol;
                 }
                 break;
 
             case 4: // PAY
                 if ( b_Import == true )
                 {
-                    tout << "Event label\t1599";
+                    tout << "1599"; // Date/Time
                     if ( P[1]  == 1 ) tout << "\t45259";
                     if ( P[2]  == 1 ) tout << "\t45260";
                     if ( P[3]  == 1 ) tout << "\t45267";
@@ -1009,14 +1017,14 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                     if ( P[23] == 1 ) tout << "\tNs 3 [code]";
                     if ( P[24] == 1 ) tout << "\tC 3 [code]";
                     if ( P[25] == 1 ) tout << "\thshs 3 [code]";
-                    tout << "\t" << "YYGG9 IIiii iRixhVV Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" << eol;
+                    tout << "\t" << tr( "YYGG9 IIiii iRixhVV Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" ) << eol;
                 }
                 break;
 
             case 5: // SON
                 if ( b_Import == true )
                 {
-                    tout << "Event label\t1599";
+                    tout << "1599"; // Date/Time
                     if ( P[1]  == 1 ) tout << "\t45267";
                     if ( P[2]  == 1 ) tout << "\t2221";
                     if ( P[3]  == 1 ) tout << "\t18906";
@@ -1068,7 +1076,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                     if ( P[21] == 1 ) tout << "\tNs 3 [code]";
                     if ( P[22] == 1 ) tout << "\tC 3 [code]";
                     if ( P[23] == 1 ) tout << "\thshs 3 [code]";
-                    tout << "\t" << "YYGG9 IIiii Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" << eol;
+                    tout << "\t" << tr( "YYGG9 IIiii Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" ) << eol;
                 }
                 break;
             }
@@ -1095,7 +1103,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                         if ( b_Import == false )
                             OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + num2str( f_Latitude ) + "\t" + num2str( f_Longitude ); // Station Date/Time Latitude Longitude
                         else
-                            OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ); // Station Date/Time
+                            OutputStr = dt.toString( "yyyy-MM-ddThh:mm" ); // Date/Time
 
 
                         if ( b_Import == false )
@@ -1330,139 +1338,141 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                         dt = dt.addSecs( i_Minute*60 );
 
                         if ( b_Import == false )
-                            tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" ) << "\t" << num2str( f_Latitude ) << "\t" << num2str( f_Longitude );
+                            OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + num2str( f_Latitude ) + "\t" + num2str( f_Longitude ); // Station Date/Time Latitude Longitude
                         else
-                            tout << s_EventLabel << "\t" << dt.toString( "yyyy-MM-ddThh:mm" );
+                            OutputStr = dt.toString( "yyyy-MM-ddThh:mm" ); // Date/Time
 
                         if ( P[1] == 1 )  // Temperature, air [deg C]
                         {
                             if ( ( InputStr.mid( 9, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 9, 5 ).toFloat() > -90 ) )
-                                tout << "\t" << InputStr.mid( 9, 5 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 9, 5 ).simplified() );
                             else
-                                tout << "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[2] == 1 ) // Pressure, atmospheric [hPa]
                         {
                             if ( ( InputStr.mid( 16, 4 ).contains( "/" ) == false ) && ( InputStr.mid( 16, 4 ).toFloat() > -90 ) )
-                                tout << "\t" << InputStr.mid( 16, 4 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 16, 4 ).simplified() );
                             else
-                                tout << "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[3] == 1 ) // Dew/frost point [deg C]
                         {
                             if ( ( InputStr.mid( 21, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 21, 5 ).toFloat() > -90 ) )
-                                tout << "\t" << InputStr.mid( 21, 5 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 21, 5 ).simplified() );
                             else
-                                tout << "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[4] == 1 ) // Wind direction [deg]
                         {
                             if ( ( InputStr.mid( 27, 3 ).contains( "/" ) == false ) && ( InputStr.mid( 27, 3 ).toFloat() > -90 ) )
-                                tout << "\t" << InputStr.mid( 27, 3 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 27, 3 ).simplified() );
                             else
-                                tout << "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[5] == 1 ) // Wind speed [m/sec]
                         {
                             if ( ( InputStr.mid( 31, 3 ).contains( "/" ) == false ) && ( InputStr.mid( 31, 3 ).toFloat() > -90 ) )
-                                tout << "\t" << InputStr.mid( 31, 3 ).simplified();
+                                OutputStr.append( "\t" + InputStr.mid( 31, 3 ).simplified() );
                             else
-                                tout << "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[6] == 1 )
                         {
                             if ( InputStr.mid( 35, 1 ) != "/" )
-                                tout << "\t" << InputStr.mid( 35, 1 );	// Past weather1 [code]
+                                OutputStr.append( "\t" + InputStr.mid( 35, 1 ) );	// Past weather1 [code]
                             else
-                                tout << "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[7] == 1 )
                         {
                             if ( InputStr.mid( 37, 1 ) != "/" )
-                                tout << "\t" << InputStr.mid( 37, 2 );	// Present weather [code]
+                                OutputStr.append( "\t" + InputStr.mid( 37, 2 ) );	// Present weather [code]
                             else
-                                tout << "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[8] == 1 )
                         {
                             if ( InputStr.mid( 40, 1 ) != "/" )
-                                tout << "\t" << InputStr.mid( 40, 1 );	// Total cloud amount [code]
+                                OutputStr.append( "\t" + InputStr.mid( 40, 1 ) );	// Total cloud amount [code]
                             else
-                                tout << "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[9] == 1 )
                         {
                             if ( InputStr.mid( 42, 1 ) != "/" )
-                                tout << "\t" << InputStr.mid( 42, 1 );	// Low/middle cloud amount [code]
+                                OutputStr.append( "\t" + InputStr.mid( 42, 1 ) );	// Low/middle cloud amount [code]
                             else
-                                tout << "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[10] == 1 )
                         {
                             if ( InputStr.mid( 44, 1 ) != "/" )
-                                tout << "\t" << InputStr.mid( 44, 1 );	// Low cloud [code]
+                                OutputStr.append( "\t" + InputStr.mid( 44, 1 ) );	// Low cloud [code]
                             else
-                                tout << "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[11] == 1 )
                         {
                             if ( InputStr.mid( 46, 1 ) != "/" )
-                                tout << "\t" << InputStr.mid( 46, 1 );	// Middle cloud [code]
+                                OutputStr.append( "\t" + InputStr.mid( 46, 1 ) );	// Middle cloud [code]
                             else
-                                tout << "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[12] == 1 )
                         {
                             if ( InputStr.mid( 48, 1 ) != "/" )
-                                tout << "\t" << InputStr.mid( 48, 1 );	// High cloud [code]
+                                OutputStr.append( "\t" + InputStr.mid( 48, 1 ) );	// High cloud [code]
                             else
-                                tout << "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[13] == 1 )
                         {
                             if ( InputStr.mid( 50, 1 ) != "/" )
-                                tout << "\t" << InputStr.mid( 50, 1 );	// Cloud base height [code]
+                                OutputStr.append( "\t" + InputStr.mid( 50, 1 ) );	// Cloud base height [code]
                             else
-                                tout << "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[14] == 1 )
                         {
                             if ( InputStr.mid( 52, 1 ) != "/" )
-                                tout << "\t" << InputStr.mid( 52, 1 );	// Present blowing snow [code]
+                                OutputStr.append( "\t" + InputStr.mid( 52, 1 ) );	// Present blowing snow [code]
                             else
-                                tout << "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[15] == 1 )
                         {
                             if ( InputStr.mid( 53, 1 ) != "/" )
-                                tout << "\t" << InputStr.mid( 53, 1 );	// Past blowing snow [code]
+                                OutputStr.append( "\t" + InputStr.mid( 53, 1 ) );	// Past blowing snow [code]
                             else
-                                tout << "\t";
+                                OutputStr.append( "\t" );
                         }
 
                         if ( P[16] == 1 )
                         {
                             if ( InputStr.mid( 55, 1 ) != "/" )
-                                tout << "\t" << InputStr.mid( 55, 2 );	// Horizontal visibility [code]
+                                OutputStr.append( "\t" + InputStr.mid( 55, 2 ) );	// Horizontal visibility [code]
                             else
-                                tout << "\t";
+                                OutputStr.append( "\t" );
                         }
 
-                        tout << eol;
+                        OutputStr.replace( "/", "" );
+
+                        tout << OutputStr << "\t" << InputStr << eol;
 
                         break;
 
@@ -1479,7 +1489,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                         if ( b_Import == false )
                             OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + num2str( f_Latitude ) + "\t" + num2str( f_Longitude ); // Station Date/Time Latitude Longitude
                         else
-                            OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ); // Station Date/Time
+                            OutputStr = dt.toString( "yyyy-MM-ddThh:mm" ); // Date/Time
 
                         if ( b_Import == false ) // IIiii
                             OutputStr.append( "\t" + InputStr.section( " ", 1, 1 ) );
@@ -1730,7 +1740,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                         if ( b_Import == false )
                             OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + num2str( f_Latitude ) + "\t" + num2str( f_Longitude ); // Station Date/Time Latitude Longitude
                         else
-                            OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ); // Station Date/Time
+                            OutputStr = dt.toString( "yyyy-MM-ddThh:mm" ); // Date/Time
 
                         if ( b_Import == false ) // IIiii
                             OutputStr.append( "\tnot given" );
@@ -1986,8 +1996,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                         if ( b_Import == false )
                             OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + num2str( f_Latitude ) + "\t" + num2str( f_Longitude ); // Station Date/Time Latitude Longitude
                         else
-                            OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ); // Station Date/Time
-
+                            OutputStr = dt.toString( "yyyy-MM-ddThh:mm" ); // Date/Time
 
                         if ( b_Import == false )
                             OutputStr.append( "\t" + InputStr.section( " ", 1, 1 ) );            // IIiii
