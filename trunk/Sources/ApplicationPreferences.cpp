@@ -105,6 +105,10 @@ void MainWindow::savePreferences()
     settings.setValue( "FieldWidth", gi_FieldWidth );
     settings.endGroup();
 
+    settings.beginGroup( "ReferenceID" );
+    settings.setValue( "LastRefercenceID", gi_lastReferenceID );
+    settings.endGroup();
+
     // Quality check options
     settings.beginGroup( "QualityCheckOptions" );
     settings.setValue( "CheckPhysicallyPossibleLimits", gb_CheckPhysicallyPossibleLimits );
@@ -252,6 +256,10 @@ void MainWindow::loadPreferences()
     gi_FieldDelimiter   = settings.value( "FieldDelimiter", _TABSTOP_ ).toInt();
     gi_FieldAlignment   = settings.value( "FieldAlignment", QTextStream::AlignLeft ).toInt();
     gi_FieldWidth       = settings.value( "FieldWidth", 20 ).toInt();
+    settings.endGroup();
+
+    settings.beginGroup( "ReferenceID" );
+    gi_lastReferenceID = settings.value( "LastRefercenceID", 70000 ).toInt();
     settings.endGroup();
 
     // Quality check options

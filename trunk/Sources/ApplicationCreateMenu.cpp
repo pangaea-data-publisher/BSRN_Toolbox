@@ -157,23 +157,26 @@ void MainWindow::createActions()
 
 // Tools menu
 
-    concatenateFilesAction = new QAction(tr("&Concatenate files..."), this);
+    concatenateFilesAction = new QAction(tr("Concatenate files..."), this);
     connect(concatenateFilesAction, SIGNAL(triggered()), this, SLOT(doConcatenateFiles()));
 
-    WinConvertEOLAction = new QAction(tr("&Convert Windows End-of-Line to UNIX"), this);
+    WinConvertEOLAction = new QAction(tr("Convert Windows End-of-Line to UNIX"), this);
     connect(WinConvertEOLAction, SIGNAL(triggered()), this, SLOT(doWinConvertEOL()));
 
-    MacOSConvertEOLAction = new QAction(tr("&Convert MacOS 9 End-of-Line to UNIX"), this);
+    MacOSConvertEOLAction = new QAction(tr("Convert MacOS 9 End-of-Line to UNIX"), this);
     connect(MacOSConvertEOLAction, SIGNAL(triggered()), this, SLOT(doMacOSConvertEOL()));
 
-    compressFileAction = new QAction(tr("&Compress files with gzip"), this);
+    compressFileAction = new QAction(tr("Compress files with gzip"), this);
     connect(compressFileAction, SIGNAL(triggered()), this, SLOT(doCompressFile()));
 
-    convertUnformattedAction = new QAction(tr("&Convert tab files to unformatted format..."), this);
+    convertUnformattedAction = new QAction(tr("Convert tab files to unformatted format..."), this);
     connect(convertUnformattedAction, SIGNAL(triggered()), this, SLOT(doConvertUnformatted()));
 
-    convertFormattedAction = new QAction(tr("&Convert tab files to formatted format..."), this);
+    convertFormattedAction = new QAction(tr("Convert tab files to formatted format..."), this);
     connect(convertFormattedAction, SIGNAL(triggered()), this, SLOT(doConvertFormatted()));
+
+    createReplaceDatabaseAction = new QAction(tr("Create search and replace database..."), this);
+    connect(createReplaceDatabaseAction, SIGNAL(triggered()), this, SLOT(doCreateReplaceDatabase()));
 
 // Quality check menu
 
@@ -333,11 +336,16 @@ void MainWindow::createMenus()
 
     toolsMenu = menuBar()->addMenu( tr( "&Tools" ) );
     toolsMenu->addAction( concatenateFilesAction );
+    toolsMenu->addSeparator();
     toolsMenu->addAction( WinConvertEOLAction );
     toolsMenu->addAction( MacOSConvertEOLAction );
+    toolsMenu->addSeparator();
     toolsMenu->addAction( compressFileAction );
+    toolsMenu->addSeparator();
     toolsMenu->addAction( convertUnformattedAction );
     toolsMenu->addAction( convertFormattedAction );
+    toolsMenu->addSeparator();
+    toolsMenu->addAction( createReplaceDatabaseAction );
 
 // **********************************************************************************************
 

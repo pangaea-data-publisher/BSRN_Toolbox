@@ -76,6 +76,7 @@ SOURCES = ./Sources/ApplicationInit.cpp \
     ./Sources/CompressFiles.cpp \
     ./Sources/ConvertFiles.cpp \
     ./Sources/CreateReferenceImportFile.cpp \
+    ./Sources/CreateReplaceDatabase.cpp \
     ./Sources/DownloadStationToArchiveFiles.cpp \
     ./Sources/doAll.cpp \
     ./Sources/ExpandedMeasurementsConverter.cpp \

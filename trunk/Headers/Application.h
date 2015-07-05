@@ -114,6 +114,7 @@ public:
     int         gi_FieldDelimiter;      //!< Felddelimiter fr den Format Converter
     int         gi_FieldWidth;          //!< Feldbreite fr den Format Converter
     int         gi_FieldAlignment;      //!< Textausrichtung fr den Format Converter
+    int         gi_lastReferenceID;     //!< letzte gesetzte Reference ID
 
     QString		gs_DownloadPath;        //!< Pfad fuer die Ablage der Station-to-archive Dateien
     QString		gs_User;                //!< Accountname
@@ -220,6 +221,7 @@ private slots:
     void doCompressFile();
     void doConvertUnformatted();
     void doConvertFormatted();
+    void doCreateReplaceDatabase();
 
 //  Quality management
     void doQualityCheckRecommendedV20();
@@ -363,6 +365,7 @@ private:
     int convertEOL( const QString& FilenameIn, const bool convertEOL, const int OS );
     int convertFile( const QString& FilenameIn, const QString& FilenameOut, const QString& MissingValue, const int FieldDelimiter, const int NumOfFiles  );
     int convertFile( const QString& FilenameIn, const QString& FilenameOut, const int FieldAlignment, const int FieldWidth, const QString& MissingValue, const int NumOfFiles  );
+    int createReplaceDatabase( const QString& FilenameIn, const int firstReferenceID, const int NumOfFiles );
 
     float calcGeopotentialHeight( const QString& ahhh );
 
@@ -436,6 +439,7 @@ private:
     QAction *WinConvertEOLAction;
     QAction *MacOSConvertEOLAction;
     QAction *compressFileAction;
+    QAction *createReplaceDatabaseAction;
 
     QAction *QualityCheckRecommendedV20Action;
 
