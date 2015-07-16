@@ -758,14 +758,19 @@ QString MainWindow::DatasetTitle( const QString& s_Text, const QString& s_Statio
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::Reference( const QString& s_ReferenceID, const QString& s_RelationTypeID, const QString& s_ReferenceType, const QString& s_EventLabel )
+QString MainWindow::Reference( const QString& s_ReferenceID, const int i_RelationTypeID, const QString& s_ReferenceType, const QString& s_EventLabel )
 {
     QString s_OutputStr = "";
 
-    if ( s_ReferenceID == "999999" )
-        s_OutputStr = "    { \"ID\": @" + s_ReferenceType + "@" + s_EventLabel + "@" + ", \"RelationTypeID\": " + s_RelationTypeID + " }";
-    else
-        s_OutputStr = "    { \"ID\": " + s_ReferenceID + ", \"RelationTypeID\": " + s_RelationTypeID + " }";
+    if ( s_ReferenceID.isEmpty() == false )
+    {
+        s_OutputStr = "    ";
+
+        if ( s_ReferenceID == "999999" )
+            s_OutputStr.append( "{ \"ID\": @" + s_ReferenceType + "@" + s_EventLabel + "@" + ", \"RelationTypeID\": " + num2str( i_RelationTypeID ) + " }" );
+        else
+            s_OutputStr.append( "{ \"ID\": " + s_ReferenceID + ", \"RelationTypeID\": " + num2str( i_RelationTypeID ) + " }" );
+    }
 
     return( s_OutputStr );
 }

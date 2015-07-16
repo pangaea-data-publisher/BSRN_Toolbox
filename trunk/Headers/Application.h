@@ -332,7 +332,7 @@ private:
     QString AuthorIDs( const QString& AuthorIDs = "-999" );
     QString SourceID( const QString& SourceID = "-999" );
     QString DatasetTitle( const QString& Text, const QString& StationName, const QDateTime dt );
-    QString Reference( const QString &ReferenceID = "-999", const QString& RelationTypeID = "-999", const QString &ReferenceType = "-999", const QString& EventLabel = "" );
+    QString Reference( const QString &ReferenceID = "-999", const int RelationTypeID = -999, const QString &ReferenceType = "-999", const QString& EventLabel = "" );
     QString ExportFilename( const QString& EventLabel, const QString& Text, const QDateTime dt );
     QString EventLabel( const QString& EventLabel = "" );
     QString Parameter( const QString& ParameterID = "-999", const QString& PIID = "506", const QString& MethodID = "43", const QString& Format = "", const QString& Comment = "" );
