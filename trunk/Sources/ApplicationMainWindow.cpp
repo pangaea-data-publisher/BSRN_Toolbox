@@ -2,8 +2,9 @@
 /* 2009-01-12                 */
 /* Dr. Rainer Sieger          */
 
-#include "Application.h"
+#include <QLoggingCategory>
 
+#include "Application.h"
 #include "../Forms/AboutDialog/AboutDialog.h"
 
 // **********************************************************************************************
@@ -16,6 +17,8 @@
 
 int main( int argc, char *argv[] )
 {
+    QLoggingCategory::setFilterRules( "qt.network.ssl.warning=false" ); // disables the QSslSocket warning
+
     QApplication app( argc, argv );
 
     #if defined(Q_OS_MAC)
