@@ -1662,6 +1662,7 @@ void MainWindow::initProgress( const int i_totalNumberOfSteps )
     ProgressBar->reset();
     ProgressBar->setRange( 0, i_totalNumberOfSteps );
     ProgressBar->setValue( 0 );
+    ProgressBar->setTextVisible( true );
 }
 
 // **********************************************************************************************
@@ -1696,6 +1697,7 @@ void MainWindow::initProgress( const int i_NumOfFiles, const QString &s_Filename
         ProgressBar->reset();
         ProgressBar->setRange( 0, i_totalNumberOfSteps );
         ProgressBar->setValue( 0 );
+        ProgressBar->setTextVisible( true );
         setStatusBarFileInProgress( s_FilenameIn );
         break;
     }
