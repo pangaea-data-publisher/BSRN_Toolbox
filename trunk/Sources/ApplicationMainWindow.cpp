@@ -1307,7 +1307,18 @@ void MainWindow::createStatusBar()
     StatusMessage->setIndent( 5 );
 
     ProgressBar = new QProgressBar();
+
+#if defined(Q_OS_LINUX)
     ProgressBar->setTextVisible( false );
+#endif
+
+#if defined(Q_OS_MAC)
+    ProgressBar->setTextVisible( true ); // if false, the ProgressBar will not be shown (maybe a Qt bug?)
+#endif
+
+#if defined(Q_OS_WIN)
+    ProgressBar->setTextVisible( false );
+#endif
 
     statusBar()->addWidget( StatusMessage, 2 );
     statusBar()->addWidget( ProgressBar, 1 );
@@ -1662,7 +1673,6 @@ void MainWindow::initProgress( const int i_totalNumberOfSteps )
     ProgressBar->reset();
     ProgressBar->setRange( 0, i_totalNumberOfSteps );
     ProgressBar->setValue( 0 );
-    ProgressBar->setTextVisible( true );
 }
 
 // **********************************************************************************************
@@ -1697,7 +1707,6 @@ void MainWindow::initProgress( const int i_NumOfFiles, const QString &s_Filename
         ProgressBar->reset();
         ProgressBar->setRange( 0, i_totalNumberOfSteps );
         ProgressBar->setValue( 0 );
-        ProgressBar->setTextVisible( true );
         setStatusBarFileInProgress( s_FilenameIn );
         break;
     }
