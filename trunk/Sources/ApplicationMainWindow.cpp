@@ -1300,7 +1300,7 @@ QString MainWindow::getApplicationName( const bool b_replaceUnderline )
 
 /*! @brief StatusBar erstellen */
 
-void MainWindow::createStatusBar()
+void MainWindow::createStatusBar( const bool b_showProgressBar )
 {
     StatusMessage = new QLabel();
     StatusMessage->setAlignment( Qt::AlignLeft | Qt::AlignVCenter );
@@ -1320,8 +1320,15 @@ void MainWindow::createStatusBar()
     ProgressBar->setTextVisible( false );
 #endif
 
-    statusBar()->addWidget( StatusMessage, 2 );
-    statusBar()->addWidget( ProgressBar, 1 );
+    if ( b_showProgressBar == true )
+    {
+        statusBar()->addWidget( StatusMessage, 2 );
+        statusBar()->addWidget( ProgressBar, 1 );
+    }
+    else
+    {
+        statusBar()->addWidget( StatusMessage, 2 );
+    }
 }
 
 // **********************************************************************************************
