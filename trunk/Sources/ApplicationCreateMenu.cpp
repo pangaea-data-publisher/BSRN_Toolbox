@@ -364,3 +364,87 @@ void MainWindow::createMenus()
     helpMenu->addAction( helpAction );
 }
 
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+void MainWindow::enableMenuItems( const QStringList sl_FilenameList )
+{
+    bool b_containsBinaryFile = containsBinaryFile( sl_FilenameList );
+
+// **********************************************************************************************
+
+    QList<QAction*> metadataMenuActions = metadataMenu->actions();
+
+    if ( b_containsBinaryFile == false )
+    {
+        for ( int i=0; i<metadataMenuActions.count(); ++i )
+            metadataMenuActions.at( i )->setEnabled( true );
+    }
+    else
+    {
+        for ( int i=0; i<metadataMenuActions.count(); ++i )
+            metadataMenuActions.at( i )->setEnabled( false );
+    }
+
+// **********************************************************************************************
+
+    QList<QAction*> dataMenuActions = dataMenu->actions();
+
+    if ( b_containsBinaryFile == false )
+    {
+        for ( int i=0; i<dataMenuActions.count(); ++i )
+            dataMenuActions.at( i )->setEnabled( true );
+    }
+    else
+    {
+        for ( int i=0; i<dataMenuActions.count(); ++i )
+            dataMenuActions.at( i )->setEnabled( false );
+    }
+
+// **********************************************************************************************
+
+    QList<QAction*> importMenuAction = importMenu->actions();
+
+    if ( b_containsBinaryFile == false )
+    {
+        for ( int i=0; i<importMenuAction.count(); ++i )
+            importMenuAction.at( i )->setEnabled( true );
+    }
+    else
+    {
+        for ( int i=0; i<importMenuAction.count(); ++i )
+            importMenuAction.at( i )->setEnabled( false );
+    }
+
+// **********************************************************************************************
+
+    QList<QAction*> toolsMenuAction = toolsMenu->actions();
+
+    if ( b_containsBinaryFile == false )
+    {
+        for ( int i=0; i<toolsMenuAction.count(); ++i )
+            toolsMenuAction.at( i )->setEnabled( true );
+    }
+    else
+    {
+        for ( int i=0; i<toolsMenuAction.count(); ++i )
+            toolsMenuAction.at( i )->setEnabled( false );
+    }
+
+// **********************************************************************************************
+
+    QList<QAction*> qualityMenuAction = qualityMenu->actions();
+
+    if ( b_containsBinaryFile == false )
+    {
+        for ( int i=0; i<qualityMenuAction.count(); ++i )
+            qualityMenuAction.at( i )->setEnabled( true );
+    }
+    else
+    {
+        for ( int i=0; i<qualityMenuAction.count(); ++i )
+            qualityMenuAction.at( i )->setEnabled( false );
+    }
+}
+

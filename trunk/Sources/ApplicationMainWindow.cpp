@@ -190,7 +190,7 @@ QStringList MainWindow::expandCommandline()
 
             if ( fi.isFile() == true )
             {
-                buildFileList( sl_Filename, QApplication::arguments().at( i ) );
+                addToFilenameList( sl_Filename, QApplication::arguments().at( i ) );
             }
             else
             {
@@ -523,7 +523,7 @@ int MainWindow::chooseFiles()
             fi.setFile( sl_d_Filename.at( i ) );
 
             if ( fi.isFile() == true )
-                buildFileList( gsl_FilenameList, sl_d_Filename.at( i ) );
+                addToFilenameList( gsl_FilenameList, sl_d_Filename.at( i ) );
 
             ++i;
         }
@@ -706,13 +706,13 @@ void MainWindow::closeEvent( QCloseEvent *event )
 *   Dateiliste hinzugefuegt.
 *
 *   @param  s_Filename Name der Datei, die der Liste hinzugefuegt werden soll.
-*   @param  b_extractZipFile wenn b_extractZipFile gleich true ist, werden Zip-Dateien entpackt.
+*   @param  b_extractZipFiles wenn b_extractZipFiles gleich true ist, werden Zip-Dateien entpackt.
 *
 *   @retval _NOERROR_ Evtl. vorhandene Zip-Dateie wurde erfolgreich geloescht.
 *   @retval _ERROR_ Das Loeschen einer Zip-Datei hat nicht funktioniert.
 */
 
-int MainWindow::buildFileList( QStringList &sl_FilenameList, const QString &s_Filename, const bool b_extractZipFile )
+int MainWindow::addToFilenameList( QStringList &sl_FilenameList, const QString &s_Filename, const bool b_showAllFiles, const bool b_extractZipFiles )
 {
     int	err	= _NOERROR_;
 
@@ -720,19 +720,19 @@ int MainWindow::buildFileList( QStringList &sl_FilenameList, const QString &s_Fi
 
     QFileInfo fi( s_Filename );
 
-    if ( ( fi.suffix().toLower() != "zip" ) && ( fi.suffix().toLower() != "gz" ) )
+    if ( ( b_showAllFiles == true ) || ( ( fi.suffix().toLower() != "zip" ) && ( fi.suffix().toLower() != "gz" ) ) )
     {
         sl_FilenameList.append( QDir::toNativeSeparators( s_Filename ) );
     }
     else
     {
-        if ( b_extractZipFile == true )
+        if ( b_extractZipFiles == true )
         {
-            err = extractZipFile( s_Filename, false, false );
+            err = extractZipFiles( s_Filename, false, false );
 
             if ( err == _NOERROR_ )
             {
-                listDir( sl_FilenameList, fi.absolutePath() + "/" + fi.baseName(), false );
+                listDir( sl_FilenameList, fi.absolutePath() + "/" + fi.baseName(), b_showAllFiles, b_extractZipFiles );
             }
             else
             {
@@ -795,10 +795,10 @@ int MainWindow::emptyDir( const QString &s_Dir )
 /*! @brief Ermittelt die Dateien in einem Verzeichnis.
 *
 *   @param s_Dir Name des Verzeichnises, das analysiert werden soll.
-*   @param  b_extractZipFile wenn b_extractZipFile gleich true ist, werden Zip-Dateien entpackt.
+*   @param  b_extractZipFiles wenn b_extractZipFiles gleich true ist, werden Zip-Dateien entpackt.
 */
 
-void MainWindow::listDir( QStringList &sl_FilenameList, const QString &s_Dir, const bool b_extractZipFile )
+void MainWindow::listDir( QStringList &sl_FilenameList, const QString &s_Dir, const bool b_showAllFiles, const bool b_extractZipFiles )
 {
     int			i				= 0;
 
@@ -834,12 +834,12 @@ void MainWindow::listDir( QStringList &sl_FilenameList, const QString &s_Dir, co
 
                 if ( fi.isFile() == true )
                 {
-                    buildFileList( sl_FilenameList, s_Filename, b_extractZipFile );
+                    addToFilenameList( sl_FilenameList, s_Filename, b_showAllFiles, b_extractZipFiles );
                 }
                 else
                 {
                     if ( fi.isDir() == true )
-                        listDir( sl_FilenameList, s_Filename, b_extractZipFile );
+                        listDir( sl_FilenameList, s_Filename, b_showAllFiles, b_extractZipFiles );
                 }
             }
 
@@ -994,14 +994,13 @@ int MainWindow::calcFileSizeClass( const QString &s_Filename, const int i_NumOfF
 *   @retval _ERROR_ Zip-Datei konnte nicht geloescht werden.
 */
 
-int MainWindow::extractZipFile( const QString &s_Filename, const bool b_createNewDir, const bool b_delZipFile )
+int MainWindow::extractZipFiles( const QString &s_Filename, const bool b_createNewDir, const bool b_delZipFile )
 {
     int		err					= _NOERROR_;
     int		i_Format			= 0;
 
     QString	s_arg				= "";
     QString	s_NewDir			= "";
-    QString s_ApplicationPath	= "";
     QString s_ZipProgramName    = "";
     QString s_GZipProgramName   = "";
 
@@ -1012,8 +1011,8 @@ int MainWindow::extractZipFile( const QString &s_Filename, const bool b_createNe
 // **********************************************************************************************
 
     #if defined(Q_OS_LINUX)
-        s_ZipProgramName  = "unzip";
-        s_GZipProgramName = "gzip";
+        s_ZipProgramName    = "unzip";
+        s_GZipProgramName   = "gzip";
     #endif
 
     #if defined(Q_OS_WIN)
@@ -1022,8 +1021,8 @@ int MainWindow::extractZipFile( const QString &s_Filename, const bool b_createNe
     #endif
 
     #if defined(Q_OS_MAC)
-        s_ZipProgramName  = "unzip";
-        s_GZipProgramName = "gzip";
+        s_ZipProgramName    = "unzip";
+        s_GZipProgramName   = "gzip";
     #endif
 
 // **********************************************************************************************
@@ -1036,8 +1035,7 @@ int MainWindow::extractZipFile( const QString &s_Filename, const bool b_createNe
     if ( fi.suffix().toLower() == "gz" )
         i_Format = _GZIP_;
 
-    s_NewDir			= fi.absolutePath() + "/";
-    s_ApplicationPath	= QCoreApplication::applicationDirPath();
+    s_NewDir = fi.absolutePath() + "/";
 
     sl_Message.clear();
 
@@ -1056,11 +1054,11 @@ int MainWindow::extractZipFile( const QString &s_Filename, const bool b_createNe
         switch ( i_Format )
         {
         case _ZIP_:
-            s_arg = "\"" + QDir::toNativeSeparators( s_ApplicationPath ) + QDir::separator() + s_ZipProgramName + "\" -o \"" + QDir::toNativeSeparators( s_Filename ) + "\" -d \"" + QDir::toNativeSeparators( s_NewDir ) + "\"";
+            s_arg = "\"" + s_ZipProgramName + "\" -o \"" + QDir::toNativeSeparators( s_Filename ) + "\" -d \"" + QDir::toNativeSeparators( s_NewDir ) + "\"";
             break;
 
         case _GZIP_:
-            s_arg = "\"" + QDir::toNativeSeparators( s_ApplicationPath ) + QDir::separator() + s_GZipProgramName + "\" -d \"" + QDir::toNativeSeparators( s_Filename ) + "\"";
+            s_arg = "\"" + s_GZipProgramName + "\" -d \"" + QDir::toNativeSeparators( s_Filename ) + "\"";
             break;
 
         default:
@@ -1110,6 +1108,9 @@ bool MainWindow::existsFirstFile( const int i_ActionNumber, const QString &s_Fil
             return( false ); // Error, choose files canceled
     }
 
+    if ( containsBinaryFile( gsl_FilenameList ) == true )
+        return( false );
+
     return( true );  // File exists
 }
 
@@ -1150,7 +1151,7 @@ bool MainWindow::buildFilename( const int i_ActionNumber, const QString &s_Filen
 
     fi.setFile( s_FilenameIn );
 
-    if ( ( fi.exists() == true ) && ( fi.suffix().toLower() != "zip" ) && ( fi.suffix().toLower() != "gz" ) )
+    if ( fi.exists() == true )
     {
         s_FilenameOut = fi.absolutePath() + "/" + s_FilenameFormat + setExtension( i_Extension );
 
@@ -1446,6 +1447,8 @@ void MainWindow::showFilenameList( const int i_ActionNumber, const QString &s_Fi
     }
 
     showList( sl_List );
+
+    enableMenuItems( sl_List );
 }
 
 // **********************************************************************************************
@@ -1510,7 +1513,7 @@ void MainWindow::dropEvent( QDropEvent *event )
 
         if ( fi.isFile() == true )
         {
-            buildFileList( gsl_FilenameList, fi.filePath() );
+            addToFilenameList( gsl_FilenameList, fi.filePath() );
         }
         else
         {
@@ -2100,4 +2103,55 @@ void MainWindow::newWindow()
 #if defined(Q_OS_WIN)
     ;
 #endif
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+// Filename list contains binary file
+
+bool MainWindow::containsBinaryFile( const QStringList sl_FilenameList )
+{
+    QFileInfo fi;
+    QString   s_Extension = "";
+
+// **********************************************************************************************
+
+    for ( int i=0; i<sl_FilenameList.count(); i++ )
+    {
+        fi.setFile( sl_FilenameList.at( i ) );
+        s_Extension = fi.suffix().toLower();
+
+        if ( s_Extension == "zip" )
+            return( true );
+
+        if ( s_Extension == "gz" )
+            return( true );
+
+        if ( s_Extension == "png" )
+            return( true );
+
+        if ( s_Extension == "jpg" )
+            return( true );
+
+        if ( s_Extension == "gif" )
+            return( true );
+
+        if ( s_Extension == "tif" )
+            return( true );
+
+        if ( s_Extension == "xls" )
+            return( true );
+
+        if ( s_Extension == "doc" )
+            return( true );
+
+        if ( s_Extension == "xlsx" )
+            return( true );
+
+        if ( s_Extension == "docx" )
+            return( true );
+    }
+
+    return( false );
 }
