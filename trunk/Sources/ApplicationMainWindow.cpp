@@ -706,13 +706,13 @@ void MainWindow::closeEvent( QCloseEvent *event )
 *   Dateiliste hinzugefuegt.
 *
 *   @param  s_Filename Name der Datei, die der Liste hinzugefuegt werden soll.
-*   @param  b_extractZipFiles wenn b_extractZipFiles gleich true ist, werden Zip-Dateien entpackt.
+*   @param  b_decompressFile wenn b_decompressFile gleich true ist, werden Zip-Dateien entpackt.
 *
 *   @retval _NOERROR_ Evtl. vorhandene Zip-Dateie wurde erfolgreich geloescht.
 *   @retval _ERROR_ Das Loeschen einer Zip-Datei hat nicht funktioniert.
 */
 
-int MainWindow::addToFilenameList( QStringList &sl_FilenameList, const QString &s_Filename, const bool b_showAllFiles, const bool b_extractZipFiles )
+int MainWindow::addToFilenameList( QStringList &sl_FilenameList, const QString &s_Filename, const bool b_showAllFiles, const bool b_decompressFile )
 {
     int	err	= _NOERROR_;
 
@@ -726,13 +726,13 @@ int MainWindow::addToFilenameList( QStringList &sl_FilenameList, const QString &
     }
     else
     {
-        if ( b_extractZipFiles == true )
+        if ( b_decompressFile == true )
         {
-            err = extractZipFiles( s_Filename, false, false );
+            err = decompressFile( s_Filename, false, false );
 
             if ( err == _NOERROR_ )
             {
-                listDir( sl_FilenameList, fi.absolutePath() + "/" + fi.baseName(), b_showAllFiles, b_extractZipFiles );
+                listDir( sl_FilenameList, fi.absolutePath() + "/" + fi.baseName(), b_showAllFiles, b_decompressFile );
             }
             else
             {
@@ -795,10 +795,10 @@ int MainWindow::emptyDir( const QString &s_Dir )
 /*! @brief Ermittelt die Dateien in einem Verzeichnis.
 *
 *   @param s_Dir Name des Verzeichnises, das analysiert werden soll.
-*   @param  b_extractZipFiles wenn b_extractZipFiles gleich true ist, werden Zip-Dateien entpackt.
+*   @param  b_decompressFile wenn b_decompressFile gleich true ist, werden Zip-Dateien entpackt.
 */
 
-void MainWindow::listDir( QStringList &sl_FilenameList, const QString &s_Dir, const bool b_showAllFiles, const bool b_extractZipFiles )
+void MainWindow::listDir( QStringList &sl_FilenameList, const QString &s_Dir, const bool b_showAllFiles, const bool b_decompressFile )
 {
     int			i				= 0;
 
@@ -834,12 +834,12 @@ void MainWindow::listDir( QStringList &sl_FilenameList, const QString &s_Dir, co
 
                 if ( fi.isFile() == true )
                 {
-                    addToFilenameList( sl_FilenameList, s_Filename, b_showAllFiles, b_extractZipFiles );
+                    addToFilenameList( sl_FilenameList, s_Filename, b_showAllFiles, b_decompressFile );
                 }
                 else
                 {
                     if ( fi.isDir() == true )
-                        listDir( sl_FilenameList, s_Filename, b_showAllFiles, b_extractZipFiles );
+                        listDir( sl_FilenameList, s_Filename, b_showAllFiles, b_decompressFile );
                 }
             }
 
@@ -994,7 +994,7 @@ int MainWindow::calcFileSizeClass( const QString &s_Filename, const int i_NumOfF
 *   @retval _ERROR_ Zip-Datei konnte nicht geloescht werden.
 */
 
-int MainWindow::extractZipFiles( const QString &s_Filename, const bool b_createNewDir, const bool b_delZipFile )
+int MainWindow::decompressFile( const QString &s_Filename, const bool b_createNewDir, const bool b_delZipFile )
 {
     int		err					= _NOERROR_;
     int		i_Format			= 0;
@@ -1070,9 +1070,7 @@ int MainWindow::extractZipFiles( const QString &s_Filename, const bool b_createN
     }
 
     if ( b_delZipFile == true )
-    {
         err = removeFile( s_Filename );
-    }
 
     return( err );
 }
