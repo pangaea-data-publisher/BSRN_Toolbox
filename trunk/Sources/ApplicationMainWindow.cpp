@@ -728,7 +728,7 @@ int MainWindow::addToFilenameList( QStringList &sl_FilenameList, const QString &
     {
         if ( b_decompressFile == true )
         {
-            err = decompressFile( s_Filename, false, false );
+            err = decompressFile( s_Filename, false );
 
             if ( err == _NOERROR_ )
             {
@@ -982,48 +982,59 @@ int MainWindow::calcFileSizeClass( const QString &s_Filename, const int i_NumOfF
 // **********************************************************************************************
 // **********************************************************************************************
 // **********************************************************************************************
-// 2009-11-29
+// 2016-01-08
 
-/*! @brief Auspacken von Zip und GZip Dateien.
-*
-*   @param  s_Filename Dateiname der Zip-Datei.
-*   @param  b_createNewDir wenn b_createNewDir gleich true ist, wird ein neues Verzeichnis erstellt.
-*   @param  b_delZipFile wenn b_delZipFile gleich true ist, wird die Zip-Datei nach dem Auspacken geloescht.
+/*! @brief Komprimieren von Dateien mit zip bzw. 7-Zip. */
 
-*   @retval _NOERROR_ Loeschen der Zip-Datei war erfolgreich.
-*   @retval _ERROR_ Zip-Datei konnte nicht geloescht werden.
-*/
-
-int MainWindow::decompressFile( const QString &s_Filename, const bool b_createNewDir, const bool b_delZipFile )
+void MainWindow::compressFile( const QString &s_FilenameIn )
 {
-    int		err					= _NOERROR_;
-    int		i_Format			= 0;
-
-    QString	s_arg				= "";
-    QString	s_NewDir			= "";
-    QString s_ZipProgramName    = "";
-    QString s_GZipProgramName   = "";
-
-    QStringList sl_Message;
+    QFileInfo fi( s_FilenameIn );
 
     QProcess process;
 
 // **********************************************************************************************
 
     #if defined(Q_OS_LINUX)
-        s_ZipProgramName    = "unzip";
-        s_GZipProgramName   = "gzip";
-    #endif
-
-    #if defined(Q_OS_WIN)
-        s_ZipProgramName  = "\"" + QDir::toNativeSeparators( QCoreApplication::applicationDirPath() + "/" ) + "unzip.exe" + "\"";
-        s_GZipProgramName = "\"" + QDir::toNativeSeparators( QCoreApplication::applicationDirPath() + "/" ) + "gzip.exe" + "\"";
+        process.start( "zip -j \"" + QDir::toNativeSeparators( fi.absolutePath() + "/" + fi.completeBaseName() + ".zip" ) + "\"" + " \"" + QDir::toNativeSeparators( s_FilenameIn ) + "\"" );
     #endif
 
     #if defined(Q_OS_MAC)
-        s_ZipProgramName    = "unzip";
-        s_GZipProgramName   = "gzip";
+        process.start( "zip -j \"" + QDir::toNativeSeparators( fi.absolutePath() + "/" + fi.completeBaseName() + ".zip" ) + "\"" + " \"" + QDir::toNativeSeparators( s_FilenameIn ) + "\"" );
     #endif
+
+    #if defined(Q_OS_WIN)
+        process.start( "7z a \"" + QDir::toNativeSeparators( fi.absolutePath() + "/" + fi.completeBaseName() + ".zip" ) + "\"" + " \"" + QDir::toNativeSeparators( s_FilenameIn ) + "\"" );
+    #endif
+
+    process.waitForFinished( -1 );
+
+    return;
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+// 2016-01-07
+
+/*! @brief Auspacken von Zip und GZip Dateien.
+*
+*   @param  s_Filename Dateiname der Zip-Datei.
+*   @param  b_delZipFile wenn b_delZipFile gleich true ist, wird die Zip-Datei nach dem Auspacken geloescht.
+
+*   @retval _NOERROR_ Loeschen der Zip-Datei war erfolgreich.
+*   @retval _ERROR_ Zip-Datei konnte nicht geloescht werden.
+*/
+
+int MainWindow::decompressFile( const QString &s_Filename, const bool b_delZipFile )
+{
+    int		err					= _NOERROR_;
+    int		i_Format			= 0;
+
+    QString	s_arg				= "";
+
+    QStringList sl_Message;
+
+    QProcess process;
 
 // **********************************************************************************************
 
@@ -1035,38 +1046,65 @@ int MainWindow::decompressFile( const QString &s_Filename, const bool b_createNe
     if ( fi.suffix().toLower() == "gz" )
         i_Format = _GZIP_;
 
-    s_NewDir = fi.absolutePath() + "/";
-
     sl_Message.clear();
 
-    if ( b_createNewDir == true )
-    {
-        s_NewDir.append( fi.baseName() );
-        QDir().mkdir( QDir::toNativeSeparators( s_NewDir ) );
-    }
-
-    fi.setFile( s_NewDir );
-
-    if ( ( fi.isDir() == true ) && ( fi.exists() == true ) )
+    if ( fi.exists() == true )
     {
         showMessage( tr( "Decompressing " ) + QDir::toNativeSeparators( s_Filename ) + tr( " ..." ), sl_Message );
 
-        switch ( i_Format )
-        {
-        case _ZIP_:
-            s_arg = "\"" + s_ZipProgramName + "\" -o \"" + QDir::toNativeSeparators( s_Filename ) + "\" -d \"" + QDir::toNativeSeparators( s_NewDir ) + "\"";
-            break;
+        #if defined(Q_OS_LINUX)
+            switch ( i_Format )
+            {
+            case _ZIP_:
+                s_arg = "unzip -o \"" + QDir::toNativeSeparators( s_Filename ) + "\" -d \"" + QDir::toNativeSeparators( fi.absolutePath() ) + "\"";
+                break;
 
-        case _GZIP_:
-            s_arg = "\"" + s_GZipProgramName + "\" -d \"" + QDir::toNativeSeparators( s_Filename ) + "\"";
-            break;
+            case _GZIP_:
+                s_arg = "gzip -d \"" + QDir::toNativeSeparators( s_Filename ) + "\"";
+                break;
 
-        default:
-            break;
-        }
+            default:
+                break;
+            }
+        #endif
+
+        #if defined(Q_OS_MAC)
+            switch ( i_Format )
+            {
+            case _ZIP_:
+                s_arg = "unzip -o \"" + QDir::toNativeSeparators( s_Filename ) + "\" -d \"" + QDir::toNativeSeparators( fi.absolutePath() ) + "\"";
+                break;
+
+            case _GZIP_:
+                s_arg = "gzip -d \"" + QDir::toNativeSeparators( s_Filename ) + "\"";
+                break;
+
+            default:
+                break;
+            }
+        #endif
+
+        #if defined(Q_OS_WIN)
+            QString s_7zX86exe( getenv( "ProgramFiles(x86)" ) );
+            s_7zX86exe.append( "/7-Zip/7z.exe" );
+
+            switch ( i_Format )
+            {
+            case _ZIP_:
+                s_arg = "\"" + QDir::toNativeSeparators( s_7zX86exe ) + "\" x \"" + QDir::toNativeSeparators( s_Filename ) + "\" -o\"" + QDir::toNativeSeparators( fi.absolutePath() ) + "\"";
+                break;
+
+            case _GZIP_:
+                s_arg = "\"" + QDir::toNativeSeparators( s_7zX86exe ) + "\" x \"" + QDir::toNativeSeparators( s_Filename ) + "\" -o\"" + QDir::toNativeSeparators( fi.absolutePath() ) + "\"";
+                break;
+
+            default:
+                break;
+            }
+        #endif
 
         process.start( s_arg );
-        process.waitForFinished();
+        process.waitForFinished( -1 );
     }
 
     if ( b_delZipFile == true )
@@ -2152,4 +2190,27 @@ bool MainWindow::containsBinaryFile( const QStringList sl_FilenameList )
     }
 
     return( false );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+// check the availability of 7-zip for Windows
+
+bool MainWindow::check7z()
+{
+#if defined(Q_OS_WIN)
+    QString s_7zX86exe( getenv( "ProgramFiles(x86)" ) );
+    s_7zX86exe.append( "/7-Zip/7z.exe" );
+    QFileInfo fi_7zX86exe( s_7zX86exe );
+
+    if ( fi_7zX86exe.exists() == false )
+    {
+        QMessageBox::information( this, getApplicationName( true ), tr( "You have to install the\nprogram 7-zip 32-bit x86 (http://7-zip.org)\nbefore using this function." ) );
+
+        return( _CHOOSEABORTED_ );
+    }
+#endif
+
+    return( _NOERROR_ );
 }
