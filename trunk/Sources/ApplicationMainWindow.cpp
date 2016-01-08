@@ -1003,7 +1003,9 @@ void MainWindow::compressFile( const QString &s_FilenameIn )
     #endif
 
     #if defined(Q_OS_WIN)
-        process.start( "7z a \"" + QDir::toNativeSeparators( fi.absolutePath() + "/" + fi.completeBaseName() + ".zip" ) + "\"" + " \"" + QDir::toNativeSeparators( s_FilenameIn ) + "\"" );
+        QString s_7zX86exe( getenv( "ProgramFiles(x86)" ) );
+        s_7zX86exe.append( "/7-Zip/7z.exe" );
+        process.start( "\"" + QDir::toNativeSeparators( s_7zX86exe ) + "\" a \"" + QDir::toNativeSeparators( fi.absolutePath() + "/" + fi.completeBaseName() + ".zip" ) + "\"" + " \"" + QDir::toNativeSeparators( s_FilenameIn ) + "\"" );
     #endif
 
     process.waitForFinished( -1 );
