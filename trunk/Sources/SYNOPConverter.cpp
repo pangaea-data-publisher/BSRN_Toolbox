@@ -20,6 +20,7 @@
 int MainWindow::SYNOPTest( const QString& s_FilenameIn, int *P, const int i_NumOfFiles )
 {
     int				i_Format		= 0;
+    int             i_Year          = 2000;
 
     QString			InputStr		= "";
     QString			SearchString1	= "*C1000";
@@ -83,6 +84,8 @@ int MainWindow::SYNOPTest( const QString& s_FilenameIn, int *P, const int i_NumO
             if ( fi.baseName().startsWith( "syo" ) == true ) i_Format = 2;
             if ( fi.baseName().startsWith( "tam" ) == true ) i_Format = 3;
             if ( fi.baseName().startsWith( "tat" ) == true ) i_Format = 2;
+
+            i_Year = fi.baseName().right( 2 ).toInt();
 
             while ( ( tin.atEnd() == false ) && ( b_Stop == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) )
             {
@@ -180,75 +183,83 @@ int MainWindow::SYNOPTest( const QString& s_FilenameIn, int *P, const int i_NumO
                         break;
 
                     case 3: // TAM
-                        InputStr = InputStr.simplified();
-
-                        if ( InputStr.count( " " ) >= 2 )
+                        if ( i_Year < 8 ) // 2000-2007
                         {
-                            if ( InputStr.section( " ", 2, 2 ).mid( 2, 1 ) != "/" ) P[1] = 1;
-                            if ( InputStr.section( " ", 2, 2 ).mid( 3, 2 ) != "//" ) P[2] = 1;
+                            InputStr = InputStr.simplified();
+
+                            if ( InputStr.count( " " ) >= 2 )
+                            {
+                                if ( InputStr.section( " ", 2, 2 ).mid( 2, 1 ) != "/" ) P[1] = 1;
+                                if ( InputStr.section( " ", 2, 2 ).mid( 3, 2 ) != "//" ) P[2] = 1;
+                            }
+
+                            if ( InputStr.count( " " ) >= 3 )
+                            {
+                                if ( InputStr.section( " ", 3, 3 ).left( 1 )   != "/" ) P[3] = 1;
+                                if ( InputStr.section( " ", 3, 3 ).mid( 1, 1 ) != "/" ) P[4] = 1;
+                                if ( InputStr.section( " ", 3, 3 ).mid( 3, 1 ) != "/" ) P[5] = 1;
+                            }
+
+                            if ( InputStr.count( " " ) >= 4 )
+                                if ( InputStr.section( " ", 4, 4 ).mid( 2, 1 ) != "/" ) P[6] = 1;
+
+                            if ( InputStr.count( " " ) >= 5 )
+                                if ( InputStr.section( " ", 5, 5 ).mid( 1, 1 ) != "/" ) P[7] = 1;
+
+                            if ( InputStr.count( " " ) >= 6 )
+                                if ( InputStr.section( " ", 6, 6 ).mid( 1, 4 ) != "////" ) P[8] = 1;
+
+                            if ( InputStr.count( " " ) >= 7 )
+                                if ( InputStr.section( " ", 7, 7 ).mid( 1, 4 ) != "////" ) P[9] = 1;
+
+                            P[9] = 0;  // Geopotential height will be not stored in BSRN datasets, GKL 2013-03-11
+
+                            if ( InputStr.count( " " ) >= 8 )
+                            {
+                                if ( InputStr.section( " ", 8, 8 ).mid( 1, 2 ) != "//" ) P[10] = 1;
+                                if ( InputStr.section( " ", 8, 8 ).mid( 3, 1 ) != "/" )  P[11] = 1;
+                                if ( InputStr.section( " ", 8, 8 ).mid( 4, 1 ) != "/" )  P[12] = 1;
+                            }
+
+                            if ( InputStr.count( " " ) >= 9 )
+                            {
+                                if ( InputStr.section( " ", 9, 9 ).mid( 1, 1 ) != "/" ) P[13] = 1;
+                                if ( InputStr.section( " ", 9, 9 ).mid( 2, 1 ) != "/" ) P[14] = 1;
+                                if ( InputStr.section( " ", 9, 9 ).mid( 3, 1 ) != "/" ) P[15] = 1;
+                                if ( InputStr.section( " ", 9, 9 ).mid( 4, 1 ) != "/" ) P[16] = 1;
+                            }
+
+                            if ( InputStr.count( " ") >= 10 )
+                            {
+                                if ( InputStr.section( " ", 10, 10 ) != "333" )
+                                    b_Stop = true;
+                            }
+
+                            if ( InputStr.count( " " ) >= 11 )
+                            {
+                                if ( InputStr.section( " ", 11, 11 ).mid( 1, 1 ) != "/" ) P[17] = 1;
+                                if ( InputStr.section( " ", 11, 11 ).mid( 2, 1 ) != "/" ) P[18] = 1;
+                                if ( InputStr.section( " ", 11, 11 ).mid( 3, 2 ) != "//" ) P[19] = 1;
+                            }
+
+                            if ( InputStr.count( " " ) >= 12 )
+                            {
+                                if ( InputStr.section( " ", 12, 12 ).mid( 1, 1 ) != "/" ) P[20] = 1;
+                                if ( InputStr.section( " ", 12, 12 ).mid( 2, 1 ) != "/" ) P[21] = 1;
+                                if ( InputStr.section( " ", 12, 12 ).mid( 3, 2 ) != "//" ) P[22] = 1;
+                            }
+
+                            if ( InputStr.count( " " ) == 13 )
+                            {
+                                if ( InputStr.section( " ", 13, 13 ).mid( 1, 1 ) != "/" ) P[23] = 1;
+                                if ( InputStr.section( " ", 13, 13 ).mid( 2, 1 ) != "/" ) P[24] = 1;
+                                if ( InputStr.section( " ", 13, 13 ).mid( 3, 2 ) != "//" ) P[25] = 1;
+                            }
                         }
 
-                        if ( InputStr.count( " " ) >= 3 )
+                        if ( i_Year > 7 ) // 2008-20xx
                         {
-                            if ( InputStr.section( " ", 3, 3 ).left( 1 )   != "/" ) P[3] = 1;
-                            if ( InputStr.section( " ", 3, 3 ).mid( 1, 1 ) != "/" ) P[4] = 1;
-                            if ( InputStr.section( " ", 3, 3 ).mid( 3, 1 ) != "/" ) P[5] = 1;
-                        }
-
-                        if ( InputStr.count( " " ) >= 4 )
-                            if ( InputStr.section( " ", 4, 4 ).mid( 2, 1 ) != "/" ) P[6] = 1;
-
-                        if ( InputStr.count( " " ) >= 5 )
-                            if ( InputStr.section( " ", 5, 5 ).mid( 1, 1 ) != "/" ) P[7] = 1;
-
-                        if ( InputStr.count( " " ) >= 6 )
-                            if ( InputStr.section( " ", 6, 6 ).mid( 1, 4 ) != "////" ) P[8] = 1;
-
-                        if ( InputStr.count( " " ) >= 7 )
-                            if ( InputStr.section( " ", 7, 7 ).mid( 1, 4 ) != "////" ) P[9] = 1;
-
-                        P[9] = 0;  // Geopotential height will be not stored in BSRN datasets, GKL 2013-03-11
-
-                        if ( InputStr.count( " " ) >= 8 )
-                        {
-                            if ( InputStr.section( " ", 8, 8 ).mid( 1, 2 ) != "//" ) P[10] = 1;
-                            if ( InputStr.section( " ", 8, 8 ).mid( 3, 1 ) != "/" )  P[11] = 1;
-                            if ( InputStr.section( " ", 8, 8 ).mid( 4, 1 ) != "/" )  P[12] = 1;
-                        }
-
-                        if ( InputStr.count( " " ) >= 9 )
-                        {
-                            if ( InputStr.section( " ", 9, 9 ).mid( 1, 1 ) != "/" ) P[13] = 1;
-                            if ( InputStr.section( " ", 9, 9 ).mid( 2, 1 ) != "/" ) P[14] = 1;
-                            if ( InputStr.section( " ", 9, 9 ).mid( 3, 1 ) != "/" ) P[15] = 1;
-                            if ( InputStr.section( " ", 9, 9 ).mid( 4, 1 ) != "/" ) P[16] = 1;
-                        }
-
-                        if ( InputStr.count( " ") >= 10 )
-                        {
-                            if ( InputStr.section( " ", 10, 10 ) != "333" )
-                                b_Stop = true;
-                        }
-
-                        if ( InputStr.count( " " ) >= 11 )
-                        {
-                            if ( InputStr.section( " ", 11, 11 ).mid( 1, 1 ) != "/" ) P[17] = 1;
-                            if ( InputStr.section( " ", 11, 11 ).mid( 2, 1 ) != "/" ) P[18] = 1;
-                            if ( InputStr.section( " ", 11, 11 ).mid( 3, 2 ) != "//" ) P[19] = 1;
-                        }
-
-                        if ( InputStr.count( " " ) >= 12 )
-                        {
-                            if ( InputStr.section( " ", 12, 12 ).mid( 1, 1 ) != "/" ) P[20] = 1;
-                            if ( InputStr.section( " ", 12, 12 ).mid( 2, 1 ) != "/" ) P[21] = 1;
-                            if ( InputStr.section( " ", 12, 12 ).mid( 3, 2 ) != "//" ) P[22] = 1;
-                        }
-
-                        if ( InputStr.count( " " ) == 13 )
-                        {
-                            if ( InputStr.section( " ", 13, 13 ).mid( 1, 1 ) != "/" ) P[23] = 1;
-                            if ( InputStr.section( " ", 13, 13 ).mid( 2, 1 ) != "/" ) P[24] = 1;
-                            if ( InputStr.section( " ", 13, 13 ).mid( 3, 2 ) != "//" ) P[25] = 1;
+                            b_Stop = true;
                         }
                         break;
 
@@ -687,11 +698,17 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
             if ( P[20] == 1 ) sl_Parameter.append( Parameter( num2str( 57650 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Ns 2 [code]
             if ( P[21] == 1 ) sl_Parameter.append( Parameter( num2str( 57653 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 2 [code]
             if ( P[22] == 1 ) sl_Parameter.append( Parameter( num2str( 57656 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 2 [code]
+
+/*
             if ( P[23] == 1 ) sl_Parameter.append( Parameter( num2str( 57651 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Ns 3 [code]
             if ( P[24] == 1 ) sl_Parameter.append( Parameter( num2str( 57654 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 3 [code]
             if ( P[25] == 1 ) sl_Parameter.append( Parameter( num2str( 57657 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 3 [code]
+*/
 
-            sl_Parameter.append( Parameter( num2str( 50007 ), num2str( i_PIID ), num2str( 43 ), tr( "" ), tr( "YYGG9 IIiii iRixhVV Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" ) ) );
+            if ( i_Year < 2008 )
+                sl_Parameter.append( Parameter( num2str( 50007 ), num2str( i_PIID ), num2str( 43 ), tr( "" ), tr( "YYGG9 IIiii iRixhVV Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs" ) ) );
+            else
+                sl_Parameter.append( Parameter( num2str( 50007 ), num2str( i_PIID ), num2str( 43 ), tr( "" ), tr( "YYGG9 IIiii ????? ????? ????? ????? ????? ????? ????? 333 ????? ????? ?????" ) ) );
 
             break;
 
@@ -921,9 +938,13 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                     if ( P[20] == 1 ) tout << "\t57650";
                     if ( P[21] == 1 ) tout << "\t57653";
                     if ( P[22] == 1 ) tout << "\t57656";
+
+/*
                     if ( P[23] == 1 ) tout << "\t57651";
                     if ( P[24] == 1 ) tout << "\t57654";
                     if ( P[25] == 1 ) tout << "\t57657";
+*/
+
                     tout << "\t50007" << eol;
                 }
                 else
@@ -951,10 +972,16 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                     if ( P[20] == 1 ) tout << "\tNs 2 [code]";
                     if ( P[21] == 1 ) tout << "\tC 2 [code]";
                     if ( P[22] == 1 ) tout << "\thshs 2 [code]";
+/*
                     if ( P[23] == 1 ) tout << "\tNs 3 [code]";
                     if ( P[24] == 1 ) tout << "\tC 3 [code]";
                     if ( P[25] == 1 ) tout << "\thshs 3 [code]";
-                    tout << "\t" << tr( "YYGG9 IIiii iRixhVV Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" ) << eol;
+*/
+
+                    if ( i_Year < 2008 )
+                        tout << "\t" << tr( "YYGG9 IIiii iRixhVV Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs" ) << eol;
+                    else
+                        tout << "\t" << tr( "YYGG9 IIiii ????? ????? ????? ????? ????? ????? ????? 333 ????? ????? ?????" ) << eol;
                 }
                 break;
 
@@ -1697,6 +1724,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                                 OutputStr.append( "\t" );
                         }
 
+/*
                         if ( P[23] == 1 ) // Ns 3 [code]
                         {
                             if ( InputStr.section( " ", 13, 13 ).mid( 1, 1 ) != "/" )
@@ -1720,6 +1748,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                             else
                                 OutputStr.append( "\t" );
                         }
+*/
 
                         OutputStr.replace( "/", "" );
 
