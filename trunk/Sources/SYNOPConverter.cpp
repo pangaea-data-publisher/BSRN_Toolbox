@@ -185,81 +185,146 @@ int MainWindow::SYNOPTest( const QString& s_FilenameIn, int *P, const int i_NumO
                     case 3: // TAM
                         if ( i_Year < 8 ) // 2000-2007
                         {
+//                          0     1     2         3       4        5           6        7      8          9            10  11         12
+//                          YYGG9 IIiii iRix|h|VV N|dd|ff 1|S|nTTT 2|S|nTdTdTd 3|P0P0P0 4|PPPP 7|ww|W1|W2 8|N|Cl|Cm|Ch 333 8|N|C|hshs 8|N|C|hshs
+//                          31064 60680 44|9|70   6|06|02 1|0|026  2|1|084     3|8620   4|8492 7|03|1|0   8|3|0|3|2    333 8|3|3|62   8|5|0|73
+
                             InputStr = InputStr.simplified();
 
-                            if ( InputStr.count( " " ) >= 2 )
+                            if ( InputStr.count( " " ) >= 2 ) // iRixhVV
                             {
-                                if ( InputStr.section( " ", 2, 2 ).mid( 2, 1 ) != "/" ) P[1] = 1;
-                                if ( InputStr.section( " ", 2, 2 ).mid( 3, 2 ) != "//" ) P[2] = 1;
+                                if ( InputStr.section( " ", 2, 2 ).mid( 2, 1 ) != "/" )  P[1] = 1; // h
+                                if ( InputStr.section( " ", 2, 2 ).mid( 3, 2 ) != "//" ) P[2] = 1; // VV
                             }
 
-                            if ( InputStr.count( " " ) >= 3 )
+                            if ( InputStr.count( " " ) >= 3 ) // Nddff
                             {
-                                if ( InputStr.section( " ", 3, 3 ).left( 1 )   != "/" ) P[3] = 1;
-                                if ( InputStr.section( " ", 3, 3 ).mid( 1, 1 ) != "/" ) P[4] = 1;
-                                if ( InputStr.section( " ", 3, 3 ).mid( 3, 1 ) != "/" ) P[5] = 1;
+                                if ( InputStr.section( " ", 3, 3 ).left( 1 )   != "/" )  P[3] = 1; // N
+                                if ( InputStr.section( " ", 3, 3 ).mid( 1, 2 ) != "//" ) P[4] = 1; // dd
+                                if ( InputStr.section( " ", 3, 3 ).mid( 3, 2 ) != "//" ) P[5] = 1; // ff
                             }
 
-                            if ( InputStr.count( " " ) >= 4 )
-                                if ( InputStr.section( " ", 4, 4 ).mid( 2, 1 ) != "/" ) P[6] = 1;
+                            if ( InputStr.count( " " ) >= 4 ) // 1SnTTT
+                                if ( InputStr.section( " ", 4, 4 ).mid( 1, 1 ) != "/" ) P[6] = 1; // sign
 
-                            if ( InputStr.count( " " ) >= 5 )
-                                if ( InputStr.section( " ", 5, 5 ).mid( 1, 1 ) != "/" ) P[7] = 1;
+                            if ( InputStr.count( " " ) >= 5 ) // 2SnTdTdTd
+                                if ( InputStr.section( " ", 5, 5 ).mid( 1, 1 ) != "/" ) P[7] = 1; // sign
 
-                            if ( InputStr.count( " " ) >= 6 )
-                                if ( InputStr.section( " ", 6, 6 ).mid( 1, 4 ) != "////" ) P[8] = 1;
+                            if ( InputStr.count( " " ) >= 6 ) // 3P0P0P0
+                                if ( InputStr.section( " ", 6, 6 ).mid( 1, 4 ) != "////" ) P[8] = 1; // xxxx
 
-                            if ( InputStr.count( " " ) >= 7 )
-                                if ( InputStr.section( " ", 7, 7 ).mid( 1, 4 ) != "////" ) P[9] = 1;
+                            if ( InputStr.count( " " ) >= 7 ) // 4PPPP
+                                if ( InputStr.section( " ", 7, 7 ).mid( 1, 4 ) != "////" ) P[9] = 1; // xxxx
 
                             P[9] = 0;  // Geopotential height will be not stored in BSRN datasets, GKL 2013-03-11
 
-                            if ( InputStr.count( " " ) >= 8 )
+                            if ( InputStr.count( " " ) >= 8 ) // 7wwW1W2
                             {
-                                if ( InputStr.section( " ", 8, 8 ).mid( 1, 2 ) != "//" ) P[10] = 1;
-                                if ( InputStr.section( " ", 8, 8 ).mid( 3, 1 ) != "/" )  P[11] = 1;
-                                if ( InputStr.section( " ", 8, 8 ).mid( 4, 1 ) != "/" )  P[12] = 1;
+                                if ( InputStr.section( " ", 8, 8 ).mid( 1, 2 ) != "//" ) P[10] = 1; // ww
+                                if ( InputStr.section( " ", 8, 8 ).mid( 3, 1 ) != "/" )  P[11] = 1; // W1
+                                if ( InputStr.section( " ", 8, 8 ).mid( 4, 1 ) != "/" )  P[12] = 1; // W2
                             }
 
-                            if ( InputStr.count( " " ) >= 9 )
+                            if ( InputStr.count( " " ) >= 9 ) // 8NClCmCh
                             {
-                                if ( InputStr.section( " ", 9, 9 ).mid( 1, 1 ) != "/" ) P[13] = 1;
-                                if ( InputStr.section( " ", 9, 9 ).mid( 2, 1 ) != "/" ) P[14] = 1;
-                                if ( InputStr.section( " ", 9, 9 ).mid( 3, 1 ) != "/" ) P[15] = 1;
-                                if ( InputStr.section( " ", 9, 9 ).mid( 4, 1 ) != "/" ) P[16] = 1;
+                                if ( InputStr.section( " ", 9, 9 ).mid( 1, 1 ) != "/" ) P[13] = 1; // N
+                                if ( InputStr.section( " ", 9, 9 ).mid( 2, 1 ) != "/" ) P[14] = 1; // Cl
+                                if ( InputStr.section( " ", 9, 9 ).mid( 3, 1 ) != "/" ) P[15] = 1; // Cm
+                                if ( InputStr.section( " ", 9, 9 ).mid( 4, 1 ) != "/" ) P[16] = 1; // Ch
                             }
 
-                            if ( InputStr.count( " ") >= 10 )
+                            if ( InputStr.count( " ") >= 10 ) // 333
                             {
                                 if ( InputStr.section( " ", 10, 10 ) != "333" )
                                     b_Stop = true;
                             }
 
-                            if ( InputStr.count( " " ) >= 11 )
+                            if ( InputStr.count( " " ) >= 11 ) // 8NChshs
                             {
-                                if ( InputStr.section( " ", 11, 11 ).mid( 1, 1 ) != "/" ) P[17] = 1;
-                                if ( InputStr.section( " ", 11, 11 ).mid( 2, 1 ) != "/" ) P[18] = 1;
-                                if ( InputStr.section( " ", 11, 11 ).mid( 3, 2 ) != "//" ) P[19] = 1;
+                                if ( InputStr.section( " ", 11, 11 ).mid( 1, 1 ) != "/" )  P[17] = 1; // N
+                                if ( InputStr.section( " ", 11, 11 ).mid( 2, 1 ) != "/" )  P[18] = 1; // C
+                                if ( InputStr.section( " ", 11, 11 ).mid( 3, 2 ) != "//" ) P[19] = 1; // hshs
                             }
 
-                            if ( InputStr.count( " " ) >= 12 )
+                            if ( InputStr.count( " " ) >= 12 ) // 8NChshs
                             {
                                 if ( InputStr.section( " ", 12, 12 ).mid( 1, 1 ) != "/" ) P[20] = 1;
                                 if ( InputStr.section( " ", 12, 12 ).mid( 2, 1 ) != "/" ) P[21] = 1;
                                 if ( InputStr.section( " ", 12, 12 ).mid( 3, 2 ) != "//" ) P[22] = 1;
                             }
-
-                            if ( InputStr.count( " " ) == 13 )
-                            {
-                                if ( InputStr.section( " ", 13, 13 ).mid( 1, 1 ) != "/" ) P[23] = 1;
-                                if ( InputStr.section( " ", 13, 13 ).mid( 2, 1 ) != "/" ) P[24] = 1;
-                                if ( InputStr.section( " ", 13, 13 ).mid( 3, 2 ) != "//" ) P[25] = 1;
-                            }
                         }
 
                         if ( i_Year > 7 ) // 2008-20xx
                         {
-                            b_Stop = true;
+//                          0     1     2       3        4           5        6      7        8            9   10          11          12
+//                          YYGG9 IIiii N|dd|ff 1|S|nTTT 2|S|nTdTdTd 3|P0P0P0 4|PPPP 7|wwW1W2 8|N|Cl|Cm|Ch 333 8|N|C|hshsh 8|N|C|hshsh 8|N|C|hshsh
+//                          02064 60680 1|00|00 1|1|004  2|0|107     3|8655   4|8524 7|03|0|0 8|0|0|0|2    333 8|1|0|73    8|/|/|//    8|/|/|//
+
+                            InputStr = InputStr.simplified();
+
+                            if ( InputStr.count( " " ) >= 2 ) // Nddff
+                            {
+                                if ( InputStr.section( " ", 2, 2 ).left( 1 )   != "/" )  P[3] = 1; // N
+                                if ( InputStr.section( " ", 2, 2 ).mid( 1, 2 ) != "//" ) P[4] = 1; // dd
+                                if ( InputStr.section( " ", 2, 2 ).mid( 3, 2 ) != "//" ) P[5] = 1; // ff
+                            }
+
+                            if ( InputStr.count( " " ) >= 3 ) // 1SnTTT
+                                if ( InputStr.section( " ", 3, 3 ).mid( 1, 1 ) != "/" ) P[6] = 1; // sign
+
+                            if ( InputStr.count( " " ) >= 4 ) // 2SnTdTdTd
+                                if ( InputStr.section( " ", 4, 4 ).mid( 1, 1 ) != "/" ) P[7] = 1; // sign
+
+                            if ( InputStr.count( " " ) >= 5 ) // 3P0P0P0
+                                if ( InputStr.section( " ", 5, 5 ).mid( 1, 4 ) != "////" ) P[8] = 1; // xxxx
+
+                            if ( InputStr.count( " " ) >= 6 ) // 4PPPP
+                                if ( InputStr.section( " ", 6, 6 ).mid( 1, 4 ) != "////" ) P[9] = 1; // xxxx
+
+                            P[9] = 0;  // Geopotential height will be not stored in BSRN datasets, GKL 2013-03-11
+
+                            if ( InputStr.count( " " ) >= 7 ) // 7wwW1W2
+                            {
+                                if ( InputStr.section( " ", 7, 7 ).mid( 1, 2 ) != "//" ) P[10] = 1; // ww
+                                if ( InputStr.section( " ", 7, 7 ).mid( 3, 1 ) != "/" )  P[11] = 1; // W1
+                                if ( InputStr.section( " ", 7, 7 ).mid( 4, 1 ) != "/" )  P[12] = 1; // W2
+                            }
+
+                            if ( InputStr.count( " " ) >= 8 ) // 8NClCmCh
+                            {
+                                if ( InputStr.section( " ", 8, 8 ).mid( 1, 1 ) != "/" ) P[13] = 1; // N
+                                if ( InputStr.section( " ", 8, 8 ).mid( 2, 1 ) != "/" ) P[14] = 1; // Cl
+                                if ( InputStr.section( " ", 8, 8 ).mid( 3, 1 ) != "/" ) P[15] = 1; // Cm
+                                if ( InputStr.section( " ", 8, 8 ).mid( 4, 1 ) != "/" ) P[16] = 1; // Ch
+                            }
+
+                            if ( InputStr.count( " ") >= 9 ) // 333
+                            {
+                                if ( InputStr.section( " ", 9, 9 ) != "333" )
+                                    b_Stop = true;
+                            }
+
+                            if ( InputStr.count( " " ) >= 10 ) // 8NChshs
+                            {
+                                if ( InputStr.section( " ", 10, 10 ).mid( 1, 1 ) != "/" )  P[17] = 1; // N 1
+                                if ( InputStr.section( " ", 10, 10 ).mid( 2, 1 ) != "/" )  P[18] = 1; // C 1
+                                if ( InputStr.section( " ", 10, 10 ).mid( 3, 2 ) != "//" ) P[19] = 1; // hshs 1
+                            }
+
+                            if ( InputStr.count( " " ) >= 11 ) // 8NChshs
+                            {
+                                if ( InputStr.section( " ", 11, 11 ).mid( 1, 1 ) != "/" )  P[20] = 1; // N 2
+                                if ( InputStr.section( " ", 11, 11 ).mid( 2, 1 ) != "/" )  P[21] = 1; // C 2
+                                if ( InputStr.section( " ", 11, 11 ).mid( 3, 2 ) != "//" ) P[22] = 1; // hshs 3
+                            }
+
+                            if ( InputStr.count( " " ) >= 12 ) // 8NChshs
+                            {
+                                if ( InputStr.section( " ", 12, 12 ).mid( 1, 1 ) != "/" )  P[23] = 1; // N 2
+                                if ( InputStr.section( " ", 12, 12 ).mid( 2, 1 ) != "/" )  P[24] = 1; // C 2
+                                if ( InputStr.section( " ", 12, 12 ).mid( 3, 2 ) != "//" ) P[25] = 1; // hshs 3
+                            }
+
                         }
                         break;
 
@@ -437,6 +502,8 @@ int MainWindow::SYNOPTest( const QString& s_FilenameIn, int *P, const int i_NumO
 */
 int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
 {
+    int             i = 0;
+
     int				i_Format		= 0;
 
     int				i_PIID			= 506;
@@ -676,39 +743,52 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
             break;
 
         case 3: // TAM
-            if ( P[1]  == 1 ) sl_Parameter.append( Parameter( num2str( 45259 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Cloud base height
-            if ( P[2]  == 1 ) sl_Parameter.append( Parameter( num2str( 45260 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Horizontal visibility
-            if ( P[3]  == 1 ) sl_Parameter.append( Parameter( num2str( 45267 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Total cloud amount
-            if ( P[4]  == 1 ) sl_Parameter.append( Parameter( num2str( 2221 ), num2str( i_PIID ), num2str( 5038 ), tr( "###0" ) ) );    // Wind direction [deg]
-            if ( P[5]  == 1 ) sl_Parameter.append( Parameter( num2str( 18906 ), num2str( i_PIID ), num2str( 5038 ), tr( "#0" ) ) );     // Wind speed [m/sec]
-            if ( P[6]  == 1 ) sl_Parameter.append( Parameter( num2str( 4610 ), num2str( i_PIID ), num2str( 4722 ), tr( "###0.0" ) ) );  // Temperature, air [deg C]
-            if ( P[7]  == 1 ) sl_Parameter.append( Parameter( num2str( 4611 ), num2str( i_PIID ), num2str( 5039 ), tr( "###0.0" ) ) );  // Dew/frost point [deg C]
-            if ( P[8]  == 1 ) sl_Parameter.append( Parameter( num2str( 48823 ), num2str( i_PIID ), num2str( 359 ), tr( "###0" ) ) );    // Station Pressure [hPa]
-            if ( P[9]  == 1 ) sl_Parameter.append( Parameter( num2str( 123640 ), num2str( i_PIID ), num2str( 50 ), tr( "###0" ) ) );    // Geopotential height [m]
-            if ( P[10] == 1 ) sl_Parameter.append( Parameter( num2str( 45261 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Present weather [code]
-            if ( P[11] == 1 ) sl_Parameter.append( Parameter( num2str( 45262 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Past weather1 [code]
-            if ( P[12] == 1 ) sl_Parameter.append( Parameter( num2str( 45263 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Past weather2 [code]
-            if ( P[13] == 1 ) sl_Parameter.append( Parameter( num2str( 45268 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Low/middle cloud amount [code]
-            if ( P[14] == 1 ) sl_Parameter.append( Parameter( num2str( 45264 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Low cloud [code]
-            if ( P[15] == 1 ) sl_Parameter.append( Parameter( num2str( 45265 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Middle cloud [code]
-            if ( P[16] == 1 ) sl_Parameter.append( Parameter( num2str( 45266 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // High cloud [code]
-            if ( P[17] == 1 ) sl_Parameter.append( Parameter( num2str( 57649 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Ns 1 [code]
-            if ( P[18] == 1 ) sl_Parameter.append( Parameter( num2str( 57652 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 1 [code]
-            if ( P[19] == 1 ) sl_Parameter.append( Parameter( num2str( 57655 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 1 [code]
-            if ( P[20] == 1 ) sl_Parameter.append( Parameter( num2str( 57650 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Ns 2 [code]
-            if ( P[21] == 1 ) sl_Parameter.append( Parameter( num2str( 57653 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 2 [code]
-            if ( P[22] == 1 ) sl_Parameter.append( Parameter( num2str( 57656 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 2 [code]
+//          0     1     2         3       4        5           6        7      8          9            10  11         12
+//          YYGG9 IIiii iRix|h|VV N|dd|ff 1|S|nTTT 2|S|nTdTdTd 3|P0P0P0 4|PPPP 7|ww|W1|W2 8|N|Cl|Cm|Ch 333 8|N|C|hshs 8|N|C|hshs
+//          31064 60680 44|9|70   6|06|02 1|0|026  2|1|084     3|8620   4|8492 7|03|1|0   8|3|0|3|2    333 8|3|3|62   8|5|0|73
 
-/*
-            if ( P[23] == 1 ) sl_Parameter.append( Parameter( num2str( 57651 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Ns 3 [code]
-            if ( P[24] == 1 ) sl_Parameter.append( Parameter( num2str( 57654 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 3 [code]
-            if ( P[25] == 1 ) sl_Parameter.append( Parameter( num2str( 57657 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 3 [code]
-*/
+            if ( P[1]  == 1 ) sl_Parameter.append( Parameter( num2str( 45259 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // h, Cloud base height
+            if ( P[2]  == 1 ) sl_Parameter.append( Parameter( num2str( 45260 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // VV, Horizontal visibility
+
+            if ( P[3]  == 1 ) sl_Parameter.append( Parameter( num2str( 45267 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // N, Total cloud amount
+            if ( P[4]  == 1 ) sl_Parameter.append( Parameter( num2str( 2221 ), num2str( i_PIID ), num2str( 5038 ), tr( "###0" ) ) );    // dd, Wind direction [deg]
+            if ( P[5]  == 1 ) sl_Parameter.append( Parameter( num2str( 18906 ), num2str( i_PIID ), num2str( 5038 ), tr( "#0" ) ) );     // ff, Wind speed [m/sec]
+
+            if ( P[6]  == 1 ) sl_Parameter.append( Parameter( num2str( 4610 ), num2str( i_PIID ), num2str( 4722 ), tr( "###0.0" ) ) );  // TTT, Temperature, air [deg C]
+
+            if ( P[7]  == 1 ) sl_Parameter.append( Parameter( num2str( 4611 ), num2str( i_PIID ), num2str( 5039 ), tr( "###0.0" ) ) );  // TdTdTd, Dew/frost point [deg C]
+
+            if ( P[8]  == 1 ) sl_Parameter.append( Parameter( num2str( 48823 ), num2str( i_PIID ), num2str( 359 ), tr( "###0" ) ) );    // P0P0P0, Station Pressure [hPa]
+
+            if ( P[9]  == 1 ) sl_Parameter.append( Parameter( num2str( 123640 ), num2str( i_PIID ), num2str( 50 ), tr( "###0" ) ) );    // PPPP, Geopotential height [m]
+
+            if ( P[10] == 1 ) sl_Parameter.append( Parameter( num2str( 45261 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // ww, Present weather [code]
+            if ( P[11] == 1 ) sl_Parameter.append( Parameter( num2str( 45262 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // W1, Past weather1 [code]
+            if ( P[12] == 1 ) sl_Parameter.append( Parameter( num2str( 45263 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // W2, Past weather2 [code]
+
+            if ( P[13] == 1 ) sl_Parameter.append( Parameter( num2str( 45268 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // N, Low/middle cloud amount [code]
+            if ( P[14] == 1 ) sl_Parameter.append( Parameter( num2str( 45264 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Cl, Low cloud [code]
+            if ( P[15] == 1 ) sl_Parameter.append( Parameter( num2str( 45265 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Cm, Middle cloud [code]
+            if ( P[16] == 1 ) sl_Parameter.append( Parameter( num2str( 45266 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Ch, High cloud [code]
+
+            // 333
+
+            if ( P[17] == 1 ) sl_Parameter.append( Parameter( num2str( 57649 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // N, Amount of cloud layer 1 [code]
+            if ( P[18] == 1 ) sl_Parameter.append( Parameter( num2str( 57652 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C, Cloud layer 1 [code]
+            if ( P[19] == 1 ) sl_Parameter.append( Parameter( num2str( 57655 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs, Cloud base height code, layer 1 [code]
+
+            if ( P[20] == 1 ) sl_Parameter.append( Parameter( num2str( 57650 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // N, Amount of cloud layer 2 [code]
+            if ( P[21] == 1 ) sl_Parameter.append( Parameter( num2str( 57653 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C, Cloud layer 2 [code]
+            if ( P[22] == 1 ) sl_Parameter.append( Parameter( num2str( 57656 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs, Cloud base height code, layer 2 [code]
+
+            if ( P[23] == 1 ) sl_Parameter.append( Parameter( num2str( 57651 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // N, Amount of cloud layer 3 [code]
+            if ( P[24] == 1 ) sl_Parameter.append( Parameter( num2str( 57654 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C, Cloud layer 3 [code]
+            if ( P[25] == 1 ) sl_Parameter.append( Parameter( num2str( 57657 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs, Cloud base height code, layer 3 [code]
 
             if ( i_Year < 2008 )
                 sl_Parameter.append( Parameter( num2str( 50007 ), num2str( i_PIID ), num2str( 43 ), tr( "" ), tr( "YYGG9 IIiii iRixhVV Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs" ) ) );
             else
-                sl_Parameter.append( Parameter( num2str( 50007 ), num2str( i_PIID ), num2str( 43 ), tr( "" ), tr( "YYGG9 IIiii ????? ????? ????? ????? ????? ????? ????? 333 ????? ????? ?????" ) ) );
+                sl_Parameter.append( Parameter( num2str( 50007 ), num2str( i_PIID ), num2str( 43 ), tr( "" ), tr( "YYGG9 IIiii Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NChshsh 8NChshsh 8NChshsh" ) ) );
 
             break;
 
@@ -938,12 +1018,9 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                     if ( P[20] == 1 ) tout << "\t57650";
                     if ( P[21] == 1 ) tout << "\t57653";
                     if ( P[22] == 1 ) tout << "\t57656";
-
-/*
                     if ( P[23] == 1 ) tout << "\t57651";
                     if ( P[24] == 1 ) tout << "\t57654";
                     if ( P[25] == 1 ) tout << "\t57657";
-*/
 
                     tout << "\t50007" << eol;
                 }
@@ -960,28 +1037,26 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                     if ( P[8]  == 1 ) tout << "\tStation Pressure [hPa]";
                     if ( P[9]  == 1 ) tout << "\tGeopotential height [m]";
                     if ( P[10] == 1 ) tout << "\tPresent weather [code]";
-                    if ( P[11]  == 1 ) tout << "\tPast weather1 [code]";
+                    if ( P[11] == 1 ) tout << "\tPast weather1 [code]";
                     if ( P[12] == 1 ) tout << "\tPast weather2 [code]";
                     if ( P[13] == 1 ) tout << "\tLow/middle cloud amount [code]";
                     if ( P[14] == 1 ) tout << "\tLow cloud [code]";
                     if ( P[15] == 1 ) tout << "\tMiddle cloud [code]";
                     if ( P[16] == 1 ) tout << "\tHigh cloud [code]";
-                    if ( P[17] == 1 ) tout << "\tNs 1 [code]";
-                    if ( P[18] == 1 ) tout << "\tC 1 [code]";
-                    if ( P[19] == 1 ) tout << "\thshs 1 [code]";
-                    if ( P[20] == 1 ) tout << "\tNs 2 [code]";
-                    if ( P[21] == 1 ) tout << "\tC 2 [code]";
-                    if ( P[22] == 1 ) tout << "\thshs 2 [code]";
-/*
-                    if ( P[23] == 1 ) tout << "\tNs 3 [code]";
-                    if ( P[24] == 1 ) tout << "\tC 3 [code]";
-                    if ( P[25] == 1 ) tout << "\thshs 3 [code]";
-*/
+                    if ( P[17] == 1 ) tout << "\tAmount of cloud layer 1 [code]";
+                    if ( P[18] == 1 ) tout << "\tCloud layer 1 [code]";
+                    if ( P[19] == 1 ) tout << "\tCloud base height code, layer 1 [code]";
+                    if ( P[20] == 1 ) tout << "\tAmount of cloud layer 2 [code]";
+                    if ( P[21] == 1 ) tout << "\tCloud layer 2 [code]";
+                    if ( P[22] == 1 ) tout << "\tCloud base height code, layer 2 [code]";
+                    if ( P[23] == 1 ) tout << "\tAmount of cloud layer 3 [code]";
+                    if ( P[24] == 1 ) tout << "\tCloud layer 3 [code]";
+                    if ( P[25] == 1 ) tout << "\tCloud base height code, layer 4 [code]";
 
                     if ( i_Year < 2008 )
                         tout << "\t" << tr( "YYGG9 IIiii iRixhVV Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs" ) << eol;
                     else
-                        tout << "\t" << tr( "YYGG9 IIiii ????? ????? ????? ????? ????? ????? ????? 333 ????? ????? ?????" ) << eol;
+                        tout << "\t" << tr( "YYGG9 IIiii Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NChshsh 8NChshsh 8NChshsh" ) << eol;
                 }
                 break;
 
@@ -1521,53 +1596,66 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                         if ( b_Import == false ) // IIiii
                             OutputStr.append( "\t" + InputStr.section( " ", 1, 1 ) );
 
+                        i = 2;
+
+                        // iRixhVV
+
                         if ( P[1] == 1 ) // Cloud base height [code]
                         {
-                            if ( InputStr.section( " ", 2, 2 ).mid( 2, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.section( " ", 2, 2 ).mid( 2, 1 ) );
+                            if ( InputStr.section( " ", i, i ).mid( 2, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.section( " ", i, i ).mid( 2, 1 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[2] == 1 ) // Horizontal visibility [code]
                         {
-                            if ( InputStr.section( " ", 2, 2 ).mid( 3, 2 ) != "//" )
-                                OutputStr.append( "\t" + InputStr.section( " ", 2, 2 ).mid( 3, 2 ) );
+                            if ( InputStr.section( " ", i, i ).mid( 3, 2 ) != "//" )
+                                OutputStr.append( "\t" + InputStr.section( " ", i, i ).mid( 3, 2 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
+                        // Nddff
+
+                        if ( i_Year < 2008 ) // 2000-2007
+                            i++;
+
                         if ( P[3] == 1 ) // Total cloud amount [code]
                         {
-                            if ( InputStr.section( " ", 3, 3 ).left( 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.section( " ", 3, 3 ).left( 1 ) );
+                            if ( InputStr.section( " ", i, i ).left( 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.section( " ", i, i ).left( 1 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[4] == 1 ) // Wind direction [deg]
                         {
-                            if ( InputStr.section( " ", 3, 3 ).mid( 1, 2 ) != "//" )
-                                OutputStr.append( QString( "\t%1" ).arg( InputStr.section( " ", 3, 3 ).mid( 1, 2 ).toInt()*10 ) );
+                            if ( InputStr.section( " ", i, i ).mid( 1, 2 ) != "//" )
+                                OutputStr.append( QString( "\t%1" ).arg( InputStr.section( " ", i, i ).mid( 1, 2 ).toInt()*10 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[5] == 1 ) // Wind speed [m/sec]
                         {
-                            if ( InputStr.section( " ", 3, 3 ).mid( 3, 2 ) != "//" )
-                                OutputStr.append( QString( "\t%1" ).arg( InputStr.section( " ", 3, 3 ).mid( 3, 2 ).toInt() ) );
+                            if ( InputStr.section( " ", i, i).mid( 3, 2 ) != "//" )
+                                OutputStr.append( QString( "\t%1" ).arg( InputStr.section( " ", i, i ).mid( 3, 2 ).toInt() ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
+                        i++;
+
+                        // 1SnTTT
+
                         if ( P[6] == 1 ) // Temperature, air [deg C]
                         {
-                            if ( InputStr.section( " ", 4, 4 ).mid( 2, 3 ) != "///" )
+                            if ( InputStr.section( " ", i, i ).mid( 2, 3 ) != "///" )
                             {
-                                float TTT = InputStr.section( " ", 4, 4 ).mid( 2, 3 ).toFloat()/10.;
+                                float TTT = InputStr.section( " ", i, i ).mid( 2, 3 ).toFloat()/10.;
 
-                                if ( InputStr.section( " ", 4, 4 ).mid( 1, 1 ).toInt() == 1 )
+                                if ( InputStr.section( " ", i, i ).mid( 1, 1 ).toInt() == 1 )
                                     TTT = -1*TTT;
 
                                 if ( TTT > -90 )
@@ -1579,13 +1667,17 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                                 OutputStr.append( "\t" );
                         }
 
+                        i++;
+
+                        // 2SnTdTdTd
+
                         if ( P[7] == 1 ) // Dew/frost point [deg C]
                         {
-                            if ( InputStr.section( " ", 5, 5 ).mid( 2, 3 ) != "///" )
+                            if ( InputStr.section( " ", i, i ).mid( 2, 3 ) != "///" )
                             {
-                                float TdTdTd = InputStr.section( " ", 5, 5 ).mid( 2, 3 ).toFloat()/10.;
+                                float TdTdTd = InputStr.section( " ", i, i ).mid( 2, 3 ).toFloat()/10.;
 
-                                if ( InputStr.section( " ", 5, 5 ).mid( 1, 1 ).toInt() == 1 )
+                                if ( InputStr.section( " ", i, i ).mid( 1, 1 ).toInt() == 1 )
                                     TdTdTd = -1*TdTdTd;
 
                                 if ( TdTdTd > -90 )
@@ -1597,158 +1689,188 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                                 OutputStr.append( "\t" );
                         }
 
+                        i++;
+
+                        // 3P0P0P0
+
                         if ( P[8] == 1 ) // Station Pressure [hPa]
                         {
-                            if ( InputStr.section( " ", 6, 6 ).mid( 1, 4 ) != "////" )
+                            if ( InputStr.section( " ", i, i ).mid( 1, 4 ) != "////" )
                             {
-                                if ( InputStr.section( " ", 6, 6 ).mid( 1, 4 ).toFloat()/10. <= 200. )
-                                    OutputStr.append( QString( "\t%1" ).arg( 1000. + InputStr.section( " ", 6, 6 ).mid( 1, 4 ).toFloat()/10. ) );
+                                if ( InputStr.section( " ", i, i ).mid( 1, 4 ).toFloat()/10. <= 200. )
+                                    OutputStr.append( QString( "\t%1" ).arg( 1000. + InputStr.section( " ", i, i ).mid( 1, 4 ).toFloat()/10. ) );
                                 else
-                                    OutputStr.append( QString( "\t%1" ).arg( InputStr.section( " ", 6, 6 ).mid( 1, 4 ).toFloat()/10. ) );
+                                    OutputStr.append( QString( "\t%1" ).arg( InputStr.section( " ", i, i ).mid( 1, 4 ).toFloat()/10. ) );
                             }
                             else
                                 OutputStr.append( "\t" );
                         }
 
+                        i++;
+
+                        // 4PPPP
+
                         if ( P[9] == 1 ) // Geopotential height [m]
                         {
-                            if ( InputStr.section( " ", 7, 7 ).mid( 1, 4 ) != "////" )
-                                OutputStr.append( QString( "\t%1" ).arg( calcGeopotentialHeight( InputStr.section( " ", 7, 7 ) ) ) );
+                            if ( InputStr.section( " ", i, i ).mid( 1, 4 ) != "////" )
+                                OutputStr.append( QString( "\t%1" ).arg( calcGeopotentialHeight( InputStr.section( " ", i, i ) ) ) );
                             else
                                 OutputStr.append( "\t" );
                         }
+
+                        i++;
+
+                        // 7wwW1W2
 
                         if ( P[10] == 1 ) // Present weather [code]
                         {
-                            if ( InputStr.section( " ", 8, 8 ).mid( 1, 2 ) != "//" )
-                                OutputStr.append( QString( "\t%1" ).arg( InputStr.section( " ", 8, 8 ).mid( 1, 2 ).toInt() ) );
+                            if ( InputStr.section( " ", i, i ).mid( 1, 2 ) != "//" )
+                                OutputStr.append( QString( "\t%1" ).arg( InputStr.section( " ", i, i ).mid( 1, 2 ).toInt() ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
-                        if ( P[11] == 1 ) // Past weather1 [code]
+                        if ( P[11] == 1 ) // Past weather 1 [code]
                         {
-                            if ( InputStr.section( " ", 8, 8 ).mid( 3, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.section( " ", 8, 8 ).mid( 3, 1 ) );
+                            if ( InputStr.section( " ", i, i ).mid( 3, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.section( " ", i, i ).mid( 3, 1 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
-                        if ( P[12] == 1 ) // Past weather2 [code]
+                        if ( P[12] == 1 ) // Past weather 2 [code]
                         {
-                            if ( InputStr.section( " ", 8, 8 ).mid( 4, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.section( " ", 8, 8 ).mid( 4, 1 ) );
+                            if ( InputStr.section( " ", i, i ).mid( 4, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.section( " ", i, i ).mid( 4, 1 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
+
+                        i++;
+
+                        // 8NhClCmCh
 
                         if ( P[13] == 1 ) // Low/middle cloud amount [code]
                         {
-                            if ( InputStr.section( " ", 9, 9 ).mid( 1, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.section( " ", 9, 9 ).mid( 1, 1 ) );
+                            if ( InputStr.section( " ", i, i ).mid( 1, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.section( " ", i, i ).mid( 1, 1 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[14] == 1 ) // Low cloud [code]
                         {
-                            if ( InputStr.section( " ", 9, 9 ).mid( 2, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.section( " ", 9, 9 ).mid( 2, 1 ) );
+                            if ( InputStr.section( " ", i, i ).mid( 2, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.section( " ", i, i ).mid( 2, 1 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[15] == 1 ) // Middle cloud [code]
                         {
-                            if ( InputStr.section( " ", 9, 9 ).mid( 3, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.section( " ", 9, 9 ).mid( 3, 1 ) );
+                            if ( InputStr.section( " ", i, i).mid( 3, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.section( " ", i, i ).mid( 3, 1 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[16] == 1 ) // High cloud [code]
                         {
-                            if ( InputStr.section( " ", 9, 9 ).mid( 4, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.section( " ", 9, 9 ).mid( 4, 1 ) );
+                            if ( InputStr.section( " ", i, i ).mid( 4, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.section( " ", i, i ).mid( 4, 1 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
+                        i++;
+
+//                      333
+
 //                      InputStr.section( " ", 10, 10 ) = "333";
+
+                        i++;
+
+                        // 8NsChshs
 
                         if ( P[17] == 1 ) // Ns 1 [code]
                         {
-                            if ( InputStr.section( " ", 11, 11 ).mid( 1, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.section( " ", 11, 11 ).mid( 1, 1 ) );
+                            if ( InputStr.section( " ", i, i ).mid( 1, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.section( " ", i, i ).mid( 1, 1 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[18] == 1 ) // C 1 [code]
                         {
-                            if ( InputStr.section( " ", 11, 11 ).mid( 2, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.section( " ", 11, 11 ).mid( 2, 1 ) );
+                            if ( InputStr.section( " ", i, i ).mid( 2, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.section( " ", i, i ).mid( 2, 1 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[19] == 1 ) // hshs 1 [code]
                         {
-                            if ( InputStr.section( " ", 11, 11 ).mid( 3, 2 ) != "//" )
-                                OutputStr.append( "\t" + InputStr.section( " ", 11, 11 ).mid( 3, 2 ) );
+                            if ( InputStr.section( " ", i, i ).mid( 3, 2 ) != "//" )
+                                OutputStr.append( "\t" + InputStr.section( " ", i, i ).mid( 3, 2 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
+                        i++;
+
+                        // 8NsChshs
+
                         if ( P[20] == 1 ) // Ns 2 [code]
                         {
-                            if ( InputStr.section( " ", 12, 12 ).mid( 1, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.section( " ", 12, 12 ).mid( 1, 1 ) );
+                            if ( InputStr.section( " ", i, i ).mid( 1, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.section( " ", i, i ).mid( 1, 1 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[21] == 1 ) // C 2 [code]
                         {
-                            if ( InputStr.section( " ", 12, 12 ).mid( 2, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.section( " ", 12, 12 ).mid( 2, 1 ) );
+                            if ( InputStr.section( " ", i, i ).mid( 2, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.section( " ", i, i ).mid( 2, 1 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[22] == 1 ) // hshs 2 [code]
                         {
-                            if ( InputStr.section( " ", 12, 12 ).mid( 3, 2 ) != "//" )
-                                OutputStr.append( "\t" + InputStr.section( " ", 12, 12 ).mid( 3, 2 ) );
+                            if ( InputStr.section( " ", i, i ).mid( 3, 2 ) != "//" )
+                                OutputStr.append( "\t" + InputStr.section( " ", i, i ).mid( 3, 2 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
-/*
+                        i++;
+
+                        // 8NsChshs
+
                         if ( P[23] == 1 ) // Ns 3 [code]
                         {
-                            if ( InputStr.section( " ", 13, 13 ).mid( 1, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.section( " ", 13, 13 ).mid( 1, 1 ) );
+                            if ( InputStr.section( " ", i, i ).mid( 1, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.section( " ", i, i ).mid( 1, 1 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[24] == 1 ) // C 3 [code]
                         {
-                            if ( InputStr.section( " ", 13, 13 ).mid( 2, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.section( " ", 13, 13 ).mid( 2, 1 ) );
+                            if ( InputStr.section( " ", i, i ).mid( 2, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.section( " ", i, i ).mid( 2, 1 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[25] == 1 ) // hshs 3 [code]
                         {
-                            if ( InputStr.section( " ", 13, 13 ).mid( 3, 2 ) != "//" )
-                                OutputStr.append( "\t" + InputStr.section( " ", 13, 13 ).mid( 3, 2 ) );
+                            if ( InputStr.section( " ", i, i ).mid( 3, 2 ) != "//" )
+                                OutputStr.append( "\t" + InputStr.section( " ", i, i ).mid( 3, 2 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
-*/
 
                         OutputStr.replace( "/", "" );
 
