@@ -42,7 +42,7 @@ void MainWindow::createActions()
 
     exitAction = new QAction(tr("&Quit"), this);
     exitAction->setShortcut(tr("Ctrl+Q"));
-    connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
+    connect(exitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
 
 // Station-to-archive menu
     downloadStationToArchiveFilesAction = new QAction(tr("&Download Station-to-archive files..."), this);
@@ -258,23 +258,21 @@ void MainWindow::createMenus()
     fileMenu = menuBar()->addMenu( tr( "&File" ) );
     fileMenu->addAction( openFileAction );
     fileMenu->addAction( openFolderAction );
-    fileMenu->addSeparator();
-
-#if defined(Q_OS_LINUX)
-    fileMenu->addAction( exitAction );
-#endif
 
 #if defined(Q_OS_MAC)
+    fileMenu->addSeparator();
     fileMenu->addAction( newWindowAction );
     newWindowAction->setEnabled( false );
     fileMenu->addAction( hideWindowAction );
 #endif
 
 #if defined(Q_OS_WIN)
+    fileMenu->addSeparator();
     fileMenu->addAction( hideWindowAction );
+#endif
+
     fileMenu->addSeparator();
     fileMenu->addAction( exitAction );
-#endif
 
 // **********************************************************************************************
 

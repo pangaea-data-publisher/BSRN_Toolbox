@@ -40,6 +40,20 @@ int main( int argc, char *argv[] )
 // **********************************************************************************************
 // **********************************************************************************************
 
+/*! @brief Beendigung des Programms.
+*/
+
+void MainWindow::exitApplication()
+{
+    savePreferences();
+
+    QCoreApplication::quit();
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
 /*! @brief Ausgabe eines Hilfstextes.
 *
 *   Wenn eine readme.html im Programmverzeichnis exsitiert wird diese geoeffnet. Andernfalls wird
@@ -93,7 +107,7 @@ QString MainWindow::getVersion()
 
 // **********************************************************************************************
 
-    s_Url              = QLatin1String( "http://www.pangaea.de/software" ) + "/" + QCoreApplication::applicationName() + "/" + QCoreApplication::applicationName() + QLatin1String( "_version.txt" );
+    s_Url              = QLatin1String( "https://pangaea.de/software" ) + "/" + QCoreApplication::applicationName() + "/" + QCoreApplication::applicationName() + QLatin1String( "_version.txt" );
     s_Version_Filename = getDataLocation() + "/" + QCoreApplication::applicationName() + QLatin1String( "_version.txt" );
 
     err = downloadFile( s_Url, s_Version_Filename );

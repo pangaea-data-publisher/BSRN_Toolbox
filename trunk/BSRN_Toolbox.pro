@@ -13,8 +13,8 @@ macx {
     # Only Intel binaries are accepted so force this
     CONFIG += x86_64
 
-    # Minimum OS X version for submission is 10.6.6
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
+    # Minimum OS X version for submission is 10.7
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
 
     # Icon has been downloaded from http://www.large-icons.com/stock-icons/free-large-torrent-icons.htm
     ICON = ./Resources/icon/Application.icns

@@ -113,8 +113,8 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent )
 
     if ( b_downloadIDs == true )
     {
-        downloadFile( QLatin1String( "http://www.pangaea.de/PHP/bsrn/BSRN_Dataset_IDs.txt" ), getDataLocation() + "/" + "BSRN_Dataset_IDs.txt" );
-        downloadFile( QLatin1String( "http://www.pangaea.de/PHP/bsrn/BSRN_IDs.txt" ), getDataLocation() + "/" + "BSRN_IDs.txt" );
+        downloadFile( QLatin1String( "https://pangaea.de/PHP/bsrn/BSRN_Dataset_IDs.txt" ), getDataLocation() + "/" + "BSRN_Dataset_IDs.txt" );
+        downloadFile( QLatin1String( "https://pangaea.de/PHP/bsrn/BSRN_IDs.txt" ), getDataLocation() + "/" + "BSRN_IDs.txt" );
     }
 
 // **********************************************************************************************

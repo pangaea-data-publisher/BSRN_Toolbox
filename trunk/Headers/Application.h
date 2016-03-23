@@ -52,7 +52,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
     Q_CLASSINFO( "author", "Rainer Sieger" )
-    Q_CLASSINFO( "url", "http://www.pangaea.de" )
+    Q_CLASSINFO( "url", "https://pangaea.de" )
 
 /* @brief Array fuer die Verwaltung des Instrumentwechseldatums */
 
@@ -165,6 +165,8 @@ private slots:
     int  chooseFolder( const QString& Folder = "" );
     int  saveFile();
     int  saveFileAs();
+
+    void exitApplication();
     void about();
     void hideWindow();
     void newWindow();
