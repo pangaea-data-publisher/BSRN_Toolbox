@@ -31,6 +31,10 @@ macx {
 }
 
 win32 {
+    # OpenSSL
+    LIBS += -LC:/Qt/OpenSSL-Win32/bin -lubsec
+    INCLUDEPATH += C:/Qt/OpenSSL-Win32/include
+
     # Icon
     RC_FILE = ./Resources/Application.rc
 }
