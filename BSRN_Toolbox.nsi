@@ -61,6 +61,8 @@ Section "MainSection" SEC01
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\libgcc_s_dw2-1.dll"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\libstdc++-6.dll"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\libwinpthread-1.dll"
+  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\libeay32.dll"
+  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\ssleay32.dll"
 
 SetOutPath "$INSTDIR\platforms"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\platforms\qminimal.dll"
@@ -113,6 +115,8 @@ Section Uninstall
   Delete "$INSTDIR\libgcc_s_dw2-1.dll"
   Delete "$INSTDIR\libstdc++-6.dll"
   Delete "$INSTDIR\libwinpthread-1.dll"
+  Delete "$INSTDIR\libeay32.dll"
+  Delete "$INSTDIR\ssleay32.dll"
   Delete "$INSTDIR\Qt5Core.dll"
   Delete "$INSTDIR\Qt5Gui.dll"
   Delete "$INSTDIR\Qt5Network.dll"
