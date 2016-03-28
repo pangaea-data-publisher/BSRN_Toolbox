@@ -77,7 +77,7 @@ void MainWindow::displayHelp()
     {
         QString s_ApplicationName = "BSRN_Toolbox";
 
-        QDesktopServices::openUrl( QUrl( tr( "http://wiki.pangaea.de/wiki/%1" ).arg( s_ApplicationName ) ) );
+        QDesktopServices::openUrl( QUrl( tr( "https://wiki.pangaea.de/wiki/%1" ).arg( s_ApplicationName ) ) );
     }
 }
 
