@@ -163,22 +163,49 @@ int MainWindow::SYNOPTest( const QString& s_FilenameIn, int *P, const int i_NumO
                         break;
 
                     case 2: // GVN and NYA
-                        if ( InputStr.mid( 9, 1 )  != "/" ) P[1] = 1;
+/*
+  1    0  -8.1   986.3  -9.5  80  18 7 38 8 8 7 / / 2 42 92
+  1  180  -8.8   985.3 -10.3  90  17 / // / / / / / / // //
+  1  360  -9.3   985.2 -10.9  90  15 7 71 8 8 7 / / 1 62 91
+  1  540  -9.4   985.7 -10.9  90  14 7 71 8 8 7 / / 2 62 92
+  1  720  -9.4   986.7 -10.8  90  16 7 71 8 8 7 / / / 63 92
+  1  900  -9.1   988.1 -10.7  90  16 7 38 8 8 8 / / 4 42 96
+  1 1080  -9.1   990.4 -10.7  90  15 7 38 8 8 6 / / 4 43 92
+  1 1260  -9.4   992.1 -11.1  90  17 7 70 8 8 8 / / 2 62 92
+  2    0 -10.4   994.2 -12.2  90  17 7 38 8 4 6 7 / 2 42 92
+  2  180 -10.7   996.3 -12.3  90  17 / // / / / / / / // //
+  2  360 -11.4   997.1 -13.4  80  17 3 36 8 6 5 7 / 4 11 96
+  2  540 -12.5   999.7 -15.0  90  12 3 02 8 7 5 / / 4 // 97
+  2  720 -12.6  1000.5 -15.7  80  11 3 01 7 7 0 3 / 9 // 97
+  2  900 -12.6  1000.8 -16.9  80  12 / // 6 6 0 3 0 9 // 98
+  2 1080 -13.6  1001.2 -18.9  80  11 / // 2 2 0 3 0 9 // 99
+  2 1260 -15.6  1001.9 -20.3  90   7 / // 0 0 0 0 0 9 // 98
+  3    0 -19.2  1001.6 -23.4 130   4 / // 1 1 0 3 0 9 // 98
+  3  180 -20.3  1001.2 -24.1 160   5 / // / / / / / / // //
+  3  360 -19.4  1001.3 -22.8 160   2 / // 7 7 0 7 / 9 // 98
+  3  540 -19.1  1001.2 -22.5 120   1 / // 7 7 0 7 / 9 // 99
+  3  720 -18.4  1001.9 -21.5 140   3 / // 8 8 0 7 / 9 // 99
+  3  900 -17.5  1002.3 -20.5 100   3 / // 8 8 0 3 / 9 // 99
+  3 1080 -17.3  1003.0 -20.8  70   5 / // 8 1 5 7 / 4 // 98
+  3 1260 -16.0  1004.3 -21.0 100   6 / // 8 8 0 7 / 8 // 98
+*/
+
+                        if ( InputStr.mid(  9, 1 ) != "/" ) P[1] = 1;
                         if ( InputStr.mid( 16, 1 ) != "/" ) P[2] = 1;
-                        if ( InputStr.mid( 21, 1 ) != "/" ) P[3] = 1;
-                        if ( InputStr.mid( 27, 1 ) != "/" ) P[4] = 1;
-                        if ( InputStr.mid( 31, 1 ) != "/" ) P[5] = 1;
-                        if ( InputStr.mid( 35, 1 ) != "/" ) P[6] = 1;
-                        if ( InputStr.mid( 37, 1 ) != "/" ) P[7] = 1;
-                        if ( InputStr.mid( 40, 1 ) != "/" ) P[8] = 1;
-                        if ( InputStr.mid( 42, 1 ) != "/" ) P[9] = 1;
-                        if ( InputStr.mid( 44, 1 ) != "/" ) P[10] = 1;
-                        if ( InputStr.mid( 46, 1 ) != "/" ) P[11] = 1;
-                        if ( InputStr.mid( 48, 1 ) != "/" ) P[12] = 1;
-                        if ( InputStr.mid( 50, 1 ) != "/" ) P[13] = 1;
-                        if ( InputStr.mid( 52, 1 ) != "/" ) P[14] = 1;
-                        if ( InputStr.mid( 53, 1 ) != "/" ) P[15] = 1;
-                        if ( InputStr.mid( 55, 1 ) != "/" ) P[16] = 1;
+                        if ( InputStr.mid( 23, 1 ) != "/" ) P[3] = 1;
+                        if ( InputStr.mid( 29, 1 ) != "/" ) P[4] = 1;
+                        if ( InputStr.mid( 33, 1 ) != "/" ) P[5] = 1;
+                        if ( InputStr.mid( 37, 1 ) != "/" ) P[6] = 1;
+                        if ( InputStr.mid( 39, 1 ) != "/" ) P[7] = 1;
+                        if ( InputStr.mid( 42, 1 ) != "/" ) P[8] = 1;
+                        if ( InputStr.mid( 44, 1 ) != "/" ) P[9] = 1;
+                        if ( InputStr.mid( 46, 1 ) != "/" ) P[10] = 1;
+                        if ( InputStr.mid( 48, 1 ) != "/" ) P[11] = 1;
+                        if ( InputStr.mid( 50, 1 ) != "/" ) P[12] = 1;
+                        if ( InputStr.mid( 52, 1 ) != "/" ) P[13] = 1;
+                        if ( InputStr.mid( 54, 1 ) != "/" ) P[14] = 1;
+                        if ( InputStr.mid( 57, 1 ) != "/" ) P[15] = 1;
+                        if ( InputStr.mid( 58, 1 ) != "/" ) P[16] = 1;
 
                         break;
 
@@ -724,7 +751,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
 
         case 2: // GVN and NYA
             if ( P[1] == 1 ) sl_Parameter.append( Parameter( num2str( 4610 ), num2str( i_PIID ), num2str( 4722 ), tr( "###0.0" ) ) );   // Temperature, air [deg C]
-            if ( P[2] == 1 ) sl_Parameter.append( Parameter( num2str( 2224 ), num2str( i_PIID ), num2str( 359 ), tr( "###0" ), tr( "Station pressure reduced to sea level" ) ) );   // Pressure, atmospheric [hPa]
+            if ( P[2] == 1 ) sl_Parameter.append( Parameter( num2str( 2224 ), num2str( i_PIID ), num2str( 359 ), tr( "###0.0" ), tr( "Station pressure reduced to sea level" ) ) );   // Pressure, atmospheric [hPa]
             if ( P[3] == 1 ) sl_Parameter.append( Parameter( num2str( 4611 ), num2str( i_PIID ), num2str( 5039 ), tr( "###0.0" ) ) );   // Dew/frost point [deg C]
             if ( P[4] == 1 ) sl_Parameter.append( Parameter( num2str( 2221 ), num2str( i_PIID ), num2str( 5038 ), tr( "###0" ) ) );     // Wind direction [deg]
             if ( P[5] == 1 ) sl_Parameter.append( Parameter( num2str( 18906 ), num2str( i_PIID ), num2str( 5038 ), tr( "#0" ) ) );      // Wind speed [m/sec]
@@ -1432,6 +1459,51 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                         break;
 
                     case 2: // GVN and NYA
+
+/*
+  1    0  -8.1   986.3  -9.5  80  18 7 38 8 8 7 / / 2 42 92
+  1  180  -8.8   985.3 -10.3  90  17 / // / / / / / / // //
+  1  360  -9.3   985.2 -10.9  90  15 7 71 8 8 7 / / 1 62 91
+  1  540  -9.4   985.7 -10.9  90  14 7 71 8 8 7 / / 2 62 92
+  1  720  -9.4   986.7 -10.8  90  16 7 71 8 8 7 / / / 63 92
+  1  900  -9.1   988.1 -10.7  90  16 7 38 8 8 8 / / 4 42 96
+  1 1080  -9.1   990.4 -10.7  90  15 7 38 8 8 6 / / 4 43 92
+  1 1260  -9.4   992.1 -11.1  90  17 7 70 8 8 8 / / 2 62 92
+  2    0 -10.4   994.2 -12.2  90  17 7 38 8 4 6 7 / 2 42 92
+  2  180 -10.7   996.3 -12.3  90  17 / // / / / / / / // //
+  2  360 -11.4   997.1 -13.4  80  17 3 36 8 6 5 7 / 4 11 96
+  2  540 -12.5   999.7 -15.0  90  12 3 02 8 7 5 / / 4 // 97
+  2  720 -12.6  1000.5 -15.7  80  11 3 01 7 7 0 3 / 9 // 97
+  2  900 -12.6  1000.8 -16.9  80  12 / // 6 6 0 3 0 9 // 98
+  2 1080 -13.6  1001.2 -18.9  80  11 / // 2 2 0 3 0 9 // 99
+  2 1260 -15.6  1001.9 -20.3  90   7 / // 0 0 0 0 0 9 // 98
+  3    0 -19.2  1001.6 -23.4 130   4 / // 1 1 0 3 0 9 // 98
+  3  180 -20.3  1001.2 -24.1 160   5 / // / / / / / / // //
+  3  360 -19.4  1001.3 -22.8 160   2 / // 7 7 0 7 / 9 // 98
+  3  540 -19.1  1001.2 -22.5 120   1 / // 7 7 0 7 / 9 // 99
+  3  720 -18.4  1001.9 -21.5 140   3 / // 8 8 0 7 / 9 // 99
+  3  900 -17.5  1002.3 -20.5 100   3 / // 8 8 0 3 / 9 // 99
+  3 1080 -17.3  1003.0 -20.8  70   5 / // 8 1 5 7 / 4 // 98
+  3 1260 -16.0  1004.3 -21.0 100   6 / // 8 8 0 7 / 8 // 98
+
+if ( InputStr.mid(  9, 1 ) != "/" ) P[1] = 1;
+if ( InputStr.mid( 16, 1 ) != "/" ) P[2] = 1;
+if ( InputStr.mid( 23, 1 ) != "/" ) P[3] = 1;
+if ( InputStr.mid( 29, 1 ) != "/" ) P[4] = 1;
+if ( InputStr.mid( 33, 1 ) != "/" ) P[5] = 1;
+if ( InputStr.mid( 37, 1 ) != "/" ) P[6] = 1;
+if ( InputStr.mid( 39, 1 ) != "/" ) P[7] = 1;
+if ( InputStr.mid( 42, 1 ) != "/" ) P[8] = 1;
+if ( InputStr.mid( 44, 1 ) != "/" ) P[9] = 1;
+if ( InputStr.mid( 46, 1 ) != "/" ) P[10] = 1;
+if ( InputStr.mid( 48, 1 ) != "/" ) P[11] = 1;
+if ( InputStr.mid( 50, 1 ) != "/" ) P[12] = 1;
+if ( InputStr.mid( 52, 1 ) != "/" ) P[13] = 1;
+if ( InputStr.mid( 54, 1 ) != "/" ) P[14] = 1;
+if ( InputStr.mid( 57, 1 ) != "/" ) P[15] = 1;
+if ( InputStr.mid( 58, 1 ) != "/" ) P[16] = 1;
+*/
+
                         i_Day		= InputStr.mid( 1, 2 ).toInt();
                         i_Minute	= InputStr.mid( 4, 4 ).toInt();
 
@@ -1447,134 +1519,135 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                         if ( P[1] == 1 )  // Temperature, air [deg C]
                         {
                             if ( ( InputStr.mid( 9, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 9, 5 ).toFloat() > -90 ) )
-                                OutputStr.append( "\t" + InputStr.mid( 9, 5 ).simplified() );
+                                OutputStr.append( "\t" + InputStr.mid( 9, 5 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[2] == 1 ) // Pressure, atmospheric [hPa]
                         {
-                            if ( ( InputStr.mid( 16, 4 ).contains( "/" ) == false ) && ( InputStr.mid( 16, 4 ).toFloat() > -90 ) )
-                                OutputStr.append( "\t" + InputStr.mid( 16, 4 ).simplified() );
+                            if ( ( InputStr.mid( 16, 6 ).contains( "/" ) == false ) && ( InputStr.mid( 16, 6 ).toFloat() > -90 ) )
+                                OutputStr.append( "\t" + InputStr.mid( 16, 6 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[3] == 1 ) // Dew/frost point [deg C]
                         {
-                            if ( ( InputStr.mid( 21, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 21, 5 ).toFloat() > -90 ) )
-                                OutputStr.append( "\t" + InputStr.mid( 21, 5 ).simplified() );
+                            if ( ( InputStr.mid( 23, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 23, 5 ).toFloat() > -90 ) )
+                                OutputStr.append( "\t" + InputStr.mid( 23, 5 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[4] == 1 ) // Wind direction [deg]
                         {
-                            if ( ( InputStr.mid( 27, 3 ).contains( "/" ) == false ) && ( InputStr.mid( 27, 3 ).toFloat() > -90 ) )
-                                OutputStr.append( "\t" + InputStr.mid( 27, 3 ).simplified() );
+                            if ( ( InputStr.mid( 29, 3 ).contains( "/" ) == false ) && ( InputStr.mid( 29, 3 ).toFloat() > -90 ) )
+                                OutputStr.append( "\t" + InputStr.mid( 29, 3 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[5] == 1 ) // Wind speed [m/sec]
                         {
-                            if ( ( InputStr.mid( 31, 3 ).contains( "/" ) == false ) && ( InputStr.mid( 31, 3 ).toFloat() > -90 ) )
-                                OutputStr.append( "\t" + InputStr.mid( 31, 3 ).simplified() );
+                            if ( ( InputStr.mid( 33, 3 ).contains( "/" ) == false ) && ( InputStr.mid( 33, 3 ).toFloat() > -90 ) )
+                                OutputStr.append( "\t" + InputStr.mid( 33, 3 ) );
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[6] == 1 )
                         {
-                            if ( InputStr.mid( 35, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.mid( 35, 1 ) );	// Past weather1 [code]
+                            if ( InputStr.mid( 37, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 37, 1 ) );	// Past weather1 [code]
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[7] == 1 )
                         {
-                            if ( InputStr.mid( 37, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.mid( 37, 2 ) );	// Present weather [code]
+                            if ( InputStr.mid( 39, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 39, 2 ) );	// Present weather [code]
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[8] == 1 )
                         {
-                            if ( InputStr.mid( 40, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.mid( 40, 1 ) );	// Total cloud amount [code]
+                            if ( InputStr.mid( 42, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 42, 1 ) );	// Total cloud amount [code]
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[9] == 1 )
                         {
-                            if ( InputStr.mid( 42, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.mid( 42, 1 ) );	// Low/middle cloud amount [code]
+                            if ( InputStr.mid( 44, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 44, 1 ) );	// Low/middle cloud amount [code]
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[10] == 1 )
                         {
-                            if ( InputStr.mid( 44, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.mid( 44, 1 ) );	// Low cloud [code]
+                            if ( InputStr.mid( 46, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 46, 1 ) );	// Low cloud [code]
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[11] == 1 )
                         {
-                            if ( InputStr.mid( 46, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.mid( 46, 1 ) );	// Middle cloud [code]
+                            if ( InputStr.mid( 48, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 48, 1 ) );	// Middle cloud [code]
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[12] == 1 )
                         {
-                            if ( InputStr.mid( 48, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.mid( 48, 1 ) );	// High cloud [code]
+                            if ( InputStr.mid( 50, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 50, 1 ) );	// High cloud [code]
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[13] == 1 )
                         {
-                            if ( InputStr.mid( 50, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.mid( 50, 1 ) );	// Cloud base height [code]
+                            if ( InputStr.mid( 52, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 52, 1 ) );	// Cloud base height [code]
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[14] == 1 )
                         {
-                            if ( InputStr.mid( 52, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.mid( 52, 1 ) );	// Present blowing snow [code]
+                            if ( InputStr.mid( 54, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 54, 2 ) );	// Present blowing snow [code]
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[15] == 1 )
                         {
-                            if ( InputStr.mid( 53, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.mid( 53, 1 ) );	// Past blowing snow [code]
+                            if ( InputStr.mid( 57, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 57, 1 ) );	// Past blowing snow [code]
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         if ( P[16] == 1 )
                         {
-                            if ( InputStr.mid( 55, 1 ) != "/" )
-                                OutputStr.append( "\t" + InputStr.mid( 55, 2 ) );	// Horizontal visibility [code]
+                            if ( InputStr.mid( 58, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 58, 1 ) );	// Horizontal visibility [code]
                             else
                                 OutputStr.append( "\t" );
                         }
 
                         OutputStr.replace( "/", "" );
+                        OutputStr.replace( " ", "" );
 
-                        tout << OutputStr << "\t" << InputStr << eol;
+                        tout << OutputStr << eol;
 
                         break;
 
