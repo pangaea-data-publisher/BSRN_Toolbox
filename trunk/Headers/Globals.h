@@ -19,7 +19,7 @@
     const QString   _PROGRAMDOI_        = "doi:10.1594/PANGAEA.774827";
     const QString   _PROGRAMREADME_     = "https://wiki.pangaea.de/wiki/BSRN_Toolbox";
 
-    const QString   _VERSION_           = "2.12";                       // Version number, 2016-04-06
+    const QString   _VERSION_           = "2.13";                       // Version number, 2016-04-09
     const QString   _DOI_               = "doi:10.1594/PANGAEA.774827"; // Dataset
 
     // EOL
@@ -45,8 +45,12 @@
     const int	_DATAFOUND_				= 4;
     const int   _CHOOSEABORTED_         = 5;
     const int   _FILENOEXISTS_          = 6;
-    const int   _FILENOTWRITABLE_       = -20;
 
+    const int   _HELP_                  = 10;
+    const int   _GCOS_                  = 11;
+    const int   _BSRNSTATUS_            = 12;
+
+    const int   FILENOTWRITABLE         = -20;
     const int   DATETIMENOTFOUND        = 1000;
     const int   LATITUDENOTFOUND        = 1001;
     const int   LONGITUDENOTFOUND       = 1002;
@@ -61,6 +65,7 @@
     const int   T2NOTFOUND              = 1012;
     const int   RHNOTFOUND              = 1013;
     const int   POPOPOPONOTFOUND        = 1014;
+    const int   NODATAFOUND             = 1015;
 
     const int	MAX_NUM_OF_METHOD		= 2000;
     const int	MAX_NUM_OF_STAFF		= 100;

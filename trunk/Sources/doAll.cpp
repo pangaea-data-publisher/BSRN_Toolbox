@@ -13,10 +13,23 @@
 
 void MainWindow::doSetOverwriteDatasetFlag()
 {
+    int err = _NOERROR_;
+
     if ( gb_OverwriteDataset == true )
       gb_OverwriteDataset = false;
     else
       gb_OverwriteDataset = true;
+
+// **********************************************************************************************
+
+    setOverwriteDatasetFlagAction->setChecked( gb_OverwriteDataset );
+
+// **********************************************************************************************
+
+    if ( gb_OverwriteDataset == true )
+        err = readIDsDatasets();
+
+    onError( err );
 }
 
 // **********************************************************************************************
@@ -352,3 +365,32 @@ void MainWindow::doAllImportConverter()
     onError( err );
 }
 
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+// 2016-04-10
+
+/*! @brief Laed BSRN IDs Datei */
+
+void MainWindow::doRefreshIDsBSRN()
+{
+    setStatusBar( tr( "Reading BSRN IDs database - please wait" ) );
+    setWaitCursor();
+
+// **********************************************************************************************
+
+    downloadFile( QLatin1String( "https://pangaea.de/PHP/bsrn/BSRN_IDs.txt" ), getDataLocation() + "/" + "BSRN_IDs.txt" );
+
+// **********************************************************************************************
+
+    setStatusBar( tr( "Ready" ), 2 );
+    setNormalCursor();
+
+// **********************************************************************************************
+
+    readIDsBSRN();
+
+// **********************************************************************************************
+
+    onError( _NOERROR_ );
+}

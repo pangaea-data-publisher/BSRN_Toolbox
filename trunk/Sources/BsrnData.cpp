@@ -222,7 +222,7 @@ int BsrnData::writeToFile(const QString & FileName)
     QTextStream ts_Output(&File);
     qint32 i_Line = 0;
 
-    if (File.open(QIODevice::WriteOnly | QIODevice::Text) == false) return(_FILENOTWRITABLE_);
+    if (File.open(QIODevice::WriteOnly | QIODevice::Text) == false) return(FILENOTWRITABLE);
 
 
     //   Write data description

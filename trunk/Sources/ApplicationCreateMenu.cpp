@@ -85,6 +85,9 @@ void MainWindow::createActions()
     doAllMetadataAction = new QAction(tr("Create all metadata files"), this);
     connect(doAllMetadataAction, SIGNAL(triggered()), this, SLOT(doAllMetadataConverter()));
 
+    doRefreshIDsBSRNAction = new QAction(tr("Refresh BSRN IDs database"), this);
+    connect(doRefreshIDsBSRNAction, SIGNAL(triggered()), this, SLOT(doRefreshIDsBSRN()));
+
     // Data menu
     basicMeasurementsAction = new QAction(tr("&Basic and other measurements, LR 0100 + LR 0300"), this);
     connect(basicMeasurementsAction, SIGNAL(triggered()), this, SLOT(doBasicMeasurementsConverter()));
@@ -190,61 +193,16 @@ void MainWindow::createActions()
     aboutQtAction = new QAction(tr("About &Qt"), this);
     connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
-    helpAction = new QAction(getApplicationName( true ) + tr(" &Manual"), this);
-    helpAction->setShortcut(tr("F1"));
-    connect(helpAction, SIGNAL(triggered()), this, SLOT(displayHelp()));
+    openExternalURLHelpAction = new QAction(getApplicationName( true ) + tr(" &Manual"), this);
+    openExternalURLHelpAction->setShortcut(tr("F1"));
+    connect(openExternalURLHelpAction, SIGNAL(triggered()), this, SLOT(doOpenExternalURLHelp()));
 
-#if defined(Q_OS_WIN)
-    newWindowAction->setStatusTip(tr("Create a new file"));
-    openFileAction->setStatusTip(tr("Choose an existing file"));
-    openFolderAction->setStatusTip(tr("Choose an existing folder"));
-    saveAction->setStatusTip(tr("Save the document to disk"));
-    saveAsAction->setStatusTip(tr("Save the document under a new name"));
-    exitAction->setStatusTip(tr("Exit the application"));
-    downloadStationToArchiveFilesAction->setStatusTip(tr("Download Station-to-archive files"));
-    checkStationToArchiveFilesAction->setStatusTip(tr("Check Station-to-archive files"));
-    fileIDAction->setStatusTip(tr("Logical record 0001 - File ID"));
-    scientistIDAction->setStatusTip(tr("Logical record 0002 - Scientist description"));
-    messagesAction->setStatusTip(tr("Logical record 0003 - Messages"));
-    stationDescriptionAction->setStatusTip(tr("Logical record 0004 - Station description"));
-    radiosondeEquipmentAction->setStatusTip(tr("Logical record 0005 - Radiosonde equipment"));
-    ozoneEquipmentAction->setStatusTip(tr("Logical record 0006 - Ozone equipment"));
-    stationHistoryAction->setStatusTip(tr("Logical record 0007 - Station history"));
-    radiationInstrumentsAction->setStatusTip(tr("Logical record 0008 - Radiation instruments"));
-    assignmentAction->setStatusTip(tr("Logical record 0009 - Assignment of radiation quantities"));
-    doAllMetadataAction->setStatusTip(tr("Run all metadata converter"));
-    basicMeasurementsAction->setStatusTip(tr("Convert logical record 0100 + 0300"));
-    otherMinuteMeasurementsAction->setStatusTip(tr("Convert logical record 0300"));
-    uvMeasurementsAction->setStatusTip(tr("Convert logical record 0500"));
-    synopAction->setStatusTip(tr("Convert logical record 1000"));
-    radiosondeMeasurementsAction->setStatusTip(tr("Convert logical record 1100"));
-    ozoneMeasurementsAction->setStatusTip(tr("Convert logical record 1200"));
-    expandedMeasurementsAction->setStatusTip(tr("Convert logical record 1300"));
-    otherMeasurementsAt10mAction->setStatusTip(tr("Convert logical record 3010"));
-    otherMeasurementsAt30mAction->setStatusTip(tr("Convert logical record 3030"));
-    otherMeasurementsAt300mAction->setStatusTip(tr("Convert logical record 3300"));
-    doAllDataAction->setStatusTip(tr("Run all data converter"));
-    basicMeasurementsImportAction->setStatusTip(tr("Convert logical record 0100 + 0300 to import file"));
-    uvMeasurementsImportAction->setStatusTip(tr("Convert logical record 0500 to import file"));
-    synopImportAction->setStatusTip(tr("Convert logical record 1000 to import file"));
-    radiosondeMeasurementsImportAction->setStatusTip(tr("Convert logical record 1100 to import file"));
-    ozoneMeasurementsImportAction->setStatusTip(tr("Convert logical record 1200 to import file"));
-    expandedMeasurementsImportAction->setStatusTip(tr("Convert logical record 1300 to import file"));
-    otherMeasurementsAt10mImportAction->setStatusTip(tr("Convert logical record 3010 to import file"));
-    otherMeasurementsAt30mImportAction->setStatusTip(tr("Convert logical record 3030 to import file"));
-    otherMeasurementsAt300mImportAction->setStatusTip(tr("Convert logical record 3300 to import file"));
-    doAllImportAction->setStatusTip(tr("Run all import converter"));
-    setOverwriteDatasetFlagAction->setStatusTip(tr("Overwrites datasets"));
-    concatenateFilesAction->setStatusTip(tr("Concatenate files"));
-    WinConvertEOLAction->setStatusTip(tr("Convert the Windows End-of-Line character to UNIX like"));
-    MacOSConvertEOLAction->setStatusTip(tr("Convert the MacOS 9 End-of-Line character to UNIX like"));
-    compressFileAction->setStatusTip(tr("Compress files with gzip"));
-    convertUnformattedAction->setStatusTip(tr("Convert tab files to unformatted format"));
-    convertFormattedAction->setStatusTip(tr("Convert tab files to formatted format"));
-    aboutAction->setStatusTip(tr("Show the application's About box"));
-    aboutQtAction->setStatusTip(tr("Show the Qt library's About box"));
-    helpAction->setStatusTip(tr("Show the application's Help"));
-#endif
+    openExternalURLBSRNStatusAction = new QAction(tr("BSRN Status"), this);
+    openExternalURLBSRNStatusAction->setShortcut(tr("F2"));
+    connect(openExternalURLBSRNStatusAction, SIGNAL(triggered()), this, SLOT(doOpenExternalURLBSRNStatus()));
+
+    openExternalURLGCOSAction = new QAction(tr("Station-to-archiv file format description"), this);
+    connect(openExternalURLGCOSAction, SIGNAL(triggered()), this, SLOT(doOpenExternalURLGCOS()));
 }
 
 // **********************************************************************************************
@@ -296,6 +254,8 @@ void MainWindow::createMenus()
     metadataMenu->addAction( createRefFileAction );
     metadataMenu->addSeparator();
     metadataMenu->addAction( doAllMetadataAction );
+    metadataMenu->addSeparator();
+    metadataMenu->addAction( doRefreshIDsBSRNAction );
 
 // **********************************************************************************************
 
@@ -359,7 +319,10 @@ void MainWindow::createMenus()
     helpMenu->addAction( aboutAction );
     helpMenu->addAction( aboutQtAction );
     helpMenu->addSeparator();
-    helpMenu->addAction( helpAction );
+    helpMenu->addAction( openExternalURLHelpAction );
+    helpMenu->addSeparator();
+    helpMenu->addAction( openExternalURLBSRNStatusAction );
+    helpMenu->addAction( openExternalURLGCOSAction );
 }
 
 // **********************************************************************************************

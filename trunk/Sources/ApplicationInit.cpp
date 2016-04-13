@@ -19,8 +19,8 @@
 
 MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent )
 {
+// **********************************************************************************************
 //  QObject::connect( this, SIGNAL( finishedBuildFilelist( bool ) ), this, SLOT( doIt( bool ) ) );
-
 // **********************************************************************************************
 
     setWaitCursor();
@@ -37,8 +37,6 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent )
     gb_OverwriteDataset = false;
 
     gsl_FilenameList.clear();
-
-    bool    b_downloadIDs   = true;
 
 // **********************************************************************************************
 
@@ -109,24 +107,45 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent )
 
 // **********************************************************************************************
 
-    setStatusBar( tr( "Reading IDs - please wait." ) );
+    setStatusBar( tr( "Reading BSRN IDs database - please wait" ) );
 
-    if ( b_downloadIDs == true )
-    {
-        downloadFile( QLatin1String( "https://pangaea.de/PHP/bsrn/BSRN_Dataset_IDs.txt" ), getDataLocation() + "/" + "BSRN_Dataset_IDs.txt" );
-        downloadFile( QLatin1String( "https://pangaea.de/PHP/bsrn/BSRN_IDs.txt" ), getDataLocation() + "/" + "BSRN_IDs.txt" );
-    }
-
-// **********************************************************************************************
-
-    readIDs();
+    downloadFile( QLatin1String( "https://pangaea.de/PHP/bsrn/BSRN_IDs.txt" ), getDataLocation() + "/" + "BSRN_IDs.txt" );
 
 // **********************************************************************************************
 
     setStatusBar( tr( "Ready" ), 2 );
     setNormalCursor();
+
+    readIDsBSRN();
 }
 
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+/*! @brief Öffnet URL.
+*
+*   Öffnet beliebige Links im Standard Browser
+*/
+
+void MainWindow::OpenExternalURL( const int i_URL )
+{
+    switch ( i_URL)
+    {
+    case _HELP_:
+        QDesktopServices::openUrl( QUrl( tr( "https://wiki.pangaea.de/wiki/BSRN_Toolbox" ) ) );
+        break;
+    case _BSRNSTATUS_:
+        QDesktopServices::openUrl( QUrl( tr( "https://pangaea.de/PHP/BSRN_Status.php" ) ) );
+        break;
+    case _GCOS_:
+        QDesktopServices::openUrl( QUrl( tr( "http://hdl.handle.net/10013/epic.42596.d001" ) ) );
+        break;
+    default:
+        QDesktopServices::openUrl( QUrl( tr( "https://pangaea.de" ) ) );
+        break;
+    }
+}
 
 // **********************************************************************************************
 // **********************************************************************************************

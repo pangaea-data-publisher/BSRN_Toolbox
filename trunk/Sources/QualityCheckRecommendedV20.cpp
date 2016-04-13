@@ -40,7 +40,7 @@ int MainWindow::QualityCheckRecommendedV20(const QString & FileNameIn, const boo
 
     // Check which parameter are available
     //   Essential parameter
-    if (Measurements.size() <= 0) return _NODATAFOUND_;
+    if (Measurements.size() <= 0) return NODATAFOUND;
     if (Measurements.Parameters.contains("Date/Time") == false) return DATETIMENOTFOUND;
     if (std::isnan(Measurements.Longitude)) return LONGITUDENOTFOUND;
     if (std::isnan(Measurements.Latitude) ) return LATITUDENOTFOUND;

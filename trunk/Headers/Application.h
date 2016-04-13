@@ -190,6 +190,7 @@ private slots:
     void doAssignmentConverter();
     void doCreateReferenceImportFile();
     void doAllMetadataConverter();
+    void doRefreshIDsBSRN();
 
 //  Data
     void doBasicMeasurementsConverter( const bool Import = false );
@@ -231,6 +232,11 @@ private slots:
     void doQualityCheckRecommendedV20();
     //void doQualityCheckTechnicalReport1();
     //void doQualityCheckUserDefined();
+
+//  External URLs
+    void doOpenExternalURLHelp() { OpenExternalURL( _HELP_ ); }
+    void doOpenExternalURLGCOS() { OpenExternalURL( _GCOS_ ); }
+    void doOpenExternalURLBSRNStatus() { OpenExternalURL( _BSRNSTATUS_ ); }
 
 private:
     QStringList expandCommandline();
@@ -366,8 +372,10 @@ private:
     int findMethodID( const QString& RadiosondeIdentification, structMethod *Method_ptr );
     int findDatasetId( const QString& ExportFilename, structDataset *Dataset_ptr );
 
-    int readIDs();
-    int writeDefaultIDs( const QString& Filename );
+    int readIDsBSRN();
+    int readIDsDatasets();
+
+    int writeDefaultIDsBSRN( const QString& Filename );
 
     int concatenateFiles( const QString& FilenameOut, const QStringList Filenames, const QString& ProgressMessage, const int SkipLines = 0, const bool RemoveFile = false );
     int convertEOL( const QString& FilenameIn, const bool convertEOL, const int OS );
@@ -376,6 +384,8 @@ private:
     int createReplaceDatabase( const QString& FilenameIn, const int firstReferenceID, const int NumOfFiles );
 
     float calcGeopotentialHeight( const QString& ahhh );
+
+    void OpenExternalURL( const int URL = 1 );
 
 //  Quality check
     int QualityCheckRecommendedV20( const QString & FileNameIn, const bool & b_CheckPhysicallyPossibleLimits, const bool & b_CheckExtremelyRareLimits, const bool & b_CheckComparisons, const QString & s_AuxiliaryDataAlgorithm, const bool & b_OutputCodes, const bool & b_OutputCleanedValues, const bool & b_OutputOriginalValues, const bool & b_OutputAuxiliaryData, const bool & b_OutputOneFile);
@@ -402,10 +412,15 @@ private:
     QAction *aboutQtAction;
     QAction *helpAction;
 
+    QAction *openExternalURLHelpAction;
+    QAction *openExternalURLGCOSAction;
+    QAction *openExternalURLBSRNStatusAction;
+
     QAction *downloadStationToArchiveFilesAction;
     QAction *checkStationToArchiveFilesAction;
 
     QAction *doAllMetadataAction;
+    QAction *doRefreshIDsBSRNAction;
     QAction *fileIDAction;
     QAction *scientistIDAction;
     QAction *messagesAction;

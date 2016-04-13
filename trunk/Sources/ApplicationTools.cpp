@@ -251,13 +251,15 @@ int MainWindow::findInstituteID( const int i_StationNumber, structStation *Stati
 }
 
 // ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
 
-/*! @brief Liest alle IDs aus einer Datei
+/*! @brief Liest alle BSRN IDs aus einer Datei (BSRN IDs database)
 *
 *   @return Fehlercode, 0 = kein Fehler, -1 = keine Einstellungsdatei gefunden
 */
 
-int MainWindow::readIDs()
+int MainWindow::readIDsBSRN()
 {
     int		i					= 0;
 
@@ -276,29 +278,27 @@ int MainWindow::readIDs()
     QFile fIDs( IDsFilename );
     QFile fIDs_old( IDsFilenameOld );
 
-    setNormalCursor();
-
     if ( ( fIDs.exists() == false ) || ( fIDs.size() == 0 ) )
     {
+        setStatusBar( tr( "Reading of BSRN IDs database fails" ) );
+
         if ( fIDs.exists() == true )
             fIDs.remove();
 
         if ( fIDs_old.exists() == true )
         {
+            QMessageBox::warning( this, getApplicationName( true ), tr( "Cannot download BSRN IDs database.\nThe old BSRN IDs database will be used." ) );
             fIDs_old.copy( IDsFilename );
-            QMessageBox::warning( this, getApplicationName( true ), tr( "Cannot download BSRN ID file.\nAn old BSRN ID file will be used." ) );
         }
         else
         {
-            writeDefaultIDs( IDsFilename );
-            QMessageBox::warning( this, getApplicationName( true ), tr( "Cannot download BSRN ID file.\nThe default BSRN ID file will be used." ) );
+            QMessageBox::warning( this, getApplicationName( true ), tr( "Cannot download BSRN IDs database.\nThe default BSRN IDs database will be used." ) );
+            writeDefaultIDsBSRN( IDsFilename );
         }
     }
 
     if ( fIDs.open( QIODevice::ReadOnly ) == false )
-        return( -30 );
-
-    setWaitCursor();
+        return( -11 ); // Can't open BSRN IDs database.
 
     QTextStream tinIDs( &fIDs );
 
@@ -311,15 +311,15 @@ int MainWindow::readIDs()
     {
         fIDs.close();
 
-        writeDefaultIDs( IDsFilename );
-        readIDs();
+        writeDefaultIDsBSRN( IDsFilename );
+        readIDsBSRN();
 
-        QMessageBox::warning( this, getApplicationName( true ), tr( "Wrong format of BSRN ID file.\nThe default BSRN ID file will be used." ) );
-
-        return( _NOERROR_ );
+        return( -42 ); // The format of the BSRN IDs database is wrong. Please contact rsieger@pangaea.de
     }
 
     InputStr = tinIDs.readLine();
+
+    setWaitCursor();
 
     while ( tinIDs.atEnd() == false )
     {
@@ -457,24 +457,82 @@ int MainWindow::readIDs()
     }
 
     fIDs.close();
+
+    setNormalCursor();
+
+    if ( InputStr.section( "\t", 0, 0 ) != "[END]" )
+    {
+        fIDs_old.copy( IDsFilename );
+        return( -60 ); // Download of BSRN IDs database fails. Please check your connection to the internet and refresh the database again.
+    }
+
     fIDs_old.remove();
 
     if ( i == MAX_NUM_OF_METHOD )
-        QMessageBox::information( this, getApplicationName( true ), tr( "Maximum number of methods was reached.\nPlease contact Rainer Sieger (rsieger@pangaea.de)" ) );
+        return( -70 ); // Maximum number of methods was reached. Please contact Rainer Sieger (rsieger@pangaea.de)
 
-// **********************************************************************************************
+    return( _NOERROR_ );
+}
 
-    IDsFilename = fi.absolutePath() + "/" + "BSRN_Dataset_IDs.txt";
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
 
-    fIDs.setFileName( IDsFilename );
+/*! @brief Liest alle Datensatz IDs aus einer Datei
+*
+*   @return Fehlercode, 0 = kein Fehler, -30 = keine Datensatz ID Datenbank gefunden
+*/
 
-    if ( fIDs.open( QIODevice::ReadOnly ) == false )
-        return( -30 );
+int MainWindow::readIDsDatasets()
+{
+    int		i					= 0;
+
+    QString InputStr			= "";
+    QString IDsFilename			= "";
+
+// ***********************************************************************************************************************
+
+    IDsFilename = getDataLocation()  + "/" + "BSRN_Dataset_IDs.txt";
+
+// ***********************************************************************************************************************
+
+    setWaitCursor();
+    setStatusBar( tr( "Reading BSRN dataset IDs database - please wait" ) );
+
+// ***********************************************************************************************************************
+
+    downloadFile( QLatin1String( "https://pangaea.de/PHP/bsrn/BSRN_Dataset_IDs.txt" ), IDsFilename );
+
+// ***********************************************************************************************************************
+
+    setNormalCursor();
+    setStatusBar( tr( "Ready" ), 2 );
+
+// ***********************************************************************************************************************
+
+    QFile fIDs( IDsFilename );
+
+// ***********************************************************************************************************************
+
+    if ( ( fIDs.open( QIODevice::ReadOnly ) == false ) || ( fIDs.size() == 0 ) )
+    {
+        doSetOverwriteDatasetFlag();
+
+        setStatusBar( tr( "Download of BSRN dataset IDs database fails" ), 2 );
+
+        return( -61 ); // Download of BSRN dataset IDs database fails. Please check your connection to the internet and refresh the database again.
+    }
+
+// ***********************************************************************************************************************
+
+    QTextStream tinIDs( &fIDs );
 
     InputStr = tinIDs.readLine(); // Date
     InputStr = tinIDs.readLine(); // Header
 
     i = 0;
+
+    setWaitCursor();
 
     while ( ( tinIDs.atEnd() == false ) && ( i < MAX_NUM_OF_DATASET ) )
     {
@@ -488,8 +546,13 @@ int MainWindow::readIDs()
 
     fIDs.close();
 
+    setNormalCursor();
+    setStatusBar( tr( "Ready" ), 2 );
+
+// **********************************************************************************************
+
     if ( i == MAX_NUM_OF_DATASET )
-        QMessageBox::information( this, getApplicationName( true ), tr( "Maximum number of datasets was reached.\nPlease contact Rainer Sieger (rsieger@pangaea.de)" ) );
+        return( -71 ); // Maximum number of datasets was reached. Please contact Rainer Sieger (rsieger@pangaea.de)
 
     return( _NOERROR_ );
 }
@@ -505,7 +568,7 @@ int MainWindow::readIDs()
 *   @return Fehlercode
 */
 
-int MainWindow::writeDefaultIDs( const QString& s_Filename )
+int MainWindow::writeDefaultIDsBSRN( const QString& s_Filename )
 {
     QFile fout( QDir::toNativeSeparators( s_Filename ) );
 
