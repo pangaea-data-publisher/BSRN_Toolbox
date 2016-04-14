@@ -235,8 +235,11 @@ private slots:
 
 //  External URLs
     void doOpenExternalURLHelp() { OpenExternalURL( _HELP_ ); }
-    void doOpenExternalURLGCOS() { OpenExternalURL( _GCOS_ ); }
+    void doOpenExternalURLBSRNStationToArchiveFormat() { OpenExternalURL( _BSRNSTATIONTOARCHIVEFORMAT_ ); }
     void doOpenExternalURLBSRNStatus() { OpenExternalURL( _BSRNSTATUS_ ); }
+    void doOpenExternalURLBSRNHomepage() { OpenExternalURL( _BSRNHOMEPAGE_ ); }
+    void doOpenExternalURLBSRNLatestSnapshot() { OpenExternalURL( _BSRNLATESTSNAPSHOT_ ); }
+    void doOpenExternalURLBSRNAccount() { OpenExternalURL( _BSRNACCOUNT_ ); }
 
 private:
     QStringList expandCommandline();
@@ -413,8 +416,11 @@ private:
     QAction *helpAction;
 
     QAction *openExternalURLHelpAction;
-    QAction *openExternalURLGCOSAction;
+    QAction *openExternalURLBSRNStationToArchiveFormatAction;
     QAction *openExternalURLBSRNStatusAction;
+    QAction *openExternalURLBSRNHomePageAction;
+    QAction *openExternalURLBSRNLatestSnapshotAction;
+    QAction *openExternalURLBSRNAccountAction;
 
     QAction *downloadStationToArchiveFilesAction;
     QAction *checkStationToArchiveFilesAction;

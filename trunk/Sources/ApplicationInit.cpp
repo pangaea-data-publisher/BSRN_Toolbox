@@ -138,8 +138,17 @@ void MainWindow::OpenExternalURL( const int i_URL )
     case _BSRNSTATUS_:
         QDesktopServices::openUrl( QUrl( tr( "https://pangaea.de/PHP/BSRN_Status.php" ) ) );
         break;
-    case _GCOS_:
-        QDesktopServices::openUrl( QUrl( tr( "http://hdl.handle.net/10013/epic.42596.d001" ) ) );
+    case _BSRNSTATIONTOARCHIVEFORMAT_:
+        QDesktopServices::openUrl( QUrl( tr( "http://bsrn.awi.de/data/station-to-archive-file-format.html" ) ) );
+        break;
+    case _BSRNHOMEPAGE_:
+        QDesktopServices::openUrl( QUrl( tr( "http://bsrn.awi.de" ) ) );
+        break;
+    case _BSRNLATESTSNAPSHOT_:
+        QDesktopServices::openUrl( QUrl( tr( "https://doi.pangaea.de/10.1594/PANGAEA.852720" ) ) );
+        break;
+    case _BSRNACCOUNT_:
+        QDesktopServices::openUrl( QUrl( tr( "http://bsrn.awi.de/data/data-retrieval-via-pangaea.html" ) ) );
         break;
     default:
         QDesktopServices::openUrl( QUrl( tr( "https://pangaea.de" ) ) );

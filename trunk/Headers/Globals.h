@@ -46,9 +46,12 @@
     const int   _CHOOSEABORTED_         = 5;
     const int   _FILENOEXISTS_          = 6;
 
-    const int   _HELP_                  = 10;
-    const int   _GCOS_                  = 11;
-    const int   _BSRNSTATUS_            = 12;
+    const int   _HELP_                       = 10;
+    const int   _BSRNSTATIONTOARCHIVEFORMAT_ = 11;
+    const int   _BSRNSTATUS_                 = 12;
+    const int   _BSRNHOMEPAGE_               = 13;
+    const int   _BSRNLATESTSNAPSHOT_         = 14;
+    const int   _BSRNACCOUNT_                = 15;
 
     const int   FILENOTWRITABLE         = -20;
     const int   DATETIMENOTFOUND        = 1000;

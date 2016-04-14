@@ -197,12 +197,20 @@ void MainWindow::createActions()
     openExternalURLHelpAction->setShortcut(tr("F1"));
     connect(openExternalURLHelpAction, SIGNAL(triggered()), this, SLOT(doOpenExternalURLHelp()));
 
+    openExternalURLBSRNHomePageAction = new QAction(tr("BSRN Homepage"), this);
+    connect(openExternalURLBSRNHomePageAction, SIGNAL(triggered()), this, SLOT(doOpenExternalURLBSRNHomepage()));
+
+    openExternalURLBSRNAccountAction = new QAction(tr("How to get the BSRN account"), this);
+    connect(openExternalURLBSRNAccountAction, SIGNAL(triggered()), this, SLOT(doOpenExternalURLBSRNAccount()));
+
     openExternalURLBSRNStatusAction = new QAction(tr("BSRN Status"), this);
-    openExternalURLBSRNStatusAction->setShortcut(tr("F2"));
     connect(openExternalURLBSRNStatusAction, SIGNAL(triggered()), this, SLOT(doOpenExternalURLBSRNStatus()));
 
-    openExternalURLGCOSAction = new QAction(tr("Station-to-archiv file format description"), this);
-    connect(openExternalURLGCOSAction, SIGNAL(triggered()), this, SLOT(doOpenExternalURLGCOS()));
+    openExternalURLBSRNLatestSnapshotAction = new QAction(tr("BSRN snapshot 2015-09"), this);
+    connect(openExternalURLBSRNLatestSnapshotAction, SIGNAL(triggered()), this, SLOT(doOpenExternalURLBSRNLatestSnapshot()));
+
+    openExternalURLBSRNStationToArchiveFormatAction = new QAction(tr("Station-to-archiv file format description"), this);
+    connect(openExternalURLBSRNStationToArchiveFormatAction, SIGNAL(triggered()), this, SLOT(doOpenExternalURLBSRNStationToArchiveFormat()));
 }
 
 // **********************************************************************************************
@@ -321,8 +329,11 @@ void MainWindow::createMenus()
     helpMenu->addSeparator();
     helpMenu->addAction( openExternalURLHelpAction );
     helpMenu->addSeparator();
+    helpMenu->addAction( openExternalURLBSRNHomePageAction );
+    helpMenu->addAction( openExternalURLBSRNAccountAction );
     helpMenu->addAction( openExternalURLBSRNStatusAction );
-    helpMenu->addAction( openExternalURLGCOSAction );
+    helpMenu->addAction( openExternalURLBSRNLatestSnapshotAction );
+    helpMenu->addAction( openExternalURLBSRNStationToArchiveFormatAction );
 }
 
 // **********************************************************************************************
