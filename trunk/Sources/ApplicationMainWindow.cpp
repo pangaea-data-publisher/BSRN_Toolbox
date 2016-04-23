@@ -1615,9 +1615,9 @@ void MainWindow::about()
         else
         {
             if ( gs_Version == "unknown" )
-                s_newVersionText = QString( tr( "Cannot determine the most recent version of %1.<br>Please look at <a href=\"http://doi.pangaea.de/%2?format=html\">%3</a> for the<br>latest version." ).arg( getApplicationName( true ) ).arg( _PROGRAMDOI_.mid( 4 ) ).arg( _PROGRAMDOI_ ) );
+                s_newVersionText = QString( tr( "Cannot determine the most recent version of %1.<br>Please look at <a href=\"https://doi.pangaea.de/%2?format=html\">%3</a> for the<br>latest version." ).arg( getApplicationName( true ) ).arg( _PROGRAMDOI_.mid( 4 ) ).arg( _PROGRAMDOI_ ) );
             else
-                s_newVersionText = QString( tr( "This version of %1 is outdated. Please look at<br><a href=\"http://doi.pangaea.de/%2?format=html\">%3</a> for the latest version." ).arg( getApplicationName( true ) ).arg( _PROGRAMDOI_.mid( 4 ) ).arg( _PROGRAMDOI_ ) );
+                s_newVersionText = QString( tr( "This version of %1 is outdated. Please look at<br><a href=\"https://doi.pangaea.de/%2?format=html\">%3</a> for the latest version." ).arg( getApplicationName( true ) ).arg( _PROGRAMDOI_.mid( 4 ) ).arg( _PROGRAMDOI_ ) );
         }
     }
     else
