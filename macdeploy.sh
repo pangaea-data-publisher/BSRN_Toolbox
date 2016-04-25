@@ -52,7 +52,7 @@ cd '/Volumes/BSRN Toolbox'
 rm -rf .fseventsd
 mkdir .fseventsd
 touch .fseventsd/no_log
-cd ~/Development/Distribution
+cd ~/Development/Distribution/BSRN_Toolbox
 
 echo - verify package
 
@@ -60,3 +60,11 @@ codesign -d '/Volumes/BSRN Toolbox/BSRN_Toolbox.app'
 
 echo
 hdiutil detach '/Volumes/BSRN Toolbox'
+
+echo - move application
+
+rm -R /Applications/BSRN_Toolbox.app
+cp -R BSRN_Toolbox.app /Applications
+cd ~/Development/Distribution
+
+echo - finished
