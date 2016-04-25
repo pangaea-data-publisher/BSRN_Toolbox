@@ -321,6 +321,12 @@ private:
     int UltraVioletMeasurementsTest( const QString& FilenameIn, int *P, const int NumOfFiles );
     int UltraVioletMeasurementsConverter( const bool Import, const QString& FilenameIn, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
     int SYNOPTest( const QString& FilenameIn, int *P, const int NumOfFiles );
+    bool SYNOPTest1( const QString &InputStr, int *P );
+    bool SYNOPTest2( const QString &InputStr, int *P );
+    bool SYNOPTest3( const QString &InputStr, const int Year, int *P );
+    bool SYNOPTest4( const QString &InputStr, int *P );
+    bool SYNOPTest5( const QString &InputStr, int *P );
+    bool SYNOPTest6( const QString &InputStr, int *P );
     int SYNOPConverter( const bool Import, const QString& FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
     int RadiosondeMeasurementsTest( const QString& FilenameIn, int *P, const int NumOfFiles );
     int RadiosondeMeasurementsConverter( const bool Import, const QString& FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );

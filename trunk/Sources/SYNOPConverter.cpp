@@ -71,21 +71,24 @@ int MainWindow::SYNOPTest( const QString& s_FilenameIn, int *P, const int i_NumO
             InputStr	= tin.readLine();
             ui_length	= incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
 
-            if ( fi.baseName().startsWith( "fua" ) == true ) i_Format = 2;
-            if ( fi.baseName().startsWith( "gvn" ) == true ) i_Format = 2;
-            if ( fi.baseName().startsWith( "ish" ) == true ) i_Format = 2;
             if ( fi.baseName().startsWith( "lin" ) == true ) i_Format = 1;
-            if ( fi.baseName().startsWith( "mnm" ) == true ) i_Format = 2;
-            if ( fi.baseName().startsWith( "nya" ) == true ) i_Format = 2;
-            if ( fi.baseName().startsWith( "pay" ) == true ) i_Format = 4;
-            if ( fi.baseName().startsWith( "sap" ) == true ) i_Format = 2;
             if ( fi.baseName().startsWith( "sbo" ) == true ) i_Format = 1;
-            if ( fi.baseName().startsWith( "son" ) == true ) i_Format = 5;
+
+            if ( fi.baseName().startsWith( "fua" ) == true ) i_Format = 2;
+            if ( fi.baseName().startsWith( "ish" ) == true ) i_Format = 2;
+            if ( fi.baseName().startsWith( "mnm" ) == true ) i_Format = 2;
+            if ( fi.baseName().startsWith( "sap" ) == true ) i_Format = 2;
             if ( fi.baseName().startsWith( "syo" ) == true ) i_Format = 2;
-            if ( fi.baseName().startsWith( "tam" ) == true ) i_Format = 3;
             if ( fi.baseName().startsWith( "tat" ) == true ) i_Format = 2;
 
-            i_Year = fi.baseName().right( 2 ).toInt();
+            if ( fi.baseName().startsWith( "tam" ) == true ) i_Format = 3;
+
+            if ( fi.baseName().startsWith( "pay" ) == true ) i_Format = 4;
+
+            if ( fi.baseName().startsWith( "son" ) == true ) i_Format = 5;
+
+            if ( fi.baseName().startsWith( "gvn" ) == true ) i_Format = 6;
+            if ( fi.baseName().startsWith( "nya" ) == true ) i_Format = 6;
 
             while ( ( tin.atEnd() == false ) && ( b_Stop == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) )
             {
@@ -96,401 +99,29 @@ int MainWindow::SYNOPTest( const QString& s_FilenameIn, int *P, const int i_NumO
                 {
                     switch ( i_Format )
                     {
-                    case 1: // LIN
-                        InputStr = InputStr.simplified();
-
-                        if ( InputStr.count( " " ) >= 2 )
-                        {
-                            if ( InputStr.section( " ", 2, 2 ).left( 1 )   != "/" ) P[1] = 1;
-                            if ( InputStr.section( " ", 2, 2 ).mid( 1, 1 ) != "/" ) P[2] = 1;
-                            if ( InputStr.section( " ", 2, 2 ).mid( 3, 1 ) != "/" ) P[3] = 1;
-                        }
-
-                        if ( InputStr.count( " " ) >= 3 )
-                            if ( InputStr.section( " ", 3, 3 ).mid( 2, 1 ) != "/" ) P[4] = 1;
-
-                        if ( InputStr.count( " " ) >= 4 )
-                            if ( InputStr.section( " ", 4, 4 ).mid( 1, 1 ) != "/" ) P[5] = 1;
-
-                        if ( InputStr.count( " " ) >= 5 )
-                            if ( InputStr.section( " ", 5, 5 ).mid( 1, 4 ) != "////" ) P[6] = 1;
-
-                        if ( InputStr.count( " " ) >= 6 )
-                            if ( InputStr.section( " ", 6, 6 ).mid( 1, 4 ) != "////" ) P[7] = 1;
-
-                        if ( InputStr.count( " " ) >= 7 )
-                        {
-                            if ( InputStr.section( " ", 7, 7 ).mid( 1, 2 ) != "//" ) P[8] = 1;
-                            if ( InputStr.section( " ", 7, 7 ).mid( 3, 1 ) != "/" ) P[9] = 1;
-                            if ( InputStr.section( " ", 7, 7 ).mid( 4, 1 ) != "/" ) P[10] = 1;
-                        }
-
-                        if ( InputStr.count( " " ) >= 8 )
-                        {
-                            if ( InputStr.section( " ", 8, 8 ).mid( 1, 1 ) != "/" ) P[11] = 1;
-                            if ( InputStr.section( " ", 8, 8 ).mid( 2, 1 ) != "/" ) P[12] = 1;
-                            if ( InputStr.section( " ", 8, 8 ).mid( 3, 1 ) != "/" ) P[13] = 1;
-                            if ( InputStr.section( " ", 8, 8 ).mid( 4, 1 ) != "/" ) P[14] = 1;
-                        }
-
-                        if ( InputStr.count( " ") >= 9 )
-                        {
-                            if ( InputStr.section( " ", 9, 9 ) != "333" )
-                                b_Stop = true;
-                        }
-
-                        if ( InputStr.count( " " ) >= 10 )
-                        {
-                            if ( InputStr.section( " ", 10, 10 ).mid( 1, 1 ) != "/" ) P[15] = 1;
-                            if ( InputStr.section( " ", 10, 10 ).mid( 2, 1 ) != "/" ) P[16] = 1;
-                            if ( InputStr.section( " ", 10, 10 ).mid( 3, 2 ) != "//" ) P[17] = 1;
-                        }
-
-                        if ( InputStr.count( " " ) >= 11 )
-                        {
-                            if ( InputStr.section( " ", 11, 11 ).mid( 1, 1 ) != "/" ) P[18] = 1;
-                            if ( InputStr.section( " ", 11, 11 ).mid( 2, 1 ) != "/" ) P[19] = 1;
-                            if ( InputStr.section( " ", 11, 11 ).mid( 3, 2 ) != "//" ) P[20] = 1;
-                        }
-
-                        if ( InputStr.count( " " ) == 12 )
-                        {
-                            if ( InputStr.section( " ", 12, 12 ).mid( 1, 1 ) != "/" ) P[21] = 1;
-                            if ( InputStr.section( " ", 12, 12 ).mid( 2, 1 ) != "/" ) P[22] = 1;
-                            if ( InputStr.section( " ", 12, 12 ).mid( 3, 2 ) != "//" ) P[23] = 1;
-                        }
-
+                    case 1: // LIN, SBO
+                        b_Stop = SYNOPTest1( InputStr.simplified(), P );
                         break;
 
-                    case 2: // GVN and NYA
-/*
-  1    0  -8.1   986.3  -9.5  80  18 7 38 8 8 7 / / 2 42 92
-  1  180  -8.8   985.3 -10.3  90  17 / // / / / / / / // //
-  1  360  -9.3   985.2 -10.9  90  15 7 71 8 8 7 / / 1 62 91
-  1  540  -9.4   985.7 -10.9  90  14 7 71 8 8 7 / / 2 62 92
-  1  720  -9.4   986.7 -10.8  90  16 7 71 8 8 7 / / / 63 92
-  1  900  -9.1   988.1 -10.7  90  16 7 38 8 8 8 / / 4 42 96
-  1 1080  -9.1   990.4 -10.7  90  15 7 38 8 8 6 / / 4 43 92
-  1 1260  -9.4   992.1 -11.1  90  17 7 70 8 8 8 / / 2 62 92
-  2    0 -10.4   994.2 -12.2  90  17 7 38 8 4 6 7 / 2 42 92
-  2  180 -10.7   996.3 -12.3  90  17 / // / / / / / / // //
-  2  360 -11.4   997.1 -13.4  80  17 3 36 8 6 5 7 / 4 11 96
-  2  540 -12.5   999.7 -15.0  90  12 3 02 8 7 5 / / 4 // 97
-  2  720 -12.6  1000.5 -15.7  80  11 3 01 7 7 0 3 / 9 // 97
-  2  900 -12.6  1000.8 -16.9  80  12 / // 6 6 0 3 0 9 // 98
-  2 1080 -13.6  1001.2 -18.9  80  11 / // 2 2 0 3 0 9 // 99
-  2 1260 -15.6  1001.9 -20.3  90   7 / // 0 0 0 0 0 9 // 98
-  3    0 -19.2  1001.6 -23.4 130   4 / // 1 1 0 3 0 9 // 98
-  3  180 -20.3  1001.2 -24.1 160   5 / // / / / / / / // //
-  3  360 -19.4  1001.3 -22.8 160   2 / // 7 7 0 7 / 9 // 98
-  3  540 -19.1  1001.2 -22.5 120   1 / // 7 7 0 7 / 9 // 99
-  3  720 -18.4  1001.9 -21.5 140   3 / // 8 8 0 7 / 9 // 99
-  3  900 -17.5  1002.3 -20.5 100   3 / // 8 8 0 3 / 9 // 99
-  3 1080 -17.3  1003.0 -20.8  70   5 / // 8 1 5 7 / 4 // 98
-  3 1260 -16.0  1004.3 -21.0 100   6 / // 8 8 0 7 / 8 // 98
-*/
-
-                        if ( InputStr.mid(  9, 1 ) != "/" ) P[1] = 1;
-                        if ( InputStr.mid( 16, 1 ) != "/" ) P[2] = 1;
-                        if ( InputStr.mid( 23, 1 ) != "/" ) P[3] = 1;
-                        if ( InputStr.mid( 29, 1 ) != "/" ) P[4] = 1;
-                        if ( InputStr.mid( 33, 1 ) != "/" ) P[5] = 1;
-                        if ( InputStr.mid( 37, 1 ) != "/" ) P[6] = 1;
-                        if ( InputStr.mid( 39, 1 ) != "/" ) P[7] = 1;
-                        if ( InputStr.mid( 42, 1 ) != "/" ) P[8] = 1;
-                        if ( InputStr.mid( 44, 1 ) != "/" ) P[9] = 1;
-                        if ( InputStr.mid( 46, 1 ) != "/" ) P[10] = 1;
-                        if ( InputStr.mid( 48, 1 ) != "/" ) P[11] = 1;
-                        if ( InputStr.mid( 50, 1 ) != "/" ) P[12] = 1;
-                        if ( InputStr.mid( 52, 1 ) != "/" ) P[13] = 1;
-                        if ( InputStr.mid( 54, 1 ) != "/" ) P[14] = 1;
-                        if ( InputStr.mid( 57, 1 ) != "/" ) P[15] = 1;
-                        if ( InputStr.mid( 58, 1 ) != "/" ) P[16] = 1;
-
+                    case 2: // FUA, ISH, MNM, SAP, SYO, TAT
+                        b_Stop = SYNOPTest2( InputStr, P );
                         break;
 
                     case 3: // TAM
-                        if ( i_Year < 8 ) // 2000-2007
-                        {
-//                          0     1     2         3       4        5           6        7      8          9            10  11         12
-//                          YYGG9 IIiii iRix|h|VV N|dd|ff 1|S|nTTT 2|S|nTdTdTd 3|P0P0P0 4|PPPP 7|ww|W1|W2 8|N|Cl|Cm|Ch 333 8|N|C|hshs 8|N|C|hshs
-//                          31064 60680 44|9|70   6|06|02 1|0|026  2|1|084     3|8620   4|8492 7|03|1|0   8|3|0|3|2    333 8|3|3|62   8|5|0|73
-
-                            InputStr = InputStr.simplified();
-
-                            if ( InputStr.count( " " ) >= 2 ) // iRixhVV
-                            {
-                                if ( InputStr.section( " ", 2, 2 ).mid( 2, 1 ) != "/" )  P[1] = 1; // h
-                                if ( InputStr.section( " ", 2, 2 ).mid( 3, 2 ) != "//" ) P[2] = 1; // VV
-                            }
-
-                            if ( InputStr.count( " " ) >= 3 ) // Nddff
-                            {
-                                if ( InputStr.section( " ", 3, 3 ).left( 1 )   != "/" )  P[3] = 1; // N
-                                if ( InputStr.section( " ", 3, 3 ).mid( 1, 2 ) != "//" ) P[4] = 1; // dd
-                                if ( InputStr.section( " ", 3, 3 ).mid( 3, 2 ) != "//" ) P[5] = 1; // ff
-                            }
-
-                            if ( InputStr.count( " " ) >= 4 ) // 1SnTTT
-                                if ( InputStr.section( " ", 4, 4 ).mid( 1, 1 ) != "/" ) P[6] = 1; // sign
-
-                            if ( InputStr.count( " " ) >= 5 ) // 2SnTdTdTd
-                                if ( InputStr.section( " ", 5, 5 ).mid( 1, 1 ) != "/" ) P[7] = 1; // sign
-
-                            if ( InputStr.count( " " ) >= 6 ) // 3P0P0P0
-                                if ( InputStr.section( " ", 6, 6 ).mid( 1, 4 ) != "////" ) P[8] = 1; // xxxx
-
-                            if ( InputStr.count( " " ) >= 7 ) // 4PPPP
-                                if ( InputStr.section( " ", 7, 7 ).mid( 1, 4 ) != "////" ) P[9] = 1; // xxxx
-
-                            P[9] = 0;  // Geopotential height will be not stored in BSRN datasets, GKL 2013-03-11
-
-                            if ( InputStr.count( " " ) >= 8 ) // 7wwW1W2
-                            {
-                                if ( InputStr.section( " ", 8, 8 ).mid( 1, 2 ) != "//" ) P[10] = 1; // ww
-                                if ( InputStr.section( " ", 8, 8 ).mid( 3, 1 ) != "/" )  P[11] = 1; // W1
-                                if ( InputStr.section( " ", 8, 8 ).mid( 4, 1 ) != "/" )  P[12] = 1; // W2
-                            }
-
-                            if ( InputStr.count( " " ) >= 9 ) // 8NClCmCh
-                            {
-                                if ( InputStr.section( " ", 9, 9 ).mid( 1, 1 ) != "/" ) P[13] = 1; // N
-                                if ( InputStr.section( " ", 9, 9 ).mid( 2, 1 ) != "/" ) P[14] = 1; // Cl
-                                if ( InputStr.section( " ", 9, 9 ).mid( 3, 1 ) != "/" ) P[15] = 1; // Cm
-                                if ( InputStr.section( " ", 9, 9 ).mid( 4, 1 ) != "/" ) P[16] = 1; // Ch
-                            }
-
-                            if ( InputStr.count( " ") >= 10 ) // 333
-                            {
-                                if ( InputStr.section( " ", 10, 10 ) != "333" )
-                                    b_Stop = true;
-                            }
-
-                            if ( InputStr.count( " " ) >= 11 ) // 8NChshs
-                            {
-                                if ( InputStr.section( " ", 11, 11 ).mid( 1, 1 ) != "/" )  P[17] = 1; // N
-                                if ( InputStr.section( " ", 11, 11 ).mid( 2, 1 ) != "/" )  P[18] = 1; // C
-                                if ( InputStr.section( " ", 11, 11 ).mid( 3, 2 ) != "//" ) P[19] = 1; // hshs
-                            }
-
-                            if ( InputStr.count( " " ) >= 12 ) // 8NChshs
-                            {
-                                if ( InputStr.section( " ", 12, 12 ).mid( 1, 1 ) != "/" ) P[20] = 1;
-                                if ( InputStr.section( " ", 12, 12 ).mid( 2, 1 ) != "/" ) P[21] = 1;
-                                if ( InputStr.section( " ", 12, 12 ).mid( 3, 2 ) != "//" ) P[22] = 1;
-                            }
-                        }
-
-                        if ( i_Year > 7 ) // 2008-20xx
-                        {
-//                          0     1     2       3        4           5        6      7        8            9   10          11          12
-//                          YYGG9 IIiii N|dd|ff 1|S|nTTT 2|S|nTdTdTd 3|P0P0P0 4|PPPP 7|wwW1W2 8|N|Cl|Cm|Ch 333 8|N|C|hshsh 8|N|C|hshsh 8|N|C|hshsh
-//                          02064 60680 1|00|00 1|1|004  2|0|107     3|8655   4|8524 7|03|0|0 8|0|0|0|2    333 8|1|0|73    8|/|/|//    8|/|/|//
-
-                            InputStr = InputStr.simplified();
-
-                            if ( InputStr.count( " " ) >= 2 ) // Nddff
-                            {
-                                if ( InputStr.section( " ", 2, 2 ).left( 1 )   != "/" )  P[3] = 1; // N
-                                if ( InputStr.section( " ", 2, 2 ).mid( 1, 2 ) != "//" ) P[4] = 1; // dd
-                                if ( InputStr.section( " ", 2, 2 ).mid( 3, 2 ) != "//" ) P[5] = 1; // ff
-                            }
-
-                            if ( InputStr.count( " " ) >= 3 ) // 1SnTTT
-                                if ( InputStr.section( " ", 3, 3 ).mid( 1, 1 ) != "/" ) P[6] = 1; // sign
-
-                            if ( InputStr.count( " " ) >= 4 ) // 2SnTdTdTd
-                                if ( InputStr.section( " ", 4, 4 ).mid( 1, 1 ) != "/" ) P[7] = 1; // sign
-
-                            if ( InputStr.count( " " ) >= 5 ) // 3P0P0P0
-                                if ( InputStr.section( " ", 5, 5 ).mid( 1, 4 ) != "////" ) P[8] = 1; // xxxx
-
-                            if ( InputStr.count( " " ) >= 6 ) // 4PPPP
-                                if ( InputStr.section( " ", 6, 6 ).mid( 1, 4 ) != "////" ) P[9] = 1; // xxxx
-
-                            P[9] = 0;  // Geopotential height will be not stored in BSRN datasets, GKL 2013-03-11
-
-                            if ( InputStr.count( " " ) >= 7 ) // 7wwW1W2
-                            {
-                                if ( InputStr.section( " ", 7, 7 ).mid( 1, 2 ) != "//" ) P[10] = 1; // ww
-                                if ( InputStr.section( " ", 7, 7 ).mid( 3, 1 ) != "/" )  P[11] = 1; // W1
-                                if ( InputStr.section( " ", 7, 7 ).mid( 4, 1 ) != "/" )  P[12] = 1; // W2
-                            }
-
-                            if ( InputStr.count( " " ) >= 8 ) // 8NClCmCh
-                            {
-                                if ( InputStr.section( " ", 8, 8 ).mid( 1, 1 ) != "/" ) P[13] = 1; // N
-                                if ( InputStr.section( " ", 8, 8 ).mid( 2, 1 ) != "/" ) P[14] = 1; // Cl
-                                if ( InputStr.section( " ", 8, 8 ).mid( 3, 1 ) != "/" ) P[15] = 1; // Cm
-                                if ( InputStr.section( " ", 8, 8 ).mid( 4, 1 ) != "/" ) P[16] = 1; // Ch
-                            }
-
-                            if ( InputStr.count( " ") >= 9 ) // 333
-                            {
-                                if ( InputStr.section( " ", 9, 9 ) != "333" )
-                                    b_Stop = true;
-                            }
-
-                            if ( InputStr.count( " " ) >= 10 ) // 8NChshs
-                            {
-                                if ( InputStr.section( " ", 10, 10 ).mid( 1, 1 ) != "/" )  P[17] = 1; // N 1
-                                if ( InputStr.section( " ", 10, 10 ).mid( 2, 1 ) != "/" )  P[18] = 1; // C 1
-                                if ( InputStr.section( " ", 10, 10 ).mid( 3, 2 ) != "//" ) P[19] = 1; // hshs 1
-                            }
-
-                            if ( InputStr.count( " " ) >= 11 ) // 8NChshs
-                            {
-                                if ( InputStr.section( " ", 11, 11 ).mid( 1, 1 ) != "/" )  P[20] = 1; // N 2
-                                if ( InputStr.section( " ", 11, 11 ).mid( 2, 1 ) != "/" )  P[21] = 1; // C 2
-                                if ( InputStr.section( " ", 11, 11 ).mid( 3, 2 ) != "//" ) P[22] = 1; // hshs 3
-                            }
-
-                            if ( InputStr.count( " " ) >= 12 ) // 8NChshs
-                            {
-                                if ( InputStr.section( " ", 12, 12 ).mid( 1, 1 ) != "/" )  P[23] = 1; // N 2
-                                if ( InputStr.section( " ", 12, 12 ).mid( 2, 1 ) != "/" )  P[24] = 1; // C 2
-                                if ( InputStr.section( " ", 12, 12 ).mid( 3, 2 ) != "//" ) P[25] = 1; // hshs 3
-                            }
-
-                        }
+                        i_Year = fi.baseName().right( 2 ).toInt();
+                        b_Stop = SYNOPTest3( InputStr.simplified(), i_Year, P );
                         break;
 
                     case 4: // PAY
-                        InputStr = InputStr.simplified();
-
-                        if ( InputStr.count( " " ) >= 1 )
-                        {
-                            if ( InputStr.section( " ", 1, 1 ).mid( 2, 1 ) != "/" ) P[1] = 1;
-                            if ( InputStr.section( " ", 1, 1 ).mid( 3, 2 ) != "//" ) P[2] = 1;
-                        }
-
-                        if ( InputStr.count( " " ) >= 2 )
-                        {
-                            if ( InputStr.section( " ", 2, 2 ).left( 1 )   != "/" ) P[3] = 1;
-                            if ( InputStr.section( " ", 2, 2 ).mid( 1, 1 ) != "/" ) P[4] = 1;
-                            if ( InputStr.section( " ", 2, 2 ).mid( 3, 1 ) != "/" ) P[5] = 1;
-                        }
-
-                        if ( InputStr.count( " " ) >= 3 )
-                            if ( InputStr.section( " ", 3, 3 ).mid( 2, 1 ) != "/" ) P[6] = 1;
-
-                        if ( InputStr.count( " " ) >= 4 )
-                            if ( InputStr.section( " ", 4, 4 ).mid( 1, 1 ) != "/" ) P[7] = 1;
-
-                        if ( InputStr.count( " " ) >= 5 )
-                            if ( InputStr.section( " ", 5, 5 ).mid( 1, 4 ) != "////" ) P[8] = 1;
-
-                        if ( InputStr.count( " " ) >= 6 )
-                            if ( InputStr.section( " ", 6, 6 ).mid( 1, 4 ) != "////" ) P[9] = 1;
-
-                        if ( InputStr.count( " " ) >= 7 )
-                        {
-                            if ( InputStr.section( " ", 7, 7 ).mid( 1, 2 ) != "//" ) P[10] = 1;
-                            if ( InputStr.section( " ", 7, 7 ).mid( 3, 1 ) != "/" ) P[11] = 1;
-                            if ( InputStr.section( " ", 7, 7 ).mid( 4, 1 ) != "/" ) P[12] = 1;
-                        }
-
-                        if ( InputStr.count( " " ) >= 8 )
-                        {
-                            if ( InputStr.section( " ", 8, 8 ).mid( 1, 1 ) != "/" ) P[13] = 1;
-                            if ( InputStr.section( " ", 8, 8 ).mid( 2, 1 ) != "/" ) P[14] = 1;
-                            if ( InputStr.section( " ", 8, 8 ).mid( 3, 1 ) != "/" ) P[15] = 1;
-                            if ( InputStr.section( " ", 8, 8 ).mid( 4, 1 ) != "/" ) P[16] = 1;
-                        }
-
-                        if ( InputStr.count( " ") >= 9 )
-                        {
-                            if ( InputStr.section( " ", 9, 9 ) != "333" )
-                                b_Stop = true;
-                        }
-
-                        if ( InputStr.count( " " ) >= 10 )
-                        {
-                            if ( InputStr.section( " ", 10, 10 ).mid( 1, 1 ) != "/" ) P[17] = 1;
-                            if ( InputStr.section( " ", 10, 10 ).mid( 2, 1 ) != "/" ) P[18] = 1;
-                            if ( InputStr.section( " ", 10, 10 ).mid( 3, 2 ) != "//" ) P[19] = 1;
-                        }
-
-                        if ( InputStr.count( " " ) >= 11 )
-                        {
-                            if ( InputStr.section( " ", 11, 11 ).mid( 1, 1 ) != "/" ) P[20] = 1;
-                            if ( InputStr.section( " ", 11, 11 ).mid( 2, 1 ) != "/" ) P[21] = 1;
-                            if ( InputStr.section( " ", 11, 11 ).mid( 3, 2 ) != "//" ) P[22] = 1;
-                        }
-
-                        if ( InputStr.count( " " ) == 12 )
-                        {
-                            if ( InputStr.section( " ", 12, 12 ).mid( 1, 1 ) != "/" ) P[23] = 1;
-                            if ( InputStr.section( " ", 12, 12 ).mid( 2, 1 ) != "/" ) P[24] = 1;
-                            if ( InputStr.section( " ", 12, 12 ).mid( 3, 2 ) != "//" ) P[25] = 1;
-                        }
+                        b_Stop = SYNOPTest4( InputStr.simplified(), P );
                         break;
 
                     case 5: // SON
-                        InputStr = InputStr.simplified();
+                        b_Stop = SYNOPTest5( InputStr.simplified(), P );
+                        break;
 
-                        if ( InputStr.count( " " ) >= 2 )
-                        {
-                            if ( InputStr.section( " ", 2, 2 ).left( 1 )   != "/" ) P[1] = 1;
-                            if ( InputStr.section( " ", 2, 2 ).mid( 1, 1 ) != "/" ) P[2] = 1;
-                            if ( InputStr.section( " ", 2, 2 ).mid( 3, 1 ) != "/" ) P[3] = 1;
-                        }
-
-                        if ( InputStr.count( " " ) >= 3 )
-                            if ( InputStr.section( " ", 3, 3 ).mid( 2, 1 ) != "/" ) P[4] = 1;
-
-                        if ( InputStr.count( " " ) >= 4 )
-                            if ( InputStr.section( " ", 4, 4 ).mid( 1, 1 ) != "/" ) P[5] = 1;
-
-                        if ( InputStr.count( " " ) >= 5 )
-                            if ( InputStr.section( " ", 5, 5 ).mid( 1, 4 ) != "////" ) P[6] = 1;
-
-                        if ( InputStr.count( " " ) >= 6 )
-                            if ( InputStr.section( " ", 6, 6 ).mid( 1, 4 ) != "////" ) P[7] = 1;
-
-                        P[7] = 0;  // Geopotential height will be not stored in BSRN datasets, GKL 2013-03-11
-
-                        if ( InputStr.count( " " ) >= 7 )
-                        {
-                            if ( InputStr.section( " ", 7, 7 ).mid( 1, 2 ) != "//" ) P[8] = 1;
-                            if ( InputStr.section( " ", 7, 7 ).mid( 3, 1 ) != "/" )  P[9] = 1;
-                            if ( InputStr.section( " ", 7, 7 ).mid( 4, 1 ) != "/" )  P[10] = 1;
-                        }
-
-                        if ( InputStr.count( " " ) >= 8 )
-                        {
-                            if ( InputStr.section( " ", 8, 8 ).mid( 1, 1 ) != "/" ) P[11] = 1;
-                            if ( InputStr.section( " ", 8, 8 ).mid( 2, 1 ) != "/" ) P[12] = 1;
-                            if ( InputStr.section( " ", 8, 8 ).mid( 3, 1 ) != "/" ) P[13] = 1;
-                            if ( InputStr.section( " ", 8, 8 ).mid( 4, 1 ) != "/" ) P[14] = 1;
-                        }
-
-                        if ( InputStr.count( " ") >= 9 )
-                        {
-                            if ( InputStr.section( " ", 9, 9 ) != "333" )
-                                b_Stop = true;
-                        }
-
-                        if ( InputStr.count( " " ) >= 10 )
-                        {
-                            if ( InputStr.section( " ", 10, 10 ).mid( 1, 1 ) != "/" )  P[15] = 1;
-                            if ( InputStr.section( " ", 10, 10 ).mid( 2, 1 ) != "/" )  P[16] = 1;
-                            if ( InputStr.section( " ", 10, 10 ).mid( 3, 2 ) != "//" ) P[17] = 1;
-                        }
-
-                        if ( InputStr.count( " " ) >= 11 )
-                        {
-                            if ( InputStr.section( " ", 11, 11 ).mid( 1, 1 ) != "/" )  P[18] = 1;
-                            if ( InputStr.section( " ", 11, 11 ).mid( 2, 1 ) != "/" )  P[19] = 1;
-                            if ( InputStr.section( " ", 11, 11 ).mid( 3, 2 ) != "//" ) P[20] = 1;
-                        }
-
-                        if ( InputStr.count( " " ) == 12 )
-                        {
-                            if ( InputStr.section( " ", 12, 12 ).mid( 1, 1 ) != "/" )  P[21] = 1;
-                            if ( InputStr.section( " ", 12, 12 ).mid( 2, 1 ) != "/" )  P[22] = 1;
-                            if ( InputStr.section( " ", 12, 12 ).mid( 3, 2 ) != "//" ) P[23] = 1;
-                        }
+                    case 6: // GVN, NYA
+                        b_Stop = SYNOPTest6( InputStr, P );
                         break;
 
                     default:
@@ -511,6 +142,443 @@ int MainWindow::SYNOPTest( const QString& s_FilenameIn, int *P, const int i_NumO
     fin.close();
 
     return( i_Format );
+}
+
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// LIN, SBO
+
+bool MainWindow::SYNOPTest1( const QString &InputStr, int *P )
+{
+    bool b_Stop = false;
+
+    if ( InputStr.count( " " ) >= 2 )
+    {
+        if ( InputStr.section( " ", 2, 2 ).left( 1 )   != "/" ) P[1] = 1;
+        if ( InputStr.section( " ", 2, 2 ).mid( 1, 1 ) != "/" ) P[2] = 1;
+        if ( InputStr.section( " ", 2, 2 ).mid( 3, 1 ) != "/" ) P[3] = 1;
+    }
+
+    if ( InputStr.count( " " ) >= 3 )
+        if ( InputStr.section( " ", 3, 3 ).mid( 2, 1 ) != "/" ) P[4] = 1;
+
+    if ( InputStr.count( " " ) >= 4 )
+        if ( InputStr.section( " ", 4, 4 ).mid( 1, 1 ) != "/" ) P[5] = 1;
+
+    if ( InputStr.count( " " ) >= 5 )
+        if ( InputStr.section( " ", 5, 5 ).mid( 1, 4 ) != "////" ) P[6] = 1;
+
+    if ( InputStr.count( " " ) >= 6 )
+        if ( InputStr.section( " ", 6, 6 ).mid( 1, 4 ) != "////" ) P[7] = 1;
+
+    if ( InputStr.count( " " ) >= 7 )
+    {
+        if ( InputStr.section( " ", 7, 7 ).mid( 1, 2 ) != "//" ) P[8] = 1;
+        if ( InputStr.section( " ", 7, 7 ).mid( 3, 1 ) != "/" ) P[9] = 1;
+        if ( InputStr.section( " ", 7, 7 ).mid( 4, 1 ) != "/" ) P[10] = 1;
+    }
+
+    if ( InputStr.count( " " ) >= 8 )
+    {
+        if ( InputStr.section( " ", 8, 8 ).mid( 1, 1 ) != "/" ) P[11] = 1;
+        if ( InputStr.section( " ", 8, 8 ).mid( 2, 1 ) != "/" ) P[12] = 1;
+        if ( InputStr.section( " ", 8, 8 ).mid( 3, 1 ) != "/" ) P[13] = 1;
+        if ( InputStr.section( " ", 8, 8 ).mid( 4, 1 ) != "/" ) P[14] = 1;
+    }
+
+    if ( InputStr.count( " ") >= 9 )
+    {
+        if ( InputStr.section( " ", 9, 9 ) != "333" )
+            b_Stop = true;
+    }
+
+    if ( InputStr.count( " " ) >= 10 )
+    {
+        if ( InputStr.section( " ", 10, 10 ).mid( 1, 1 ) != "/" ) P[15] = 1;
+        if ( InputStr.section( " ", 10, 10 ).mid( 2, 1 ) != "/" ) P[16] = 1;
+        if ( InputStr.section( " ", 10, 10 ).mid( 3, 2 ) != "//" ) P[17] = 1;
+    }
+
+    if ( InputStr.count( " " ) >= 11 )
+    {
+        if ( InputStr.section( " ", 11, 11 ).mid( 1, 1 ) != "/" ) P[18] = 1;
+        if ( InputStr.section( " ", 11, 11 ).mid( 2, 1 ) != "/" ) P[19] = 1;
+        if ( InputStr.section( " ", 11, 11 ).mid( 3, 2 ) != "//" ) P[20] = 1;
+    }
+
+    if ( InputStr.count( " " ) == 12 )
+    {
+        if ( InputStr.section( " ", 12, 12 ).mid( 1, 1 ) != "/" ) P[21] = 1;
+        if ( InputStr.section( " ", 12, 12 ).mid( 2, 1 ) != "/" ) P[22] = 1;
+        if ( InputStr.section( " ", 12, 12 ).mid( 3, 2 ) != "//" ) P[23] = 1;
+    }
+
+    return( b_Stop );
+}
+
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// FUA, ISH, MNM, SAP, SYO, TAT
+
+bool MainWindow::SYNOPTest2( const QString &InputStr, int *P )
+{
+    bool b_Stop = false;
+
+    if ( InputStr.mid(  9, 1 ) != "/" ) P[1] = 1;
+    if ( InputStr.mid( 16, 1 ) != "/" ) P[2] = 1;
+    if ( InputStr.mid( 23, 1 ) != "/" ) P[3] = 1;
+    if ( InputStr.mid( 29, 1 ) != "/" ) P[4] = 1;
+    if ( InputStr.mid( 33, 1 ) != "/" ) P[5] = 1;
+    if ( InputStr.mid( 37, 1 ) != "/" ) P[6] = 1;
+    if ( InputStr.mid( 39, 1 ) != "/" ) P[7] = 1;
+    if ( InputStr.mid( 42, 1 ) != "/" ) P[8] = 1;
+    if ( InputStr.mid( 44, 1 ) != "/" ) P[9] = 1;
+    if ( InputStr.mid( 46, 1 ) != "/" ) P[10] = 1;
+    if ( InputStr.mid( 48, 1 ) != "/" ) P[11] = 1;
+    if ( InputStr.mid( 50, 1 ) != "/" ) P[12] = 1;
+    if ( InputStr.mid( 52, 1 ) != "/" ) P[13] = 1;
+    if ( InputStr.mid( 54, 1 ) != "/" ) P[14] = 1;
+    if ( InputStr.mid( 57, 1 ) != "/" ) P[15] = 1;
+    if ( InputStr.mid( 58, 1 ) != "/" ) P[16] = 1;
+
+    return( b_Stop );
+}
+
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// TAM
+
+bool MainWindow::SYNOPTest3( const QString &InputStr, const int i_Year, int *P )
+{
+    bool b_Stop = false;
+
+    if ( i_Year < 8 ) // 2000-2007
+    {
+//      0     1     2         3       4        5           6        7      8          9            10  11         12
+//      YYGG9 IIiii iRix|h|VV N|dd|ff 1|S|nTTT 2|S|nTdTdTd 3|P0P0P0 4|PPPP 7|ww|W1|W2 8|N|Cl|Cm|Ch 333 8|N|C|hshs 8|N|C|hshs
+//      31064 60680 44|9|70   6|06|02 1|0|026  2|1|084     3|8620   4|8492 7|03|1|0   8|3|0|3|2    333 8|3|3|62   8|5|0|73
+
+        if ( InputStr.count( " " ) >= 2 ) // iRixhVV
+        {
+            if ( InputStr.section( " ", 2, 2 ).mid( 2, 1 ) != "/" )  P[1] = 1; // h
+            if ( InputStr.section( " ", 2, 2 ).mid( 3, 2 ) != "//" ) P[2] = 1; // VV
+        }
+
+        if ( InputStr.count( " " ) >= 3 ) // Nddff
+        {
+            if ( InputStr.section( " ", 3, 3 ).left( 1 )   != "/" )  P[3] = 1; // N
+            if ( InputStr.section( " ", 3, 3 ).mid( 1, 2 ) != "//" ) P[4] = 1; // dd
+            if ( InputStr.section( " ", 3, 3 ).mid( 3, 2 ) != "//" ) P[5] = 1; // ff
+        }
+
+        if ( InputStr.count( " " ) >= 4 ) // 1SnTTT
+            if ( InputStr.section( " ", 4, 4 ).mid( 1, 1 ) != "/" ) P[6] = 1; // sign
+
+        if ( InputStr.count( " " ) >= 5 ) // 2SnTdTdTd
+            if ( InputStr.section( " ", 5, 5 ).mid( 1, 1 ) != "/" ) P[7] = 1; // sign
+
+        if ( InputStr.count( " " ) >= 6 ) // 3P0P0P0
+            if ( InputStr.section( " ", 6, 6 ).mid( 1, 4 ) != "////" ) P[8] = 1; // xxxx
+
+        if ( InputStr.count( " " ) >= 7 ) // 4PPPP
+            if ( InputStr.section( " ", 7, 7 ).mid( 1, 4 ) != "////" ) P[9] = 1; // xxxx
+
+        P[9] = 0;  // Geopotential height will be not stored in BSRN datasets, GKL 2013-03-11
+
+        if ( InputStr.count( " " ) >= 8 ) // 7wwW1W2
+        {
+            if ( InputStr.section( " ", 8, 8 ).mid( 1, 2 ) != "//" ) P[10] = 1; // ww
+            if ( InputStr.section( " ", 8, 8 ).mid( 3, 1 ) != "/" )  P[11] = 1; // W1
+            if ( InputStr.section( " ", 8, 8 ).mid( 4, 1 ) != "/" )  P[12] = 1; // W2
+        }
+
+        if ( InputStr.count( " " ) >= 9 ) // 8NClCmCh
+        {
+            if ( InputStr.section( " ", 9, 9 ).mid( 1, 1 ) != "/" ) P[13] = 1; // N
+            if ( InputStr.section( " ", 9, 9 ).mid( 2, 1 ) != "/" ) P[14] = 1; // Cl
+            if ( InputStr.section( " ", 9, 9 ).mid( 3, 1 ) != "/" ) P[15] = 1; // Cm
+            if ( InputStr.section( " ", 9, 9 ).mid( 4, 1 ) != "/" ) P[16] = 1; // Ch
+        }
+
+        if ( InputStr.count( " ") >= 10 ) // 333
+        {
+            if ( InputStr.section( " ", 10, 10 ) != "333" )
+                b_Stop = true;
+        }
+
+        if ( InputStr.count( " " ) >= 11 ) // 8NChshs
+        {
+            if ( InputStr.section( " ", 11, 11 ).mid( 1, 1 ) != "/" )  P[17] = 1; // N
+            if ( InputStr.section( " ", 11, 11 ).mid( 2, 1 ) != "/" )  P[18] = 1; // C
+            if ( InputStr.section( " ", 11, 11 ).mid( 3, 2 ) != "//" ) P[19] = 1; // hshs
+        }
+
+        if ( InputStr.count( " " ) >= 12 ) // 8NChshs
+        {
+            if ( InputStr.section( " ", 12, 12 ).mid( 1, 1 ) != "/" ) P[20] = 1;
+            if ( InputStr.section( " ", 12, 12 ).mid( 2, 1 ) != "/" ) P[21] = 1;
+            if ( InputStr.section( " ", 12, 12 ).mid( 3, 2 ) != "//" ) P[22] = 1;
+        }
+    }
+
+    if ( i_Year > 7 ) // 2008-20xx
+    {
+//                          0     1     2       3        4           5        6      7        8            9   10          11          12
+//                          YYGG9 IIiii N|dd|ff 1|S|nTTT 2|S|nTdTdTd 3|P0P0P0 4|PPPP 7|wwW1W2 8|N|Cl|Cm|Ch 333 8|N|C|hshsh 8|N|C|hshsh 8|N|C|hshsh
+//                          02064 60680 1|00|00 1|1|004  2|0|107     3|8655   4|8524 7|03|0|0 8|0|0|0|2    333 8|1|0|73    8|/|/|//    8|/|/|//
+
+        if ( InputStr.count( " " ) >= 2 ) // Nddff
+        {
+            if ( InputStr.section( " ", 2, 2 ).left( 1 )   != "/" )  P[3] = 1; // N
+            if ( InputStr.section( " ", 2, 2 ).mid( 1, 2 ) != "//" ) P[4] = 1; // dd
+            if ( InputStr.section( " ", 2, 2 ).mid( 3, 2 ) != "//" ) P[5] = 1; // ff
+        }
+
+        if ( InputStr.count( " " ) >= 3 ) // 1SnTTT
+            if ( InputStr.section( " ", 3, 3 ).mid( 1, 1 ) != "/" ) P[6] = 1; // sign
+
+        if ( InputStr.count( " " ) >= 4 ) // 2SnTdTdTd
+            if ( InputStr.section( " ", 4, 4 ).mid( 1, 1 ) != "/" ) P[7] = 1; // sign
+
+        if ( InputStr.count( " " ) >= 5 ) // 3P0P0P0
+            if ( InputStr.section( " ", 5, 5 ).mid( 1, 4 ) != "////" ) P[8] = 1; // xxxx
+
+        if ( InputStr.count( " " ) >= 6 ) // 4PPPP
+            if ( InputStr.section( " ", 6, 6 ).mid( 1, 4 ) != "////" ) P[9] = 1; // xxxx
+
+        P[9] = 0;  // Geopotential height will be not stored in BSRN datasets, GKL 2013-03-11
+
+        if ( InputStr.count( " " ) >= 7 ) // 7wwW1W2
+        {
+            if ( InputStr.section( " ", 7, 7 ).mid( 1, 2 ) != "//" ) P[10] = 1; // ww
+            if ( InputStr.section( " ", 7, 7 ).mid( 3, 1 ) != "/" )  P[11] = 1; // W1
+            if ( InputStr.section( " ", 7, 7 ).mid( 4, 1 ) != "/" )  P[12] = 1; // W2
+        }
+
+        if ( InputStr.count( " " ) >= 8 ) // 8NClCmCh
+        {
+            if ( InputStr.section( " ", 8, 8 ).mid( 1, 1 ) != "/" ) P[13] = 1; // N
+            if ( InputStr.section( " ", 8, 8 ).mid( 2, 1 ) != "/" ) P[14] = 1; // Cl
+            if ( InputStr.section( " ", 8, 8 ).mid( 3, 1 ) != "/" ) P[15] = 1; // Cm
+            if ( InputStr.section( " ", 8, 8 ).mid( 4, 1 ) != "/" ) P[16] = 1; // Ch
+        }
+
+        if ( InputStr.count( " ") >= 9 ) // 333
+        {
+            if ( InputStr.section( " ", 9, 9 ) != "333" )
+                b_Stop = true;
+        }
+
+        if ( InputStr.count( " " ) >= 10 ) // 8NChshs
+        {
+            if ( InputStr.section( " ", 10, 10 ).mid( 1, 1 ) != "/" )  P[17] = 1; // N 1
+            if ( InputStr.section( " ", 10, 10 ).mid( 2, 1 ) != "/" )  P[18] = 1; // C 1
+            if ( InputStr.section( " ", 10, 10 ).mid( 3, 2 ) != "//" ) P[19] = 1; // hshs 1
+        }
+
+        if ( InputStr.count( " " ) >= 11 ) // 8NChshs
+        {
+            if ( InputStr.section( " ", 11, 11 ).mid( 1, 1 ) != "/" )  P[20] = 1; // N 2
+            if ( InputStr.section( " ", 11, 11 ).mid( 2, 1 ) != "/" )  P[21] = 1; // C 2
+            if ( InputStr.section( " ", 11, 11 ).mid( 3, 2 ) != "//" ) P[22] = 1; // hshs 3
+        }
+
+        if ( InputStr.count( " " ) >= 12 ) // 8NChshs
+        {
+            if ( InputStr.section( " ", 12, 12 ).mid( 1, 1 ) != "/" )  P[23] = 1; // N 2
+            if ( InputStr.section( " ", 12, 12 ).mid( 2, 1 ) != "/" )  P[24] = 1; // C 2
+            if ( InputStr.section( " ", 12, 12 ).mid( 3, 2 ) != "//" ) P[25] = 1; // hshs 3
+        }
+
+    }
+
+    return( b_Stop );
+}
+
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// PAY
+
+bool MainWindow::SYNOPTest4( const QString &InputStr, int *P )
+{
+    bool b_Stop = false;
+
+    if ( InputStr.count( " " ) >= 1 )
+    {
+        if ( InputStr.section( " ", 1, 1 ).mid( 2, 1 ) != "/" ) P[1] = 1;
+        if ( InputStr.section( " ", 1, 1 ).mid( 3, 2 ) != "//" ) P[2] = 1;
+    }
+
+    if ( InputStr.count( " " ) >= 2 )
+    {
+        if ( InputStr.section( " ", 2, 2 ).left( 1 )   != "/" ) P[3] = 1;
+        if ( InputStr.section( " ", 2, 2 ).mid( 1, 1 ) != "/" ) P[4] = 1;
+        if ( InputStr.section( " ", 2, 2 ).mid( 3, 1 ) != "/" ) P[5] = 1;
+    }
+
+    if ( InputStr.count( " " ) >= 3 )
+        if ( InputStr.section( " ", 3, 3 ).mid( 2, 1 ) != "/" ) P[6] = 1;
+
+    if ( InputStr.count( " " ) >= 4 )
+        if ( InputStr.section( " ", 4, 4 ).mid( 1, 1 ) != "/" ) P[7] = 1;
+
+    if ( InputStr.count( " " ) >= 5 )
+        if ( InputStr.section( " ", 5, 5 ).mid( 1, 4 ) != "////" ) P[8] = 1;
+
+    if ( InputStr.count( " " ) >= 6 )
+        if ( InputStr.section( " ", 6, 6 ).mid( 1, 4 ) != "////" ) P[9] = 1;
+
+    if ( InputStr.count( " " ) >= 7 )
+    {
+        if ( InputStr.section( " ", 7, 7 ).mid( 1, 2 ) != "//" ) P[10] = 1;
+        if ( InputStr.section( " ", 7, 7 ).mid( 3, 1 ) != "/" ) P[11] = 1;
+        if ( InputStr.section( " ", 7, 7 ).mid( 4, 1 ) != "/" ) P[12] = 1;
+    }
+
+    if ( InputStr.count( " " ) >= 8 )
+    {
+        if ( InputStr.section( " ", 8, 8 ).mid( 1, 1 ) != "/" ) P[13] = 1;
+        if ( InputStr.section( " ", 8, 8 ).mid( 2, 1 ) != "/" ) P[14] = 1;
+        if ( InputStr.section( " ", 8, 8 ).mid( 3, 1 ) != "/" ) P[15] = 1;
+        if ( InputStr.section( " ", 8, 8 ).mid( 4, 1 ) != "/" ) P[16] = 1;
+    }
+
+    if ( InputStr.count( " ") >= 9 )
+    {
+        if ( InputStr.section( " ", 9, 9 ) != "333" )
+            b_Stop = true;
+    }
+
+    if ( InputStr.count( " " ) >= 10 )
+    {
+        if ( InputStr.section( " ", 10, 10 ).mid( 1, 1 ) != "/" ) P[17] = 1;
+        if ( InputStr.section( " ", 10, 10 ).mid( 2, 1 ) != "/" ) P[18] = 1;
+        if ( InputStr.section( " ", 10, 10 ).mid( 3, 2 ) != "//" ) P[19] = 1;
+    }
+
+    if ( InputStr.count( " " ) >= 11 )
+    {
+        if ( InputStr.section( " ", 11, 11 ).mid( 1, 1 ) != "/" ) P[20] = 1;
+        if ( InputStr.section( " ", 11, 11 ).mid( 2, 1 ) != "/" ) P[21] = 1;
+        if ( InputStr.section( " ", 11, 11 ).mid( 3, 2 ) != "//" ) P[22] = 1;
+    }
+
+    if ( InputStr.count( " " ) == 12 )
+    {
+        if ( InputStr.section( " ", 12, 12 ).mid( 1, 1 ) != "/" ) P[23] = 1;
+        if ( InputStr.section( " ", 12, 12 ).mid( 2, 1 ) != "/" ) P[24] = 1;
+        if ( InputStr.section( " ", 12, 12 ).mid( 3, 2 ) != "//" ) P[25] = 1;
+    }
+
+    return( b_Stop );
+}
+
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// SON
+
+bool MainWindow::SYNOPTest5( const QString &InputStr, int *P )
+{
+    bool b_Stop = false;
+
+    if ( InputStr.count( " " ) >= 2 )
+    {
+        if ( InputStr.section( " ", 2, 2 ).left( 1 )   != "/" ) P[1] = 1;
+        if ( InputStr.section( " ", 2, 2 ).mid( 1, 1 ) != "/" ) P[2] = 1;
+        if ( InputStr.section( " ", 2, 2 ).mid( 3, 1 ) != "/" ) P[3] = 1;
+    }
+
+    if ( InputStr.count( " " ) >= 3 )
+        if ( InputStr.section( " ", 3, 3 ).mid( 2, 1 ) != "/" ) P[4] = 1;
+
+    if ( InputStr.count( " " ) >= 4 )
+        if ( InputStr.section( " ", 4, 4 ).mid( 1, 1 ) != "/" ) P[5] = 1;
+
+    if ( InputStr.count( " " ) >= 5 )
+        if ( InputStr.section( " ", 5, 5 ).mid( 1, 4 ) != "////" ) P[6] = 1;
+
+    if ( InputStr.count( " " ) >= 6 )
+        if ( InputStr.section( " ", 6, 6 ).mid( 1, 4 ) != "////" ) P[7] = 1;
+
+    P[7] = 0;  // Geopotential height will be not stored in BSRN datasets, GKL 2013-03-11
+
+    if ( InputStr.count( " " ) >= 7 )
+    {
+        if ( InputStr.section( " ", 7, 7 ).mid( 1, 2 ) != "//" ) P[8] = 1;
+        if ( InputStr.section( " ", 7, 7 ).mid( 3, 1 ) != "/" )  P[9] = 1;
+        if ( InputStr.section( " ", 7, 7 ).mid( 4, 1 ) != "/" )  P[10] = 1;
+    }
+
+    if ( InputStr.count( " " ) >= 8 )
+    {
+        if ( InputStr.section( " ", 8, 8 ).mid( 1, 1 ) != "/" ) P[11] = 1;
+        if ( InputStr.section( " ", 8, 8 ).mid( 2, 1 ) != "/" ) P[12] = 1;
+        if ( InputStr.section( " ", 8, 8 ).mid( 3, 1 ) != "/" ) P[13] = 1;
+        if ( InputStr.section( " ", 8, 8 ).mid( 4, 1 ) != "/" ) P[14] = 1;
+    }
+
+    if ( InputStr.count( " ") >= 9 )
+    {
+        if ( InputStr.section( " ", 9, 9 ) != "333" )
+            b_Stop = true;
+    }
+
+    if ( InputStr.count( " " ) >= 10 )
+    {
+        if ( InputStr.section( " ", 10, 10 ).mid( 1, 1 ) != "/" )  P[15] = 1;
+        if ( InputStr.section( " ", 10, 10 ).mid( 2, 1 ) != "/" )  P[16] = 1;
+        if ( InputStr.section( " ", 10, 10 ).mid( 3, 2 ) != "//" ) P[17] = 1;
+    }
+
+    if ( InputStr.count( " " ) >= 11 )
+    {
+        if ( InputStr.section( " ", 11, 11 ).mid( 1, 1 ) != "/" )  P[18] = 1;
+        if ( InputStr.section( " ", 11, 11 ).mid( 2, 1 ) != "/" )  P[19] = 1;
+        if ( InputStr.section( " ", 11, 11 ).mid( 3, 2 ) != "//" ) P[20] = 1;
+    }
+
+    if ( InputStr.count( " " ) == 12 )
+    {
+        if ( InputStr.section( " ", 12, 12 ).mid( 1, 1 ) != "/" )  P[21] = 1;
+        if ( InputStr.section( " ", 12, 12 ).mid( 2, 1 ) != "/" )  P[22] = 1;
+        if ( InputStr.section( " ", 12, 12 ).mid( 3, 2 ) != "//" ) P[23] = 1;
+    }
+
+    return( b_Stop );
+}
+
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// GVN, NYA
+
+bool MainWindow::SYNOPTest6( const QString &InputStr, int *P )
+{
+    bool b_Stop = false;
+
+    if ( InputStr.mid(  9, 1 ) != "/" ) P[1] = 1;
+    if ( InputStr.mid( 16, 1 ) != "/" ) P[2] = 1;
+    if ( InputStr.mid( 23, 1 ) != "/" ) P[3] = 1;
+    if ( InputStr.mid( 29, 1 ) != "/" ) P[4] = 1;
+    if ( InputStr.mid( 33, 1 ) != "/" ) P[5] = 1;
+    if ( InputStr.mid( 37, 1 ) != "/" ) P[6] = 1;
+    if ( InputStr.mid( 39, 1 ) != "/" ) P[7] = 1;
+    if ( InputStr.mid( 42, 1 ) != "/" ) P[8] = 1;
+    if ( InputStr.mid( 44, 1 ) != "/" ) P[9] = 1;
+    if ( InputStr.mid( 46, 1 ) != "/" ) P[10] = 1;
+    if ( InputStr.mid( 48, 1 ) != "/" ) P[11] = 1;
+    if ( InputStr.mid( 50, 1 ) != "/" ) P[12] = 1;
+    if ( InputStr.mid( 52, 1 ) != "/" ) P[13] = 1;
+    if ( InputStr.mid( 54, 1 ) != "/" ) P[14] = 1;
+    if ( InputStr.mid( 57, 1 ) != "/" ) P[15] = 1;
+    if ( InputStr.mid( 58, 1 ) != "/" ) P[16] = 1;
+
+    return( b_Stop );
 }
 
 // ***********************************************************************************************************************
@@ -749,7 +817,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
 
             break;
 
-        case 2: // GVN and NYA
+        case 2: // FUA, ISH, MNM, SAP, SYO, TAT
             if ( P[1] == 1 ) sl_Parameter.append( Parameter( num2str( 4610 ), num2str( i_PIID ), num2str( 4722 ), tr( "###0.0" ) ) );   // Temperature, air [deg C]
             if ( P[2] == 1 ) sl_Parameter.append( Parameter( num2str( 2224 ), num2str( i_PIID ), num2str( 359 ), tr( "###0.0" ), tr( "Station pressure reduced to sea level" ) ) );   // Pressure, atmospheric [hPa]
             if ( P[3] == 1 ) sl_Parameter.append( Parameter( num2str( 4611 ), num2str( i_PIID ), num2str( 5039 ), tr( "###0.0" ) ) );   // Dew/frost point [deg C]
@@ -770,10 +838,6 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
             break;
 
         case 3: // TAM
-//          0     1     2         3       4        5           6        7      8          9            10  11         12
-//          YYGG9 IIiii iRix|h|VV N|dd|ff 1|S|nTTT 2|S|nTdTdTd 3|P0P0P0 4|PPPP 7|ww|W1|W2 8|N|Cl|Cm|Ch 333 8|N|C|hshs 8|N|C|hshs
-//          31064 60680 44|9|70   6|06|02 1|0|026  2|1|084     3|8620   4|8492 7|03|1|0   8|3|0|3|2    333 8|3|3|62   8|5|0|73
-
             if ( P[1]  == 1 ) sl_Parameter.append( Parameter( num2str( 45259 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // h, Cloud base height
             if ( P[2]  == 1 ) sl_Parameter.append( Parameter( num2str( 45260 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // VV, Horizontal visibility
 
@@ -846,7 +910,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
             if ( P[24] == 1 ) sl_Parameter.append( Parameter( num2str( 57654 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 3 [code]
             if ( P[25] == 1 ) sl_Parameter.append( Parameter( num2str( 57657 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 3 [code]
 
-           sl_Parameter.append( Parameter( num2str( 50007 ), num2str( i_PIID ), num2str( 43 ), tr( "" ), tr( "YYGG9 iRixhVV Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" ) ) );
+            sl_Parameter.append( Parameter( num2str( 50007 ), num2str( i_PIID ), num2str( 43 ), tr( "" ), tr( "YYGG9 iRixhVV Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" ) ) );
 
             break;
 
@@ -875,8 +939,31 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
             if ( P[22] == 1 ) sl_Parameter.append( Parameter( num2str( 57654 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // C 3 [code]
             if ( P[23] == 1 ) sl_Parameter.append( Parameter( num2str( 57657 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // hshs 3 [code]
 
-           sl_Parameter.append( Parameter( num2str( 50007 ), num2str( i_PIID ), num2str( 43 ), tr( "" ), tr( "YYGG9 IIiii Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" ) ) );
+            sl_Parameter.append( Parameter( num2str( 50007 ), num2str( i_PIID ), num2str( 43 ), tr( "" ), tr( "YYGG9 IIiii Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" ) ) );
 
+            break;
+
+        case 6: // GVN and NYA
+            if ( P[1] == 1 ) sl_Parameter.append( Parameter( num2str( 4610 ), num2str( i_PIID ), num2str( 4722 ), tr( "###0.0" ) ) );   // Temperature, air [deg C]
+            if ( P[2] == 1 ) sl_Parameter.append( Parameter( num2str( 2224 ), num2str( i_PIID ), num2str( 359 ), tr( "###0.0" ), tr( "Station pressure reduced to sea level" ) ) );   // Pressure, atmospheric [hPa]
+            if ( P[3] == 1 ) sl_Parameter.append( Parameter( num2str( 4611 ), num2str( i_PIID ), num2str( 5039 ), tr( "###0.0" ) ) );   // Dew/frost point [deg C]
+            if ( P[4] == 1 ) sl_Parameter.append( Parameter( num2str( 2221 ), num2str( i_PIID ), num2str( 5038 ), tr( "###0" ) ) );     // Wind direction [deg]
+            if ( P[5] == 1 ) sl_Parameter.append( Parameter( num2str( 18906 ), num2str( i_PIID ), num2str( 5038 ), tr( "#0" ) ) );      // Wind speed [m/sec]
+            if ( P[6] == 1 ) sl_Parameter.append( Parameter( num2str( 45262 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );       // Past weather1 [code]
+            if ( P[7] == 1 ) sl_Parameter.append( Parameter( num2str( 45261 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );       // Present weather [code]
+            if ( P[8] == 1 ) sl_Parameter.append( Parameter( num2str( 45267 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );       // Total cloud amount
+            if ( P[9] == 1 ) sl_Parameter.append( Parameter( num2str( 45268 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );       // Low/middle cloud amount [code]
+            if ( P[10] == 1 ) sl_Parameter.append( Parameter( num2str( 45264 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Low cloud [code]
+            if ( P[11] == 1 ) sl_Parameter.append( Parameter( num2str( 45265 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Middle cloud [code]
+            if ( P[12] == 1 ) sl_Parameter.append( Parameter( num2str( 45266 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // High cloud [code]
+            if ( P[13] == 1 ) sl_Parameter.append( Parameter( num2str( 45259 ), num2str( i_PIID ), num2str( 5036 ), tr( "#0" ) ) );     // Cloud base height [code]
+            if ( P[14] == 1 ) sl_Parameter.append( Parameter( num2str( 45307 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Present blowing snow [code]
+            if ( P[15] == 1 ) sl_Parameter.append( Parameter( num2str( 45308 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Past blowing snow [code]
+            if ( P[16] == 1 ) sl_Parameter.append( Parameter( num2str( 45260 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // Horizontal visibility [code]
+
+            break;
+
+        default:
             break;
         }
     }
@@ -974,7 +1061,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                 }
                 break;
 
-            case 2: // GVN and NYA
+            case 2: // FUA, ISH, MNM, SAP, SYO, TAT
                 if ( b_Import == true )
                 {
                     tout << "1599"; // Date/Time
@@ -1207,6 +1294,54 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                     if ( P[23] == 1 ) tout << "\thshs 3 [code]";
                     tout << "\t" << tr( "YYGG9 IIiii Nddff 1SnTTT 2SnTdTdTd 3P0P0P0 4PPPP 7wwW1W2 8NhClCmCh 333 8NsChshs 8NsChshs 8NsChshs" ) << eol;
                 }
+                break;
+
+            case 6: // GVN, NYA
+                if ( b_Import == true )
+                {
+                    tout << "1599"; // Date/Time
+                    if ( P[1]  == 1 ) tout << "\t4610";
+                    if ( P[2]  == 1 ) tout << "\t2224";
+                    if ( P[3]  == 1 ) tout << "\t4611";
+                    if ( P[4]  == 1 ) tout << "\t2221";
+                    if ( P[5]  == 1 ) tout << "\t18906";
+                    if ( P[6]  == 1 ) tout << "\t45262";
+                    if ( P[7]  == 1 ) tout << "\t45261";
+                    if ( P[8]  == 1 ) tout << "\t45267";
+                    if ( P[9]  == 1 ) tout << "\t45268";
+                    if ( P[10] == 1 ) tout << "\t45264";
+                    if ( P[11] == 1 ) tout << "\t45265";
+                    if ( P[12] == 1 ) tout << "\t45266";
+                    if ( P[13] == 1 ) tout << "\t45259";
+                    if ( P[14] == 1 ) tout << "\t45307";
+                    if ( P[15] == 1 ) tout << "\t45308";
+                    if ( P[16] == 1 ) tout << "\t45260";
+                    tout << eol;
+                }
+                else
+                {
+                    tout << "Station\tDate/Time\tLatitude\tLongitude";
+                    if ( P[1]  == 1 ) tout << "\tTemperature, air [deg C]";
+                    if ( P[2]  == 1 ) tout << "\tPressure, atmospheric [hPa]";
+                    if ( P[3]  == 1 ) tout << "\tDew/frost point [deg C]";
+                    if ( P[4]  == 1 ) tout << "\tWind direction [deg]";
+                    if ( P[5]  == 1 ) tout << "\tWind speed [m/sec]";
+                    if ( P[6]  == 1 ) tout << "\tPast weather1 [code]";
+                    if ( P[7]  == 1 ) tout << "\tPresent weather [code]";
+                    if ( P[8]  == 1 ) tout << "\tTotal cloud amount [code]";
+                    if ( P[9]  == 1 ) tout << "\tLow/middle cloud amount [code]";
+                    if ( P[10] == 1 ) tout << "\tLow cloud [code]";
+                    if ( P[11] == 1 ) tout << "\tMiddle cloud [code]";
+                    if ( P[12] == 1 ) tout << "\tHigh cloud [code]";
+                    if ( P[13] == 1 ) tout << "\tCloud base height [code]";
+                    if ( P[14] == 1 ) tout << "\tPresent blowing snow [code]";
+                    if ( P[15] == 1 ) tout << "\tPast blowing snow [code]";
+                    if ( P[16] == 1 ) tout << "\tHorizontal visibility [code]";
+                    tout << eol;
+                }
+                break;
+
+            default:
                 break;
             }
 
@@ -1458,52 +1593,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
 
                         break;
 
-                    case 2: // GVN and NYA
-
-/*
-  1    0  -8.1   986.3  -9.5  80  18 7 38 8 8 7 / / 2 42 92
-  1  180  -8.8   985.3 -10.3  90  17 / // / / / / / / // //
-  1  360  -9.3   985.2 -10.9  90  15 7 71 8 8 7 / / 1 62 91
-  1  540  -9.4   985.7 -10.9  90  14 7 71 8 8 7 / / 2 62 92
-  1  720  -9.4   986.7 -10.8  90  16 7 71 8 8 7 / / / 63 92
-  1  900  -9.1   988.1 -10.7  90  16 7 38 8 8 8 / / 4 42 96
-  1 1080  -9.1   990.4 -10.7  90  15 7 38 8 8 6 / / 4 43 92
-  1 1260  -9.4   992.1 -11.1  90  17 7 70 8 8 8 / / 2 62 92
-  2    0 -10.4   994.2 -12.2  90  17 7 38 8 4 6 7 / 2 42 92
-  2  180 -10.7   996.3 -12.3  90  17 / // / / / / / / // //
-  2  360 -11.4   997.1 -13.4  80  17 3 36 8 6 5 7 / 4 11 96
-  2  540 -12.5   999.7 -15.0  90  12 3 02 8 7 5 / / 4 // 97
-  2  720 -12.6  1000.5 -15.7  80  11 3 01 7 7 0 3 / 9 // 97
-  2  900 -12.6  1000.8 -16.9  80  12 / // 6 6 0 3 0 9 // 98
-  2 1080 -13.6  1001.2 -18.9  80  11 / // 2 2 0 3 0 9 // 99
-  2 1260 -15.6  1001.9 -20.3  90   7 / // 0 0 0 0 0 9 // 98
-  3    0 -19.2  1001.6 -23.4 130   4 / // 1 1 0 3 0 9 // 98
-  3  180 -20.3  1001.2 -24.1 160   5 / // / / / / / / // //
-  3  360 -19.4  1001.3 -22.8 160   2 / // 7 7 0 7 / 9 // 98
-  3  540 -19.1  1001.2 -22.5 120   1 / // 7 7 0 7 / 9 // 99
-  3  720 -18.4  1001.9 -21.5 140   3 / // 8 8 0 7 / 9 // 99
-  3  900 -17.5  1002.3 -20.5 100   3 / // 8 8 0 3 / 9 // 99
-  3 1080 -17.3  1003.0 -20.8  70   5 / // 8 1 5 7 / 4 // 98
-  3 1260 -16.0  1004.3 -21.0 100   6 / // 8 8 0 7 / 8 // 98
-
-if ( InputStr.mid(  9, 1 ) != "/" ) P[1] = 1;
-if ( InputStr.mid( 16, 1 ) != "/" ) P[2] = 1;
-if ( InputStr.mid( 23, 1 ) != "/" ) P[3] = 1;
-if ( InputStr.mid( 29, 1 ) != "/" ) P[4] = 1;
-if ( InputStr.mid( 33, 1 ) != "/" ) P[5] = 1;
-if ( InputStr.mid( 37, 1 ) != "/" ) P[6] = 1;
-if ( InputStr.mid( 39, 1 ) != "/" ) P[7] = 1;
-if ( InputStr.mid( 42, 1 ) != "/" ) P[8] = 1;
-if ( InputStr.mid( 44, 1 ) != "/" ) P[9] = 1;
-if ( InputStr.mid( 46, 1 ) != "/" ) P[10] = 1;
-if ( InputStr.mid( 48, 1 ) != "/" ) P[11] = 1;
-if ( InputStr.mid( 50, 1 ) != "/" ) P[12] = 1;
-if ( InputStr.mid( 52, 1 ) != "/" ) P[13] = 1;
-if ( InputStr.mid( 54, 1 ) != "/" ) P[14] = 1;
-if ( InputStr.mid( 57, 1 ) != "/" ) P[15] = 1;
-if ( InputStr.mid( 58, 1 ) != "/" ) P[16] = 1;
-*/
-
+                    case 2: // FUA, ISH, MNM, SAP, SYO, TAT
                         i_Day		= InputStr.mid( 1, 2 ).toInt();
                         i_Minute	= InputStr.mid( 4, 4 ).toInt();
 
@@ -2438,6 +2528,157 @@ if ( InputStr.mid( 58, 1 ) != "/" ) P[16] = 1;
 
                         tout << OutputStr << "\t" << InputStr << eol;
 
+                        break;
+
+                    case 6: // GVN, NYA
+                        i_Day		= InputStr.mid( 1, 2 ).toInt();
+                        i_Minute	= InputStr.mid( 4, 4 ).toInt();
+
+                        dt.setDate( QDate( i_Year, i_Month, i_Day ) );
+                        dt.setTime( QTime( 0, 0, 0 ) );
+                        dt = dt.addSecs( i_Minute*60 );
+
+                        if ( b_Import == false )
+                            OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + num2str( f_Latitude ) + "\t" + num2str( f_Longitude ); // Station Date/Time Latitude Longitude
+                        else
+                            OutputStr = dt.toString( "yyyy-MM-ddThh:mm" ); // Date/Time
+
+                        if ( P[1] == 1 )  // Temperature, air [deg C]
+                        {
+                            if ( ( InputStr.mid( 9, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 9, 5 ).toFloat() > -90 ) )
+                                OutputStr.append( "\t" + InputStr.mid( 9, 5 ) );
+                            else
+                                OutputStr.append( "\t" );
+                        }
+
+                        if ( P[2] == 1 ) // Pressure, atmospheric [hPa]
+                        {
+                            if ( ( InputStr.mid( 16, 6 ).contains( "/" ) == false ) && ( InputStr.mid( 16, 6 ).toFloat() > -90 ) )
+                                OutputStr.append( "\t" + InputStr.mid( 16, 6 ) );
+                            else
+                                OutputStr.append( "\t" );
+                        }
+
+                        if ( P[3] == 1 ) // Dew/frost point [deg C]
+                        {
+                            if ( ( InputStr.mid( 23, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 23, 5 ).toFloat() > -90 ) )
+                                OutputStr.append( "\t" + InputStr.mid( 23, 5 ) );
+                            else
+                                OutputStr.append( "\t" );
+                        }
+
+                        if ( P[4] == 1 ) // Wind direction [deg]
+                        {
+                            if ( ( InputStr.mid( 29, 3 ).contains( "/" ) == false ) && ( InputStr.mid( 29, 3 ).toFloat() > -90 ) )
+                                OutputStr.append( "\t" + InputStr.mid( 29, 3 ) );
+                            else
+                                OutputStr.append( "\t" );
+                        }
+
+                        if ( P[5] == 1 ) // Wind speed [m/sec]
+                        {
+                            if ( ( InputStr.mid( 33, 3 ).contains( "/" ) == false ) && ( InputStr.mid( 33, 3 ).toFloat() > -90 ) )
+                                OutputStr.append( "\t" + InputStr.mid( 33, 3 ) );
+                            else
+                                OutputStr.append( "\t" );
+                        }
+
+                        if ( P[6] == 1 )
+                        {
+                            if ( InputStr.mid( 37, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 37, 1 ) );	// Past weather1 [code]
+                            else
+                                OutputStr.append( "\t" );
+                        }
+
+                        if ( P[7] == 1 )
+                        {
+                            if ( InputStr.mid( 39, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 39, 2 ) );	// Present weather [code]
+                            else
+                                OutputStr.append( "\t" );
+                        }
+
+                        if ( P[8] == 1 )
+                        {
+                            if ( InputStr.mid( 42, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 42, 1 ) );	// Total cloud amount [code]
+                            else
+                                OutputStr.append( "\t" );
+                        }
+
+                        if ( P[9] == 1 )
+                        {
+                            if ( InputStr.mid( 44, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 44, 1 ) );	// Low/middle cloud amount [code]
+                            else
+                                OutputStr.append( "\t" );
+                        }
+
+                        if ( P[10] == 1 )
+                        {
+                            if ( InputStr.mid( 46, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 46, 1 ) );	// Low cloud [code]
+                            else
+                                OutputStr.append( "\t" );
+                        }
+
+                        if ( P[11] == 1 )
+                        {
+                            if ( InputStr.mid( 48, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 48, 1 ) );	// Middle cloud [code]
+                            else
+                                OutputStr.append( "\t" );
+                        }
+
+                        if ( P[12] == 1 )
+                        {
+                            if ( InputStr.mid( 50, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 50, 1 ) );	// High cloud [code]
+                            else
+                                OutputStr.append( "\t" );
+                        }
+
+                        if ( P[13] == 1 )
+                        {
+                            if ( InputStr.mid( 52, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 52, 1 ) );	// Cloud base height [code]
+                            else
+                                OutputStr.append( "\t" );
+                        }
+
+                        if ( P[14] == 1 )
+                        {
+                            if ( InputStr.mid( 54, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 54, 2 ) );	// Present blowing snow [code]
+                            else
+                                OutputStr.append( "\t" );
+                        }
+
+                        if ( P[15] == 1 )
+                        {
+                            if ( InputStr.mid( 57, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 57, 1 ) );	// Past blowing snow [code]
+                            else
+                                OutputStr.append( "\t" );
+                        }
+
+                        if ( P[16] == 1 )
+                        {
+                            if ( InputStr.mid( 58, 1 ) != "/" )
+                                OutputStr.append( "\t" + InputStr.mid( 58, 1 ) );	// Horizontal visibility [code]
+                            else
+                                OutputStr.append( "\t" );
+                        }
+
+                        OutputStr.replace( "/", "" );
+                        OutputStr.replace( " ", "" );
+
+                        tout << OutputStr << eol;
+
+                        break;
+
+                    default:
                         break;
                     }
                 }
