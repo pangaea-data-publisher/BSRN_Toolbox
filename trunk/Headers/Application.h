@@ -320,14 +320,36 @@ private:
     int OtherMinuteMeasurementsConverter( const bool Import, const QString& FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, int *P, const int NumOfFiles );
     int UltraVioletMeasurementsTest( const QString& FilenameIn, int *P, const int NumOfFiles );
     int UltraVioletMeasurementsConverter( const bool Import, const QString& FilenameIn, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
+
     int SYNOPTest( const QString& FilenameIn, int *P, const int NumOfFiles );
+
     bool SYNOPTest1( const QString &InputStr, int *P );
     bool SYNOPTest2( const QString &InputStr, int *P );
     bool SYNOPTest3( const QString &InputStr, const int Year, int *P );
     bool SYNOPTest4( const QString &InputStr, int *P );
     bool SYNOPTest5( const QString &InputStr, int *P );
     bool SYNOPTest6( const QString &InputStr, int *P );
+    QStringList buildSYNOPDataDescriptionHeader1( int *P, const int PIID );
+    QStringList buildSYNOPDataDescriptionHeader2( int *P, const int PIID );
+    QStringList buildSYNOPDataDescriptionHeader3( int *P, const int PIID, const int Year );
+    QStringList buildSYNOPDataDescriptionHeader4( int *P, const int PIID );
+    QStringList buildSYNOPDataDescriptionHeader5( int *P, const int PIID );
+    QStringList buildSYNOPDataDescriptionHeader6( int *P, const int PIID );
+    QString buildSYNOPDataHeader1( int *P, const bool Import );
+    QString buildSYNOPDataHeader2( int *P, const bool Import );
+    QString buildSYNOPDataHeader3( int *P, const int Year, const bool Import );
+    QString buildSYNOPDataHeader4( int *P, const bool Import );
+    QString buildSYNOPDataHeader5( int *P, const bool Import );
+    QString buildSYNOPDataHeader6( int *P, const bool Import );
+    QString buildSYNOPDataOutputStr1( const QString EventLabel, const QString DataStr, int *P, const int Year, const int Month, const float Latitude, const float Longitude, const bool Import );
+    QString buildSYNOPDataOutputStr2( const QString EventLabel, const QString DataStr, int *P, const int Year, const int Month, const float Latitude, const float Longitude, const bool Import );
+    QString buildSYNOPDataOutputStr3( const QString EventLabel, const QString DataStr, int *P, const int Year, const int Month, const float Latitude, const float Longitude, const bool Import );
+    QString buildSYNOPDataOutputStr4( const QString EventLabel, const QString DataStr, int *P, const int Year, const int Month, const float Latitude, const float Longitude, const bool Import );
+    QString buildSYNOPDataOutputStr5( const QString EventLabel, const QString DataStr, int *P, const int Year, const int Month, const float Latitude, const float Longitude, const bool Import );
+    QString buildSYNOPDataOutputStr6( const QString EventLabel, const QString DataStr, int *P, const int Year, const int Month, const float Latitude, const float Longitude, const bool Import );
+
     int SYNOPConverter( const bool Import, const QString& FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
+
     int RadiosondeMeasurementsTest( const QString& FilenameIn, int *P, const int NumOfFiles );
     int RadiosondeMeasurementsConverter( const bool Import, const QString& FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
     int OzoneMeasurementsConverter( const bool Import, const QString& FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
