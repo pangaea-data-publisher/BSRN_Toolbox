@@ -89,6 +89,7 @@ int MainWindow::SYNOPTest( const QString& s_FilenameIn, int *P, const int i_NumO
             if ( fi.baseName().startsWith( "son" ) == true ) i_Format = 5;
 
             if ( fi.baseName().startsWith( "gvn" ) == true ) i_Format = 6;
+//          if ( fi.baseName().startsWith( "gvn" ) == true ) i_Format = 7; // 2016-05
 
             while ( ( tin.atEnd() == false ) && ( b_Stop == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) )
             {
@@ -122,6 +123,10 @@ int MainWindow::SYNOPTest( const QString& s_FilenameIn, int *P, const int i_NumO
 
                     case 6: // GVN, NYA
                         b_Stop = SYNOPTest6( InputStr, P );
+                        break;
+
+                    case 7: // GVN, NYA, 2016-05
+                        b_Stop = SYNOPTest7( InputStr, P );
                         break;
 
                     default:
@@ -240,8 +245,8 @@ bool MainWindow::SYNOPTest2( const QString &InputStr, int *P )
     if ( InputStr.mid( 48, 1 ) != "/" ) P[12] = 1;
     if ( InputStr.mid( 50, 1 ) != "/" ) P[13] = 1;
     if ( InputStr.mid( 52, 1 ) != "/" ) P[14] = 1;
-    if ( InputStr.mid( 55, 1 ) != "/" ) P[15] = 1;
-    if ( InputStr.mid( 56, 1 ) != "/" ) P[16] = 1;
+    if ( InputStr.mid( 53, 1 ) != "/" ) P[15] = 1;
+    if ( InputStr.mid( 55, 1 ) != "/" ) P[16] = 1;
 
     return( b_Stop );
 }
@@ -575,8 +580,43 @@ bool MainWindow::SYNOPTest6( const QString &InputStr, int *P )
     if ( InputStr.mid( 50, 1 ) != "/" ) P[12] = 1;
     if ( InputStr.mid( 52, 1 ) != "/" ) P[13] = 1;
     if ( InputStr.mid( 54, 1 ) != "/" ) P[14] = 1;
-    if ( InputStr.mid( 57, 1 ) != "/" ) P[15] = 1;
-    if ( InputStr.mid( 58, 1 ) != "/" ) P[16] = 1;
+    if ( InputStr.mid( 55, 1 ) != "/" ) P[15] = 1;
+    if ( InputStr.mid( 57, 1 ) != "/" ) P[16] = 1;
+
+    return( b_Stop );
+}
+
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// GVN, NYA, 2016-05
+
+bool MainWindow::SYNOPTest7( const QString &InputStr, int *P )
+{
+    bool b_Stop = false;
+
+    if ( InputStr.mid(  9, 1 ) != "/" ) P[1] = 1;  // Cloud base height [code]
+    if ( InputStr.mid( 11, 1 ) != "/" ) P[2] = 1;  // Horizontal visibility [code]
+    if ( InputStr.mid( 14, 1 ) != "/" ) P[3] = 1;  // Wind direction [deg]
+    if ( InputStr.mid( 18, 1 ) != "/" ) P[4] = 1;  // Wind speed [m/sec]
+    if ( InputStr.mid( 23, 1 ) != "/" ) P[5] = 1;  // Temperature, air [deg C]
+    if ( InputStr.mid( 29, 1 ) != "/" ) P[6] = 1;  // Dew/frost point [deg C]
+    if ( InputStr.mid( 35, 1 ) != "/" ) P[7] = 1;  // Pressure, atmospheric [hPa]
+    if ( InputStr.mid( 42, 1 ) != "/" ) P[8] = 1;  // Characteristic of barometric tendency [code]
+    if ( InputStr.mid( 44, 1 ) != "/" ) P[9] = 1;  // Amount of barometric tendency [hPa]
+    if ( InputStr.mid( 49, 1 ) != "/" ) P[10] = 1; // Present weather [code]
+    if ( InputStr.mid( 52, 1 ) != "/" ) P[11] = 1; // Past weather1 [code]
+    if ( InputStr.mid( 54, 1 ) != "/" ) P[12] = 1; // Past weather2 [code]
+    if ( InputStr.mid( 56, 1 ) != "/" ) P[13] = 1; // Low cloud [code]
+    if ( InputStr.mid( 58, 1 ) != "/" ) P[14] = 1; // Middle cloud [code]
+    if ( InputStr.mid( 60, 1 ) != "/" ) P[15] = 1; // High cloud [code]
+    if ( InputStr.mid( 62, 1 ) != "/" ) P[16] = 1; // Total cloud amount [code]
+    if ( InputStr.mid( 64, 1 ) != "/" ) P[17] = 1; // Low/middle cloud amount [code]
+    if ( InputStr.mid( 66, 1 ) != "/" ) P[18] = 1; // Temperature, air, maximum [deg C]
+    if ( InputStr.mid( 72, 1 ) != "/" ) P[19] = 1; // Temperature, air, minimum [deg C]
+    if ( InputStr.mid( 78, 1 ) != "/" ) P[20] = 1; // Present blowing snow [code]
+    if ( InputStr.mid( 80, 1 ) != "/" ) P[21] = 1; // Past blowing snow [code]
+    if ( InputStr.mid( 82, 1 ) != "/" ) P[22] = 1; // Whiteout yes/no [y/n]
 
     return( b_Stop );
 }
@@ -806,6 +846,41 @@ QStringList MainWindow::buildSYNOPDataDescriptionHeader6( int *P, const int i_PI
     if ( P[14] == 1 ) sl_Parameter.append( Parameter( num2str( 45307 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Present blowing snow [code]
     if ( P[15] == 1 ) sl_Parameter.append( Parameter( num2str( 45308 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Past blowing snow [code]
     if ( P[16] == 1 ) sl_Parameter.append( Parameter( num2str( 45260 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );     // Horizontal visibility [code]
+
+    return( sl_Parameter );
+}
+
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// GVN, NYA, 2016-05
+
+QStringList MainWindow::buildSYNOPDataDescriptionHeader7( int *P, const int i_PIID )
+{
+    QStringList sl_Parameter;
+
+    if ( P[1] == 1 ) sl_Parameter.append( Parameter( num2str( 45259 ), num2str( i_PIID ), num2str( 5036 ), tr( "#0" ) ) );      // Cloud base height [code]
+    if ( P[2] == 1 ) sl_Parameter.append( Parameter( num2str( 45260 ), num2str( i_PIID ), num2str( 5037 ), tr( "#0" ) ) );      // Horizontal visibility [code]
+    if ( P[3] == 1 ) sl_Parameter.append( Parameter( num2str( 2221 ), num2str( i_PIID ), num2str( 5038 ), tr( "###0" ) ) );     // Wind direction [deg]
+    if ( P[4] == 1 ) sl_Parameter.append( Parameter( num2str( 18906 ), num2str( i_PIID ), num2str( 5038 ), tr( "#0.0" ) ) );    // Wind speed [m/sec]
+    if ( P[5] == 1 ) sl_Parameter.append( Parameter( num2str( 4610 ), num2str( i_PIID ), num2str( 4722 ), tr( "###0.0" ) ) );   // Temperature, air [deg C]
+    if ( P[6] == 1 ) sl_Parameter.append( Parameter( num2str( 4611 ), num2str( i_PIID ), num2str( 5039 ), tr( "###0.0" ) ) );   // Dew/frost point [deg C]
+    if ( P[7] == 1 ) sl_Parameter.append( Parameter( num2str( 2224 ), num2str( i_PIID ), num2str( 359 ), tr( "###0.0" ), tr( "Station pressure reduced to sea level" ) ) );   // Pressure, atmospheric [hPa]
+    if ( P[8] == 1 ) sl_Parameter.append( Parameter( num2str( 45311 ), num2str( i_PIID ), num2str( 359 ), tr( "#0" ) ) );       // Characteristic of barometric tendency [code]
+    if ( P[9] == 1 ) sl_Parameter.append( Parameter( num2str( 45312 ), num2str( i_PIID ), num2str( 359 ), tr( "#0" ) ) );       // Amount of barometric tendency [hPa]
+    if ( P[10] == 1 ) sl_Parameter.append( Parameter( num2str( 45261 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Present weather [code]
+    if ( P[11] == 1 ) sl_Parameter.append( Parameter( num2str( 45262 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Past weather1 [code]
+    if ( P[12] == 1 ) sl_Parameter.append( Parameter( num2str( 45263 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Past weather2 [code]
+    if ( P[13] == 1 ) sl_Parameter.append( Parameter( num2str( 45264 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Low cloud [code]
+    if ( P[14] == 1 ) sl_Parameter.append( Parameter( num2str( 45265 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Middle cloud [code]
+    if ( P[15] == 1 ) sl_Parameter.append( Parameter( num2str( 45266 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // High cloud [code]
+    if ( P[16] == 1 ) sl_Parameter.append( Parameter( num2str( 45267 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Total cloud amount
+    if ( P[17] == 1 ) sl_Parameter.append( Parameter( num2str( 45268 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Low/middle cloud amount [code]
+    if ( P[18] == 1 ) sl_Parameter.append( Parameter( num2str( 5151 ), num2str( i_PIID ), num2str( 4722 ), tr( "###0.0" ) ) );  // Temperature, air, maximum [deg C]
+    if ( P[19] == 1 ) sl_Parameter.append( Parameter( num2str( 5150 ), num2str( i_PIID ), num2str( 4722 ), tr( "###0.0" ) ) );  // Temperature, air, minimum [deg C]
+    if ( P[20] == 1 ) sl_Parameter.append( Parameter( num2str( 45307 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Present blowing snow [code]
+    if ( P[21] == 1 ) sl_Parameter.append( Parameter( num2str( 45308 ), num2str( i_PIID ), num2str( 530 ), tr( "#0" ) ) );      // Past blowing snow [code]
+    if ( P[22] == 1 ) sl_Parameter.append( Parameter( num2str( 45309 ), num2str( i_PIID ), num2str( 530 ), tr( "" ) ) );        // Whiteout yes/no [y/n]
 
     return( sl_Parameter );
 }
@@ -1226,6 +1301,73 @@ QString MainWindow::buildSYNOPDataHeader6( int *P, const bool b_Import )
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
+// GVN, NYA, 2016-05
+
+QString MainWindow::buildSYNOPDataHeader7( int *P, const bool b_Import )
+{
+    QString s_SYNOPDataHeader = "";
+
+    if ( b_Import == true )
+    {
+        s_SYNOPDataHeader.append( "1599" ); // Date/Time
+
+        if ( P[1] == 1 ) s_SYNOPDataHeader.append( "\t45259" );  // Cloud base height [code]
+        if ( P[2] == 1 ) s_SYNOPDataHeader.append( "\t45260" );  // Horizontal visibility [code]
+        if ( P[3] == 1 ) s_SYNOPDataHeader.append( "\t2221" );   // Wind direction [deg]
+        if ( P[4] == 1 ) s_SYNOPDataHeader.append( "\t18906" );  // Wind speed [m/sec]
+        if ( P[5] == 1 ) s_SYNOPDataHeader.append( "\t4610" );   // Temperature, air [deg C]
+        if ( P[6] == 1 ) s_SYNOPDataHeader.append( "\t4611" );   // Dew/frost point [deg C]
+        if ( P[7] == 1 ) s_SYNOPDataHeader.append( "\t2224" );   // Pressure, atmospheric [hPa]
+        if ( P[8] == 1 ) s_SYNOPDataHeader.append( "\t45311" );  // Characteristic of barometric tendency [code]
+        if ( P[9] == 1 ) s_SYNOPDataHeader.append( "\t45312" );  // Amount of barometric tendency [hPa]
+        if ( P[10] == 1 ) s_SYNOPDataHeader.append( "\t45261" ); // Present weather [code]
+        if ( P[11] == 1 ) s_SYNOPDataHeader.append( "\t45262" ); // Past weather1 [code]
+        if ( P[12] == 1 ) s_SYNOPDataHeader.append( "\t45263" ); // Past weather2 [code]
+        if ( P[13] == 1 ) s_SYNOPDataHeader.append( "\t45264" ); // Low cloud [code]
+        if ( P[14] == 1 ) s_SYNOPDataHeader.append( "\t45265" ); // Middle cloud [code]
+        if ( P[15] == 1 ) s_SYNOPDataHeader.append( "\t45266" ); // High cloud [code]
+        if ( P[16] == 1 ) s_SYNOPDataHeader.append( "\t45267" ); // Total cloud amount
+        if ( P[17] == 1 ) s_SYNOPDataHeader.append( "\t45268" ); // Low/middle cloud amount [code]
+        if ( P[18] == 1 ) s_SYNOPDataHeader.append( "\t5151" );  // Temperature, air, maximum [deg C]
+        if ( P[19] == 1 ) s_SYNOPDataHeader.append( "\t5150" );  // Temperature, air, minimum [deg C]
+        if ( P[20] == 1 ) s_SYNOPDataHeader.append( "\t45307" ); // Present blowing snow [code]
+        if ( P[21] == 1 ) s_SYNOPDataHeader.append( "\t45308" ); // Past blowing snow [code]
+        if ( P[22] == 1 ) s_SYNOPDataHeader.append( "\t45309");  // Whiteout yes/no [y/n]
+    }
+    else
+    {
+        s_SYNOPDataHeader.append( "Station\tDate/Time\tLatitude\tLongitude" );
+
+        if ( P[1] == 1 )  s_SYNOPDataHeader.append( "\tCloud base height [code]" );
+        if ( P[2] == 1 )  s_SYNOPDataHeader.append( "\tHorizontal visibility [code]" );
+        if ( P[3] == 1 )  s_SYNOPDataHeader.append( "\tWind direction [deg]" );
+        if ( P[4] == 1 )  s_SYNOPDataHeader.append( "\tWind speed [m/sec]" );
+        if ( P[5] == 1 )  s_SYNOPDataHeader.append( "\tTemperature, air [deg C]" );
+        if ( P[6] == 1 )  s_SYNOPDataHeader.append( "\tDew/frost point [deg C]" );
+        if ( P[7] == 1 )  s_SYNOPDataHeader.append( "\tPressure, atmospheric [hPa]" );
+        if ( P[8] == 1 )  s_SYNOPDataHeader.append( "\tCharacteristic of barometric tendency [code]" );
+        if ( P[9] == 1 )  s_SYNOPDataHeader.append( "\tAmount of barometric tendency [hPa]" );
+        if ( P[10] == 1 ) s_SYNOPDataHeader.append( "\tPresent weather [code]" );
+        if ( P[11] == 1 ) s_SYNOPDataHeader.append( "\tPast weather1 [code]" );
+        if ( P[12] == 1 ) s_SYNOPDataHeader.append( "\tPast weather2 [code]" );
+        if ( P[13] == 1 ) s_SYNOPDataHeader.append( "\tLow cloud [code]" );
+        if ( P[14] == 1 ) s_SYNOPDataHeader.append( "\tMiddle cloud [code]" );
+        if ( P[15] == 1 ) s_SYNOPDataHeader.append( "\tHigh cloud [code]" );
+        if ( P[16] == 1 ) s_SYNOPDataHeader.append( "\tTotal cloud amount" );
+        if ( P[17] == 1 ) s_SYNOPDataHeader.append( "\tLow/middle cloud amount [code]" );
+        if ( P[18] == 1 ) s_SYNOPDataHeader.append( "\tTemperature, air, maximum [deg C]" );
+        if ( P[19] == 1 ) s_SYNOPDataHeader.append( "\tTemperature, air, minimum [deg C]" );
+        if ( P[20] == 1 ) s_SYNOPDataHeader.append( "\tPresent blowing snow [code]" );
+        if ( P[21] == 1 ) s_SYNOPDataHeader.append( "\tPast blowing snow [code]" );
+        if ( P[22] == 1 ) s_SYNOPDataHeader.append( "\tWhiteout yes/no [y/n]" );
+    }
+
+    return( s_SYNOPDataHeader );
+}
+
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
 // LIN
 
 QString MainWindow::buildSYNOPDataOutputStr1( const QString s_EventLabel, const QString DataStr, int *P, const int i_Year, const int i_Month, const float f_Latitude, const float f_Longitude, const bool b_Import )
@@ -1511,7 +1653,7 @@ QString MainWindow::buildSYNOPDataOutputStr2( const QString s_EventLabel, const 
 
     if ( P[1] == 1 )  // Temperature, air [deg C]
     {
-        if ( ( InputStr.mid( 9, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 9, 5 ).toFloat() > -90 ) )
+        if ( ( InputStr.mid( 9, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 9, 5 ).toFloat() > -90. ) )
             OutputStr.append( "\t" + InputStr.mid( 9, 5 ) );
         else
             OutputStr.append( "\t" );
@@ -1519,7 +1661,7 @@ QString MainWindow::buildSYNOPDataOutputStr2( const QString s_EventLabel, const 
 
     if ( P[2] == 1 ) // Pressure, atmospheric [hPa]
     {
-        if ( ( InputStr.mid( 16, 6 ).contains( "/" ) == false ) && ( InputStr.mid( 16, 6 ).toFloat() > -90 ) )
+        if ( ( InputStr.mid( 16, 6 ).contains( "/" ) == false ) && ( InputStr.mid( 16, 6 ).toFloat() > -90. ) )
             OutputStr.append( "\t" + InputStr.mid( 16, 6 ) );
         else
             OutputStr.append( "\t" );
@@ -1527,7 +1669,7 @@ QString MainWindow::buildSYNOPDataOutputStr2( const QString s_EventLabel, const 
 
     if ( P[3] == 1 ) // Dew/frost point [deg C]
     {
-        if ( ( InputStr.mid( 21, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 21, 5 ).toFloat() > -90 ) )
+        if ( ( InputStr.mid( 21, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 21, 5 ).toFloat() > -90. ) )
             OutputStr.append( "\t" + InputStr.mid( 21, 5 ) );
         else
             OutputStr.append( "\t" );
@@ -1535,7 +1677,7 @@ QString MainWindow::buildSYNOPDataOutputStr2( const QString s_EventLabel, const 
 
     if ( P[4] == 1 ) // Wind direction [deg]
     {
-        if ( ( InputStr.mid( 27, 3 ).contains( "/" ) == false ) && ( InputStr.mid( 27, 3 ).toFloat() > -90 ) )
+        if ( ( InputStr.mid( 27, 3 ).contains( "/" ) == false ) && ( InputStr.mid( 27, 3 ).toFloat() > -90. ) )
             OutputStr.append( "\t" + InputStr.mid( 27, 3 ) );
         else
             OutputStr.append( "\t" );
@@ -1543,7 +1685,7 @@ QString MainWindow::buildSYNOPDataOutputStr2( const QString s_EventLabel, const 
 
     if ( P[5] == 1 ) // Wind speed [m/sec]
     {
-        if ( ( InputStr.mid( 31, 3 ).contains( "/" ) == false ) && ( InputStr.mid( 31, 3 ).toFloat() > -90 ) )
+        if ( ( InputStr.mid( 31, 3 ).contains( "/" ) == false ) && ( InputStr.mid( 31, 3 ).toFloat() > -90. ) )
             OutputStr.append( "\t" + InputStr.mid( 31, 3 ) );
         else
             OutputStr.append( "\t" );
@@ -1616,23 +1758,23 @@ QString MainWindow::buildSYNOPDataOutputStr2( const QString s_EventLabel, const 
     if ( P[14] == 1 )
     {
         if ( InputStr.mid( 52, 1 ) != "/" )
-            OutputStr.append( "\t" + InputStr.mid( 52, 2 ) );	// Present blowing snow [code]
+            OutputStr.append( "\t" + InputStr.mid( 52, 1 ) );	// Present blowing snow [code]
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[15] == 1 )
     {
-        if ( InputStr.mid( 55, 1 ) != "/" )
-            OutputStr.append( "\t" + InputStr.mid( 55, 1 ) );	// Past blowing snow [code]
+        if ( InputStr.mid( 53, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 53, 1 ) );	// Past blowing snow [code]
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[16] == 1 )
     {
-        if ( InputStr.mid( 56, 1 ) != "/" )
-            OutputStr.append( "\t" + InputStr.mid( 56, 1 ) );	// Horizontal visibility [code]
+        if ( InputStr.mid( 55, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 55, 2 ) );	// Horizontal visibility [code]
         else
             OutputStr.append( "\t" );
     }
@@ -2516,7 +2658,7 @@ QString MainWindow::buildSYNOPDataOutputStr6( const QString s_EventLabel, const 
 
     if ( P[1] == 1 )  // Temperature, air [deg C]
     {
-        if ( ( InputStr.mid( 9, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 9, 5 ).toFloat() > -90 ) )
+        if ( ( InputStr.mid( 9, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 9, 5 ).toFloat() > -90. ) )
             OutputStr.append( "\t" + InputStr.mid( 9, 5 ) );
         else
             OutputStr.append( "\t" );
@@ -2524,7 +2666,7 @@ QString MainWindow::buildSYNOPDataOutputStr6( const QString s_EventLabel, const 
 
     if ( P[2] == 1 ) // Pressure, atmospheric [hPa]
     {
-        if ( ( InputStr.mid( 16, 6 ).contains( "/" ) == false ) && ( InputStr.mid( 16, 6 ).toFloat() > -90 ) )
+        if ( ( InputStr.mid( 16, 6 ).contains( "/" ) == false ) && ( InputStr.mid( 16, 6 ).toFloat() > -90. ) )
             OutputStr.append( "\t" + InputStr.mid( 16, 6 ) );
         else
             OutputStr.append( "\t" );
@@ -2532,7 +2674,7 @@ QString MainWindow::buildSYNOPDataOutputStr6( const QString s_EventLabel, const 
 
     if ( P[3] == 1 ) // Dew/frost point [deg C]
     {
-        if ( ( InputStr.mid( 23, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 23, 5 ).toFloat() > -90 ) )
+        if ( ( InputStr.mid( 23, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 23, 5 ).toFloat() > -90. ) )
             OutputStr.append( "\t" + InputStr.mid( 23, 5 ) );
         else
             OutputStr.append( "\t" );
@@ -2540,7 +2682,7 @@ QString MainWindow::buildSYNOPDataOutputStr6( const QString s_EventLabel, const 
 
     if ( P[4] == 1 ) // Wind direction [deg]
     {
-        if ( ( InputStr.mid( 29, 3 ).contains( "/" ) == false ) && ( InputStr.mid( 29, 3 ).toFloat() > -90 ) )
+        if ( ( InputStr.mid( 29, 3 ).contains( "/" ) == false ) && ( InputStr.mid( 29, 3 ).toFloat() > -90. ) )
             OutputStr.append( "\t" + InputStr.mid( 29, 3 ) );
         else
             OutputStr.append( "\t" );
@@ -2548,7 +2690,7 @@ QString MainWindow::buildSYNOPDataOutputStr6( const QString s_EventLabel, const 
 
     if ( P[5] == 1 ) // Wind speed [m/sec]
     {
-        if ( ( InputStr.mid( 33, 3 ).contains( "/" ) == false ) && ( InputStr.mid( 33, 3 ).toFloat() > -90 ) )
+        if ( ( InputStr.mid( 33, 3 ).contains( "/" ) == false ) && ( InputStr.mid( 33, 3 ).toFloat() > -90. ) )
             OutputStr.append( "\t" + InputStr.mid( 33, 3 ) );
         else
             OutputStr.append( "\t" );
@@ -2621,23 +2763,236 @@ QString MainWindow::buildSYNOPDataOutputStr6( const QString s_EventLabel, const 
     if ( P[14] == 1 )
     {
         if ( InputStr.mid( 54, 1 ) != "/" )
-            OutputStr.append( "\t" + InputStr.mid( 54, 2 ) );	// Present blowing snow [code]
+            OutputStr.append( "\t" + InputStr.mid( 54, 1 ) );	// Present blowing snow [code]
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[15] == 1 )
     {
-        if ( InputStr.mid( 57, 1 ) != "/" )
-            OutputStr.append( "\t" + InputStr.mid( 57, 1 ) );	// Past blowing snow [code]
+        if ( InputStr.mid( 55, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 55, 1 ) );	// Past blowing snow [code]
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[16] == 1 )
     {
+        if ( InputStr.mid( 57, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 57, 2 ) );	// Horizontal visibility [code]
+        else
+            OutputStr.append( "\t" );
+    }
+
+    OutputStr.replace( "/", "" );
+    OutputStr.replace( " ", "" );
+
+    return( OutputStr );
+}
+
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// GVN, NYA, 2016-05
+
+QString MainWindow::buildSYNOPDataOutputStr7( const QString s_EventLabel, const QString DataStr, int *P, const int i_Year, const int i_Month, const float f_Latitude, const float f_Longitude, const bool b_Import )
+{
+    int				i_Day		= 0;
+    int             i_Minute    = 0;
+
+    QString			OutputStr	= "";
+    QString         InputStr    = DataStr;
+
+    QDateTime       dt          = QDateTime().toUTC();
+
+// ***********************************************************************************************************************
+
+    i_Day	 = InputStr.mid( 1, 2 ).toInt();
+    i_Minute = InputStr.mid( 4, 4 ).toInt();
+
+    dt.setDate( QDate( i_Year, i_Month, i_Day ) );
+    dt.setTime( QTime( 0, 0, 0 ) );
+    dt = dt.addSecs( i_Minute*60 );
+
+// ***********************************************************************************************************************
+
+    if ( b_Import == false )
+        OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + num2str( f_Latitude ) + "\t" + num2str( f_Longitude ); // Station Date/Time Latitude Longitude
+    else
+        OutputStr = dt.toString( "yyyy-MM-ddThh:mm" ); // Date/Time
+
+    if ( P[1] == 1 )
+    {
+        if ( InputStr.mid( 9, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 9, 1 ) );	// Cloud base height [code]
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[2] == 1 )
+    {
+        if ( InputStr.mid( 11, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 11, 2 ) );	// Horizontal visibility [code]
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[3] == 1 ) // Wind direction [deg]
+    {
+        if ( ( InputStr.mid( 14, 3 ).contains( "/" ) == false ) && ( InputStr.mid( 14, 3 ).toInt() > -90 ) )
+            OutputStr.append( "\t" + InputStr.mid( 14, 3 ) );
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[4] == 1 ) // Wind speed [m/sec]
+    {
+        if ( ( InputStr.mid( 18, 4 ).contains( "/" ) == false ) && ( InputStr.mid( 18, 4 ).toFloat() > -90.0 ) )
+            OutputStr.append( "\t" + InputStr.mid( 18, 4 ) );
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[5] == 1 )  // Temperature, air [deg C]
+    {
+        if ( ( InputStr.mid( 23, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 23, 5 ).toFloat() > -90.0 ) )
+            OutputStr.append( "\t" + InputStr.mid( 23, 5 ) );
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[6] == 1 ) // Dew/frost point [deg C]
+    {
+        if ( ( InputStr.mid( 29, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 29, 5 ).toFloat() > -90. ) )
+            OutputStr.append( "\t" + InputStr.mid( 29, 5 ) );
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[7] == 1 ) // Pressure, atmospheric [hPa]
+    {
+        if ( ( InputStr.mid( 35, 6 ).contains( "/" ) == false ) && ( InputStr.mid( 35, 6 ).toFloat() > -90. ) )
+            OutputStr.append( "\t" + InputStr.mid( 35, 6 ) );
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[8] == 1 )
+    {
+        if ( InputStr.mid( 42, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 42, 1 ) );	// Characteristic of barometric tendency [code]
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[9] == 1 )
+    {
+        if ( ( InputStr.mid( 44, 4 ).contains( "/" ) == false ) && ( InputStr.mid( 44, 4 ).toFloat() > -90. ) )
+            OutputStr.append( "\t" + InputStr.mid( 44, 4 ) );	// Amount of barometric tendency [hPa]
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[10] == 1 )
+    {
+        if ( InputStr.mid( 49, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 49, 2 ) );	// Present weather [code]
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[11] == 1 )
+    {
+        if ( InputStr.mid( 52, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 52, 1 ) );	// Past weather1 [code]
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[12] == 1 )
+    {
+        if ( InputStr.mid( 54, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 54, 1 ) );	// Past weather2 [code]
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[13] == 1 )
+    {
+        if ( InputStr.mid( 56, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 56, 1 ) );	// Low cloud [code]
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[14] == 1 )
+    {
         if ( InputStr.mid( 58, 1 ) != "/" )
-            OutputStr.append( "\t" + InputStr.mid( 58, 1 ) );	// Horizontal visibility [code]
+            OutputStr.append( "\t" + InputStr.mid( 58, 1 ) );	// Middle cloud [code]
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[15] == 1 )
+    {
+        if ( InputStr.mid( 60, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 60, 1 ) );	// High cloud [code]
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[16] == 1 )
+    {
+        if ( InputStr.mid( 62, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 62, 1 ) );	// Total cloud amount [code]
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[17] == 1 )
+    {
+        if ( InputStr.mid( 64, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 64, 1 ) );	// Low/middle cloud amount [code]
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[18] == 1 )  // Temperature, air, maximum [deg C]
+    {
+        if ( ( InputStr.mid( 66, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 66, 5 ).toFloat() > -90. ) )
+            OutputStr.append( "\t" + InputStr.mid( 66, 5 ) );
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[19] == 1 )  // Temperature, air, minimum [deg C]
+    {
+        if ( ( InputStr.mid( 72, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 72, 5 ).toFloat() > -90. ) )
+            OutputStr.append( "\t" + InputStr.mid( 72, 5 ) );
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[20] == 1 )
+    {
+        if ( InputStr.mid( 78, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 78, 1 ) );	// Present blowing snow [code]
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[21] == 1 )
+    {
+        if ( InputStr.mid( 80, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 80, 1 ) );	// Past blowing snow [code]
+        else
+            OutputStr.append( "\t" );
+    }
+
+    if ( P[22] == 1 )
+    {
+        if ( InputStr.mid( 82, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 82, 1 ) );	// Whiteout yes/no [y/n]
         else
             OutputStr.append( "\t" );
     }
@@ -2876,6 +3231,10 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
             sl_Parameter.append( buildSYNOPDataDescriptionHeader6( P, i_PIID ) );
             break;
 
+        case 7: // GVN and NYA, 2016-05
+            sl_Parameter.append( buildSYNOPDataDescriptionHeader7( P, i_PIID ) );
+            break;
+
         default:
             break;
         }
@@ -2940,6 +3299,10 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
                 tout << buildSYNOPDataHeader6( P, b_Import ) << eol;
                 break;
 
+            case 7: // GVN, NYA
+                tout << buildSYNOPDataHeader7( P, b_Import ) << eol;
+                break;
+
             default:
                 break;
             }
@@ -2976,6 +3339,10 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
 
                     case 6: // GVN, NYA
                         tout << buildSYNOPDataOutputStr6( s_EventLabel, InputStr, P, i_Year, i_Month, f_Latitude, f_Longitude, b_Import ) << eol;
+                        break;
+
+                    case 7: // GVN, NYA, 2016-05
+                        tout << buildSYNOPDataOutputStr7( s_EventLabel, InputStr, P, i_Year, i_Month, f_Latitude, f_Longitude, b_Import ) << eol;
                         break;
 
                     default:
