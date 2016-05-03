@@ -88,8 +88,8 @@ int MainWindow::SYNOPTest( const QString& s_FilenameIn, int *P, const int i_NumO
 
             if ( fi.baseName().startsWith( "son" ) == true ) i_Format = 5;
 
-            if ( fi.baseName().startsWith( "gvn" ) == true ) i_Format = 6;
-//          if ( fi.baseName().startsWith( "gvn" ) == true ) i_Format = 7; // 2016-05
+//          if ( fi.baseName().startsWith( "gvn" ) == true ) i_Format = 6;
+            if ( fi.baseName().startsWith( "gvn" ) == true ) i_Format = 7; // 2016-05
 
             while ( ( tin.atEnd() == false ) && ( b_Stop == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) )
             {
@@ -595,28 +595,28 @@ bool MainWindow::SYNOPTest7( const QString &InputStr, int *P )
 {
     bool b_Stop = false;
 
-    if ( InputStr.mid(  9, 1 ) != "/" ) P[1] = 1;  // Cloud base height [code]
-    if ( InputStr.mid( 11, 1 ) != "/" ) P[2] = 1;  // Horizontal visibility [code]
-    if ( InputStr.mid( 14, 1 ) != "/" ) P[3] = 1;  // Wind direction [deg]
-    if ( InputStr.mid( 18, 1 ) != "/" ) P[4] = 1;  // Wind speed [m/sec]
-    if ( InputStr.mid( 23, 1 ) != "/" ) P[5] = 1;  // Temperature, air [deg C]
-    if ( InputStr.mid( 29, 1 ) != "/" ) P[6] = 1;  // Dew/frost point [deg C]
-    if ( InputStr.mid( 35, 1 ) != "/" ) P[7] = 1;  // Pressure, atmospheric [hPa]
-    if ( InputStr.mid( 42, 1 ) != "/" ) P[8] = 1;  // Characteristic of barometric tendency [code]
-    if ( InputStr.mid( 44, 1 ) != "/" ) P[9] = 1;  // Amount of barometric tendency [hPa]
-    if ( InputStr.mid( 49, 1 ) != "/" ) P[10] = 1; // Present weather [code]
-    if ( InputStr.mid( 52, 1 ) != "/" ) P[11] = 1; // Past weather1 [code]
-    if ( InputStr.mid( 54, 1 ) != "/" ) P[12] = 1; // Past weather2 [code]
-    if ( InputStr.mid( 56, 1 ) != "/" ) P[13] = 1; // Low cloud [code]
-    if ( InputStr.mid( 58, 1 ) != "/" ) P[14] = 1; // Middle cloud [code]
-    if ( InputStr.mid( 60, 1 ) != "/" ) P[15] = 1; // High cloud [code]
-    if ( InputStr.mid( 62, 1 ) != "/" ) P[16] = 1; // Total cloud amount [code]
-    if ( InputStr.mid( 64, 1 ) != "/" ) P[17] = 1; // Low/middle cloud amount [code]
-    if ( InputStr.mid( 66, 1 ) != "/" ) P[18] = 1; // Temperature, air, maximum [deg C]
-    if ( InputStr.mid( 72, 1 ) != "/" ) P[19] = 1; // Temperature, air, minimum [deg C]
-    if ( InputStr.mid( 78, 1 ) != "/" ) P[20] = 1; // Present blowing snow [code]
-    if ( InputStr.mid( 80, 1 ) != "/" ) P[21] = 1; // Past blowing snow [code]
-    if ( InputStr.mid( 82, 1 ) != "/" ) P[22] = 1; // Whiteout yes/no [y/n]
+    if ( InputStr.mid(  9, 1 ) != "/" )     P[1] = 1;  // Cloud base height [code]
+    if ( InputStr.mid( 11, 2 ) != "//" )    P[2] = 1;  // Horizontal visibility [code]
+    if ( InputStr.mid( 14, 3 ) != "-99" )   P[3] = 1;  // Wind direction [deg]
+    if ( InputStr.mid( 18, 5 ) != "-99.0" ) P[4] = 1;  // Wind speed [m/sec]
+    if ( InputStr.mid( 24, 5 ) != "-99.0" ) P[5] = 1;  // Temperature, air [deg C]
+    if ( InputStr.mid( 30, 5 ) != "-99.0" ) P[6] = 1;  // Dew/frost point [deg C]
+    if ( InputStr.mid( 37, 5 ) != "-99.0" ) P[7] = 1;  // Pressure, atmospheric [hPa]
+    if ( InputStr.mid( 43, 1 ) != "/" )     P[8] = 1;  // Characteristic of barometric tendency [code]
+    if ( InputStr.mid( 45, 5 ) != "-99.0" ) P[9] = 1;  // Amount of barometric tendency [hPa]
+    if ( InputStr.mid( 51, 2 ) != "//" )    P[10] = 1; // Present weather [code]
+    if ( InputStr.mid( 54, 1 ) != "/" )     P[11] = 1; // Past weather1 [code]
+    if ( InputStr.mid( 56, 1 ) != "/" )     P[12] = 1; // Past weather2 [code]
+    if ( InputStr.mid( 58, 1 ) != "/" )     P[13] = 1; // Low cloud [code]
+    if ( InputStr.mid( 60, 1 ) != "/" )     P[14] = 1; // Middle cloud [code]
+    if ( InputStr.mid( 62, 1 ) != "/" )     P[15] = 1; // High cloud [code]
+    if ( InputStr.mid( 64, 1 ) != "/" )     P[16] = 1; // Total cloud amount [code]
+    if ( InputStr.mid( 66, 1 ) != "/" )     P[17] = 1; // Low/middle cloud amount [code]
+    if ( InputStr.mid( 68, 5 ) != "-99.0" ) P[18] = 1; // Temperature, air, maximum [deg C]
+    if ( InputStr.mid( 74, 5 ) != "-99.0" ) P[19] = 1; // Temperature, air, minimum [deg C]
+    if ( InputStr.mid( 80, 1 ) != "/" )     P[20] = 1; // Present blowing snow [code]
+    if ( InputStr.mid( 82, 1 ) != "/" )     P[21] = 1; // Past blowing snow [code]
+    if ( InputStr.mid( 84, 1 ) != "/" )     P[22] = 1; // Whiteout yes/no [y/n]
 
     return( b_Stop );
 }
@@ -2831,7 +2831,7 @@ QString MainWindow::buildSYNOPDataOutputStr7( const QString s_EventLabel, const 
 
     if ( P[2] == 1 )
     {
-        if ( InputStr.mid( 11, 1 ) != "/" )
+        if ( InputStr.mid( 11, 2 ) != "//" )
             OutputStr.append( "\t" + InputStr.mid( 11, 2 ) );	// Horizontal visibility [code]
         else
             OutputStr.append( "\t" );
@@ -2839,7 +2839,7 @@ QString MainWindow::buildSYNOPDataOutputStr7( const QString s_EventLabel, const 
 
     if ( P[3] == 1 ) // Wind direction [deg]
     {
-        if ( ( InputStr.mid( 14, 3 ).contains( "/" ) == false ) && ( InputStr.mid( 14, 3 ).toInt() > -90 ) )
+        if ( ( InputStr.mid( 14, 3 ) != "-99" ) && ( InputStr.mid( 14, 3 ).toInt() > -90 ) )
             OutputStr.append( "\t" + InputStr.mid( 14, 3 ) );
         else
             OutputStr.append( "\t" );
@@ -2847,152 +2847,152 @@ QString MainWindow::buildSYNOPDataOutputStr7( const QString s_EventLabel, const 
 
     if ( P[4] == 1 ) // Wind speed [m/sec]
     {
-        if ( ( InputStr.mid( 18, 4 ).contains( "/" ) == false ) && ( InputStr.mid( 18, 4 ).toFloat() > -90.0 ) )
-            OutputStr.append( "\t" + InputStr.mid( 18, 4 ) );
+        if ( ( InputStr.mid( 18, 5 ) != "-99.0" ) && ( InputStr.mid( 18, 5 ).toFloat() > -90.0 ) )
+            OutputStr.append( "\t" + InputStr.mid( 18, 5 ) );
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[5] == 1 )  // Temperature, air [deg C]
     {
-        if ( ( InputStr.mid( 23, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 23, 5 ).toFloat() > -90.0 ) )
-            OutputStr.append( "\t" + InputStr.mid( 23, 5 ) );
+        if ( ( InputStr.mid( 24, 5 ) != "-99.0" ) && ( InputStr.mid( 24, 5 ).toFloat() > -90.0 ) )
+            OutputStr.append( "\t" + InputStr.mid( 24, 5 ) );
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[6] == 1 ) // Dew/frost point [deg C]
     {
-        if ( ( InputStr.mid( 29, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 29, 5 ).toFloat() > -90. ) )
-            OutputStr.append( "\t" + InputStr.mid( 29, 5 ) );
+        if ( ( InputStr.mid( 30, 5 ) != "-99.0" ) && ( InputStr.mid( 30, 5 ).toFloat() > -90. ) )
+            OutputStr.append( "\t" + InputStr.mid( 30, 5 ) );
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[7] == 1 ) // Pressure, atmospheric [hPa]
     {
-        if ( ( InputStr.mid( 35, 6 ).contains( "/" ) == false ) && ( InputStr.mid( 35, 6 ).toFloat() > -90. ) )
-            OutputStr.append( "\t" + InputStr.mid( 35, 6 ) );
+        if ( ( InputStr.mid( 37, 5 ) != "-99.0" ) && ( InputStr.mid( 36, 6 ).toFloat() > -90. ) )
+            OutputStr.append( "\t" + InputStr.mid( 36, 6 ) );
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[8] == 1 )
     {
-        if ( InputStr.mid( 42, 1 ) != "/" )
-            OutputStr.append( "\t" + InputStr.mid( 42, 1 ) );	// Characteristic of barometric tendency [code]
+        if ( InputStr.mid( 43, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 43, 1 ) );	// Characteristic of barometric tendency [code]
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[9] == 1 )
     {
-        if ( ( InputStr.mid( 44, 4 ).contains( "/" ) == false ) && ( InputStr.mid( 44, 4 ).toFloat() > -90. ) )
-            OutputStr.append( "\t" + InputStr.mid( 44, 4 ) );	// Amount of barometric tendency [hPa]
+        if ( ( InputStr.mid( 45, 5 ) != "-99.0" ) && ( InputStr.mid( 45, 5 ).toFloat() > -90. ) )
+            OutputStr.append( "\t" + InputStr.mid( 45, 5 ) );	// Amount of barometric tendency [hPa]
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[10] == 1 )
     {
-        if ( InputStr.mid( 49, 1 ) != "/" )
-            OutputStr.append( "\t" + InputStr.mid( 49, 2 ) );	// Present weather [code]
+        if ( InputStr.mid( 51, 2 ) != "//" )
+            OutputStr.append( "\t" + InputStr.mid( 51, 2 ) );	// Present weather [code]
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[11] == 1 )
     {
-        if ( InputStr.mid( 52, 1 ) != "/" )
-            OutputStr.append( "\t" + InputStr.mid( 52, 1 ) );	// Past weather1 [code]
+        if ( InputStr.mid( 54, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 54, 1 ) );	// Past weather1 [code]
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[12] == 1 )
     {
-        if ( InputStr.mid( 54, 1 ) != "/" )
-            OutputStr.append( "\t" + InputStr.mid( 54, 1 ) );	// Past weather2 [code]
+        if ( InputStr.mid( 56, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 56, 1 ) );	// Past weather2 [code]
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[13] == 1 )
     {
-        if ( InputStr.mid( 56, 1 ) != "/" )
-            OutputStr.append( "\t" + InputStr.mid( 56, 1 ) );	// Low cloud [code]
+        if ( InputStr.mid( 58, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 58, 1 ) );	// Low cloud [code]
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[14] == 1 )
     {
-        if ( InputStr.mid( 58, 1 ) != "/" )
-            OutputStr.append( "\t" + InputStr.mid( 58, 1 ) );	// Middle cloud [code]
+        if ( InputStr.mid( 60, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 60, 1 ) );	// Middle cloud [code]
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[15] == 1 )
     {
-        if ( InputStr.mid( 60, 1 ) != "/" )
-            OutputStr.append( "\t" + InputStr.mid( 60, 1 ) );	// High cloud [code]
+        if ( InputStr.mid( 62, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 62, 1 ) );	// High cloud [code]
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[16] == 1 )
     {
-        if ( InputStr.mid( 62, 1 ) != "/" )
-            OutputStr.append( "\t" + InputStr.mid( 62, 1 ) );	// Total cloud amount [code]
+        if ( InputStr.mid( 64, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 64, 1 ) );	// Total cloud amount [code]
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[17] == 1 )
     {
-        if ( InputStr.mid( 64, 1 ) != "/" )
-            OutputStr.append( "\t" + InputStr.mid( 64, 1 ) );	// Low/middle cloud amount [code]
+        if ( InputStr.mid( 66, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 66, 1 ) );	// Low/middle cloud amount [code]
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[18] == 1 )  // Temperature, air, maximum [deg C]
     {
-        if ( ( InputStr.mid( 66, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 66, 5 ).toFloat() > -90. ) )
-            OutputStr.append( "\t" + InputStr.mid( 66, 5 ) );
+        if ( ( InputStr.mid( 68, 5 ) != "-99.0" ) && ( InputStr.mid( 68, 5 ).toFloat() > -90. ) )
+            OutputStr.append( "\t" + InputStr.mid( 68, 5 ) );
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[19] == 1 )  // Temperature, air, minimum [deg C]
     {
-        if ( ( InputStr.mid( 72, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 72, 5 ).toFloat() > -90. ) )
-            OutputStr.append( "\t" + InputStr.mid( 72, 5 ) );
+        if ( ( InputStr.mid( 74, 5 ) != "-99.0" ) && ( InputStr.mid( 74, 5 ).toFloat() > -90. ) )
+            OutputStr.append( "\t" + InputStr.mid( 74, 5 ) );
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[20] == 1 )
     {
-        if ( InputStr.mid( 78, 1 ) != "/" )
-            OutputStr.append( "\t" + InputStr.mid( 78, 1 ) );	// Present blowing snow [code]
+        if ( InputStr.mid( 80, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 80, 1 ) );	// Present blowing snow [code]
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[21] == 1 )
     {
-        if ( InputStr.mid( 80, 1 ) != "/" )
-            OutputStr.append( "\t" + InputStr.mid( 80, 1 ) );	// Past blowing snow [code]
+        if ( InputStr.mid( 82, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 82, 1 ) );	// Past blowing snow [code]
         else
             OutputStr.append( "\t" );
     }
 
     if ( P[22] == 1 )
     {
-        if ( InputStr.mid( 82, 1 ) != "/" )
-            OutputStr.append( "\t" + InputStr.mid( 82, 1 ) );	// Whiteout yes/no [y/n]
+        if ( InputStr.mid( 84, 1 ) != "/" )
+            OutputStr.append( "\t" + InputStr.mid( 84, 1 ) );	// Whiteout yes/no [y/n]
         else
             OutputStr.append( "\t" );
     }
