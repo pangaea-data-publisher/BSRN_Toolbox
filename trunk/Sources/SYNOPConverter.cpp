@@ -232,7 +232,7 @@ bool MainWindow::SYNOPTest2( const QString &InputStr, int *P )
     bool b_Stop = false;
 
     if ( InputStr.mid(  9, 1 ) != "/" ) P[1] = 1;
-    if ( InputStr.mid( 16, 1 ) != "/" ) P[2] = 1;
+    if ( InputStr.mid( 15, 1 ) != "/" ) P[2] = 1;
     if ( InputStr.mid( 21, 1 ) != "/" ) P[3] = 1;
     if ( InputStr.mid( 27, 1 ) != "/" ) P[4] = 1;
     if ( InputStr.mid( 31, 1 ) != "/" ) P[5] = 1;
@@ -567,7 +567,7 @@ bool MainWindow::SYNOPTest6( const QString &InputStr, int *P )
     bool b_Stop = false;
 
     if ( InputStr.mid(  9, 1 ) != "/" ) P[1] = 1;
-    if ( InputStr.mid( 16, 1 ) != "/" ) P[2] = 1;
+    if ( InputStr.mid( 15, 1 ) != "/" ) P[2] = 1;
     if ( InputStr.mid( 23, 1 ) != "/" ) P[3] = 1;
     if ( InputStr.mid( 29, 1 ) != "/" ) P[4] = 1;
     if ( InputStr.mid( 33, 1 ) != "/" ) P[5] = 1;
@@ -669,7 +669,7 @@ QStringList MainWindow::buildSYNOPDataDescriptionHeader2( int *P, const int i_PI
     QStringList sl_Parameter;
 
     if ( P[1] == 1 ) sl_Parameter.append( Parameter( num2str( 4610 ), num2str( i_PIID ), num2str( 4722 ), tr( "###0.0" ) ) );   // Temperature, air [deg C]
-    if ( P[2] == 1 ) sl_Parameter.append( Parameter( num2str( 2224 ), num2str( i_PIID ), num2str( 359 ), tr( "###0.0" ), tr( "Station pressure reduced to sea level" ) ) );   // Pressure, atmospheric [hPa]
+    if ( P[2] == 1 ) sl_Parameter.append( Parameter( num2str( 2224 ), num2str( i_PIID ), num2str( 359 ), tr( "###0" ), tr( "Station pressure reduced to sea level" ) ) );   // Pressure, atmospheric [hPa]
     if ( P[3] == 1 ) sl_Parameter.append( Parameter( num2str( 4611 ), num2str( i_PIID ), num2str( 5039 ), tr( "###0.0" ) ) );   // Dew/frost point [deg C]
     if ( P[4] == 1 ) sl_Parameter.append( Parameter( num2str( 2221 ), num2str( i_PIID ), num2str( 5038 ), tr( "###0" ) ) );     // Wind direction [deg]
     if ( P[5] == 1 ) sl_Parameter.append( Parameter( num2str( 18906 ), num2str( i_PIID ), num2str( 5038 ), tr( "#0" ) ) );      // Wind speed [m/sec]
@@ -1661,8 +1661,8 @@ QString MainWindow::buildSYNOPDataOutputStr2( const QString s_EventLabel, const 
 
     if ( P[2] == 1 ) // Pressure, atmospheric [hPa]
     {
-        if ( ( InputStr.mid( 16, 6 ).contains( "/" ) == false ) && ( InputStr.mid( 16, 6 ).toFloat() > -90. ) )
-            OutputStr.append( "\t" + InputStr.mid( 16, 6 ) );
+        if ( ( InputStr.mid( 15, 5 ).contains( "/" ) == false ) && ( InputStr.mid( 15, 5 ).toFloat() > -90. ) )
+            OutputStr.append( "\t" + InputStr.mid( 15, 5 ) );
         else
             OutputStr.append( "\t" );
     }
@@ -2666,8 +2666,8 @@ QString MainWindow::buildSYNOPDataOutputStr6( const QString s_EventLabel, const 
 
     if ( P[2] == 1 ) // Pressure, atmospheric [hPa]
     {
-        if ( ( InputStr.mid( 16, 6 ).contains( "/" ) == false ) && ( InputStr.mid( 16, 6 ).toFloat() > -90. ) )
-            OutputStr.append( "\t" + InputStr.mid( 16, 6 ) );
+        if ( ( InputStr.mid( 15, 7 ).contains( "/" ) == false ) && ( InputStr.mid( 15, 7 ).toFloat() > -90. ) )
+            OutputStr.append( "\t" + InputStr.mid( 15, 7 ) );
         else
             OutputStr.append( "\t" );
     }

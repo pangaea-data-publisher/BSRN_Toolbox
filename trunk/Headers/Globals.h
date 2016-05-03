@@ -19,7 +19,7 @@
     const QString   _PROGRAMDOI_        = "doi:10.1594/PANGAEA.774827";
     const QString   _PROGRAMREADME_     = "https://wiki.pangaea.de/wiki/BSRN_Toolbox";
 
-    const QString   _VERSION_           = "2.16";                       // Version number, 2016-05-02
+    const QString   _VERSION_           = "2.17";                       // Version number, 2016-05-03
     const QString   _DOI_               = "doi:10.1594/PANGAEA.774827"; // Dataset
 
     // EOL
@@ -76,7 +76,7 @@
     const int	MAX_NUM_OF_PARAMETER	= 300;
     const int	MAX_NUM_OF_MONTH		= 12;
     const int	MAX_NUM_OF_YEAR			= 30;
-    const int   MAX_NUM_OF_DATASET      = 20000;
+    const int   MAX_NUM_OF_DATASET      = 50000; // 2016-05-03: 21,460 Datasets in BSRN_Datasets_IDs.txt
 
     const int	_ZIP_					= 1;
     const int	_GZIP_					= 2;
