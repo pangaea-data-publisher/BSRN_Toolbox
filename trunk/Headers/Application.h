@@ -329,7 +329,6 @@ private:
     bool SYNOPTest4( const QString &InputStr, int *P );
     bool SYNOPTest5( const QString &InputStr, int *P );
     bool SYNOPTest6( const QString &InputStr, int *P );
-    bool SYNOPTest7( const QString &InputStr, int *P );
 
     QStringList buildSYNOPDataDescriptionHeader1( int *P, const int PIID );
     QStringList buildSYNOPDataDescriptionHeader2( int *P, const int PIID );
@@ -337,7 +336,6 @@ private:
     QStringList buildSYNOPDataDescriptionHeader4( int *P, const int PIID );
     QStringList buildSYNOPDataDescriptionHeader5( int *P, const int PIID );
     QStringList buildSYNOPDataDescriptionHeader6( int *P, const int PIID );
-    QStringList buildSYNOPDataDescriptionHeader7( int *P, const int PIID );
 
     QString buildSYNOPDataHeader1( int *P, const bool Import );
     QString buildSYNOPDataHeader2( int *P, const bool Import );
@@ -345,7 +343,6 @@ private:
     QString buildSYNOPDataHeader4( int *P, const bool Import );
     QString buildSYNOPDataHeader5( int *P, const bool Import );
     QString buildSYNOPDataHeader6( int *P, const bool Import );
-    QString buildSYNOPDataHeader7( int *P, const bool Import );
 
     QString buildSYNOPDataOutputStr1( const QString EventLabel, const QString DataStr, int *P, const int Year, const int Month, const float Latitude, const float Longitude, const bool Import );
     QString buildSYNOPDataOutputStr2( const QString EventLabel, const QString DataStr, int *P, const int Year, const int Month, const float Latitude, const float Longitude, const bool Import );
@@ -353,7 +350,6 @@ private:
     QString buildSYNOPDataOutputStr4( const QString EventLabel, const QString DataStr, int *P, const int Year, const int Month, const float Latitude, const float Longitude, const bool Import );
     QString buildSYNOPDataOutputStr5( const QString EventLabel, const QString DataStr, int *P, const int Year, const int Month, const float Latitude, const float Longitude, const bool Import );
     QString buildSYNOPDataOutputStr6( const QString EventLabel, const QString DataStr, int *P, const int Year, const int Month, const float Latitude, const float Longitude, const bool Import );
-    QString buildSYNOPDataOutputStr7( const QString EventLabel, const QString DataStr, int *P, const int Year, const int Month, const float Latitude, const float Longitude, const bool Import );
 
     int SYNOPConverter( const bool Import, const QString& FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
 
