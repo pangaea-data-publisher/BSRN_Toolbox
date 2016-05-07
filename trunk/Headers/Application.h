@@ -99,6 +99,14 @@ class MainWindow : public QMainWindow
         int DatasetID;	    		//!< Dataset ID
     };
 
+/* @brief Array fuer die Verwaltung der Referenzen */
+
+    struct structReference
+    {
+        QString ReferenceURI;		//!< URI der Referenz
+        int ReferenceID;            //!< Referenz ID
+    };
+
 
 public:
     explicit MainWindow( QWidget *parent = 0 );
@@ -129,9 +137,9 @@ public:
     bool		gb_DeleteOriginalFiles;	//!< Wenn true werden die Original-Dateien nach dem Verbinden geloescht.
     bool        gb_OverwriteDataset;    //!< Wenn true wird der Datensatz berschrieben.
 
-    bool		gb_Station[MAX_NUM_OF_STATION+1];	//!< Array von Flags, wenn Flag[i] = true werden die Datei der ausgewaehlten Station geladen
-    bool		gb_Month[MAX_NUM_OF_MONTH+1];		//!< Array von Monaten
-    bool		gb_Year[MAX_NUM_OF_YEAR+1];			//!< Array von Jahren
+    bool		gb_Station[MAX_NUM_OF_STATIONS+1];	//!< Array von Flags, wenn Flag[i] = true werden die Datei der ausgewaehlten Station geladen
+    bool		gb_Month[MAX_NUM_OF_MONTHS+1];		//!< Array von Monaten
+    bool		gb_Year[MAX_NUM_OF_YEARS+1];		//!< Array von Jahren
 
     QString     gs_MissingValue;    //!< Missing value fr den Format Converter
     QString		gs_FilenameFormat;	//!< Bestimmt in die Form des automatisch erzeugten neuen Dateinamens. \%a = aktuelle Actionnumber, \%N = Dateiname.
@@ -143,12 +151,13 @@ public:
     bool        gb_CheckPhysicallyPossibleLimits; //!< If true perform quality check "Physically Possible Limits"
     bool        gb_CheckExtremelyRareLimits;      //!< If true perform quality check "Extremely Rare Limits"
     bool        gb_CheckComparisons;              //!< If true perform quality check "Comparisons"
-    QString     gs_AuxiliaryDataAlgorithm;        //!< Algorithm to use for determining auxiliary data during quality check
     bool        gb_OutputCodes;                   //!< If true write quality codes to file after quality check
     bool        gb_OutputCleanedValues;           //!< If true write cleaend values to file after quality check
     bool        gb_OutputOriginalValues;          //!< If true write original values to file after quality check
     bool        gb_OutputAuxiliaryData;           //!< If true write calculated auxiliary data to file after quality check
     bool        gb_OutputOneFile;                 //!< If true write all data from quality check to one file
+
+    QString     gs_AuxiliaryDataAlgorithm;        //!< Algorithm to use for determining auxiliary data during quality check
 
 protected:
     void dragEnterEvent( QDragEnterEvent *event );
@@ -190,7 +199,8 @@ private slots:
     void doAssignmentConverter();
     void doCreateReferenceImportFile();
     void doAllMetadataConverter();
-    void doRefreshIDsBSRN();
+    void doRefreshBsrnIDs();
+    void doRefreshBsrnReferenceIDs();
 
 //  Data
     void doBasicMeasurementsConverter( const bool Import = false );
@@ -300,7 +310,7 @@ private:
     bool warning( const QString & Message, const QString & Title = tr("Warning"));
 
 // Station-to-archive
-    int downloadStationToArchiveFiles( structStation *Station_ptr, const QString& FilenameOut, const QString& FTPServer, const QString& User, const QString& Password, const bool DecompressFiles, const bool CheckFiles, const bool CheckAvailability, bool Station[MAX_NUM_OF_STATION+1], bool Month[MAX_NUM_OF_MONTH+1], bool Year[MAX_NUM_OF_YEAR+1] );
+    int downloadStationToArchiveFiles( structStation *Station_ptr, const QString& FilenameOut, const QString& FTPServer, const QString& User, const QString& Password, const bool DecompressFiles, const bool CheckFiles, const bool CheckAvailability, bool Station[MAX_NUM_OF_STATIONS+1], bool Month[MAX_NUM_OF_MONTHS+1], bool Year[MAX_NUM_OF_YEARS+1] );
 
 // Metadata
     int FileIDConverter( const QString& FilenameIn, QStringList& FilenameOut, structStation *Station_ptr, const int NumOfFiles );
@@ -315,14 +325,6 @@ private:
     int CreateReferenceImportFile( const QString& FilenameIn, QStringList& FilenameOut, structStaff *Staff_ptr, structStation *Station_ptr, const int NumOfFiles );
 
 // Data
-    int BasicMeasurementsTest( const QString& FilenameIn, int *P, const int NumOfFiles );
-    int BasicMeasurementsConverter( const bool Import, const QString& FilenameIn, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
-    int OtherMinuteMeasurementsConverter( const bool Import, const QString& FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, int *P, const int NumOfFiles );
-    int UltraVioletMeasurementsTest( const QString& FilenameIn, int *P, const int NumOfFiles );
-    int UltraVioletMeasurementsConverter( const bool Import, const QString& FilenameIn, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
-
-    int SYNOPTest( const QString& FilenameIn, int *P, const int NumOfFiles );
-
     bool SYNOPTest1( const QString &InputStr, int *P );
     bool SYNOPTest2( const QString &InputStr, int *P );
     bool SYNOPTest3( const QString &InputStr, const int Year, int *P );
@@ -351,26 +353,31 @@ private:
     QString buildSYNOPDataOutputStr5( const QString EventLabel, const QString DataStr, int *P, const int Year, const int Month, const float Latitude, const float Longitude, const bool Import );
     QString buildSYNOPDataOutputStr6( const QString EventLabel, const QString DataStr, int *P, const int Year, const int Month, const float Latitude, const float Longitude, const bool Import );
 
-    int SYNOPConverter( const bool Import, const QString& FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
-
+    int BasicMeasurementsTest( const QString& FilenameIn, int *P, const int NumOfFiles );
+    int UltraVioletMeasurementsTest( const QString& FilenameIn, int *P, const int NumOfFiles );
+    int SYNOPTest( const QString& FilenameIn, int *P, const int NumOfFiles );
     int RadiosondeMeasurementsTest( const QString& FilenameIn, int *P, const int NumOfFiles );
-    int RadiosondeMeasurementsConverter( const bool Import, const QString& FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
-    int OzoneMeasurementsConverter( const bool Import, const QString& FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
     int ExpandedMeasurementsTest( const QString& FilenameIn, int *P, const int NumOfFiles );
-    int ExpandedMeasurementsConverter( const bool Import, const QString& FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
     int OtherMeasurementsAtXmTest( const QString& FilenameIn, int *P, const int Height, const int NumOfFiles );
-    int OtherMeasurementsAtXmConverter( const bool Import, const QString& FilenameIn, const int Height, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles );
+
+    int BasicMeasurementsConverter( const bool Import, const QString& FilenameIn, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
+    int OtherMinuteMeasurementsConverter( const bool Import, const QString& FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, int *P, const int NumOfFiles );
+    int UltraVioletMeasurementsConverter( const bool Import, const QString& FilenameIn, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
+    int SYNOPConverter( const bool Import, const QString& FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
+    int RadiosondeMeasurementsConverter( const bool Import, const QString& FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
+    int OzoneMeasurementsConverter( const bool Import, const QString& FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
+    int ExpandedMeasurementsConverter( const bool Import, const QString& FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
+    int OtherMeasurementsAtXmConverter( const bool Import, const QString& FilenameIn, const int Height, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles );
 
 // Dialogs
     int doConcatenateOptionsDialog( int &SkipNFirstLines, bool &deleteOriginalFiles );
-    int doDownloadManagerDialog( QString &DownloadPath, QString &FTPServer, QString &User, QString &Password, bool &DecompressFiles, bool &CheckFiles, bool &CheckAvailability, bool Station[MAX_NUM_OF_STATION+1], bool Month[MAX_NUM_OF_MONTH+1], bool Year[MAX_NUM_OF_YEAR+1] );
+    int doDownloadManagerDialog( QString &DownloadPath, QString &FTPServer, QString &User, QString &Password, bool &DecompressFiles, bool &CheckFiles, bool &CheckAvailability, bool Station[MAX_NUM_OF_STATIONS+1], bool Month[MAX_NUM_OF_MONTHS+1], bool Year[MAX_NUM_OF_YEARS+1] );
     int doQualityCheckRecommendedV20OptionsDialog( bool & b_CheckPhysicallyPossibleLimits, bool & b_CheckExtremelyRareLimits, bool & b_CheckComparisons, QString & s_AuxiliaryDataAlgorithm, bool & b_OutputCodes, bool & b_OutputCleanedValues, bool & b_OutputOriginalValues, bool & b_OutputAuxiliaryData, bool & b_OutputOneFile);
     int doFormatUnformattedOptionsDialog( QString &MissingValue, int &FieldDelimiter );
     int doFormatFormattedOptionsDialog( int &FieldAlignment, int &FieldWidth, QString &MissingValue );
 
 // Tools
-    QString ReferenceOtherVersionClassic( const QString& s_EventLabel, const QDateTime dt );
-    QString ReferenceOtherVersion( const QString& EventLabel, const QDateTime dt );
+    QString ReferenceOtherVersion( const QString& EventLabel, structReference *Reference_ptr, const QDateTime dt );
     QString ReferenceImportFile( const QString& EventLabel, const QDateTime dt , const int PIID, const QString &StationName );
 
     QString OpenDataDescriptionHeader();
@@ -401,13 +408,15 @@ private:
     bool checkFilename( const QString& s_Filename, const QString& s_EventLabel, const QString& s_Month, const QString& s_Year );
 
     int findInstituteID( const int StationNumber, structStation *Station_ptr );
-    int findPiId( const QString& Name, structStaff *Staff_ptr );
+    int findPiID( const QString& Name, structStaff *Staff_ptr );
     int findMethodID( const int StationNumber, const int WRMCnumber, structMethod *Method_ptr );
     int findMethodID( const QString& RadiosondeIdentification, structMethod *Method_ptr );
-    int findDatasetId( const QString& ExportFilename, structDataset *Dataset_ptr );
+    int findDatasetID( const QString& ExportFilename, structDataset *Dataset_ptr );
+    int findReferenceID( const QString& ReferenceURI, structReference *Reference_ptr );
 
-    int readIDsBSRN();
-    int readIDsDatasets();
+    int readBsrnIDs();
+    int readBsrnDatasetIDs();
+    int readBsrnReferenceIDs( const bool updateReferenceIDs );
 
     int writeDefaultIDsBSRN( const QString& Filename );
 
@@ -456,8 +465,9 @@ private:
     QAction *downloadStationToArchiveFilesAction;
     QAction *checkStationToArchiveFilesAction;
 
-    QAction *doAllMetadataAction;
-    QAction *doRefreshIDsBSRNAction;
+    QAction *allMetadataAction;
+    QAction *refreshBsrnIDsAction;
+    QAction *refreshBsrnReferenceIDsAction;
     QAction *fileIDAction;
     QAction *scientistIDAction;
     QAction *messagesAction;
@@ -469,7 +479,7 @@ private:
     QAction *assignmentAction;
     QAction *createRefFileAction;
 
-    QAction *doAllDataAction;
+    QAction *allDataAction;
     QAction *basicMeasurementsAction;
     QAction *otherMinuteMeasurementsAction;
     QAction *uvMeasurementsAction;
@@ -481,7 +491,7 @@ private:
     QAction *otherMeasurementsAt30mAction;
     QAction *otherMeasurementsAt300mAction;
 
-    QAction *doAllImportAction;
+    QAction *allImportAction;
     QAction *basicMeasurementsImportAction;
     QAction *uvMeasurementsImportAction;
     QAction *synopImportAction;
@@ -524,6 +534,7 @@ private:
     structStaff		*g_Staff_ptr;
     structMethod	*g_Method_ptr;
     structDataset	*g_Dataset_ptr;
+    structReference	*g_Reference_ptr;
 };
 
 #endif

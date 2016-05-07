@@ -82,11 +82,14 @@ void MainWindow::createActions()
     createRefFileAction = new QAction(tr("Create reference import file"), this);
     connect(createRefFileAction, SIGNAL(triggered()), this, SLOT(doCreateReferenceImportFile()));
 
-    doAllMetadataAction = new QAction(tr("Create all metadata files"), this);
-    connect(doAllMetadataAction, SIGNAL(triggered()), this, SLOT(doAllMetadataConverter()));
+    allMetadataAction = new QAction(tr("Create all metadata files"), this);
+    connect(allMetadataAction, SIGNAL(triggered()), this, SLOT(doAllMetadataConverter()));
 
-    doRefreshIDsBSRNAction = new QAction(tr("Refresh BSRN IDs database"), this);
-    connect(doRefreshIDsBSRNAction, SIGNAL(triggered()), this, SLOT(doRefreshIDsBSRN()));
+    refreshBsrnIDsAction = new QAction(tr("Refresh BSRN IDs database"), this);
+    connect(refreshBsrnIDsAction, SIGNAL(triggered()), this, SLOT(doRefreshBsrnIDs()));
+
+    refreshBsrnReferenceIDsAction = new QAction(tr("Refresh BSRN reference IDs database"), this);
+    connect(refreshBsrnReferenceIDsAction, SIGNAL(triggered()), this, SLOT(doRefreshBsrnReferenceIDs()));
 
     // Data menu
     basicMeasurementsAction = new QAction(tr("&Basic and other measurements, LR 0100 + LR 0300"), this);
@@ -119,8 +122,8 @@ void MainWindow::createActions()
     otherMeasurementsAt300mAction = new QAction(tr("&Other measurements at 300 m, LR 3300"), this);
     connect(otherMeasurementsAt300mAction, SIGNAL(triggered()), this, SLOT(doOtherMeasurementsAt300mConverter()));
 
-    doAllDataAction = new QAction(tr("Create all data files"), this);
-    connect(doAllDataAction, SIGNAL(triggered()), this, SLOT(doAllDataConverter()));
+    allDataAction = new QAction(tr("Create all data files"), this);
+    connect(allDataAction, SIGNAL(triggered()), this, SLOT(doAllDataConverter()));
 
     // Import menu
     basicMeasurementsImportAction = new QAction(tr("&Basic and other measurements, LR 0100 + LR 0300"), this);
@@ -150,8 +153,8 @@ void MainWindow::createActions()
     otherMeasurementsAt300mImportAction = new QAction(tr("&Other measurements at 300 m, LR 3300"), this);
     connect(otherMeasurementsAt300mImportAction, SIGNAL(triggered()), this, SLOT(doOtherMeasurementsAt300mImportConverter()));
 
-    doAllImportAction = new QAction(tr("Create all import files"), this);
-    connect(doAllImportAction, SIGNAL(triggered()), this, SLOT(doAllImportConverter()));
+    allImportAction = new QAction(tr("Create all import files"), this);
+    connect(allImportAction, SIGNAL(triggered()), this, SLOT(doAllImportConverter()));
 
     setOverwriteDatasetFlagAction = new QAction(tr("Overwrite dataset"), this);
     setOverwriteDatasetFlagAction->setCheckable( true );
@@ -261,9 +264,10 @@ void MainWindow::createMenus()
     metadataMenu->addSeparator();
     metadataMenu->addAction( createRefFileAction );
     metadataMenu->addSeparator();
-    metadataMenu->addAction( doAllMetadataAction );
+    metadataMenu->addAction( allMetadataAction );
     metadataMenu->addSeparator();
-    metadataMenu->addAction( doRefreshIDsBSRNAction );
+    metadataMenu->addAction( refreshBsrnIDsAction );
+    metadataMenu->addAction( refreshBsrnReferenceIDsAction );
 
 // **********************************************************************************************
 
@@ -279,7 +283,7 @@ void MainWindow::createMenus()
     dataMenu->addAction( otherMeasurementsAt30mAction );
     dataMenu->addAction( otherMeasurementsAt300mAction );
     dataMenu->addSeparator();
-    dataMenu->addAction( doAllDataAction );
+    dataMenu->addAction( allDataAction );
 
 // **********************************************************************************************
 
@@ -296,7 +300,7 @@ void MainWindow::createMenus()
     importMenu->addAction( otherMeasurementsAt30mImportAction );
     importMenu->addAction( otherMeasurementsAt300mImportAction );
     importMenu->addSeparator();
-    importMenu->addAction( doAllImportAction );
+    importMenu->addAction( allImportAction );
 
  // **********************************************************************************************
 
@@ -310,8 +314,8 @@ void MainWindow::createMenus()
     toolsMenu->addSeparator();
     toolsMenu->addAction( convertUnformattedAction );
     toolsMenu->addAction( convertFormattedAction );
-    toolsMenu->addSeparator();
-    toolsMenu->addAction( createReplaceDatabaseAction );
+//  toolsMenu->addSeparator();
+//  toolsMenu->addAction( createReplaceDatabaseAction );
 
 // **********************************************************************************************
 

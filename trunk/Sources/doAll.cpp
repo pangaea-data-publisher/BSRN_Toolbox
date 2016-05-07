@@ -27,7 +27,7 @@ void MainWindow::doSetOverwriteDatasetFlag()
 // **********************************************************************************************
 
     if ( gb_OverwriteDataset == true )
-        err = readIDsDatasets();
+        err = readBsrnDatasetIDs();
 
     onError( err );
 }
@@ -191,7 +191,7 @@ void MainWindow::doAllDataConverter()
 
 // LR 0100
             if ( err == _NOERROR_ )
-                err = BasicMeasurementsConverter( false, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = BasicMeasurementsConverter( false, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 0300
             if ( err == _NOERROR_ )
@@ -199,35 +199,35 @@ void MainWindow::doAllDataConverter()
 
 // LR 0500
             if ( err == _NOERROR_ )
-                err = UltraVioletMeasurementsConverter( false, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = UltraVioletMeasurementsConverter( false, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 1000
             if ( err == _NOERROR_ )
-                err = SYNOPConverter( false, gsl_FilenameList.at( i ), g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = SYNOPConverter( false, gsl_FilenameList.at( i ), g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 1100
             if ( err == _NOERROR_ )
-                err = RadiosondeMeasurementsConverter( false, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = RadiosondeMeasurementsConverter( false, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 1200
             if ( err == _NOERROR_ )
-                err = OzoneMeasurementsConverter( false, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = OzoneMeasurementsConverter( false, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 1300
             if ( err == _NOERROR_ )
-                err = ExpandedMeasurementsConverter( false, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = ExpandedMeasurementsConverter( false, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 3010
             if ( err == _NOERROR_ )
-                err = OtherMeasurementsAtXmConverter( false, gsl_FilenameList.at( i ), 10, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = OtherMeasurementsAtXmConverter( false, gsl_FilenameList.at( i ), 10, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 3030
             if ( err == _NOERROR_ )
-                err = OtherMeasurementsAtXmConverter( false, gsl_FilenameList.at( i ), 30, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = OtherMeasurementsAtXmConverter( false, gsl_FilenameList.at( i ), 30, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 3300
             if ( err == _NOERROR_ )
-                err = OtherMeasurementsAtXmConverter( false, gsl_FilenameList.at( i ), 300, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = OtherMeasurementsAtXmConverter( false, gsl_FilenameList.at( i ), 300, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }
@@ -298,39 +298,39 @@ void MainWindow::doAllImportConverter()
 
 // LR 0100
             if ( err == _NOERROR_ )
-                err = BasicMeasurementsConverter( true, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = BasicMeasurementsConverter( true, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 0500
             if ( err == _NOERROR_ )
-                err = UltraVioletMeasurementsConverter( true, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = UltraVioletMeasurementsConverter( true, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 1000
             if ( err == _NOERROR_ )
-                err = SYNOPConverter( true, gsl_FilenameList.at( i ), g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = SYNOPConverter( true, gsl_FilenameList.at( i ), g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 1100
             if ( err == _NOERROR_ )
-                err = RadiosondeMeasurementsConverter( true, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = RadiosondeMeasurementsConverter( true, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 1200
             if ( err == _NOERROR_ )
-                err = OzoneMeasurementsConverter( true, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = OzoneMeasurementsConverter( true, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 1300
             if ( err == _NOERROR_ )
-                err = ExpandedMeasurementsConverter( true, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = ExpandedMeasurementsConverter( true, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 3010
             if ( err == _NOERROR_ )
-                err = OtherMeasurementsAtXmConverter( true, gsl_FilenameList.at( i ), 10, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = OtherMeasurementsAtXmConverter( true, gsl_FilenameList.at( i ), 10, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 3030
             if ( err == _NOERROR_ )
-                err = OtherMeasurementsAtXmConverter( true, gsl_FilenameList.at( i ), 30, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = OtherMeasurementsAtXmConverter( true, gsl_FilenameList.at( i ), 30, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 3300
             if ( err == _NOERROR_ )
-                err = OtherMeasurementsAtXmConverter( true, gsl_FilenameList.at( i ), 300, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = OtherMeasurementsAtXmConverter( true, gsl_FilenameList.at( i ), 300, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }
@@ -370,9 +370,9 @@ void MainWindow::doAllImportConverter()
 // **********************************************************************************************
 // 2016-04-10
 
-/*! @brief Laed BSRN IDs Datei */
+/*! @brief Laed BSRN dataset IDs Datei */
 
-void MainWindow::doRefreshIDsBSRN()
+void MainWindow::doRefreshBsrnIDs()
 {
     setStatusBar( tr( "Reading BSRN IDs database - please wait" ) );
     setWaitCursor();
@@ -388,7 +388,37 @@ void MainWindow::doRefreshIDsBSRN()
 
 // **********************************************************************************************
 
-    readIDsBSRN();
+    readBsrnIDs();
+
+// **********************************************************************************************
+
+    onError( _NOERROR_ );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+// 2016-04-10
+
+/*! @brief Laed BSRN reference IDs Datei */
+
+void MainWindow::doRefreshBsrnReferenceIDs()
+{
+    setStatusBar( tr( "Reading BSRN reference IDs database - please wait" ) );
+    setWaitCursor();
+
+// **********************************************************************************************
+
+    downloadFile( QLatin1String( "https://pangaea.de/ddi?request=bsrn/BSRNReferences&format=textfile&charset=UTF-8" ), getDataLocation() + "/" + "BSRN_Reference_IDs.txt" );
+
+// **********************************************************************************************
+
+    readBsrnReferenceIDs( true );
+
+// **********************************************************************************************
+
+    setStatusBar( tr( "Ready" ), 2 );
+    setNormalCursor();
 
 // **********************************************************************************************
 

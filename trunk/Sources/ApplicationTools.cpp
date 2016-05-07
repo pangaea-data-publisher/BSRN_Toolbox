@@ -10,25 +10,6 @@ const QString PrefDate = "BSRN Toolbox, 2008-05-20";
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::ReferenceOtherVersionClassic( const QString& s_EventLabel, const QDateTime dt )
-{
-    QString s_ReferenceStr = "Reference:\t";
-    QString s_URI          = "ftp://ftp.bsrn.awi.de/" + s_EventLabel.toLower() + "/" + s_EventLabel.toLower() + dt.toString( "MMyy" ) + ".dat.gz";
-    QString s_Relationtype = QString( " * RELATIONTYPE: %1" ).arg( _RELATIONTYPE_ );
-
-// **********************************************************************************************
-
-    s_ReferenceStr.append( s_URI );
-    s_ReferenceStr.append( s_Relationtype );
-    s_ReferenceStr.append( "\n" );
-
-    return( s_ReferenceStr );
-}
-
-// **********************************************************************************************
-// **********************************************************************************************
-// **********************************************************************************************
-
 QString MainWindow::ReferenceImportFile( const QString& s_EventLabel, const QDateTime dt, const int i_PIID, const QString& s_StationName )
 {
     QString s_ReferenceStr = "";
@@ -93,12 +74,35 @@ bool  MainWindow::checkFilename( const QString& s_Filename, const QString& s_Eve
 *	@return ID des Datensatzes. -999 wird zurueckgegeben wenn keine ID gefunden wurde
 */
 
-int MainWindow::findDatasetId( const QString& s_ExportFilename, structDataset *Dataset_ptr )
+int MainWindow::findDatasetID( const QString& s_ExportFilename, structDataset *Dataset_ptr )
 {
-    for ( int i=1; i<=MAX_NUM_OF_DATASET; ++i )
+    for ( int i=1; i<=MAX_NUM_OF_DATASETS; ++i )
     {
         if ( Dataset_ptr[i].ExportFilename == s_ExportFilename )
             return( Dataset_ptr[i].DatasetID );
+    }
+
+    return ( -999 );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+/*! @brief Ermittelt die PANGAEA ID der Station-to-archive File Referenz.
+*
+*   @param s_ReferenceURI URI des Station-to-archive Files (ftp://ftp.bsrn.awi.de/...)
+*   @param Reference_ptr Pointer auf Array aller Referenzen
+*
+*	@return ID der Referenz. -999 wird zurueckgegeben wenn keine ID gefunden wurde
+*/
+
+int MainWindow::findReferenceID( const QString& s_ReferenceURI, structReference *Reference_ptr )
+{
+    for ( int i=1; i<=MAX_NUM_OF_REFERENCES; ++i )
+    {
+        if ( Reference_ptr[i].ReferenceURI == s_ReferenceURI )
+            return( Reference_ptr[i].ReferenceID );
     }
 
     return ( -999 );
@@ -116,9 +120,9 @@ int MainWindow::findDatasetId( const QString& s_ExportFilename, structDataset *D
 *	@return ID der Person. -999 wird zurueckgegeben wenn keine ID gefunden wurde
 */
 
-int MainWindow::findPiId( const QString& s_StationScientist, structStaff *Staff_ptr )
+int MainWindow::findPiID( const QString& s_StationScientist, structStaff *Staff_ptr )
 {
-    for ( int i=1; i<=MAX_NUM_OF_STAFF; ++i )
+    for ( int i=1; i<=MAX_NUM_OF_STAFFS; ++i )
     {
         if ( Staff_ptr[i].StationScientist == s_StationScientist )
             return( Staff_ptr[i].StaffID );
@@ -142,7 +146,7 @@ int MainWindow::findPiId( const QString& s_StationScientist, structStaff *Staff_
 
 int MainWindow::findMethodID( const int i_StationNumber, const int i_WRMCnumber, structMethod *Method_ptr )
 {
-    for ( int i=1; i<=MAX_NUM_OF_METHOD; ++i )
+    for ( int i=1; i<=MAX_NUM_OF_METHODS; ++i )
     {
         if ( ( Method_ptr[i].StationID == i_StationNumber ) && ( Method_ptr[i].WRMCnumber == i_WRMCnumber ) )
             return( Method_ptr[i].MethodID );
@@ -165,7 +169,7 @@ int MainWindow::findMethodID( const int i_StationNumber, const int i_WRMCnumber,
 
 int MainWindow::findMethodID( const QString& s_InstrumentIdentificationNumber, structMethod *Method_ptr )
 {
-    for ( int i=1; i<=MAX_NUM_OF_METHOD; ++i )
+    for ( int i=1; i<=MAX_NUM_OF_METHODS; ++i )
     {
         if ( Method_ptr[i].SerialNumber == s_InstrumentIdentificationNumber )
             return( Method_ptr[i].MethodID );
@@ -188,7 +192,7 @@ int MainWindow::findMethodID( const QString& s_InstrumentIdentificationNumber, s
 
 QString MainWindow::findEventLabel( const int i_StationNumber, structStation *Station_ptr )
 {
-    for ( int i=1; i<=MAX_NUM_OF_STATION; ++i )
+    for ( int i=1; i<=MAX_NUM_OF_STATIONS; ++i )
     {
         if ( Station_ptr[i].StationID == i_StationNumber )
             return( Station_ptr[i].EventLabel );
@@ -213,7 +217,7 @@ QString MainWindow::findStationName( const int i_StationNumber, structStation *S
 {
     QString	s_StationName	= "";
 
-    for ( int i=1; i<=MAX_NUM_OF_STATION; ++i )
+    for ( int i=1; i<=MAX_NUM_OF_STATIONS; ++i )
     {
         if ( Station_ptr[i].StationID == i_StationNumber )
         {
@@ -241,7 +245,7 @@ QString MainWindow::findStationName( const int i_StationNumber, structStation *S
 
 int MainWindow::findInstituteID( const int i_StationNumber, structStation *Station_ptr )
 {
-    for ( int i=1; i<=MAX_NUM_OF_STATION; ++i )
+    for ( int i=1; i<=MAX_NUM_OF_STATIONS; ++i )
     {
         if ( Station_ptr[i].StationID == i_StationNumber )
             return( Station_ptr[i].InstituteID );
@@ -259,7 +263,7 @@ int MainWindow::findInstituteID( const int i_StationNumber, structStation *Stati
 *   @return Fehlercode, 0 = kein Fehler, -1 = keine Einstellungsdatei gefunden
 */
 
-int MainWindow::readIDsBSRN()
+int MainWindow::readBsrnIDs()
 {
     int		i					= 0;
 
@@ -312,7 +316,7 @@ int MainWindow::readIDsBSRN()
         fIDs.close();
 
         writeDefaultIDsBSRN( IDsFilename );
-        readIDsBSRN();
+        readBsrnIDs();
 
         return( -42 ); // The format of the BSRN IDs database is wrong. Please contact rsieger@pangaea.de
     }
@@ -368,7 +372,7 @@ int MainWindow::readIDsBSRN()
         {
             InputStr = tinIDs.readLine(); i = 0;
 
-            while ( ( tinIDs.atEnd() == false ) && ( InputStr.startsWith( "[" ) == false ) && ( i < MAX_NUM_OF_METHOD ) )
+            while ( ( tinIDs.atEnd() == false ) && ( InputStr.startsWith( "[" ) == false ) && ( i < MAX_NUM_OF_METHODS ) )
             {
                 InputStr = tinIDs.readLine();
 
@@ -388,7 +392,7 @@ int MainWindow::readIDsBSRN()
         {
             InputStr = tinIDs.readLine(); // Header
 
-            while ( ( tinIDs.atEnd() == false ) && ( InputStr.startsWith( "[" ) == false ) && ( i < MAX_NUM_OF_METHOD ) )
+            while ( ( tinIDs.atEnd() == false ) && ( InputStr.startsWith( "[" ) == false ) && ( i < MAX_NUM_OF_METHODS ) )
             {
                 // Beck Instruments, 91 \t 111111
 
@@ -410,7 +414,7 @@ int MainWindow::readIDsBSRN()
         {
             InputStr = tinIDs.readLine();  // Header
 
-            while ( ( tinIDs.atEnd() == false ) && ( InputStr.startsWith( "[" ) == false ) && ( i < MAX_NUM_OF_METHOD ) )
+            while ( ( tinIDs.atEnd() == false ) && ( InputStr.startsWith( "[" ) == false ) && ( i < MAX_NUM_OF_METHODS ) )
             {
                 // Vaisala DigiCora, RS80 \t 5435
 
@@ -432,7 +436,7 @@ int MainWindow::readIDsBSRN()
         {
             InputStr = tinIDs.readLine(); // Header
 
-            while ( ( tinIDs.atEnd() == false ) && ( InputStr.startsWith( "[" ) == false ) && ( i < MAX_NUM_OF_METHOD ) )
+            while ( ( tinIDs.atEnd() == false ) && ( InputStr.startsWith( "[" ) == false ) && ( i < MAX_NUM_OF_METHODS ) )
             {
                 // 1, SN 28987F3, WRMC No. 1004 \t 5435
                 InputStr = tinIDs.readLine();
@@ -468,8 +472,83 @@ int MainWindow::readIDsBSRN()
 
     fIDs_old.remove();
 
-    if ( i == MAX_NUM_OF_METHOD )
+    if ( i == MAX_NUM_OF_METHODS )
         return( -70 ); // Maximum number of methods was reached. Please contact Rainer Sieger (rsieger@pangaea.de)
+
+    return( _NOERROR_ );
+}
+
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+
+/*! @brief Liest alle Reference IDs aus einer Datei
+*
+*   @return Fehlercode, 0 = kein Fehler, -30 = keine Datensatz ID Datenbank gefunden
+*/
+
+int MainWindow::readBsrnReferenceIDs( const bool b_updateReferenceIDs )
+{
+    int         i               = 0;
+    int         n               = 0;
+
+    QString     IDsFilename		= "";
+
+    QStringList sl_Input;
+
+// ***********************************************************************************************************************
+
+    if ( b_updateReferenceIDs == true )
+        g_Reference_ptr[0].ReferenceID = -999;
+
+    if ( g_Reference_ptr[0].ReferenceID > 0 )
+        return( _NOERROR_ );
+
+// ***********************************************************************************************************************
+
+    IDsFilename = getDataLocation()  + "/" + "BSRN_Reference_IDs.txt";
+
+// ***********************************************************************************************************************
+
+    setWaitCursor();
+    setStatusBar( tr( "Reading BSRN reference IDs database - please wait" ) );
+
+// ***********************************************************************************************************************
+
+    QFileInfo fIDs( IDsFilename );
+
+// ***********************************************************************************************************************
+
+    if ( fIDs.size() == 0 )
+    {
+        setStatusBar( tr( "Download of BSRN reference IDs database fails" ), 2 );
+
+        return( -62 ); // Download of BSRN reference IDs database fails. Please check your connection to the internet and refresh the database again.
+    }
+
+// ***********************************************************************************************************************
+
+    setWaitCursor();
+
+    n = readFile( IDsFilename, sl_Input, _UTF8_ ) - 1; // Number of lines - Header line
+
+    if ( n == MAX_NUM_OF_REFERENCES )
+        return( -72 ); // Maximum number of datasets was reached. Please contact Rainer Sieger (rsieger@pangaea.de)
+
+    for ( int j=n; j>0; --j )
+    {
+        i++;
+
+        g_Reference_ptr[i].ReferenceID  = sl_Input.at( j ).section( "\t", 0, 0 ).toInt();
+        g_Reference_ptr[i].ReferenceURI = sl_Input.at( j ).section( "\t", 1, 1 );
+    }
+
+    g_Reference_ptr[0].ReferenceID  = n;
+
+    setNormalCursor();
+    setStatusBar( tr( "Ready" ), 2 );
+
+// **********************************************************************************************
 
     return( _NOERROR_ );
 }
@@ -483,7 +562,7 @@ int MainWindow::readIDsBSRN()
 *   @return Fehlercode, 0 = kein Fehler, -30 = keine Datensatz ID Datenbank gefunden
 */
 
-int MainWindow::readIDsDatasets()
+int MainWindow::readBsrnDatasetIDs()
 {
     int		i					= 0;
 
@@ -534,7 +613,7 @@ int MainWindow::readIDsDatasets()
 
     setWaitCursor();
 
-    while ( ( tinIDs.atEnd() == false ) && ( i < MAX_NUM_OF_DATASET ) )
+    while ( ( tinIDs.atEnd() == false ) && ( i < MAX_NUM_OF_DATASETS ) )
     {
         ++i;
 
@@ -551,7 +630,7 @@ int MainWindow::readIDsDatasets()
 
 // **********************************************************************************************
 
-    if ( i == MAX_NUM_OF_DATASET )
+    if ( i == MAX_NUM_OF_DATASETS )
         return( -71 ); // Maximum number of datasets was reached. Please contact Rainer Sieger (rsieger@pangaea.de)
 
     return( _NOERROR_ );
@@ -1068,13 +1147,28 @@ QString MainWindow::LoginID( const QString& s_LoginID )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::ReferenceOtherVersion( const QString& s_EventLabel, const QDateTime dt )
+QString MainWindow::ReferenceOtherVersion( const QString& s_EventLabel, structReference *Reference_ptr, const QDateTime dt )
 {
     QString s_OutputStr = "  ";
+    QString s_URI       = "ftp://ftp.bsrn.awi.de/" + s_EventLabel.toLower() + "/" + s_EventLabel.toLower() + dt.toString( "MMyy" ) + ".dat.gz";
+
+// **********************************************************************************************
+
+    if ( Reference_ptr[0].ReferenceID > 0 )
+    {
+        for ( int i=1; i <= Reference_ptr[0].ReferenceID; i++ )
+        {
+            if ( s_URI == Reference_ptr[i].ReferenceURI )
+            {
+                s_URI = QString( "%1" ).arg( Reference_ptr[i].ReferenceID );
+                break;
+            }
+        }
+    }
 
     s_OutputStr.append( "\"ReferenceIDs\": [" );
     s_OutputStr.append( eol );
-    s_OutputStr.append( "    { \"ID\": ftp://ftp.bsrn.awi.de/" + s_EventLabel.toLower() + "/" + s_EventLabel.toLower() + dt.toString( "MMyy" ) + ".dat.gz, \"RelationTypeID\": 13 } ]," );
+    s_OutputStr.append( "    { \"ID\": " + s_URI + ", \"RelationTypeID\": 13 } ]," );
     s_OutputStr.append( eol );
 
     return( s_OutputStr );

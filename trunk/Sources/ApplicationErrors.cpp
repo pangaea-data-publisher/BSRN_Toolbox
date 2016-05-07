@@ -65,11 +65,17 @@ void MainWindow::onError( const int err )
     case -61:
         QMessageBox::information( this, getApplicationName( true ), tr( "Download of BSRN dataset IDs database\nfails. Please check your connection to the\ninternet and refresh the database again." ) );
         break;
+    case -62:
+        QMessageBox::information( this, getApplicationName( true ), tr( "Download of BSRN reference IDs database\nfails. Please check your connection to the\ninternet and refresh the database again." ) );
+        break;
     case -70:
         QMessageBox::information( this, getApplicationName( true ), tr( "Maximum number of methods was reached.\nPlease contact rsieger@pangaea.de" ) );
         break;
     case -71:
         QMessageBox::information( this, getApplicationName( true ), tr( "Maximum number of datasets was reached.\nPlease contact rsieger@pangaea.de" ) );
+        break;
+    case -72:
+        QMessageBox::information( this, getApplicationName( true ), tr( "Maximum number of references was reached.\nPlease contact rsieger@pangaea.de" ) );
         break;
 
     case NODATAFOUND:

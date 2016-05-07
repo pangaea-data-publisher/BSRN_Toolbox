@@ -136,7 +136,7 @@ int MainWindow::ScientistIDConverter( const QString& s_FilenameIn, QStringList& 
             InputStr = tin.readLine();
             ui_length	= incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
 
-            i_PiID = findPiId( InputStr.left( 38 ).simplified(), Staff_ptr );
+            i_PiID = findPiID( InputStr.left( 38 ).simplified(), Staff_ptr );
 
             tout << s_EventLabel.toLower() << dt.toString( "MMyy" ) << ".dat" << "\t";
             tout << i_StationNumber << "\t" << s_EventLabel << "\t" << s_StationName << "\t" << dt.toString( "yyyy-MM" ) << "\t";

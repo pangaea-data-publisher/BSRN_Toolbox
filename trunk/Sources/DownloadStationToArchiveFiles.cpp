@@ -30,9 +30,9 @@ int MainWindow::downloadStationToArchiveFiles( structStation *Station_ptr,
                                                   const QString& s_User, const QString& s_Password,
                                                   const bool b_DecompressFiles, const bool b_CheckFiles,
                                                   const bool b_CheckAvailability,
-                                                  bool b_Station[MAX_NUM_OF_STATION+1],
-                                                  bool b_Month[MAX_NUM_OF_MONTH+1],
-                                                  bool b_Year[MAX_NUM_OF_YEAR+1] )
+                                                  bool b_Station[MAX_NUM_OF_STATIONS+1],
+                                                  bool b_Month[MAX_NUM_OF_MONTHS+1],
+                                                  bool b_Year[MAX_NUM_OF_YEARS+1] )
 {
     int		i_Num_of_Files			= 0;
 
@@ -201,19 +201,19 @@ int MainWindow::downloadStationToArchiveFiles( structStation *Station_ptr,
         tout << "type binary" << endl;
     #endif
 
-    for ( int i=1; i<=MAX_NUM_OF_STATION; ++i )
+    for ( int i=1; i<=MAX_NUM_OF_STATIONS; ++i )
     {
         if ( b_Station[i] == true )
         {
             s_EventLabel = findEventLabel( i, Station_ptr ).toLower();
 
-            for ( int j=1; j<=MAX_NUM_OF_MONTH; ++j )
+            for ( int j=1; j<=MAX_NUM_OF_MONTHS; ++j )
             {
                 if ( b_Month[j] == true )
                 {
                     s_Month.sprintf( "%02d", j );
 
-                    for ( int k=1; k<=MAX_NUM_OF_YEAR; k++ )
+                    for ( int k=1; k<=MAX_NUM_OF_YEARS; k++ )
                     {
                         if ( b_Year[k] == true )
                         {

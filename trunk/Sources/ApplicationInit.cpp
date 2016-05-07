@@ -64,10 +64,16 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent )
 
     setAcceptDrops( true );
 
-    g_Station_ptr = new structStation[MAX_NUM_OF_STATION+1];
-    g_Staff_ptr	  = new structStaff[MAX_NUM_OF_STAFF+1];
-    g_Method_ptr  = new structMethod[MAX_NUM_OF_METHOD+1];
-    g_Dataset_ptr = new structDataset[MAX_NUM_OF_DATASET+1];
+    g_Station_ptr   = new structStation[MAX_NUM_OF_STATIONS+1];
+    g_Staff_ptr	    = new structStaff[MAX_NUM_OF_STAFFS+1];
+    g_Method_ptr    = new structMethod[MAX_NUM_OF_METHODS+1];
+    g_Dataset_ptr   = new structDataset[MAX_NUM_OF_DATASETS+1];
+    g_Reference_ptr = new structReference[MAX_NUM_OF_REFERENCES+1];
+
+// **********************************************************************************************
+
+    g_Reference_ptr[0].ReferenceURI = "Number of References";
+    g_Reference_ptr[0].ReferenceID = -999;
 
 // **********************************************************************************************
 
@@ -116,7 +122,7 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent )
     setStatusBar( tr( "Ready" ), 2 );
     setNormalCursor();
 
-    readIDsBSRN();
+    readBsrnIDs();
 }
 
 // **********************************************************************************************

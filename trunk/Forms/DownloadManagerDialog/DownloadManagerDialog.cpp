@@ -320,8 +320,8 @@ void DownloadManagerDialog::SelectNoneYear()
 
 int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTPServer, QString &s_User,
                                          QString &s_Password, bool &b_DecompressFiles, bool &b_CheckFiles,
-                                         bool &b_CheckAvailability, bool b_Station[MAX_NUM_OF_STATION+1],
-                                         bool b_Month[MAX_NUM_OF_MONTH+1], bool b_Year[MAX_NUM_OF_YEAR+1] )
+                                         bool &b_CheckAvailability, bool b_Station[MAX_NUM_OF_STATIONS+1],
+                                         bool b_Month[MAX_NUM_OF_MONTHS+1], bool b_Year[MAX_NUM_OF_YEARS+1] )
 {
     int i_DialogResult = QDialog::Rejected;
 

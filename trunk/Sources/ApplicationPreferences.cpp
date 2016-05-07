@@ -55,7 +55,7 @@ void MainWindow::savePreferences()
 
     // Station flags
     QString s_StationFlags = "";
-    for ( int i=1; i<=MAX_NUM_OF_STATION; ++i )
+    for ( int i=1; i<=MAX_NUM_OF_STATIONS; ++i )
     {
         if ( gb_Station[i] == true )
             s_StationFlags.append( "1," );
@@ -66,7 +66,7 @@ void MainWindow::savePreferences()
 
     // Month flags
     QString s_MonthFlags = "";
-    for ( int i=1; i<=MAX_NUM_OF_MONTH; ++i )
+    for ( int i=1; i<=MAX_NUM_OF_MONTHS; ++i )
     {
         if ( gb_Month[i] == true )
             s_MonthFlags.append( "1," );
@@ -77,7 +77,7 @@ void MainWindow::savePreferences()
 
     // Year flags
     QString s_YearFlags = "";
-    for ( int i=1; i<=MAX_NUM_OF_YEAR; ++i )
+    for ( int i=1; i<=MAX_NUM_OF_YEARS; ++i )
     {
         if ( gb_Year[i] == true )
             s_YearFlags.append( "1," );
@@ -190,12 +190,12 @@ void MainWindow::loadPreferences()
 
     if ( s_StationFlags.isEmpty() == true )
     {
-        for ( int i=1; i<MAX_NUM_OF_STATION; ++i )
+        for ( int i=1; i<MAX_NUM_OF_STATIONS; ++i )
             s_StationFlags.append( "0," );
         s_StationFlags.append( "0" );
     }
 
-    for ( int i=0; i<MAX_NUM_OF_STATION; ++i )
+    for ( int i=0; i<MAX_NUM_OF_STATIONS; ++i )
     {
         if ( s_StationFlags.section( ",", i, i ) == "0" )
             gb_Station[i+1] = false;
@@ -208,12 +208,12 @@ void MainWindow::loadPreferences()
 
     if ( s_MonthFlags.isEmpty() == true )
     {
-        for ( int i=1; i<MAX_NUM_OF_MONTH; ++i )
+        for ( int i=1; i<MAX_NUM_OF_MONTHS; ++i )
             s_MonthFlags.append( "0," );
         s_MonthFlags.append( "0" );
     }
 
-    for ( int i=0; i<MAX_NUM_OF_MONTH; ++i )
+    for ( int i=0; i<MAX_NUM_OF_MONTHS; ++i )
     {
         if ( s_MonthFlags.section( ",", i, i ) == "0" )
             gb_Month[i+1] = false;
@@ -226,12 +226,12 @@ void MainWindow::loadPreferences()
 
     if ( s_YearFlags.isEmpty() == true )
     {
-        for ( int i=1; i<MAX_NUM_OF_YEAR; ++i )
+        for ( int i=1; i<MAX_NUM_OF_YEARS; ++i )
             s_YearFlags.append( "0," );
         s_YearFlags.append( "0" );
     }
 
-    for ( int i=0; i<MAX_NUM_OF_YEAR; ++i )
+    for ( int i=0; i<MAX_NUM_OF_YEARS; ++i )
     {
         if ( s_YearFlags.section( ",", i, i ) == "0" )
             gb_Year[i+1] = false;

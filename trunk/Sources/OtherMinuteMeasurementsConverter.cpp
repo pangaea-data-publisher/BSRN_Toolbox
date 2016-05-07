@@ -126,7 +126,7 @@ int MainWindow::OtherMinuteMeasurementsConverter( const bool b_Import, const QSt
             InputStr = tin.readLine();
             ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
 
-            i_PIID = findPiId( InputStr.left( 38 ).simplified(), Staff_ptr );
+            i_PIID = findPiID( InputStr.left( 38 ).simplified(), Staff_ptr );
 
             b_Stop = true;
         }

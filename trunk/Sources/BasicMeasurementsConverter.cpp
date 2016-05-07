@@ -225,7 +225,7 @@ int MainWindow::BasicMeasurementsTest( const QString& s_FilenameIn, int *P, cons
 *   @return Fehlercode
 */
 
-int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& s_FilenameIn, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
+int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& s_FilenameIn, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
 {
     int				err				= 0;
 
@@ -410,7 +410,7 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
             InputStr  = tin.readLine();
             ui_length = ui_length + InputStr.length();
 
-            i_PIID = findPiId( InputStr.left( 38 ).simplified(), Staff_ptr );
+            i_PIID = findPiID( InputStr.left( 38 ).simplified(), Staff_ptr );
 
             b_Stop = true;
         }
@@ -555,12 +555,12 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
     {
         if ( b_overwriteDataset == true )
         {
-            int i_DatasetID = findDatasetId( QString( "%1_radiation_%2" ).arg( s_EventLabel ).arg( dt.toString( "yyyy-MM" ) ), Dataset_ptr );
+            int i_DatasetID = findDatasetID( QString( "%1_radiation_%2" ).arg( s_EventLabel ).arg( dt.toString( "yyyy-MM" ) ), Dataset_ptr );
 
             if ( i_DatasetID > 0 )
                 s_DatasetID = DataSetID( num2str( i_DatasetID ) );
             else
-                s_DatasetID = DataSetID( QString( "%1_radiation_%2" ).arg( s_EventLabel ).arg( dt.toString( "yyyy-MM" ) ) );
+                s_DatasetID = DataSetID( QString( "@%1_radiation_%2@" ).arg( s_EventLabel ).arg( dt.toString( "yyyy-MM" ) ) );
         }
 
         sl_Parameter.append( Parameter( num2str( 1599 ), num2str( i_PIID ), num2str( 43 ), tr( "yyyy-MM-dd'T'HH:mm" ) ) );
@@ -803,7 +803,7 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
     {
         tout << OpenDataDescriptionHeader();
         tout << s_DatasetID;
-        tout << ReferenceOtherVersion( s_EventLabel, dt );
+        tout << ReferenceOtherVersion( s_EventLabel, Reference_ptr, dt );
         tout << AuthorIDs( num2str( i_PIID ) );
         tout << SourceID( num2str( i_SourceID ) );
 
@@ -1493,11 +1493,14 @@ void MainWindow::doBasicMeasurementsConverter( const bool b_Import )
 
     if ( existsFirstFile( gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList ) == true )
     {
+        if ( b_Import == true )
+            readBsrnReferenceIDs( false );
+
         initFileProgress( gsl_FilenameList.count(), gsl_FilenameList.at( 0 ), tr( "Basic measurements converter working..." ) );
 
         while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( stopProgress != _APPBREAK_ ) )
         {
-            err = BasicMeasurementsConverter( b_Import, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+            err = BasicMeasurementsConverter( b_Import, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }

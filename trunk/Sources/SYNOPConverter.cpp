@@ -88,7 +88,7 @@ int MainWindow::SYNOPTest( const QString& s_FilenameIn, int *P, const int i_NumO
 
             if ( fi.baseName().startsWith( "son" ) == true ) i_Format = 5;
 
-            if ( fi.baseName().startsWith( "gvn" ) == true ) i_Format = 7; // 2016-05
+            if ( fi.baseName().startsWith( "gvn" ) == true ) i_Format = 6; // 2016-05
 
             while ( ( tin.atEnd() == false ) && ( b_Stop == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) )
             {
@@ -2734,7 +2734,7 @@ QString MainWindow::buildSYNOPDataOutputStr6( const QString s_EventLabel, const 
 *
 *   @return Fehlercode
 */
-int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
+int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
 {
     int				i_Format		= 0;
 
@@ -2848,7 +2848,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
             InputStr = tin.readLine();
             ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
 
-            i_PIID = findPiId( InputStr.left( 38 ).simplified(), Staff_ptr );
+            i_PIID = findPiID( InputStr.left( 38 ).simplified(), Staff_ptr );
 
             b_Stop = true;
         }
@@ -2912,12 +2912,12 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
     {
         if ( b_overwriteDataset == true )
         {
-            int i_DatasetID = findDatasetId( QString( "%1_SYNOP_%2" ).arg( s_EventLabel ).arg( dt.toString( "yyyy-MM" ) ), Dataset_ptr );
+            int i_DatasetID = findDatasetID( QString( "%1_SYNOP_%2" ).arg( s_EventLabel ).arg( dt.toString( "yyyy-MM" ) ), Dataset_ptr );
 
             if ( i_DatasetID > 0 )
                 s_DatasetID = DataSetID( num2str( i_DatasetID ) );
             else
-                s_DatasetID = DataSetID( QString( "%1_SYNOP_%2" ).arg( s_EventLabel ).arg( dt.toString( "yyyy-MM" ) ) );
+                s_DatasetID = DataSetID( QString( "@%1_SYNOP_%2@" ).arg( s_EventLabel ).arg( dt.toString( "yyyy-MM" ) ) );
         }
 
         sl_Parameter.clear(); sl_Parameter.append( Parameter( num2str( 1599 ), num2str( i_PIID ), num2str( 43 ), tr( "yyyy-MM-dd'T'HH:mm" ) ) );
@@ -2960,7 +2960,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
     {
         tout << OpenDataDescriptionHeader();
         tout << s_DatasetID;
-        tout << ReferenceOtherVersion( s_EventLabel, dt );
+        tout << ReferenceOtherVersion( s_EventLabel, Reference_ptr, dt );
         tout << AuthorIDs( num2str( i_PIID ) );
         tout << SourceID( num2str( i_SourceID ) );
         tout << DatasetTitle( QString( "Meteorological synoptical observations from" ), s_StationName, dt );
@@ -3137,11 +3137,14 @@ void MainWindow::doSYNOPConverter( const bool b_Import )
 
     if ( existsFirstFile( gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList ) == true )
     {
+        if ( b_Import == true )
+            readBsrnReferenceIDs( false );
+
         initFileProgress( gsl_FilenameList.count(), gsl_FilenameList.at( 0 ), tr( "SYNOP converter working..." ) );
 
         while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( stopProgress != _APPBREAK_ ) )
         {
-            err = SYNOPConverter( b_Import, gsl_FilenameList.at( i ), g_Staff_ptr, g_Station_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+            err = SYNOPConverter( b_Import, gsl_FilenameList.at( i ), g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }
