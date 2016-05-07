@@ -521,6 +521,7 @@ int MainWindow::readBsrnReferenceIDs( const bool b_updateReferenceIDs )
 
     if ( fIDs.size() == 0 )
     {
+        setNormalCursor();
         setStatusBar( tr( "Download of BSRN reference IDs database fails" ), 2 );
 
         return( -62 ); // Download of BSRN reference IDs database fails. Please check your connection to the internet and refresh the database again.
@@ -528,12 +529,15 @@ int MainWindow::readBsrnReferenceIDs( const bool b_updateReferenceIDs )
 
 // ***********************************************************************************************************************
 
-    setWaitCursor();
-
     n = readFile( IDsFilename, sl_Input, _UTF8_ ) - 1; // Number of lines - Header line
 
     if ( n == MAX_NUM_OF_REFERENCES )
+    {
+        setNormalCursor();
+        setStatusBar( tr( "Maximum number of datasets was reached" ), 2 );
+
         return( -72 ); // Maximum number of datasets was reached. Please contact Rainer Sieger (rsieger@pangaea.de)
+    }
 
     for ( int j=n; j>0; --j )
     {
@@ -584,11 +588,6 @@ int MainWindow::readBsrnDatasetIDs()
 
 // ***********************************************************************************************************************
 
-    setNormalCursor();
-    setStatusBar( tr( "Ready" ), 2 );
-
-// ***********************************************************************************************************************
-
     QFile fIDs( IDsFilename );
 
 // ***********************************************************************************************************************
@@ -597,6 +596,7 @@ int MainWindow::readBsrnDatasetIDs()
     {
         doSetOverwriteDatasetFlag();
 
+        setNormalCursor();
         setStatusBar( tr( "Download of BSRN dataset IDs database fails" ), 2 );
 
         return( -61 ); // Download of BSRN dataset IDs database fails. Please check your connection to the internet and refresh the database again.
@@ -610,8 +610,6 @@ int MainWindow::readBsrnDatasetIDs()
     InputStr = tinIDs.readLine(); // Header
 
     i = 0;
-
-    setWaitCursor();
 
     while ( ( tinIDs.atEnd() == false ) && ( i < MAX_NUM_OF_DATASETS ) )
     {

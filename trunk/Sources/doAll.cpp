@@ -291,6 +291,8 @@ void MainWindow::doAllImportConverter()
     {
         sl_FilenameOut.clear();
 
+        readBsrnReferenceIDs( false );
+
         initFileProgress( gsl_FilenameList.count(), gsl_FilenameList.at( 0 ), tr( "Import converter working..." ) );
 
         while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( stopProgress != _APPBREAK_ ) )
@@ -374,8 +376,8 @@ void MainWindow::doAllImportConverter()
 
 void MainWindow::doRefreshBsrnIDs()
 {
-    setStatusBar( tr( "Reading BSRN IDs database - please wait" ) );
     setWaitCursor();
+    setStatusBar( tr( "Reading BSRN IDs database - please wait" ) );
 
 // **********************************************************************************************
 
@@ -383,8 +385,8 @@ void MainWindow::doRefreshBsrnIDs()
 
 // **********************************************************************************************
 
-    setStatusBar( tr( "Ready" ), 2 );
     setNormalCursor();
+    setStatusBar( tr( "Ready" ), 2 );
 
 // **********************************************************************************************
 
@@ -404,8 +406,8 @@ void MainWindow::doRefreshBsrnIDs()
 
 void MainWindow::doRefreshBsrnReferenceIDs()
 {
-    setStatusBar( tr( "Reading BSRN reference IDs database - please wait" ) );
     setWaitCursor();
+    setStatusBar( tr( "Reading BSRN reference IDs database - please wait" ) );
 
 // **********************************************************************************************
 
@@ -417,8 +419,8 @@ void MainWindow::doRefreshBsrnReferenceIDs()
 
 // **********************************************************************************************
 
-    setStatusBar( tr( "Ready" ), 2 );
     setNormalCursor();
+    setStatusBar( tr( "Ready" ), 2 );
 
 // **********************************************************************************************
 
