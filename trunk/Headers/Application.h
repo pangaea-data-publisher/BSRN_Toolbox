@@ -378,7 +378,7 @@ private:
 
 // Tools
     QString ReferenceOtherVersion( const QString& EventLabel, structReference *Reference_ptr, const QDateTime dt );
-    QString ReferenceImportFile( const QString& EventLabel, const QDateTime dt , const int PIID, const QString &StationName );
+    QString ReferenceImportFile( const QString& EventLabel, const QDateTime DateOfData, const int PIID, const QString &StationName );
 
     QString OpenDataDescriptionHeader();
     QString CloseDataDescriptionHeader();
