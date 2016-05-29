@@ -965,6 +965,35 @@ int MainWindow::readFile( const QString &s_FilenameIn, QStringList &sl_Input, co
 // **********************************************************************************************
 // **********************************************************************************************
 // **********************************************************************************************
+// 2016-05-28
+
+/*! @brief berechnet den Hash-Wert einer Datei.
+*
+*   @param  s_FilenameIn Dateiname.
+*
+*   @retval Hash.
+*/
+
+QString MainWindow::getFileChecksum( const QString &s_FilenameIn )
+{
+    QFile              f_File( s_FilenameIn );
+    QCryptographicHash hash( QCryptographicHash::Sha256 );
+
+// **********************************************************************************************
+
+    if ( f_File.open( QFile::ReadOnly ) == true )
+    {
+        hash.addData( &f_File );
+        f_File.close();
+        return( hash.result().toHex().trimmed() );
+    }
+
+    return( "" );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
 // 2009-12-03
 
 /*! @brief bestimmt die Groesse einer Datei und gibt eine Groessenklasse zurueck.

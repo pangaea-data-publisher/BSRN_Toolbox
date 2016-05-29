@@ -306,6 +306,7 @@ private:
     QString getVersion();
     QString setEOLChar( const int EOL );
     QString setExtension( const int Extension );
+    QString getFileChecksum( const QString &FilenameIn );
 
     bool warning( const QString & Message, const QString & Title = tr("Warning"));
 
