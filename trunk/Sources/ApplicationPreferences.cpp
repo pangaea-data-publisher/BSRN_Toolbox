@@ -2,21 +2,24 @@
 **
 ** Preferences
 ** 2008-03-21, Dr. Rainer Sieger
-** last change: 2008-04-27
+** last change: 2016-06-06
 **
 ****************************************************************/
 
 #include "Application.h"
+#include "simplecrypt.h"
 
 // **********************************************************************************************
 // **********************************************************************************************
 // **********************************************************************************************
-// 11.3.2004
+// 2016-06-06
 
 /*! @brief Sichern der Programmeinstellungen */
 
 void MainWindow::savePreferences()
 {
+    SimpleCrypt crypto( Q_UINT64_C( 0x07cfffa122768de4f ) ); //some random number
+
     #if defined(Q_OS_LINUX)
         QSettings settings( getPreferenceFilename(), QSettings::IniFormat );
     #endif
@@ -89,9 +92,9 @@ void MainWindow::savePreferences()
     settings.endGroup();
 
     settings.beginGroup( "DownloadManagerDialog" );
-    settings.setValue( "FTPServer", gs_FTPServer );
-    settings.setValue( "User", gs_User );
-    settings.setValue( "Password", gs_Password );
+    settings.setValue( "FTPServer", crypto.encryptToString( gs_FTPServer ) );
+    settings.setValue( "User", crypto.encryptToString( gs_User ) );
+    settings.setValue( "Password", crypto.encryptToString( gs_Password ) );
     settings.setValue( "DownloadPath", gs_DownloadPath );
     settings.setValue( "DecompressFiles", gb_DecompressFiles );
     settings.setValue( "CheckFiles", gb_CheckFiles );
@@ -134,6 +137,8 @@ void MainWindow::savePreferences()
 
 void MainWindow::loadPreferences()
 {
+    SimpleCrypt crypto( Q_UINT64_C( 0x07cfffa122768de4f ) ); //some random number
+
     #if defined(Q_OS_LINUX)
         gi_Codec = _UTF8_; // UTF-8
         gi_EOL   = _UNIX_;
@@ -242,9 +247,9 @@ void MainWindow::loadPreferences()
     settings.endGroup();
 
     settings.beginGroup( "DownloadManagerDialog" );
-    gs_FTPServer         = settings.value( "FTPServer", "ftp.bsrn.awi.de" ).toString();
-    gs_User              = settings.value( "User", "" ).toString();
-    gs_Password          = settings.value( "Password", "" ).toString();
+    gs_FTPServer         = crypto.decryptToString( settings.value( "FTPServer", "ftp.bsrn.awi.de" ).toString() );
+    gs_User              = crypto.decryptToString( settings.value( "User", "" ).toString() );
+    gs_Password          = crypto.decryptToString( settings.value( "Password", "" ).toString() );
     gs_DownloadPath      = settings.value( "DownloadPath", getDocumentDir() ).toString();
     gb_DecompressFiles   = settings.value( "DecompressFiles", true ).toBool();
     gb_CheckFiles        = settings.value( "CheckFiles", true ).toBool();

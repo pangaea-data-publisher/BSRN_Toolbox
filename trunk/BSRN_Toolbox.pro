@@ -56,6 +56,7 @@ HEADERS = ./Headers/Application.h \
     ./Headers/Globals.h \
     ./Headers/solpos00.h \
     ./Headers/Webfile.h \
+    ./Headers/simplecrypt.h \
     ./Forms/AboutDialog/AboutDialog.h \
     ./Forms/FormatUnformattedOptionsDialog/FormatUnformattedOptionsDialog.h \
     ./Forms/FormatFormattedOptionsDialog/FormatFormattedOptionsDialog.h \
@@ -101,6 +102,7 @@ SOURCES = ./Sources/ApplicationInit.cpp \
     ./Sources/SYNOPConverter.cpp \
     ./Sources/UltraVioletMeasurementsConverter.cpp \
     ./Sources/Webfile.cpp \
+    ./Sources/simplecrypt.cpp \
     ./Forms/AboutDialog/AboutDialog.cpp \
     ./Forms/FormatUnformattedOptionsDialog/FormatUnformattedOptionsDialog.cpp \
     ./Forms/FormatFormattedOptionsDialog/FormatFormattedOptionsDialog.cpp \
