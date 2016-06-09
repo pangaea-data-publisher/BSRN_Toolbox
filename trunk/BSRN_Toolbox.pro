@@ -58,11 +58,12 @@ HEADERS = ./Headers/Application.h \
     ./Headers/Webfile.h \
     ./Headers/simplecrypt.h \
     ./Forms/AboutDialog/AboutDialog.h \
-    ./Forms/FormatUnformattedOptionsDialog/FormatUnformattedOptionsDialog.h \
-    ./Forms/FormatFormattedOptionsDialog/FormatFormattedOptionsDialog.h \
     ./Forms/ConcatenateOptionsDialog/ConcatenateOptionsDialog.h \
     ./Forms/DownloadManagerDialog/DownloadManagerDialog.h \
-    ./Forms/QualityCheckOptionsDialogs/QualityCheckRecommendedV20OptionsDialog.h
+    ./Forms/FormatFormattedOptionsDialog/FormatFormattedOptionsDialog.h \
+    ./Forms/FormatUnformattedOptionsDialog/FormatUnformattedOptionsDialog.h \
+    ./Forms/QualityCheckOptionsDialogs/QualityCheckRecommendedV20OptionsDialog.h \
+    ./Forms/SelectParametersDialog/SelectParametersDialog.h
 
 SOURCES = ./Sources/ApplicationInit.cpp \
     ./Sources/ApplicationMainWindow.cpp \
@@ -104,14 +105,16 @@ SOURCES = ./Sources/ApplicationInit.cpp \
     ./Sources/Webfile.cpp \
     ./Sources/simplecrypt.cpp \
     ./Forms/AboutDialog/AboutDialog.cpp \
-    ./Forms/FormatUnformattedOptionsDialog/FormatUnformattedOptionsDialog.cpp \
-    ./Forms/FormatFormattedOptionsDialog/FormatFormattedOptionsDialog.cpp \
     ./Forms/ConcatenateOptionsDialog/ConcatenateOptionsDialog.cpp \
     ./Forms/DownloadManagerDialog/DownloadManagerDialog.cpp \
-    ./Forms/QualityCheckOptionsDialogs/QualityCheckRecommendedV20OptionsDialog.cpp
+    ./Forms/FormatFormattedOptionsDialog/FormatFormattedOptionsDialog.cpp \
+    ./Forms/FormatUnformattedOptionsDialog/FormatUnformattedOptionsDialog.cpp \
+    ./Forms/QualityCheckOptionsDialogs/QualityCheckRecommendedV20OptionsDialog.cpp \
+    ./Forms/SelectParametersDialog/SelectParametersDialog.cpp
 
 FORMS = ./Forms/AboutDialog/aboutdialog.ui \
-    ./Forms/FormatUnformattedOptionsDialog/formatunformattedoptionsdialog.ui \
-    ./Forms/FormatFormattedOptionsDialog/formatformattedoptionsdialog.ui \
     ./Forms/ConcatenateOptionsDialog/concatenateoptionsdialog.ui \
-    ./Forms/DownloadManagerDialog/downloadmanagerdialog.ui
+    ./Forms/DownloadManagerDialog/downloadmanagerdialog.ui \
+    ./Forms/FormatFormattedOptionsDialog/formatformattedoptionsdialog.ui \
+    ./Forms/FormatUnformattedOptionsDialog/formatunformattedoptionsdialog.ui \
+    ./Forms/SelectParametersDialog/selectparametersdialog.ui

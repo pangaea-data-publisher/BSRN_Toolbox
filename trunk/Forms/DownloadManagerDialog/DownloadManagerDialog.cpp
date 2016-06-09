@@ -589,9 +589,11 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
         break;
 
     case QDialog::Rejected:
+        i_DialogResult      = QDialog::Rejected;
         break;
 
     default:
+        i_DialogResult      = QDialog::Rejected;
         break;
     }
 

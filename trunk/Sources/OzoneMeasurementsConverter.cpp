@@ -176,14 +176,14 @@ int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& 
 
 // ***********************************************************************************************************************
 
-    QString s_FilenameOut = s_EventLabel + "_" + dt.toString( "yyyy-MM" ) + "_1200";
+    QString s_FilenameOut = fi.absolutePath() + "/" + s_EventLabel + "_" + dt.toString( "yyyy-MM" ) + "_1200";
 
     if ( b_Import == true )
         s_FilenameOut.append( "_imp.txt" );
     else
         s_FilenameOut.append( ".txt" );
 
-    QFile fout( fi.absolutePath() + "/" + s_FilenameOut );
+    QFile fout( s_FilenameOut );
 
     if ( fout.open( QIODevice::WriteOnly | QIODevice::Text ) == false )
     {

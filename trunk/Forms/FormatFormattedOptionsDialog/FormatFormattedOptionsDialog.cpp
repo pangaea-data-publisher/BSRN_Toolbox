@@ -67,13 +67,15 @@ int MainWindow::doFormatFormattedOptionsDialog( int &i_FieldAlignment, int &i_Fi
 
         s_MissingValue = dialog.missingValue_lineEdit->text();
 
-        i_DialogResult     = QDialog::Accepted;
+        i_DialogResult = QDialog::Accepted;
         break;
 
     case QDialog::Rejected:
+        i_DialogResult = QDialog::Rejected;
         break;
 
     default:
+        i_DialogResult = QDialog::Rejected;
         break;
     }
 

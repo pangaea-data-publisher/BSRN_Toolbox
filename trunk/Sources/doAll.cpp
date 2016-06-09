@@ -162,11 +162,11 @@ void MainWindow::doAllMetadataConverter()
 
 void MainWindow::doAllDataConverter()
 {
-    int		i				= 0;
-    int		err				= 0;
-    int		stopProgress	= 0;
+    int		i				  = 0;
+    int		err				  = 0;
+    int		stopProgress	  = 0;
 
-    int		P[MAX_NUM_OF_PARAMETER+1];
+    QString     s_FilenameOut = "";
 
     QStringList sl_FilenameOut;
 
@@ -191,15 +191,15 @@ void MainWindow::doAllDataConverter()
 
 // LR 0100
             if ( err == _NOERROR_ )
-                err = BasicMeasurementsConverter( false, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = BasicMeasurementsConverter( false, false, LR0100, gsl_FilenameList.at( i ), s_FilenameOut, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 0300
             if ( err == _NOERROR_ )
-                err = OtherMinuteMeasurementsConverter( false, gsl_FilenameList.at( i ), g_Staff_ptr, g_Station_ptr, P, gsl_FilenameList.count() );
+                err = BasicMeasurementsConverter( false, false, LR0300, gsl_FilenameList.at( i ), s_FilenameOut, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 0500
             if ( err == _NOERROR_ )
-                err = UltraVioletMeasurementsConverter( false, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = UltraVioletMeasurementsConverter( false, false, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 1000
             if ( err == _NOERROR_ )
@@ -271,9 +271,11 @@ void MainWindow::doAllDataConverter()
 
 void MainWindow::doAllImportConverter()
 {
-    int		    i				= 0;
-    int		    err				= 0;
-    int		    stopProgress	= 0;
+    int		i				  = 0;
+    int		err				  = 0;
+    int		stopProgress	  = 0;
+
+    QString     s_FilenameOut = "";
 
     QStringList sl_FilenameOut;  // not used
 
@@ -300,11 +302,11 @@ void MainWindow::doAllImportConverter()
 
 // LR 0100
             if ( err == _NOERROR_ )
-                err = BasicMeasurementsConverter( true, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = BasicMeasurementsConverter( true, false, LR0100, gsl_FilenameList.at( i ), s_FilenameOut, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 0500
             if ( err == _NOERROR_ )
-                err = UltraVioletMeasurementsConverter( true, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = UltraVioletMeasurementsConverter( true, false, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 1000
             if ( err == _NOERROR_ )

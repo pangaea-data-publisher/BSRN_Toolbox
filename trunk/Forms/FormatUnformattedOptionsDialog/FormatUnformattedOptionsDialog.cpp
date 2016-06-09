@@ -71,9 +71,11 @@ int MainWindow::doFormatUnformattedOptionsDialog( QString &s_MissingValue, int &
         break;
 
     case QDialog::Rejected:
+        i_DialogResult = QDialog::Rejected;
         break;
 
     default:
+        i_DialogResult = QDialog::Rejected;
         break;
     }
 

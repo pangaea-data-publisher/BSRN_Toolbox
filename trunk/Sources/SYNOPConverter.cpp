@@ -2883,14 +2883,14 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
 
 // ***********************************************************************************************************************
 
-    QString s_FilenameOut = s_EventLabel + "_" + dt.toString( "yyyy-MM" ) + "_1000";
+    QString s_FilenameOut = fi.absolutePath() + "/" + s_EventLabel + "_" + dt.toString( "yyyy-MM" ) + "_1000";
 
     if ( b_Import == true )
         s_FilenameOut.append( "_imp.txt" );
     else
         s_FilenameOut.append( ".txt" );
 
-    QFile fout( fi.absolutePath() + "/" + s_FilenameOut );
+    QFile fout( s_FilenameOut );
 
     if ( fout.open( QIODevice::WriteOnly | QIODevice::Text ) == false )
     {

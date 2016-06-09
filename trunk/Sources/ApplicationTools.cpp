@@ -1174,3 +1174,156 @@ QString MainWindow::ReferenceOtherVersion( const QString& s_EventLabel, structRe
 
     return( s_OutputStr );
 }
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+// 2016-06-06
+
+QString MainWindow::writeGeocodeHeader( const bool b_Import, int *P )
+{
+    QString s_OutputStr = "";
+
+    if ( b_Import == true )
+    {
+        s_OutputStr.append( "1599" );   // Date/Time
+        s_OutputStr.append( "\t" );     // tab
+        s_OutputStr.append( "56349" );  //  Height above ground = 2 m
+    }
+    else
+    {
+        if ( P[0] > 0 )
+            s_OutputStr.append( "Station" );
+
+        if ( P[1] > 0 )
+        {
+            if ( s_OutputStr.isEmpty() == false )
+                s_OutputStr.append( "\t" );
+
+            s_OutputStr.append( "Date/Time" );
+        }
+
+        if ( P[2] > 0 )
+        {
+            if ( s_OutputStr.isEmpty() == false )
+                s_OutputStr.append( "\t" );
+
+            s_OutputStr.append( "Latitude" );
+        }
+
+        if ( P[3] > 0 )
+        {
+            if ( s_OutputStr.isEmpty() == false )
+                s_OutputStr.append( "\t" );
+
+            s_OutputStr.append( "Longitude" );
+        }
+
+        if ( P[4] > 0 )
+        {
+            if ( s_OutputStr.isEmpty() == false )
+                s_OutputStr.append( "\t" );
+
+            s_OutputStr.append( "Height above ground [m]" );
+        }
+
+        if ( s_OutputStr.isEmpty() == true )
+            s_OutputStr.append( "Date/Time" );
+    }
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+// 2016-06-06
+
+QString MainWindow::buildGeocodeEntries( const bool b_Import, int *P, const QDateTime dt, const QString s_EventLabel, const float f_Latitude, const float f_Longitude )
+{
+    QString s_OutputStr = "";
+
+    if ( b_Import == true )
+    {
+        s_OutputStr.append( dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" );
+        s_OutputStr.append( tr( "2" ) );
+    }
+    else
+    {
+        if ( P[0] > 0 )
+            s_OutputStr.append( s_EventLabel );
+
+        if ( P[1] > 0 )
+        {
+            if ( s_OutputStr.isEmpty() == false )
+                s_OutputStr.append( "\t" );
+
+            s_OutputStr.append( dt.toString( "yyyy-MM-ddThh:mm" ) );
+        }
+
+        if ( P[2] > 0 )
+        {
+            if ( s_OutputStr.isEmpty() == false )
+                s_OutputStr.append( "\t" );
+
+            s_OutputStr.append( num2str( f_Latitude ) );
+        }
+
+        if ( P[3] > 0 )
+        {
+            if ( s_OutputStr.isEmpty() == false )
+                s_OutputStr.append( "\t" );
+
+            s_OutputStr.append( num2str( f_Longitude ) );
+        }
+
+        if ( P[4] > 0 )
+        {
+            if ( s_OutputStr.isEmpty() == false )
+                s_OutputStr.append( "\t" );
+
+            s_OutputStr.append( tr( "2" ) );
+        }
+
+        if ( s_OutputStr.isEmpty() == true )
+            s_OutputStr.append( dt.toString( "yyyy-MM-ddThh:mm" ) );
+    }
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+// 2016-06-07
+
+int MainWindow::checkSelectedParameter( const int offset, int *P, int *PoM )
+{
+    int P_sum = 0;
+
+    for ( int i=offset+1; i<MAX_NUM_OF_PARAMETER; i++ )
+        P_sum += P[i] + PoM[i];
+
+    if ( P_sum < 1 )
+        return( -51 );
+
+    return( _NOERROR_ );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+// 2016-06-07
+
+int MainWindow::checkSelectedParameter( const int offset, int *P )
+{
+    int P_sum = 0;
+
+    for ( int i=offset+1; i<MAX_NUM_OF_PARAMETER; i++ )
+        P_sum += P[i];
+
+    if ( P_sum < 1 )
+        return( -51 );
+
+    return( _NOERROR_ );
+}

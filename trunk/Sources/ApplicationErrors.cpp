@@ -57,7 +57,10 @@ void MainWindow::onError( const int err )
         QMessageBox::warning( this, getApplicationName( true ), tr( "The format of the BSRN IDs database is\nwrong. Please contact rsieger@pangaea.de" ) );
         break;
     case -50:
-        QMessageBox::information( this, getApplicationName( true ), tr( "Select more the one file!" ) );
+        QMessageBox::information( this, getApplicationName( true ), tr( "Select more than one file!" ) );
+        break ;
+    case -51:
+        QMessageBox::information( this, getApplicationName( true ), tr( "You have to select parameters not only metadata!" ) );
         break ;
     case -60:
         QMessageBox::information( this, getApplicationName( true ), tr( "Download of BSRN IDs database fails.\nPlease check your connection to the\ninternet and refresh the database again." ) );

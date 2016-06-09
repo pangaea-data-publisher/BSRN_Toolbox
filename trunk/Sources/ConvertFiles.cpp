@@ -7,8 +7,94 @@
 // *************************************************************************************
 // *************************************************************************************
 // *************************************************************************************
+// 2016-06-09
+// remove Latitude and Longitude from Quality Check output file
 
-int MainWindow::convertFile( const QString& s_FilenameIn, const QString& FilenameOut, const int i_FieldAlignment, const int i_FieldWidth, const QString& s_MissingValue, const int i_NumOfFiles )
+int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_FilenameOut, const int i_NumOfFiles )
+{
+    int         i             = 0;
+    int         n             = 0;
+    int         m             = 0;
+
+    int         i_PosPosition = -1;
+
+    QStringList sl_Input;
+
+// ************************************************************************************************
+
+    n = readFile( s_FilenameIn, sl_Input, _SYSTEM_, i_NumOfFiles );
+
+// ***********************************************************************************************************************
+
+    QFile fout( s_FilenameOut );
+
+    if ( fout.open( QIODevice::WriteOnly | QIODevice::Text) == false )
+        return( -20 );
+
+    QTextStream tout( &fout );
+
+// ***********************************************************************************************************************
+
+    setStatusBarFileInProgress( s_FilenameIn );
+
+    if ( sl_Input.at( i ) == "/* DATA DESCRIPTION:" )
+    {
+        while ( ( sl_Input.at( i ).contains( "*/" ) == false ) && ( i < n ) )
+        {
+            if ( ( sl_Input.at( i ).contains( tr("Latitude") ) == false ) && ( sl_Input.at( i ).contains( tr("Longitude") ) == false ) )
+                tout << sl_Input.at( i ) << endl;
+
+            i++;
+        }
+
+        tout << sl_Input.at( i++ ) << endl;
+
+        m = NumOfSections( sl_Input.at( i ) ) - 1;
+
+        for ( int j=0; j<m; j++ )
+        {
+            if ( ( sl_Input.at( i ).section( "\t", j, j ).toLower() == "latitude" ) && ( sl_Input.at( i ).section( "\t", j+1, j+1 ).toLower() == "longitude" ) )
+            {
+                i_PosPosition = j;
+                break;
+            }
+        }
+
+        if ( i_PosPosition > -1 )
+        {
+            QFile::remove( s_FilenameIn );
+
+            while ( i < n )
+            {
+                tout << sl_Input.at( i ).section( "\t", 0, i_PosPosition-1 ) << "\t";
+                tout << sl_Input.at( i ).section( "\t", i_PosPosition+2, m ) << endl;
+
+                i++;
+            }
+        }
+        else
+        {
+            fout.close();
+            fout.remove();
+
+            QFile::rename( s_FilenameIn, s_FilenameOut );
+
+            return( LATITUDENOTFOUND );
+        }
+    }
+
+// *************************************************************************************
+
+    fout.close();
+
+    return( _NOERROR_ );
+}
+
+// *************************************************************************************
+// *************************************************************************************
+// *************************************************************************************
+
+int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_FilenameOut, const int i_FieldAlignment, const int i_FieldWidth, const QString& s_MissingValue, const int i_NumOfFiles )
 {
     int   n             = 0;
     int	  stopProgress	= 0;
@@ -26,7 +112,7 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const QString& Filenam
         return( -10 );
     ui_filesize = fin.size();
 
-    QFile fout( FilenameOut );
+    QFile fout( s_FilenameOut );
 
     if ( fout.open( QIODevice::WriteOnly | QIODevice::Text) == false )
         return( -20 );
@@ -97,7 +183,7 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const QString& Filenam
 // *************************************************************************************
 // *************************************************************************************
 
-int MainWindow::convertFile( const QString& s_FilenameIn, const QString& FilenameOut, const QString& s_MissingValue, const int i_FieldDelimiter, const int i_NumOfFiles )
+int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_FilenameOut, const QString& s_MissingValue, const int i_FieldDelimiter, const int i_NumOfFiles )
 {
     int   n             = 0;
     int	  stopProgress	= 0;
@@ -116,7 +202,7 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const QString& Filenam
         return( -10 );
     ui_filesize = fin.size();
 
-    QFile fout( FilenameOut );
+    QFile fout( s_FilenameOut );
 
     if ( fout.open( QIODevice::WriteOnly | QIODevice::Text) == false )
         return( -20 );

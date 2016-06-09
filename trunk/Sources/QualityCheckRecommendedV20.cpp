@@ -14,7 +14,7 @@
 #define GT_COMPARISON        5
 
 
-int MainWindow::QualityCheckRecommendedV20(const QString & FileNameIn, const bool & b_CheckPhysicallyPossibleLimits, const bool & b_CheckExtremelyRareLimits, const bool & b_CheckComparisons, const QString & s_AuxiliaryDataAlgorithm, const bool & b_OutputCodes, const bool & b_OutputCleanedValues, const bool & b_OutputOriginalValues, const bool & b_OutputAuxiliaryData, const bool & b_OutputOneFile)
+int MainWindow::QualityCheckRecommendedV20(const QString & FileNameIn, QString & FileNameOut, const bool & b_CheckPhysicallyPossibleLimits, const bool & b_CheckExtremelyRareLimits, const bool & b_CheckComparisons, const QString & s_AuxiliaryDataAlgorithm, const bool & b_OutputCodes, const bool & b_OutputCleanedValues, const bool & b_OutputOriginalValues, const bool & b_OutputAuxiliaryData, const bool & b_OutputOneFile)
 {
     qDebug() << "QualityCheckRecommendedV20 started";
     QTime t;
@@ -318,7 +318,7 @@ int MainWindow::QualityCheckRecommendedV20(const QString & FileNameIn, const boo
     //   Preliminaries
     Measurements.toBsrnUnits();
     QFileInfo FileInfoIn (FileNameIn);
-    QString FileNameOut;
+//  QString FileNameOut; -> Rainer Sieger, 2016-06-09
     BsrnData MeasurementsCleaned (Measurements);
     MeasurementsCleaned.set(NAN,QcCodes);
     MeasurementsCleaned.DataDescription["Applied quality checks"] = QcCodes.DataDescription["Applied quality checks"];
@@ -334,7 +334,7 @@ int MainWindow::QualityCheckRecommendedV20(const QString & FileNameIn, const boo
     if (b_OutputAuxiliaryData == true && b_OutputOneFile == false)
     {
         initProgress(2, FileNameIn, tr( "Writing auxiliary data..." ), AuxData.size());
-        FileNameOut = (FileInfoIn.absolutePath() + "/" + FileInfoIn.baseName() + "_QC_auxdata.tab");
+        FileNameOut = (FileInfoIn.absolutePath() + "/" + FileInfoIn.baseName() + "_QC_auxdata_temp.txt"); // .tab -> _temp.txt (Rainer Sieger - 2016-06-09 )
         connect(&AuxData, SIGNAL(lineProcessed(int)), this, SLOT(incProgress(int)));
         int Error = AuxData.writeToFile(FileNameOut);
         disconnect(&AuxData, SIGNAL(lineProcessed(int)), this, SLOT(incProgress(int)));
@@ -346,7 +346,7 @@ int MainWindow::QualityCheckRecommendedV20(const QString & FileNameIn, const boo
     if (b_OutputCleanedValues == true && b_OutputOneFile == false)
     {
         initProgress(2, FileNameIn, tr("Writing cleaned data..."), MeasurementsCleaned.size());
-        FileNameOut = (FileInfoIn.absolutePath() + "/" + FileInfoIn.baseName() + "_QC_cleaned.tab");
+        FileNameOut = (FileInfoIn.absolutePath() + "/" + FileInfoIn.baseName() + "_QC_cleaned_temp.txt"); // .tab -> _temp.txt (Rainer Sieger - 2016-06-09 )
         connect(&MeasurementsCleaned, SIGNAL(lineProcessed(int)), this, SLOT(incProgress(int)));
         int Error = MeasurementsCleaned.writeToFile(FileNameOut);
         disconnect(&MeasurementsCleaned, SIGNAL(lineProcessed(int)), this, SLOT(incProgress(int)));
@@ -358,7 +358,7 @@ int MainWindow::QualityCheckRecommendedV20(const QString & FileNameIn, const boo
     if (b_OutputCodes == true && b_OutputOneFile == false)
     {
         initProgress(2, FileNameIn, tr( "Writing QC codes..." ), QcCodes.size());
-        FileNameOut = (FileInfoIn.absolutePath() + "/" + FileInfoIn.baseName() + "_QC_codes.tab");
+        FileNameOut = (FileInfoIn.absolutePath() + "/" + FileInfoIn.baseName() + "_QC_codes_temp.txt"); // .tab -> _temp.txt (Rainer Sieger - 2016-06-09 )
         connect(&QcCodes, SIGNAL(lineProcessed(int)), this, SLOT(incProgress(int)));
         int Error = QcCodes.writeToFile(FileNameOut);
         disconnect(&QcCodes, SIGNAL(lineProcessed(int)), this, SLOT(incProgress(int)));
@@ -370,7 +370,7 @@ int MainWindow::QualityCheckRecommendedV20(const QString & FileNameIn, const boo
     if (b_OutputOneFile == true)
     {
         initProgress(2, FileNameIn, tr( "Writing combined data..." ), CombinedData.size());
-        FileNameOut = (FileInfoIn.absolutePath() + "/" + FileInfoIn.baseName() + "_QC_combined.tab");
+        FileNameOut = (FileInfoIn.absolutePath() + "/" + FileInfoIn.baseName() + "_QC_combined_temp.txt"); // .tab -> _temp.txt (Rainer Sieger - 2016-06-09 )
         connect(&CombinedData, SIGNAL(lineProcessed(int)), this, SLOT(incProgress(int)));
         int Error = CombinedData.writeToFile(FileNameOut);
         disconnect(&CombinedData, SIGNAL(lineProcessed(int)), this, SLOT(incProgress(int)));
@@ -409,28 +409,59 @@ int MainWindow::incProgress( const int i_Step )
 
 void MainWindow::doQualityCheckRecommendedV20()
 {
-    int err = _NOERROR_;
-    int i = 0;
-    int stopProgress = 0;
+    int		i				= 0;
+    int		err				= 0;
+    int		stopProgress	= 0;
 
+    QString s_FilenameIn    = "";
+    QString s_FilenameOut   = "";
+
+// *************************************************************************************
+
+    structParameter	*Parameter_0001_ptr	= NULL;
+    structParameter	*Parameter_0009_ptr	= NULL;
+
+    Parameter_0001_ptr	= new structParameter[MAX_NUM_OF_PARAMETER+1];
+    Parameter_0009_ptr	= new structParameter[MAX_NUM_OF_PARAMETER+1];
+
+// **********************************************************************************************
 
     if ( gsl_FilenameList.isEmpty() == true )
         chooseFiles();
 
     if ( gsl_FilenameList.isEmpty() == false )
     {
-        err = doQualityCheckRecommendedV20OptionsDialog(gb_CheckPhysicallyPossibleLimits, gb_CheckExtremelyRareLimits, gb_CheckComparisons, gs_AuxiliaryDataAlgorithm, gb_OutputCodes, gb_OutputCleanedValues, gb_OutputOriginalValues, gb_OutputAuxiliaryData, gb_OutputOneFile);
+        err = doQualityCheckRecommendedV20OptionsDialog( gb_CheckPhysicallyPossibleLimits, gb_CheckExtremelyRareLimits, gb_CheckComparisons, gs_AuxiliaryDataAlgorithm, gb_OutputCodes, gb_OutputCleanedValues, gb_OutputOriginalValues, gb_OutputAuxiliaryData, gb_OutputOneFile );
 
         if ( err == QDialog::Accepted )
         {
-            initFileProgress(gsl_FilenameList.count(), gsl_FilenameList.at( 0 ), tr( "Quality check - Recommended V2.0 ..." ));
+            initFileProgress( gsl_FilenameList.count(), gsl_FilenameList.at( 0 ), tr( "Quality check - Recommended V2.0 ..." ) );
 
             ErrorMessage = new QErrorMessage;
-            err = _NOERROR_;
+            err          = _NOERROR_;
+
             while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( stopProgress == 0 ) )
             {
-                err = QualityCheckRecommendedV20(gsl_FilenameList.at(i), gb_CheckPhysicallyPossibleLimits, gb_CheckExtremelyRareLimits, gb_CheckComparisons, gs_AuxiliaryDataAlgorithm, gb_OutputCodes, gb_OutputCleanedValues, gb_OutputOriginalValues, gb_OutputAuxiliaryData, gb_OutputOneFile);
-                stopProgress = incFileProgress(gsl_FilenameList.count(), ++i );
+                s_FilenameIn = gsl_FilenameList.at( i );
+
+                if ( s_FilenameIn.endsWith( ".dat" ) == true )
+                {
+                    err = BasicMeasurementsConverter( false, false, LR0100, s_FilenameIn, s_FilenameOut, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+
+                    s_FilenameIn = s_FilenameOut;
+                }
+
+                err = QualityCheckRecommendedV20( s_FilenameIn, s_FilenameOut, gb_CheckPhysicallyPossibleLimits, gb_CheckExtremelyRareLimits, gb_CheckComparisons, gs_AuxiliaryDataAlgorithm, gb_OutputCodes, gb_OutputCleanedValues, gb_OutputOriginalValues, gb_OutputAuxiliaryData, gb_OutputOneFile );
+
+                if ( err == _NOERROR_ )
+                {
+                    s_FilenameIn = s_FilenameOut;
+                    s_FilenameOut.replace( "_temp", "" );
+
+                    err = convertFile( s_FilenameIn, s_FilenameOut, gsl_FilenameList.count() );
+                }
+
+                stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
             }
 
             resetFileProgress( gsl_FilenameList.count() );
@@ -448,6 +479,22 @@ void MainWindow::doQualityCheckRecommendedV20()
 // *************************************************************************************
 
     endTool( err, stopProgress, gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList, tr( "Done" ), tr( "Quality check - Recommended V2.0 was canceled" ), false, false );
+
+// **********************************************************************************************
+
+    if ( Parameter_0001_ptr != NULL )
+    {
+        delete []Parameter_0001_ptr;
+        Parameter_0001_ptr = NULL;
+    }
+
+    if ( Parameter_0009_ptr != NULL )
+    {
+        delete []Parameter_0009_ptr;
+        Parameter_0009_ptr = NULL;
+    }
+
+// **********************************************************************************************
 
     onError( err );
 }

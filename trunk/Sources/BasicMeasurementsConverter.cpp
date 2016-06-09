@@ -22,7 +22,7 @@ int MainWindow::BasicMeasurementsTest( const QString& s_FilenameIn, int *P, cons
     int				n				= 0;
     int				i_P_sum			= 0;
 
-    QString			InputStr		= "";
+    QString			InputStr_LR0100	= "";
     QString			SearchString1	= "*C0100";
     QString			SearchString2	= "*U0100";
 
@@ -61,26 +61,26 @@ int MainWindow::BasicMeasurementsTest( const QString& s_FilenameIn, int *P, cons
 
 // ***********************************************************************************************************************
 
-    InputStr = tin.readLine().simplified();
-    InputStr = tin.readLine().simplified();
+    InputStr_LR0100 = tin.readLine().simplified();
+    InputStr_LR0100 = tin.readLine().simplified();
 
-    while ( ( tin.atEnd() == false ) && ( InputStr.startsWith( "*" ) == false ) )
+    while ( ( tin.atEnd() == false ) && ( InputStr_LR0100.startsWith( "*" ) == false ) )
     {
         // ID of quantity
-        InputStr  = tin.readLine().simplified();
-        ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
+        InputStr_LR0100  = tin.readLine().simplified();
+        ui_length        = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr_LR0100 );
 
-        if ( InputStr.startsWith( "*" ) == false )
+        if ( InputStr_LR0100.startsWith( "*" ) == false )
         {
-            InputStr = " " + InputStr + " ";
+            InputStr_LR0100 = " " + InputStr_LR0100 + " ";
 
-            if ( InputStr.contains( " 2 " ) ) ++n;
-            if ( InputStr.contains( " 3 " ) ) ++n;
-            if ( InputStr.contains( " 4 " ) ) ++n;
-            if ( InputStr.contains( " 5 " ) ) ++n;
-            if ( InputStr.contains( " 21 " ) ) ++n;
-            if ( InputStr.contains( " 22 " ) ) ++n;
-            if ( InputStr.contains( " 23 " ) ) ++n;
+            if ( InputStr_LR0100.contains( " 2 " ) ) ++n;
+            if ( InputStr_LR0100.contains( " 3 " ) ) ++n;
+            if ( InputStr_LR0100.contains( " 4 " ) ) ++n;
+            if ( InputStr_LR0100.contains( " 5 " ) ) ++n;
+            if ( InputStr_LR0100.contains( " 21 " ) ) ++n;
+            if ( InputStr_LR0100.contains( " 22 " ) ) ++n;
+            if ( InputStr_LR0100.contains( " 23 " ) ) ++n;
         }
     }
 
@@ -93,93 +93,93 @@ int MainWindow::BasicMeasurementsTest( const QString& s_FilenameIn, int *P, cons
 
     while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
     {
-        InputStr	= tin.readLine();
-        ui_length	= incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
+        InputStr_LR0100	= tin.readLine();
+        ui_length       = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr_LR0100 );
 
-        if ( ( InputStr.startsWith( SearchString1 ) == true ) || ( InputStr.startsWith( SearchString2 ) == true ) )
+        if ( ( InputStr_LR0100.startsWith( SearchString1 ) == true ) || ( InputStr_LR0100.startsWith( SearchString2 ) == true ) )
         {
             while ( ( tin.atEnd() == false ) && ( b_Stop == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) )
             {
-                InputStr	= tin.readLine();
-                ui_length	= incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
+                InputStr_LR0100	= tin.readLine();
+                ui_length       = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr_LR0100 );
 
-                if ( InputStr.startsWith( "*" ) == false )
+                if ( InputStr_LR0100.startsWith( "*" ) == false )
                 {
-                    if ( InputStr.mid( 11, 4 ).simplified() != "-999" )
+                    if ( InputStr_LR0100.mid( 11, 4 ).simplified() != "-999" )
                         P[1] = 1;
 
-                    if ( InputStr.mid( 16, 5 ).simplified() != "-99.9" )
+                    if ( InputStr_LR0100.mid( 16, 5 ).simplified() != "-99.9" )
                         P[2] = 1;
 
-                    if ( InputStr.mid( 22, 4 ).simplified() != "-999" )
+                    if ( InputStr_LR0100.mid( 22, 4 ).simplified() != "-999" )
                         P[3] = 1;
 
-                    if ( InputStr.mid( 27, 4 ).simplified() != "-999" )
+                    if ( InputStr_LR0100.mid( 27, 4 ).simplified() != "-999" )
                         P[4] = 1;
 
-                    if ( InputStr.mid( 34, 4 ).simplified() != "-999" )
+                    if ( InputStr_LR0100.mid( 34, 4 ).simplified() != "-999" )
                         P[5] = 1;
 
-                    if ( InputStr.mid( 39, 5 ).simplified() != "-99.9" )
+                    if ( InputStr_LR0100.mid( 39, 5 ).simplified() != "-99.9" )
                         P[6] = 1;
 
-                    if ( InputStr.mid( 45, 4 ).simplified() != "-999" )
+                    if ( InputStr_LR0100.mid( 45, 4 ).simplified() != "-999" )
                         P[7] = 1;
 
-                    if ( InputStr.mid( 50, 4 ).simplified() != "-999" )
+                    if ( InputStr_LR0100.mid( 50, 4 ).simplified() != "-999" )
                         P[8] = 1;
 
-                    InputStr  = tin.readLine();
-                    ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
+                    InputStr_LR0100 = tin.readLine();
+                    ui_length       = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr_LR0100 );
 
-                    if ( InputStr.length() < 80 )
+                    if ( InputStr_LR0100.length() < 80 )
                     { // Raw data format
-                        if ( InputStr.mid( 11, 4 ).simplified() != "-999" )
+                        if ( InputStr_LR0100.mid( 11, 4 ).simplified() != "-999" )
                             P[9] = 1;
 
-                        if ( InputStr.mid( 16, 5 ).simplified() != "-99.9" )
+                        if ( InputStr_LR0100.mid( 16, 5 ).simplified() != "-99.9" )
                             P[10] = 1;
 
-                        if ( InputStr.mid( 22, 4 ).simplified() != "-999" )
+                        if ( InputStr_LR0100.mid( 22, 4 ).simplified() != "-999" )
                             P[11] = 1;
 
-                        if ( InputStr.mid( 27, 4 ).simplified() != "-999" )
+                        if ( InputStr_LR0100.mid( 27, 4 ).simplified() != "-999" )
                             P[12] = 1;
 
-                        if ( InputStr.mid( 34, 4 ).simplified() != "-999" )
+                        if ( InputStr_LR0100.mid( 34, 4 ).simplified() != "-999" )
                             P[13] = 1;
 
-                        if ( InputStr.mid( 39, 5 ).simplified() != "-99.9" )
+                        if ( InputStr_LR0100.mid( 39, 5 ).simplified() != "-99.9" )
                             P[14] = 1;
 
-                        if ( InputStr.mid( 45, 4 ).simplified() != "-999" )
+                        if ( InputStr_LR0100.mid( 45, 4 ).simplified() != "-999" )
                             P[15] = 1;
 
-                        if ( InputStr.mid( 50, 4 ).simplified() != "-999" )
+                        if ( InputStr_LR0100.mid( 50, 4 ).simplified() != "-999" )
                             P[16] = 1;
 
-                        if ( InputStr.mid( 58, 5 ).simplified() != "-99.9" )
+                        if ( InputStr_LR0100.mid( 58, 5 ).simplified() != "-99.9" )
                             P[17] = 1;
 
-                        if ( InputStr.mid( 64, 5 ).simplified() != "-99.9" )
+                        if ( InputStr_LR0100.mid( 64, 5 ).simplified() != "-99.9" )
                             P[18] = 1;
 
-                        if ( InputStr.mid( 70, 4 ).simplified() != "-999" )
+                        if ( InputStr_LR0100.mid( 70, 4 ).simplified() != "-999" )
                             P[19] = 1;
                     }
                     else
                     { // Quality checked format
-                        InputStr = InputStr.simplified();
+                        InputStr_LR0100 = InputStr_LR0100.simplified();
 
                         for ( int i=1; i<=4; ++i )
                         {
-                            if ( InputStr.section( " ", i, i ).toFloat() > -99. )
+                            if ( InputStr_LR0100.section( " ", i, i ).toFloat() > -99. )
                                 P[8+i] = 1;
                         }
 
                         for ( int i=6; i<=12; ++i )
                         {
-                            if ( InputStr.section( " ", i, i ).toFloat() > -99. )
+                            if ( InputStr_LR0100.section( " ", i, i ).toFloat() > -99. )
                                 P[7+i] = 1;
                         }
                     }
@@ -211,9 +211,11 @@ int MainWindow::BasicMeasurementsTest( const QString& s_FilenameIn, int *P, cons
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
 
-/*! @brief Konvertiert den LR 1300.
+/*! @brief Konvertiert den LR 0100.
 *
 *   @param b_Import Erzeugt Import- oder Datendatei
+*   @param b_showSelectParameterDialog soll der Select Parameter Dialog anzeigt werden?
+*   @param i_Mode mit oder ohne LR0300
 *   @param s_FilenameIn Dateiname der Inputdatei
 *   @param Parameter_0001 Pointer auf Array aller Parameter aus LR 0001
 *   @param Parameter_0009 Pointer auf Array aller Parameter aus LR 0009
@@ -225,7 +227,7 @@ int MainWindow::BasicMeasurementsTest( const QString& s_FilenameIn, int *P, cons
 *   @return Fehlercode
 */
 
-int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& s_FilenameIn, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
+int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_showSelectParameterDialog, const int i_Mode, const QString& s_FilenameIn, QString& s_FilenameOut, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
 {
     int				err				= 0;
 
@@ -233,6 +235,7 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
     int				k				= 0;
     int             l               = 0;
     int				n				= 0;
+    int             offset          = 0;
 
     int				i_PIID			= 506;
     int				i_SourceID		= 17;
@@ -251,8 +254,8 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 
     QString			OutputStr		= "";
 
-    QString			InputStr	= "";
-    QString			InputStr_0300	= "";
+    QString			InputStr_LR0100	= "";
+    QString			InputStr_LR0300	= "";
 
     QString			SearchString1	= "*C0009";
     QString			SearchString2	= "*U0009";
@@ -290,7 +293,8 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 
 // ***********************************************************************************************************************
 
-    err = BasicMeasurementsTest( s_FilenameIn, P, i_NumOfFiles );
+    if ( i_Mode != LR0300 )
+        err = BasicMeasurementsTest( s_FilenameIn, P, i_NumOfFiles );
 
     if ( err == _ERROR_ )
         return( _ERROR_ );
@@ -328,10 +332,10 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 
 // ***********************************************************************************************************************
 
-    InputStr  = tin.readLine();
-    ui_length = InputStr.length();
+    InputStr_LR0100 = tin.readLine();
+    ui_length       = InputStr_LR0100.length();
 
-    if ( ( InputStr.startsWith( "*C0001" ) == false ) && ( InputStr.startsWith( "*U0001" ) == false ) )
+    if ( ( InputStr_LR0100.startsWith( "*C0001" ) == false ) && ( InputStr_LR0100.startsWith( "*U0001" ) == false ) )
     {
         fin.close();
         return( -40 );
@@ -339,18 +343,18 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 
 // ***********************************************************************************************************************
 
-    InputStr  = tin.readLine();
-    ui_length = ui_length + InputStr.length();
+    InputStr_LR0100 = tin.readLine();
+    ui_length       = ui_length + InputStr_LR0100.length();
 
-    i_StationNumber	= InputStr.left( 3 ).toInt();
+    i_StationNumber	= InputStr_LR0100.left( 3 ).toInt();
     i_SourceID		= findInstituteID( i_StationNumber, Station_ptr );
     s_StationName	= findStationName( i_StationNumber, Station_ptr );
     s_EventLabel	= findEventLabel( i_StationNumber, Station_ptr );
 
 // ***********************************************************************************************************************
 
-    i_Month	= InputStr.mid( 4, 2 ).toInt();
-    i_Year	= InputStr.mid( 7, 4 ).toInt();
+    i_Month	= InputStr_LR0100.mid( 4, 2 ).toInt();
+    i_Year	= InputStr_LR0100.mid( 7, 4 ).toInt();
 
     QDateTime dt = QDateTime().toUTC();
 
@@ -359,7 +363,7 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 
 // ***********************************************************************************************************************
 
-    if ( checkFilename( fi.fileName(), s_EventLabel, InputStr.mid( 4, 2 ), InputStr.mid( 9, 2 ) ) == false )
+    if ( checkFilename( fi.fileName(), s_EventLabel, InputStr_LR0100.mid( 4, 2 ), InputStr_LR0100.mid( 9, 2 ) ) == false )
     {
         resetProgress( i_NumOfFiles );
         fin.close();
@@ -368,20 +372,20 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 
 // ***********************************************************************************************************************
 
-    while ( ( tin.atEnd() == false ) && ( InputStr.startsWith( "*" ) == false ) )
+    while ( ( tin.atEnd() == false ) && ( InputStr_LR0100.startsWith( "*" ) == false ) )
     {
         // ID of quantity
-        InputStr  = tin.readLine().simplified();
-        ui_length = ui_length + InputStr.length();
+        InputStr_LR0100 = tin.readLine().simplified();
+        ui_length       = ui_length + InputStr_LR0100.length();
 
-        if ( InputStr.startsWith( "*" ) == false )
+        if ( InputStr_LR0100.startsWith( "*" ) == false )
         {
-            InputStr.replace( " ", "\t" );
-            InputStr.replace( "-1", "" );
+            InputStr_LR0100.replace( " ", "\t" );
+            InputStr_LR0100.replace( "-1", "" );
 
             for ( int i=0; i<8; ++i )
             {
-                i_ParameterID = InputStr.section( "\t", i, i ).toInt();
+                i_ParameterID = InputStr_LR0100.section( "\t", i, i ).toInt();
 
                 if ( i_ParameterID > 0 )
                 {
@@ -402,15 +406,15 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 
     while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
     {
-        if ( ( InputStr.startsWith( "*C0002" ) == true ) || ( InputStr.startsWith( "*U0002" ) == true ) )
+        if ( ( InputStr_LR0100.startsWith( "*C0002" ) == true ) || ( InputStr_LR0100.startsWith( "*U0002" ) == true ) )
         {
-            InputStr  = tin.readLine();
-            ui_length = ui_length + InputStr.length();
+            InputStr_LR0100 = tin.readLine();
+            ui_length       = ui_length + InputStr_LR0100.length();
 
-            InputStr  = tin.readLine();
-            ui_length = ui_length + InputStr.length();
+            InputStr_LR0100 = tin.readLine();
+            ui_length       = ui_length + InputStr_LR0100.length();
 
-            i_PIID = findPiID( InputStr.left( 38 ).simplified(), Staff_ptr );
+            i_PIID = findPiID( InputStr_LR0100.left( 38 ).simplified(), Staff_ptr );
 
             b_Stop = true;
         }
@@ -428,19 +432,19 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 
     while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
     {
-        InputStr  = tin.readLine();
-        ui_length = ui_length + InputStr.length();
+        InputStr_LR0100 = tin.readLine();
+        ui_length       = ui_length + InputStr_LR0100.length();
 
-        if ( ( InputStr.startsWith( "*C0004" ) == true ) || ( InputStr.startsWith( "*U0004" ) == true ) )
+        if ( ( InputStr_LR0100.startsWith( "*C0004" ) == true ) || ( InputStr_LR0100.startsWith( "*U0004" ) == true ) )
         {
             for ( int i=0; i<6; i++ )
             {
-                InputStr  = tin.readLine();
-                ui_length = ui_length + InputStr.length();
+                InputStr_LR0100 = tin.readLine();
+                ui_length       = ui_length + InputStr_LR0100.length();
             }
 
-            f_Latitude  = InputStr.simplified().section( " ", 0, 0 ).toFloat() - 90.;
-            f_Longitude = InputStr.simplified().section( " ", 1, 1 ).toFloat() - 180.;
+            f_Latitude  = InputStr_LR0100.simplified().section( " ", 0, 0 ).toFloat() - 90.;
+            f_Longitude = InputStr_LR0100.simplified().section( " ", 1, 1 ).toFloat() - 180.;
 
             b_Stop = true;
         }
@@ -450,19 +454,33 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 
 // ***********************************************************************************************************************
 
-    QString s_FilenameOut = s_EventLabel + "_" + dt.toString( "yyyy-MM" );
+    s_FilenameOut = fi.absolutePath() + "/" + s_EventLabel + "_" + dt.toString( "yyyy-MM" );
 
-    if ( b_LR0300 == true )
-        s_FilenameOut.append( "_0100+0300" );
-    else
+    switch ( i_Mode )
+    {
+    case LR0100:
         s_FilenameOut.append( "_0100" );
+
+        if ( b_LR0300 == true )
+            s_FilenameOut.append( "+0300" );
+
+        break;
+
+    case LR0300:
+        s_FilenameOut.append( "_0300" );
+        break;
+
+    default:
+        s_FilenameOut.append( "_error" );
+        break;
+    }
 
     if ( b_Import == true )
         s_FilenameOut.append( "_imp.txt" );
     else
         s_FilenameOut.append( ".txt" );
 
-    QFile fout( fi.absolutePath() + "/" + s_FilenameOut );
+    QFile fout( s_FilenameOut );
 
     if ( fout.open( QIODevice::WriteOnly | QIODevice::Text ) == false )
     {
@@ -473,32 +491,154 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
     QTextStream tout( &fout );
 
 // ***********************************************************************************************************************
-
-    QFile fin0300( fi.absolutePath() + "/" + s_EventLabel + "_" + dt.toString( "yyyy-MM" ) + "_0300.txt" );
-
-    QTextStream tin0300( &fin0300 );
+// Test data file and build LR0300 temp file
 
     if ( b_LR0300 == true )
     {
-        err = OtherMinuteMeasurementsConverter( true, s_FilenameIn, Staff_ptr, Station_ptr, PoM, i_NumOfFiles );
-
-        if ( ( err != _NOERROR_ ) || ( fin0300.open( QIODevice::ReadOnly | QIODevice::Text ) == false ) )
+        if ( ( err = OtherMinuteMeasurementsConverter( true, s_FilenameIn, Staff_ptr, Station_ptr, PoM, i_NumOfFiles ) ) != _NOERROR_ )
         {
             fin.close();
-            return( -10 );
+            fout.close();
+            fout.remove();
+
+            return( err );
         }
     }
 
 // ***********************************************************************************************************************
 
-    initProgress( i_NumOfFiles, s_FilenameIn, tr( "Basic measurements converter working (Building)..." ), 100 );
+    QFile fin0300( fi.absolutePath() + "/" + s_EventLabel + "_" + dt.toString( "yyyy-MM" ) + "_0300_temp.txt" );
+
+    if ( fin0300.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
+    {
+        fin.close();
+        fout.close();
+        fout.remove();
+
+        return( -20 );
+    }
+
+    QTextStream tin0300( &fin0300 );
+
+// ***********************************************************************************************************************
+
+    if ( b_Import == false )
+    {
+        offset = 4;
+
+        if ( b_showSelectParameterDialog == true )
+        {
+            if ( i_Mode != LR0300 )
+            {
+                if ( checkSelectedParameter( offset, P ) == _NOERROR_ )
+                    err = doSelectParametersDialog( LR0100, P );
+                else
+                    err = QDialog::Accepted;
+
+                if ( err == QDialog::Accepted )
+                {
+                    if ( checkSelectedParameter( offset, PoM ) == _NOERROR_ )
+                        err = doSelectParametersDialog( LR0100plusLR0300, PoM );
+                }
+            }
+            else
+            {
+                P[0] = 0;
+
+                for ( int i=2; i<MAX_NUM_OF_PARAMETER; i++ )
+                    P[i] = 0;
+
+                err = _NODATAFOUND_;
+
+                if ( checkSelectedParameter( offset, PoM ) == _NOERROR_ )
+                {
+                    err = doSelectParametersDialog( LR0300, PoM );
+
+                    for ( int i=0; i<=offset; i++ )
+                    {
+                        if ( PoM[i] > 0 )
+                            P[i] = 1;
+                    }
+                }
+            }
+
+            if ( err != QDialog::Accepted )
+            {
+                fin.close();
+                fout.close();
+                fout.remove();
+
+                if ( b_LR0300 == true )
+                {
+                    fin0300.close();
+                    fin0300.remove();
+                }
+
+                switch ( err )
+                {
+                case QDialog::Rejected:
+                    return( _CHOOSEABORTED_ );
+                    break;
+                case _NODATAFOUND_:
+                    return( _NODATAFOUND_ );
+                    break;
+                default:
+                    return( _ERROR_ );
+                    break;
+                }
+            }
+        }
+        else
+        {
+            // select parameters for Quality Check Recommended V2.0
+
+            for ( int i=0; i<=19+offset; i++ )
+                P[i] = 0;
+
+            for ( int i=0; i<=13+offset; i++ )
+                PoM[i] = 0;
+
+            P[1] = 1; P[2] = 1; P[3] = 1; // Date/Time, Latitutude, Longitude
+            P[1+offset] = 1; P[5+offset] = 1; P[9+offset] = 1; P[13+offset] = 1;
+
+            if ( b_LR0300 == true )
+            {
+                PoM[1] = 1; // Date/Time
+                PoM[1+offset] = 1; PoM[5+offset] = 1; PoM[9+offset] = 1;
+            }
+
+            P[17+offset] = 1; P[18+offset] = 1; P[19+offset] = 1; // Air temperature, relative Humidity, Station pressure
+        }
+
+        if ( ( err = checkSelectedParameter( offset, P, PoM ) ) != _NOERROR_ )
+        {
+            fin.close();
+            fout.close();
+            fout.remove();
+
+            if ( b_LR0300 == true )
+            {
+                fin0300.close();
+                fin0300.remove();
+            }
+
+            return( err );
+        }
+    }
+
+// ***********************************************************************************************************************
+
+    if ( i_Mode != LR0300 )
+        initProgress( i_NumOfFiles, s_FilenameIn, tr( "Basic measurements converter working (Building)..." ), 100 );
+    else
+        initProgress( i_NumOfFiles, s_FilenameIn, tr( "Other measurements converter working (Building)..." ), 100 );
 
     setStatusBarFileInProgress( s_FilenameIn, tr( " - Building" ) );
 
 // ***********************************************************************************************************************
 
     if ( b_LR0300 == true )
-        InputStr_0300 = tin0300.readLine(); // read header
+        InputStr_LR0300 = tin0300.readLine(); // read header
 
 // ***********************************************************************************************************************
 // LR 0009
@@ -508,26 +648,26 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 
     while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
     {
-        InputStr  = tin.readLine();
-        ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
+        InputStr_LR0100 = tin.readLine();
+        ui_length       = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr_LR0100 );
 
-        if ( ( InputStr.startsWith( SearchString1 ) == true ) || ( InputStr.startsWith( SearchString2 ) == true ) )
+        if ( ( InputStr_LR0100.startsWith( SearchString1 ) == true ) || ( InputStr_LR0100.startsWith( SearchString2 ) == true ) )
         {
             while ( ( tin.atEnd() == false ) && ( b_Stop == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) )
             {
-                InputStr = tin.readLine();
-                ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
+                InputStr_LR0100 = tin.readLine();
+                ui_length       = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr_LR0100 );
 
-                if ( InputStr.startsWith( "*" ) == false )
+                if ( InputStr_LR0100.startsWith( "*" ) == false )
                 {
                     if ( ++l <= MAX_NUM_OF_PARAMETER )
                     {
-                        Parameter_0009[l].ParameterID	= InputStr.mid( 10, 9 ).simplified().toInt();
-                        Parameter_0009[l].MethodID		= InputStr.mid( 20, 5 ).simplified().toInt();
+                        Parameter_0009[l].ParameterID	= InputStr_LR0100.mid( 10, 9 ).simplified().toInt();
+                        Parameter_0009[l].MethodID		= InputStr_LR0100.mid( 20, 5 ).simplified().toInt();
 
-                        i_Day		= InputStr.mid( 1, 2 ).toInt();
-                        i_Hour		= InputStr.mid( 4, 2 ).toInt();
-                        i_Minute	= InputStr.mid( 7, 2 ).toInt();
+                        i_Day		= InputStr_LR0100.mid( 1, 2 ).toInt();
+                        i_Hour		= InputStr_LR0100.mid( 4, 2 ).toInt();
+                        i_Minute	= InputStr_LR0100.mid( 7, 2 ).toInt();
 
                         if ( i_Day == -1 ) i_Day = 1;
                         if ( i_Hour == -1 ) i_Hour = 0;
@@ -674,7 +814,7 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
         }
 
 // ***********************************************************************************************************************
-// 0300 - build data description header
+// LR0300 - build data description header
 
         for ( int i=1; i<=n; ++i )
         {
@@ -755,7 +895,7 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
         }
 
 // ***********************************************************************************************************************
-// Temperature, relative humidity, station pressure
+// LR0100 - Temperature - build data description header, relative humidity, station pressure
 
         for ( int i=1; i<=MAX_NUM_OF_PARAMETER; ++i )
         {
@@ -766,6 +906,9 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
             }
         }
 
+// ***********************************************************************************************************************
+// LR0100 - Relative humidity - build data description header
+
         for ( int i=1; i<=MAX_NUM_OF_PARAMETER; ++i )
         {
             if ( ( Parameter_0001[i].ParameterID == 22 ) && ( P[18] > 0 ) && ( b_relHum == false )  )
@@ -775,6 +918,9 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
             }
         }
 
+// ***********************************************************************************************************************
+// LR0100 - Station pressure - build data description header
+
         for ( int i=1; i<=MAX_NUM_OF_PARAMETER; ++i )
         {
             if ( ( Parameter_0001[i].ParameterID == 23 ) && ( P[19] > 0 ) && ( b_press == false )  )
@@ -783,6 +929,8 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
                 b_press = true;
             }
         }
+
+// ***********************************************************************************************************************
 
         b_gr		= false;
         b_dr		= false;
@@ -826,10 +974,7 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 // ***********************************************************************************************************************
 // write data header
 
-    if ( b_Import == true )
-        tout << "1599\t56349";  // Date/Time and Height above ground = 2 m
-    else
-        tout << "Station\tDate/Time\tLatitude\tLongitude\tHeight above ground [m]";
+    tout << writeGeocodeHeader( b_Import, P );
 
     for ( int i=1; i<=MAX_NUM_OF_PARAMETER; ++i )
     {
@@ -844,10 +989,10 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
             }
             else
             {
-                if ( P[1] > 0 ) tout << "\tShort-wave downward (GLOBAL) radiation [W/m**2]";
-                if ( P[2] > 0 ) tout << "\tShort-wave downward (GLOBAL) radiation, standard deviation [W/m**2]";
-                if ( P[3] > 0 ) tout << "\tShort-wave downward (GLOBAL) radiation, minimum [W/m**2]";
-                if ( P[4] > 0 ) tout << "\tShort-wave downward (GLOBAL) radiation, maximum [W/m**2]";
+                if ( P[1+offset] > 0 ) tout << "\tShort-wave downward (GLOBAL) radiation [W/m**2]";
+                if ( P[2+offset] > 0 ) tout << "\tShort-wave downward (GLOBAL) radiation, standard deviation [W/m**2]";
+                if ( P[3+offset] > 0 ) tout << "\tShort-wave downward (GLOBAL) radiation, minimum [W/m**2]";
+                if ( P[4+offset] > 0 ) tout << "\tShort-wave downward (GLOBAL) radiation, maximum [W/m**2]";
             }
 
             b_gr = true;
@@ -867,10 +1012,10 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
             }
             else
             {
-                if ( P[5] > 0 ) tout << "\tDirect radiation [W/m**2]";
-                if ( P[6] > 0 ) tout << "\tDirect radiation, standard deviation [W/m**2]";
-                if ( P[7] > 0 ) tout << "\tDirect radiation, minimum [W/m**2]";
-                if ( P[8] > 0 ) tout << "\tDirect radiation, maximum [W/m**2]";
+                if ( P[5+offset] > 0 ) tout << "\tDirect radiation [W/m**2]";
+                if ( P[6+offset] > 0 ) tout << "\tDirect radiation, standard deviation [W/m**2]";
+                if ( P[7+offset] > 0 ) tout << "\tDirect radiation, minimum [W/m**2]";
+                if ( P[8+offset] > 0 ) tout << "\tDirect radiation, maximum [W/m**2]";
             }
 
             b_dr = true;
@@ -883,17 +1028,17 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
         {
             if ( b_Import == true )
             {
-                if ( P[9] > 0 )  tout << "\t45293";
+                if ( P[9]  > 0 ) tout << "\t45293";
                 if ( P[10] > 0 ) tout << "\t55961";
                 if ( P[11] > 0 ) tout << "\t55959";
                 if ( P[12] > 0 ) tout << "\t55960";
             }
             else
             {
-                if ( P[9] > 0 )  tout << "\tDiffuse radiation [W/m**2]";
-                if ( P[10] > 0 ) tout << "\tDiffuse radiation, standard deviation [W/m**2]";
-                if ( P[11] > 0 ) tout << "\tDiffuse radiation, minimum [W/m**2]";
-                if ( P[12] > 0 ) tout << "\tDiffuse radiation, maximum [W/m**2]";
+                if ( P[9+offset]  > 0 ) tout << "\tDiffuse radiation [W/m**2]";
+                if ( P[10+offset] > 0 ) tout << "\tDiffuse radiation, standard deviation [W/m**2]";
+                if ( P[11+offset] > 0 ) tout << "\tDiffuse radiation, minimum [W/m**2]";
+                if ( P[12+offset] > 0 ) tout << "\tDiffuse radiation, maximum [W/m**2]";
             }
 
             b_dif = true;
@@ -913,10 +1058,10 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
             }
             else
             {
-                if ( P[13] > 0 ) tout << "\tLong-wave downward radiation [W/m**2]";
-                if ( P[14] > 0 ) tout << "\tLong-wave downward radiation, standard deviation [W/m**2]";
-                if ( P[15] > 0 ) tout << "\tLong-wave downward radiation, minimum [W/m**2]";
-                if ( P[16] > 0 ) tout << "\tLong-wave downward radiation, maximum [W/m**2]";
+                if ( P[13+offset] > 0 ) tout << "\tLong-wave downward radiation [W/m**2]";
+                if ( P[14+offset] > 0 ) tout << "\tLong-wave downward radiation, standard deviation [W/m**2]";
+                if ( P[15+offset] > 0 ) tout << "\tLong-wave downward radiation, minimum [W/m**2]";
+                if ( P[16+offset] > 0 ) tout << "\tLong-wave downward radiation, maximum [W/m**2]";
             }
 
             b_dlw = true;
@@ -938,10 +1083,10 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
                 }
                 else
                 {
-                    if ( PoM[1] > 0 ) tout << "\tShort-wave upward (REFLEX) radiation [W/m**2]";
-                    if ( PoM[2] > 0 ) tout << "\tShort-wave upward (REFLEX) radiation, standard deviation [W/m**2]";
-                    if ( PoM[3] > 0 ) tout << "\tShort-wave upward (REFLEX) radiation, minimum [W/m**2]";
-                    if ( PoM[4] > 0 ) tout << "\tShort-wave upward (REFLEX) radiation, maximum [W/m**2]";
+                    if ( PoM[1+offset] > 0 ) tout << "\tShort-wave upward (REFLEX) radiation [W/m**2]";
+                    if ( PoM[2+offset] > 0 ) tout << "\tShort-wave upward (REFLEX) radiation, standard deviation [W/m**2]";
+                    if ( PoM[3+offset] > 0 ) tout << "\tShort-wave upward (REFLEX) radiation, minimum [W/m**2]";
+                    if ( PoM[4+offset] > 0 ) tout << "\tShort-wave upward (REFLEX) radiation, maximum [W/m**2]";
                 }
 
                 b_usr = true;
@@ -961,10 +1106,10 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
                 }
                 else
                 {
-                    if ( PoM[5] > 0 ) tout << "\tLong-wave upward radiation [W/m**2]";
-                    if ( PoM[6] > 0 ) tout << "\tLong-wave upward radiation, standard deviation [W/m**2]";
-                    if ( PoM[7] > 0 ) tout << "\tLong-wave upward radiation, minimum [W/m**2]";
-                    if ( PoM[8] > 0 ) tout << "\tLong-wave upward radiation, maximum [W/m**2]";
+                    if ( PoM[5+offset] > 0 ) tout << "\tLong-wave upward radiation [W/m**2]";
+                    if ( PoM[6+offset] > 0 ) tout << "\tLong-wave upward radiation, standard deviation [W/m**2]";
+                    if ( PoM[7+offset] > 0 ) tout << "\tLong-wave upward radiation, minimum [W/m**2]";
+                    if ( PoM[8+offset] > 0 ) tout << "\tLong-wave upward radiation, maximum [W/m**2]";
                 }
 
                 b_ul = true;
@@ -977,17 +1122,17 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
             {
                 if ( b_Import == true )
                 {
-                    if ( PoM[9] > 0 )  tout << "\t55918";
+                    if ( PoM[9]  > 0 ) tout << "\t55918";
                     if ( PoM[10] > 0 ) tout << "\t55919";
                     if ( PoM[11] > 0 ) tout << "\t55920";
                     if ( PoM[12] > 0 ) tout << "\t55921";
                 }
                 else
                 {
-                    if ( PoM[9] > 0 )  tout << "\tNet radiation [W/m**2]";
-                    if ( PoM[10] > 0 ) tout << "\tNet radiation, standard deviation [W/m**2]";
-                    if ( PoM[11] > 0 ) tout << "\tNet radiation, minimum [W/m**2]";
-                    if ( PoM[12] > 0 ) tout << "\tNet radiation, maximum [W/m**2]";
+                    if ( PoM[9+offset]  > 0 ) tout << "\tNet radiation [W/m**2]";
+                    if ( PoM[10+offset] > 0 ) tout << "\tNet radiation, standard deviation [W/m**2]";
+                    if ( PoM[11+offset] > 0 ) tout << "\tNet radiation, minimum [W/m**2]";
+                    if ( PoM[12+offset] > 0 ) tout << "\tNet radiation, maximum [W/m**2]";
                 }
 
                 b_netr = true;
@@ -997,12 +1142,18 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 
     for ( int i=1; i<=MAX_NUM_OF_PARAMETER; ++i )
     {
-        if ( ( Parameter_0001[i].ParameterID == 21 ) && ( P[17] > 0 ) && ( b_temp == false ) ) // Air temperature
+        if ( ( Parameter_0001[i].ParameterID == 21 ) && ( b_temp == false ) ) // Air temperature
         {
             if ( b_Import == true )
-                tout << "\t48820";
+            {
+                if ( P[17] > 0 )
+                    tout << "\t48820";
+            }
             else
-                tout << "\tAir temperature [deg C]";
+            {
+                if ( P[17+offset] > 0 )
+                   tout << "\tAir temperature [deg C]";
+            }
 
             b_temp = true;
         }
@@ -1010,12 +1161,18 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 
     for ( int i=1; i<=MAX_NUM_OF_PARAMETER; ++i )
     {
-        if ( ( Parameter_0001[i].ParameterID == 22 ) && ( P[18] > 0 ) && ( b_relHum == false ) ) // relative humidity
+        if ( ( Parameter_0001[i].ParameterID == 22 ) && ( b_relHum == false ) ) // relative humidity
         {
             if ( b_Import == true )
-                tout << "\t2219";
+            {
+                if ( P[18] > 0 )
+                    tout << "\t2219";
+            }
             else
-                tout << "\tHumidity, relative [%]";
+            {
+                if ( P[18+offset] > 0 )
+                    tout << "\tHumidity, relative [%]";
+            }
 
             b_relHum = true;
         }
@@ -1023,12 +1180,18 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 
     for ( int i=1; i<=MAX_NUM_OF_PARAMETER; ++i )
     {
-        if ( ( Parameter_0001[i].ParameterID == 23 ) && ( P[19] > 0 ) && ( b_press == false ) ) // Station pressure
+        if ( ( Parameter_0001[i].ParameterID == 23 ) && ( b_press == false ) ) // Station pressure
         {
             if ( b_Import == true )
-                tout << "\t48823";
+            {
+                if ( P[19] > 0 )
+                    tout << "\t48823";
+            }
             else
-                tout << "\tStation pressure [hPa]";
+            {
+                if ( P[19+offset] > 0 )
+                    tout << "\tStation pressure [hPa]";
+            }
 
             b_press = true;
         }
@@ -1036,74 +1199,72 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 
     tout << eol;
 
-//	b_Stop = true;
+// ***********************************************************************************************************************
+// write data
 
     while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
     {
-        if ( ( InputStr.startsWith( SearchString3 ) == true ) || ( InputStr.startsWith( SearchString4 ) == true ) )
+        if ( ( InputStr_LR0100.startsWith( SearchString3 ) == true ) || ( InputStr_LR0100.startsWith( SearchString4 ) == true ) )
         {
             while ( ( tin.atEnd() == false ) && ( b_Stop == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) )
             {
-                InputStr = tin.readLine();
-                ui_length     = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
+                InputStr_LR0100 = tin.readLine();
+                ui_length       = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr_LR0100 );
 
-                if ( InputStr.startsWith( "*" ) == false )
+                if ( InputStr_LR0100.startsWith( "*" ) == false )
                 {
-                    i_Day		= InputStr.mid( 1, 2 ).toInt();
-                    i_Minute	= InputStr.mid( 4, 4 ).toInt();
+                    i_Day		= InputStr_LR0100.mid( 1, 2 ).toInt();
+                    i_Minute	= InputStr_LR0100.mid( 4, 4 ).toInt();
 
                     dt.setDate( QDate( i_Year, i_Month, i_Day ) );
                     dt.setTime( QTime( 0, 0, 0 ) );
                     dt = dt.addSecs( i_Minute*60 );
 
-                    b_Out	  = false;
+                    b_Out = false;
 
-                    if ( b_Import == false )
-                        OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + num2str( f_Latitude ) + "\t" + num2str( f_Longitude ) + "\t" + tr( "2" );
-                    else
-                        OutputStr = dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + tr( "2" );
+                    OutputStr = buildGeocodeEntries( b_Import, P, dt, s_EventLabel, f_Latitude, f_Longitude );
 
                     if ( b_gr == true ) // global radiation = 2
                     {
-                        if ( P[1] > 0 )
+                        if ( P[1+offset] > 0 )
                         {
-                            if ( InputStr.mid( 11, 4 ).simplified() != "-999" )
+                            if ( InputStr_LR0100.mid( 11, 4 ).simplified() != "-999" )
                             {
                                 b_Out = true;
-                                OutputStr.append( "\t" + InputStr.mid( 11, 4 ).simplified() );
+                                OutputStr.append( "\t" + InputStr_LR0100.mid( 11, 4 ).simplified() );
                             }
                             else
                                 OutputStr.append( "\t" );
                         }
 
-                        if ( P[2] > 0 )
+                        if ( P[2+offset] > 0 )
                         {
-                            if ( InputStr.mid( 16, 5 ).simplified() != "-99.9" )
+                            if ( InputStr_LR0100.mid( 16, 5 ).simplified() != "-99.9" )
                             {
                                 b_Out = true;
-                                OutputStr.append( "\t" + InputStr.mid( 16, 5 ).simplified() );
+                                OutputStr.append( "\t" + InputStr_LR0100.mid( 16, 5 ).simplified() );
                             }
                             else
                                 OutputStr.append( "\t" );
                         }
 
-                        if ( P[3] > 0 )
+                        if ( P[3+offset] > 0 )
                         {
-                            if ( InputStr.mid( 22, 4 ).simplified() != "-999" )
+                            if ( InputStr_LR0100.mid( 22, 4 ).simplified() != "-999" )
                             {
                                 b_Out = true;
-                                OutputStr.append( "\t" + InputStr.mid( 22, 4 ).simplified() );
+                                OutputStr.append( "\t" + InputStr_LR0100.mid( 22, 4 ).simplified() );
                             }
                             else
                                 OutputStr.append( "\t" );
                         }
 
-                        if ( P[4] > 0 )
+                        if ( P[4+offset] > 0 )
                         {
-                            if ( InputStr.mid( 27, 4 ).simplified() != "-999" )
+                            if ( InputStr_LR0100.mid( 27, 4 ).simplified() != "-999" )
                             {
                                 b_Out = true;
-                                OutputStr.append( "\t" + InputStr.mid( 27, 4 ).simplified() );
+                                OutputStr.append( "\t" + InputStr_LR0100.mid( 27, 4 ).simplified() );
                             }
                             else
                                 OutputStr.append( "\t" );
@@ -1112,97 +1273,97 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 
                     if ( b_dr == true ) // direct radiation = 3
                     {
-                        if ( P[5] > 0 )
+                        if ( P[5+offset] > 0 )
                         {
-                            if ( InputStr.mid( 34, 4 ).simplified() != "-999" )
+                            if ( InputStr_LR0100.mid( 34, 4 ).simplified() != "-999" )
                             {
                                 b_Out = true;
-                                OutputStr.append( "\t" + InputStr.mid( 34, 4 ).simplified() );
+                                OutputStr.append( "\t" + InputStr_LR0100.mid( 34, 4 ).simplified() );
                             }
                             else
                                 OutputStr.append( "\t" );
                         }
 
-                        if ( P[6] > 0 )
+                        if ( P[6+offset] > 0 )
                         {
-                            if ( InputStr.mid( 39, 5 ).simplified() != "-99.9" )
+                            if ( InputStr_LR0100.mid( 39, 5 ).simplified() != "-99.9" )
                             {
                                 b_Out = true;
-                                OutputStr.append( "\t" + InputStr.mid( 39, 5 ).simplified() );
+                                OutputStr.append( "\t" + InputStr_LR0100.mid( 39, 5 ).simplified() );
                             }
                             else
                                 OutputStr.append( "\t" );
                         }
 
-                        if ( P[7] > 0 )
+                        if ( P[7+offset] > 0 )
                         {
-                            if ( InputStr.mid( 45, 4 ).simplified() != "-999" )
+                            if ( InputStr_LR0100.mid( 45, 4 ).simplified() != "-999" )
                             {
                                 b_Out = true;
-                                OutputStr.append( "\t" + InputStr.mid( 45, 4 ).simplified() );
+                                OutputStr.append( "\t" + InputStr_LR0100.mid( 45, 4 ).simplified() );
                             }
                             else
                                 OutputStr.append( "\t" );
                         }
 
-                        if ( P[8] > 0 )
+                        if ( P[8+offset] > 0 )
                         {
-                            if ( InputStr.mid( 50, 4 ).simplified() != "-999" )
+                            if ( InputStr_LR0100.mid( 50, 4 ).simplified() != "-999" )
                             {
                                 b_Out = true;
-                                OutputStr.append( "\t" + InputStr.mid( 50, 4 ).simplified() );
+                                OutputStr.append( "\t" + InputStr_LR0100.mid( 50, 4 ).simplified() );
                             }
                             else
                                 OutputStr.append( "\t" );
                         }
                     }
 
-                    InputStr = tin.readLine();
-                    ui_length     = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
+                    InputStr_LR0100 = tin.readLine();
+                    ui_length       = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr_LR0100 );
 
-                    if ( InputStr.length() < 80 )
+                    if ( InputStr_LR0100.length() < 80 )
                     { // Raw data format
                         if ( b_dif == true ) // diffuse radiation = 4
                         {
-                            if ( P[9] > 0 )
+                            if ( P[9+offset] > 0 )
                             {
-                                if ( InputStr.mid( 11, 4 ).simplified() != "-999" )
+                                if ( InputStr_LR0100.mid( 11, 4 ).simplified() != "-999" )
                                 {
                                     b_Out = true;
-                                    OutputStr.append( "\t" + InputStr.mid( 11, 4 ).simplified() );
+                                    OutputStr.append( "\t" + InputStr_LR0100.mid( 11, 4 ).simplified() );
                                 }
                                 else
                                     OutputStr.append( "\t" );
                             }
 
-                            if ( P[10] > 0 )
+                            if ( P[10+offset] > 0 )
                             {
-                                if ( InputStr.mid( 16, 5 ).simplified() != "-99.9" )
+                                if ( InputStr_LR0100.mid( 16, 5 ).simplified() != "-99.9" )
                                 {
                                     b_Out = true;
-                                    OutputStr.append( "\t" + InputStr.mid( 16, 5 ).simplified() );
+                                    OutputStr.append( "\t" + InputStr_LR0100.mid( 16, 5 ).simplified() );
                                 }
                                 else
                                     OutputStr.append( "\t" );
                             }
 
-                            if ( P[11] > 0 )
+                            if ( P[11+offset] > 0 )
                             {
-                                if ( InputStr.mid( 22, 4 ).simplified() != "-999" )
+                                if ( InputStr_LR0100.mid( 22, 4 ).simplified() != "-999" )
                                 {
                                     b_Out = true;
-                                    OutputStr.append( "\t" + InputStr.mid( 22, 4 ).simplified() );
+                                    OutputStr.append( "\t" + InputStr_LR0100.mid( 22, 4 ).simplified() );
                                 }
                                 else
                                     OutputStr.append( "\t" );
                             }
 
-                            if ( P[12] > 0 )
+                            if ( P[12+offset] > 0 )
                             {
-                                if ( InputStr.mid( 27, 4 ).simplified() != "-999" )
+                                if ( InputStr_LR0100.mid( 27, 4 ).simplified() != "-999" )
                                 {
                                     b_Out = true;
-                                    OutputStr.append( "\t" + InputStr.mid( 27, 4 ).simplified() );
+                                    OutputStr.append( "\t" + InputStr_LR0100.mid( 27, 4 ).simplified() );
                                 }
                                 else
                                     OutputStr.append( "\t" );
@@ -1211,45 +1372,45 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 
                         if ( b_dlw == true ) // downward long-wave radiation = 5
                         {
-                            if ( P[13] > 0 )
+                            if ( P[13+offset] > 0 )
                             {
-                                if ( InputStr.mid( 34, 4 ).simplified() != "-999" )
+                                if ( InputStr_LR0100.mid( 34, 4 ).simplified() != "-999" )
                                 {
                                     b_Out = true;
-                                    OutputStr.append( "\t" + InputStr.mid( 34, 4 ).simplified() );
+                                    OutputStr.append( "\t" + InputStr_LR0100.mid( 34, 4 ).simplified() );
                                 }
                                 else
                                     OutputStr.append( "\t" );
                             }
 
-                            if ( P[14] > 0 )
+                            if ( P[14+offset] > 0 )
                             {
-                                if ( InputStr.mid( 39, 5 ).simplified() != "-99.9" )
+                                if ( InputStr_LR0100.mid( 39, 5 ).simplified() != "-99.9" )
                                 {
                                     b_Out = true;
-                                    OutputStr.append( "\t" + InputStr.mid( 39, 5 ).simplified() );
+                                    OutputStr.append( "\t" + InputStr_LR0100.mid( 39, 5 ).simplified() );
                                 }
                                 else
                                     OutputStr.append( "\t" );
                             }
 
-                            if ( P[15] > 0 )
+                            if ( P[15+offset] > 0 )
                             {
-                                if ( InputStr.mid( 45, 4 ).simplified() != "-999" )
+                                if ( InputStr_LR0100.mid( 45, 4 ).simplified() != "-999" )
                                 {
                                     b_Out = true;
-                                    OutputStr.append( "\t" + InputStr.mid( 45, 4 ).simplified() );
+                                    OutputStr.append( "\t" + InputStr_LR0100.mid( 45, 4 ).simplified() );
                                 }
                                 else
                                     OutputStr.append( "\t" );
                             }
 
-                            if ( P[16] > 0 )
+                            if ( P[16+offset] > 0 )
                             {
-                                if ( InputStr.mid( 50, 4 ).simplified() != "-999" )
+                                if ( InputStr_LR0100.mid( 50, 4 ).simplified() != "-999" )
                                 {
                                     b_Out = true;
-                                    OutputStr.append( "\t" + InputStr.mid( 50, 4 ).simplified() );
+                                    OutputStr.append( "\t" + InputStr_LR0100.mid( 50, 4 ).simplified() );
                                 }
                                 else
                                     OutputStr.append( "\t" );
@@ -1260,18 +1421,18 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
                     { // Quality checked format
                         b_QualityChecked = true;
 
-                        InputStr = InputStr.simplified();
+                        InputStr_LR0100 = InputStr_LR0100.simplified();
 
                         if ( b_dif == true ) // diffuse radiation = 4
                         {
                             for ( int i=1; i<=4; ++i )
                             {
-                                if ( P[8+i] > 0 )
+                                if ( P[8+i+offset] > 0 )
                                 {
-                                    if ( InputStr.section( " ", i, i ).toFloat() > -99. )
+                                    if ( InputStr_LR0100.section( " ", i, i ).toFloat() > -99. )
                                     {
                                         b_Out = true;
-                                        OutputStr.append( "\t" + InputStr.section( " ", i, i ) );
+                                        OutputStr.append( "\t" + InputStr_LR0100.section( " ", i, i ) );
                                     }
                                     else
                                         OutputStr.append( "\t" );
@@ -1283,12 +1444,12 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
                         {
                             for ( int i=6; i<=9; ++i )
                             {
-                                if ( P[7+i] > 0 )
+                                if ( P[7+i+offset] > 0 )
                                 {
-                                    if ( InputStr.section( " ", i, i ).toFloat() > -99. )
+                                    if ( InputStr_LR0100.section( " ", i, i ).toFloat() > -99. )
                                     {
                                         b_Out = true;
-                                        OutputStr.append( "\t" + InputStr.section( " ", i, i ) );
+                                        OutputStr.append( "\t" + InputStr_LR0100.section( " ", i, i ) );
                                     }
                                     else
                                         OutputStr.append( "\t" );
@@ -1299,59 +1460,59 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 
                     if ( ( b_LR0300 == true ) && ( ( b_usr == true ) || ( b_ul == true ) || ( b_netr == true ) ) && ( tin0300.atEnd() == false ) )
                     {
-                        InputStr_0300 = tin0300.readLine();
+                        InputStr_LR0300 = tin0300.readLine();
 
-                        if ( InputStr_0300.section( "\t", 0, 0 ) == dt.toString( "yyyy-MM-ddThh:mm" ) )
+                        if ( InputStr_LR0300.section( "\t", 0, 0 ) == dt.toString( "yyyy-MM-ddThh:mm" ) )
                         {
                             if ( b_usr == true ) // Reflex radiation = 131
                             {
                                 b_Out = true;
 
-                                if ( PoM[1] > 0 )
-                                    OutputStr.append( "\t" + InputStr_0300.section( "\t", 1, 1 ) );
+                                if ( PoM[1+offset] > 0 )
+                                    OutputStr.append( "\t" + InputStr_LR0300.section( "\t", 1, 1 ) );
 
-                                if ( PoM[2] > 0 )
-                                    OutputStr.append( "\t" + InputStr_0300.section( "\t", 2, 2 ) );
+                                if ( PoM[2+offset] > 0 )
+                                    OutputStr.append( "\t" + InputStr_LR0300.section( "\t", 2, 2 ) );
 
-                                if ( PoM[3] > 0 )
-                                    OutputStr.append( "\t" + InputStr_0300.section( "\t", 3, 3 ) );
+                                if ( PoM[3+offset] > 0 )
+                                    OutputStr.append( "\t" + InputStr_LR0300.section( "\t", 3, 3 ) );
 
-                                if ( PoM[4] > 0 )
-                                    OutputStr.append( "\t" + InputStr_0300.section( "\t", 4, 4 ) );
+                                if ( PoM[4+offset] > 0 )
+                                    OutputStr.append( "\t" + InputStr_LR0300.section( "\t", 4, 4 ) );
                             }
 
                             if ( b_ul == true ) // Long-wave radiation, upward = 132
                             {
                                 b_Out = true;
 
-                                if ( PoM[5] > 0 )
-                                    OutputStr.append( "\t" + InputStr_0300.section( "\t", 5, 5 ) );
+                                if ( PoM[5+offset] > 0 )
+                                    OutputStr.append( "\t" + InputStr_LR0300.section( "\t", 5, 5 ) );
 
-                                if ( PoM[6] > 0 )
-                                    OutputStr.append( "\t" + InputStr_0300.section( "\t", 6, 6 ) );
+                                if ( PoM[6+offset] > 0 )
+                                    OutputStr.append( "\t" + InputStr_LR0300.section( "\t", 6, 6 ) );
 
-                                if ( PoM[7] > 0 )
-                                    OutputStr.append( "\t" + InputStr_0300.section( "\t", 7, 7 ) );
+                                if ( PoM[7+offset] > 0 )
+                                    OutputStr.append( "\t" + InputStr_LR0300.section( "\t", 7, 7 ) );
 
-                                if ( PoM[8] > 0 )
-                                    OutputStr.append( "\t" + InputStr_0300.section( "\t", 8, 8 ) );
+                                if ( PoM[8+offset] > 0 )
+                                    OutputStr.append( "\t" + InputStr_LR0300.section( "\t", 8, 8 ) );
                             }
 
                             if ( b_netr == true ) // Netto radiation = 141
                             {
                                 b_Out = true;
 
-                                if ( PoM[9] > 0 )
-                                    OutputStr.append( "\t" + InputStr_0300.section( "\t",  9,  9 ) );
+                                if ( PoM[9+offset] > 0 )
+                                    OutputStr.append( "\t" + InputStr_LR0300.section( "\t",  9,  9 ) );
 
-                                if ( PoM[10] > 0 )
-                                    OutputStr.append( "\t" + InputStr_0300.section( "\t", 10, 10 ) );
+                                if ( PoM[10+offset] > 0 )
+                                    OutputStr.append( "\t" + InputStr_LR0300.section( "\t", 10, 10 ) );
 
-                                if ( PoM[11] > 0 )
-                                    OutputStr.append( "\t" + InputStr_0300.section( "\t", 11, 11 ) );
+                                if ( PoM[11+offset] > 0 )
+                                    OutputStr.append( "\t" + InputStr_LR0300.section( "\t", 11, 11 ) );
 
-                                if ( PoM[12] > 0 )
-                                    OutputStr.append( "\t" + InputStr_0300.section( "\t", 12, 12 ) );
+                                if ( PoM[12+offset] > 0 )
+                                    OutputStr.append( "\t" + InputStr_LR0300.section( "\t", 12, 12 ) );
                             }
                         }
                         else
@@ -1363,34 +1524,34 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
 
                     if ( b_QualityChecked == false )
                     { // Raw data format
-                        if ( b_temp == true ) // air temperature = 21
+                        if ( ( P[17+offset] == 1 ) && ( b_temp == true ) ) // air temperature = 21
                         {
-                            if ( InputStr.mid( 58, 5 ).simplified() != "-99.9" )
+                            if ( InputStr_LR0100.mid( 58, 5 ).simplified() != "-99.9" )
                             {
                                 b_Out = true;
-                                OutputStr.append( "\t" + InputStr.mid( 58, 5 ).simplified() );
+                                OutputStr.append( "\t" + InputStr_LR0100.mid( 58, 5 ).simplified() );
                             }
                             else
                                 OutputStr.append( "\t" );
                         }
 
-                        if ( b_relHum == true ) // relative humidity = 22
+                        if ( ( P[18+offset] == 1 ) && ( b_relHum == true ) ) // relative humidity = 22
                         {
-                            if ( InputStr.mid( 64, 5 ).toFloat() > 0. )
+                            if ( InputStr_LR0100.mid( 64, 5 ).toFloat() > 0. )
                             {
                                 b_Out = true;
-                                OutputStr.append( "\t" + InputStr.mid( 64, 5 ).simplified() );
+                                OutputStr.append( "\t" + InputStr_LR0100.mid( 64, 5 ).simplified() );
                             }
                             else
                                 OutputStr.append( "\t" );
                         }
 
-                        if ( b_press == true ) // station pressure = 23
+                        if ( ( P[19+offset] == 1 ) && ( b_press == true ) ) // station pressure = 23
                         {
-                            if ( InputStr.mid( 70, 4 ).simplified() != "-999" )
+                            if ( InputStr_LR0100.mid( 70, 4 ).simplified() != "-999" )
                             {
                                 b_Out = true;
-                                OutputStr.append( "\t" + InputStr.mid( 70, 4 ).simplified() );
+                                OutputStr.append( "\t" + InputStr_LR0100.mid( 70, 4 ).simplified() );
                             }
                             else
                                 OutputStr.append( "\t" );
@@ -1398,34 +1559,34 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
                     }
                     else
                     {
-                        if ( b_temp == true ) // air temperature = 21
+                        if ( ( P[17+offset] == 1 ) && ( b_temp == true ) ) // air temperature = 21
                         {
-                            if ( InputStr.section( " ", 10, 10 ).simplified() != "-99.9" )
+                            if ( InputStr_LR0100.section( " ", 10, 10 ).simplified() != "-99.9" )
                             {
                                 b_Out = true;
-                                OutputStr.append( "\t" + InputStr.section( " ", 10, 10 ) );
+                                OutputStr.append( "\t" + InputStr_LR0100.section( " ", 10, 10 ) );
                             }
                             else
                                 OutputStr.append( "\t" );
                         }
 
-                        if ( b_relHum == true ) // relative humidity = 22
+                        if ( ( P[18+offset] == 1 ) && ( b_relHum == true ) ) // relative humidity = 22
                         {
-                            if ( InputStr.section( " ", 11, 11 ).simplified() != "-99.9" )
+                            if ( InputStr_LR0100.section( " ", 11, 11 ).simplified() != "-99.9" )
                             {
                                 b_Out = true;
-                                OutputStr.append( "\t" + InputStr.section( " ", 11, 11 ) );
+                                OutputStr.append( "\t" + InputStr_LR0100.section( " ", 11, 11 ) );
                             }
                             else
                                 OutputStr.append( "\t" );
                         }
 
-                        if ( b_press == true ) // station pressure = 23
+                        if ( ( P[19+offset] == 1 ) && ( b_press == true ) ) // station pressure = 23
                         {
-                            if ( InputStr.section( " ", 12, 12 ) != "-999" )
+                            if ( InputStr_LR0100.section( " ", 12, 12 ) != "-999" )
                             {
                                 b_Out = true;
-                                OutputStr.append( "\t" + InputStr.section( " ", 12, 12 ) );
+                                OutputStr.append( "\t" + InputStr_LR0100.section( " ", 12, 12 ) );
                             }
                             else
                                 OutputStr.append( "\t" );
@@ -1443,8 +1604,8 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
         }
         else
         {
-            InputStr  = tin.readLine();
-            ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
+            InputStr_LR0100 = tin.readLine();
+            ui_length       = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr_LR0100 );
         }
     }
 
@@ -1453,7 +1614,6 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
     resetProgress( i_NumOfFiles );
 
     fin.close();
-
     fout.close();
 
     if ( b_LR0300 == true )
@@ -1465,13 +1625,19 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const QString& 
     if ( ui_length == (unsigned int) _APPBREAK_ )
         return( _APPBREAK_ );
 
+    if ( ( err = checkSelectedParameter( offset, PoM ) ) != _NOERROR_ )
+    {
+        QString s_FilenameLR0100 = s_FilenameOut;
+        QFile::rename( s_FilenameOut, s_FilenameLR0100.replace( "0100+0300", "0100" ) );
+    }
+
     return( _NOERROR_ );
 }
 
 // **********************************************************************************************
 // **********************************************************************************************
 // **********************************************************************************************
-// 02.08.2003
+// 2003-08-02
 
 /*! @brief Steuerung des Basic Measurements Converters, LR 0100 */
 
@@ -1480,6 +1646,8 @@ void MainWindow::doBasicMeasurementsConverter( const bool b_Import )
     int		i				= 0;
     int		err				= 0;
     int		stopProgress	= 0;
+
+    QString s_FilenameOut   = "";
 
 // **********************************************************************************************
 
@@ -1500,7 +1668,7 @@ void MainWindow::doBasicMeasurementsConverter( const bool b_Import )
 
         while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( stopProgress != _APPBREAK_ ) )
         {
-            err = BasicMeasurementsConverter( b_Import, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+            err = BasicMeasurementsConverter( b_Import, true, LR0100, gsl_FilenameList.at( i ), s_FilenameOut, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }
@@ -1538,7 +1706,7 @@ void MainWindow::doBasicMeasurementsConverter( const bool b_Import )
 // **********************************************************************************************
 // **********************************************************************************************
 // **********************************************************************************************
-// 02.08.2003
+// 2003-08-02
 
 /*! @brief Steuerung des Basic Measurements Converters im Import-Mode, LR 0100 */
 

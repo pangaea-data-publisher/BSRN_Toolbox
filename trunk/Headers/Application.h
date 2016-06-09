@@ -361,9 +361,9 @@ private:
     int ExpandedMeasurementsTest( const QString& FilenameIn, int *P, const int NumOfFiles );
     int OtherMeasurementsAtXmTest( const QString& FilenameIn, int *P, const int Height, const int NumOfFiles );
 
-    int BasicMeasurementsConverter( const bool Import, const QString& FilenameIn, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
+    int BasicMeasurementsConverter( const bool Import, const bool showSelectParameterDialog, const int Mode, const QString& FilenameIn, QString& FilenameOut, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
     int OtherMinuteMeasurementsConverter( const bool Import, const QString& FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, int *P, const int NumOfFiles );
-    int UltraVioletMeasurementsConverter( const bool Import, const QString& FilenameIn, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
+    int UltraVioletMeasurementsConverter( const bool Import, const bool showSelectParameterDialog, const QString& FilenameIn, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
     int SYNOPConverter( const bool Import, const QString& FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
     int RadiosondeMeasurementsConverter( const bool Import, const QString& FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
     int OzoneMeasurementsConverter( const bool Import, const QString& FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
@@ -376,6 +376,7 @@ private:
     int doQualityCheckRecommendedV20OptionsDialog( bool & b_CheckPhysicallyPossibleLimits, bool & b_CheckExtremelyRareLimits, bool & b_CheckComparisons, QString & s_AuxiliaryDataAlgorithm, bool & b_OutputCodes, bool & b_OutputCleanedValues, bool & b_OutputOriginalValues, bool & b_OutputAuxiliaryData, bool & b_OutputOneFile);
     int doFormatUnformattedOptionsDialog( QString &MissingValue, int &FieldDelimiter );
     int doFormatFormattedOptionsDialog( int &FieldAlignment, int &FieldWidth, QString &MissingValue );
+    int doSelectParametersDialog( const int mode, int *P );
 
 // Tools
     QString ReferenceOtherVersion( const QString& EventLabel, structReference *Reference_ptr, const QDateTime dt );
@@ -407,6 +408,8 @@ private:
     QString findEventLabel( const int StationNumber, structStation *Station_ptr );
     QString findStationName( const int StationNumber, structStation *Station_ptr );
     bool checkFilename( const QString& s_Filename, const QString& s_EventLabel, const QString& s_Month, const QString& s_Year );
+    int checkSelectedParameter( const int offset, int *P, int *PoM );
+    int checkSelectedParameter( const int offset, int *P );
 
     int findInstituteID( const int StationNumber, structStation *Station_ptr );
     int findPiID( const QString& Name, structStaff *Staff_ptr );
@@ -423,16 +426,21 @@ private:
 
     int concatenateFiles( const QString& FilenameOut, const QStringList Filenames, const QString& ProgressMessage, const int SkipLines = 0, const bool RemoveFile = false );
     int convertEOL( const QString& FilenameIn, const bool convertEOL, const int OS );
-    int convertFile( const QString& FilenameIn, const QString& FilenameOut, const QString& MissingValue, const int FieldDelimiter, const int NumOfFiles  );
-    int convertFile( const QString& FilenameIn, const QString& FilenameOut, const int FieldAlignment, const int FieldWidth, const QString& MissingValue, const int NumOfFiles  );
+    int convertFile( const QString& FilenameIn, const QString& FilenameOut, const int NumOfFiles );
+    int convertFile( const QString& FilenameIn, const QString& FilenameOut, const QString& MissingValue, const int FieldDelimiter, const int NumOfFiles );
+    int convertFile( const QString& FilenameIn, const QString& FilenameOut, const int FieldAlignment, const int FieldWidth, const QString& MissingValue, const int NumOfFiles );
     int createReplaceDatabase( const QString& FilenameIn, const int firstReferenceID, const int NumOfFiles );
 
     float calcGeopotentialHeight( const QString& ahhh );
 
     void OpenExternalURL( const int URL = 1 );
 
+    QString writeGeocodeHeader( const bool Import, int *P );
+    QString buildGeocodeEntries( const bool Import, int *P, const QDateTime dt, const QString EventLabel, const float Latitude, const float Longitude );
+
+
 //  Quality check
-    int QualityCheckRecommendedV20( const QString & FileNameIn, const bool & b_CheckPhysicallyPossibleLimits, const bool & b_CheckExtremelyRareLimits, const bool & b_CheckComparisons, const QString & s_AuxiliaryDataAlgorithm, const bool & b_OutputCodes, const bool & b_OutputCleanedValues, const bool & b_OutputOriginalValues, const bool & b_OutputAuxiliaryData, const bool & b_OutputOneFile);
+    int QualityCheckRecommendedV20( const QString & FileNameIn, QString & FileNameOut, const bool & b_CheckPhysicallyPossibleLimits, const bool & b_CheckExtremelyRareLimits, const bool & b_CheckComparisons, const QString & s_AuxiliaryDataAlgorithm, const bool & b_OutputCodes, const bool & b_OutputCleanedValues, const bool & b_OutputOriginalValues, const bool & b_OutputAuxiliaryData, const bool & b_OutputOneFile);
     //int QualityCheckTechnicalReport1( const QString& FilenameIn );
     //int QualityCheckUserDefined( const QString& FilenameIn );
 
@@ -526,10 +534,11 @@ private:
 
     QTextEdit			*textViewer;
 
-    QPoint	posWindow;	//!< Position des Programmfensters.
-    QSize	sizeWindow;	//!< Groesse des Programmfensters.
+    QPoint	posWindow;	             //!< Position des Programmfensters.
+    QSize	sizeWindow;	             //!< Groesse des Programmfensters.
 
-    QPoint  posDialog;  //!< Position der Dialoge
+    QPoint  posDialog;               //!< Position der Dialoge
+    QSize	sizeParameterDialog;	 //!< Groesse der Parameterdialogs.
 
     structStation	*g_Station_ptr;
     structStaff		*g_Staff_ptr;

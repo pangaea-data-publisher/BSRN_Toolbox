@@ -48,9 +48,11 @@ int MainWindow::doConcatenateOptionsDialog( int &i_SkipNFirstLines, bool &b_dele
         break;
 
     case QDialog::Rejected:
+        i_DialogResult          = QDialog::Rejected;
         break;
 
     default:
+        i_DialogResult          = QDialog::Rejected;
         break;
     }
 

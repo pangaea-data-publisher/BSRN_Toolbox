@@ -213,9 +213,11 @@ int MainWindow::doQualityCheckRecommendedV20OptionsDialog(bool & b_CheckPhysical
         break;
 
     case QDialog::Rejected:
+        i_DialogResult = QDialog::Rejected;
         break;
 
     default:
+        i_DialogResult = QDialog::Rejected;
         break;
     }
 

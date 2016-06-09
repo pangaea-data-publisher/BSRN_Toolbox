@@ -61,13 +61,13 @@ int MainWindow::UltraVioletMeasurementsTest( const QString& s_FilenameIn, int *P
 
 // ***********************************************************************************************************************
 
-    InputStr = tin.readLine().simplified();
-    InputStr = tin.readLine().simplified();
+    InputStr  = tin.readLine().simplified();
+    InputStr  = tin.readLine().simplified();
 
     while ( ( tin.atEnd() == false ) && ( InputStr.startsWith( "*" ) == false ) )
     {
         // ID of quantity
-        InputStr = tin.readLine().simplified();
+        InputStr  = tin.readLine().simplified();
         ui_length	= incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
 
         if ( InputStr.startsWith( "*" ) == false )
@@ -148,6 +148,7 @@ int MainWindow::UltraVioletMeasurementsTest( const QString& s_FilenameIn, int *P
 
 /*! @brief Konvertiert den LR 0500.
 *
+*   @param b_showSelectParameterDialog soll der Select Parameter Dialog anzeigt werden?
 *   @param b_Import Erzeugt Import- oder Datendatei
 *   @param s_FilenameIn Dateiname der Inputdatei
 *   @param Parameter_0001 Pointer auf Array aller Parameter aus LR 0001
@@ -160,7 +161,7 @@ int MainWindow::UltraVioletMeasurementsTest( const QString& s_FilenameIn, int *P
 *   @return Fehlercode
 */
 
-int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QString& s_FilenameIn, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
+int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const bool b_showSelectParameterDialog, const QString& s_FilenameIn, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
 {
     int				err				= 0;
 
@@ -168,6 +169,8 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
     int				j				= 1;
     int				k				= 0;
     int				n				= 0;
+
+    int             offset          = 0;
 
     int				i_PIID			= 506;
     int				i_SourceID		= 17;
@@ -222,6 +225,20 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
 
     if ( err == _APPBREAK_ )
         return( _APPBREAK_ );
+
+    if ( b_Import == false )
+    {
+        offset = 4;
+
+        if ( b_showSelectParameterDialog == true )
+        {
+            if ( doSelectParametersDialog( LR0500, P ) != QDialog::Accepted )
+                return( _CHOOSEABORTED_ );
+
+            if ( ( err = checkSelectedParameter( offset, P ) ) != _NOERROR_ )
+                 return( err );
+        }
+    }
 
 // ***********************************************************************************************************************
 
@@ -304,7 +321,7 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
     while ( ( tin.atEnd() == false ) && ( InputStr.startsWith( "*" ) == false ) )
     {
         // ID of quantity
-        InputStr = tin.readLine().simplified();
+        InputStr  = tin.readLine().simplified();
         ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
 
         if ( InputStr.startsWith( "*" ) == false )
@@ -330,10 +347,10 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
     {
         if ( ( InputStr.startsWith( "*C0002" ) == true ) || ( InputStr.startsWith( "*U0002" ) == true ) )
         {
-            InputStr = tin.readLine();
+            InputStr  = tin.readLine();
             ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
 
-            InputStr = tin.readLine();
+            InputStr  = tin.readLine();
             ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
 
             i_PIID = findPiID( InputStr.left( 38 ).simplified(), Staff_ptr );
@@ -377,14 +394,14 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
 
 // ***********************************************************************************************************************
 
-    QString s_FilenameOut = s_EventLabel + "_" + dt.toString( "yyyy-MM" ) + "_0500";
+    QString s_FilenameOut = fi.absolutePath() + "/" + s_EventLabel + "_" + dt.toString( "yyyy-MM" ) + "_0500";
 
     if ( b_Import == true )
         s_FilenameOut.append( "_imp.txt" );
     else
         s_FilenameOut.append( ".txt" );
 
-    QFile fout( fi.absolutePath() + "/" + s_FilenameOut );
+    QFile fout( s_FilenameOut );
 
     if ( fout.open( QIODevice::WriteOnly | QIODevice::Text ) == false )
     {
@@ -403,14 +420,14 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
 
     while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
     {
-        InputStr = tin.readLine();
+        InputStr  = tin.readLine();
         ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
 
         if ( ( InputStr.startsWith( SearchString1 ) == true ) || ( InputStr.startsWith( SearchString2 ) == true ) )
         {
             while ( ( tin.atEnd() == false ) && ( b_Stop == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) )
             {
-                InputStr = tin.readLine();
+                InputStr  = tin.readLine();
                 ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
 
                 if ( InputStr.startsWith( "*" ) == false )
@@ -624,10 +641,7 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
 // ***********************************************************************************************************************
 // write data header
 
-    if ( b_Import == true )
-        tout << "1599\t56349";  // Date/Time and Height above ground = 2 m
-    else
-        tout << "Station\tDate/Time\tLatitude\tLongitude\tHeight above ground [m]";
+    tout << writeGeocodeHeader( b_Import, P );
 
     for ( int i=1; i<=n; ++i )
     {
@@ -642,10 +656,10 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
             }
             else
             {
-                if ( P[1] > 0 ) tout << "\tUV-a global [W/m**2]";
-                if ( P[2] > 0 ) tout << "\tUV-a global, standard deviation [W/m**2]";
-                if ( P[3] > 0 ) tout << "\tUV-a global, minimum [W/m**2]";
-                if ( P[4] > 0 ) tout << "\tUV-a global, maximum [W/m**2]";
+                if ( P[1+offset] > 0 ) tout << "\tUV-a global [W/m**2]";
+                if ( P[2+offset] > 0 ) tout << "\tUV-a global, standard deviation [W/m**2]";
+                if ( P[3+offset] > 0 ) tout << "\tUV-a global, minimum [W/m**2]";
+                if ( P[4+offset] > 0 ) tout << "\tUV-a global, maximum [W/m**2]";
             }
 
             b_UV_a_g = true;
@@ -665,10 +679,10 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
             }
             else
             {
-                if ( P[5] > 0 ) tout << "\tUV-b direct [W/m**2]";
-                if ( P[6] > 0 ) tout << "\tUV-b direct, standard deviation [W/m**2]";
-                if ( P[7] > 0 ) tout << "\tUV-b direct, minimum [W/m**2]";
-                if ( P[8] > 0 ) tout << "\tUV-b direct, maximum [W/m**2]";
+                if ( P[5+offset] > 0 ) tout << "\tUV-b direct [W/m**2]";
+                if ( P[6+offset] > 0 ) tout << "\tUV-b direct, standard deviation [W/m**2]";
+                if ( P[7+offset] > 0 ) tout << "\tUV-b direct, minimum [W/m**2]";
+                if ( P[8+offset] > 0 ) tout << "\tUV-b direct, maximum [W/m**2]";
             }
 
             b_UV_b_d = true;
@@ -681,17 +695,17 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
         {
             if ( b_Import == true )
             {
-                if ( P[9] > 0 ) tout << "\t55930";
+                if ( P[9]  > 0 ) tout << "\t55930";
                 if ( P[10] > 0 ) tout << "\t55931";
                 if ( P[11] > 0 ) tout << "\t55932";
                 if ( P[12] > 0 ) tout << "\t55933";			// UV-b global
             }
             else
             {
-                if ( P[9] > 0 ) tout << "\tUV-b global [W/m**2]";
-                if ( P[10] > 0 ) tout << "\tUV-b global, standard deviation [W/m**2]";
-                if ( P[11] > 0 ) tout << "\tUV-b global, minimum [W/m**2]";
-                if ( P[12] > 0 ) tout << "\tUV-b global, maximum [W/m**2]";
+                if ( P[9+offset]  > 0 ) tout << "\tUV-b global [W/m**2]";
+                if ( P[10+offset] > 0 ) tout << "\tUV-b global, standard deviation [W/m**2]";
+                if ( P[11+offset] > 0 ) tout << "\tUV-b global, minimum [W/m**2]";
+                if ( P[12+offset] > 0 ) tout << "\tUV-b global, maximum [W/m**2]";
             }
 
             b_UV_b_g = true;
@@ -711,10 +725,10 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
             }
             else
             {
-                if ( P[13] > 0 ) tout << "\tUV-b diffuse [W/m**2]";
-                if ( P[14] > 0 ) tout << "\tUV-b diffuse, standard deviation [W/m**2]";
-                if ( P[15] > 0 ) tout << "\tUV-b diffuse, minimum [W/m**2]";
-                if ( P[16] > 0 ) tout << "\tUV-b diffuse, maximum [W/m**2]";
+                if ( P[13+offset] > 0 ) tout << "\tUV-b diffuse [W/m**2]";
+                if ( P[14+offset] > 0 ) tout << "\tUV-b diffuse, standard deviation [W/m**2]";
+                if ( P[15+offset] > 0 ) tout << "\tUV-b diffuse, minimum [W/m**2]";
+                if ( P[16+offset] > 0 ) tout << "\tUV-b diffuse, maximum [W/m**2]";
             }
 
             b_UV_b_diff = true;
@@ -734,10 +748,10 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
             }
             else
             {
-                if ( P[17] > 0 ) tout << "\tUV upward reflected [W/m**2]";
-                if ( P[18] > 0 ) tout << "\tUV upward reflected, standard deviation [W/m**2]";
-                if ( P[19] > 0 ) tout << "\tUV upward reflected, minimum [W/m**2]\t";
-                if ( P[20] > 0 ) tout << "UV upward reflected, maximum [W/m**2]";
+                if ( P[17+offset] > 0 ) tout << "\tUV upward reflected [W/m**2]";
+                if ( P[18+offset] > 0 ) tout << "\tUV upward reflected, standard deviation [W/m**2]";
+                if ( P[19+offset] > 0 ) tout << "\tUV upward reflected, minimum [W/m**2]";
+                if ( P[20+offset] > 0 ) tout << "\tUV upward reflected, maximum [W/m**2]";
             }
 
             b_UV_up_r = true;
@@ -769,16 +783,13 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
 
                     b_Out = false;
 
-                    if ( b_Import == false )
-                        OutputStr = s_EventLabel + "\t" + dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + num2str( f_Latitude ) + "\t" + num2str( f_Longitude ) + "\t" + tr( "2" );
-                    else
-                        OutputStr = dt.toString( "yyyy-MM-ddThh:mm" ) + "\t" + tr( "2" );
+                    OutputStr = buildGeocodeEntries( b_Import, P, dt, s_EventLabel, f_Latitude, f_Longitude );
 
                     if ( b_UV_a_g == true )
                     {
                         for ( int i=1; i<=4; ++i )
                         {
-                            if ( P[i] > 0 )
+                            if ( P[i+offset] > 0 )
                             {
                                 if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
                                 {
@@ -795,7 +806,7 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
                     {
                         for ( i=5; i<=8; ++i )
                         {
-                            if ( P[i] > 0 )
+                            if ( P[i+offset] > 0 )
                             {
                                 if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
                                 {
@@ -815,7 +826,7 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
                     {
                         for ( int i=1; i<=4; ++i )
                         {
-                            if ( P[i+8] > 0 )
+                            if ( P[i+8+offset] > 0 )
                             {
                                 if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
                                 {
@@ -832,7 +843,7 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
                     {
                         for ( i=5; i<=8; ++i )
                         {
-                            if ( P[i+8] > 0 )
+                            if ( P[i+8+offset] > 0 )
                             {
                                 if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
                                 {
@@ -849,7 +860,7 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const QSt
                     {
                         for ( i=9; i<=12; ++i )
                         {
-                            if ( P[i+8] > 0 )
+                            if ( P[i+8+offset] > 0 )
                             {
                                 if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
                                 {
@@ -928,7 +939,7 @@ void MainWindow::doUltraVioletMeasurementsConverter( const bool b_Import )
 
         while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( stopProgress != _APPBREAK_ ) )
         {
-            err = UltraVioletMeasurementsConverter( b_Import, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+            err = UltraVioletMeasurementsConverter( b_Import, true, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }

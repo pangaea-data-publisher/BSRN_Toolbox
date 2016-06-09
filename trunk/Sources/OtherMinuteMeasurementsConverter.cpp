@@ -162,9 +162,9 @@ int MainWindow::OtherMinuteMeasurementsConverter( const bool b_Import, const QSt
 // ***********************************************************************************************************************
 // LR0300
 
-    QString s_FilenameOut = s_EventLabel + "_" + dt.toString( "yyyy-MM" ) + "_0300.txt";
+    QString s_FilenameOut = fi.absolutePath() + "/" + s_EventLabel + "_" + dt.toString( "yyyy-MM" ) + "_0300_temp.txt";
 
-    QFile fout( fi.absolutePath() + "/" + s_FilenameOut );
+    QFile fout( s_FilenameOut );
 
     if ( fout.open( QIODevice::WriteOnly | QIODevice::Text ) == false )
     {
@@ -345,7 +345,7 @@ int MainWindow::OtherMinuteMeasurementsConverter( const bool b_Import, const QSt
 // **********************************************************************************************
 // **********************************************************************************************
 // **********************************************************************************************
-// 21.11.2007
+// 2007-11-12
 
 /*! @brief Steuerung des Other Minute Measurements Converters, LR 0300 */
 
@@ -355,7 +355,15 @@ void MainWindow::doOtherMinuteMeasurementsConverter()
     int		err				= 0;
     int		stopProgress	= 0;
 
-    int		P[MAX_NUM_OF_PARAMETER+1];
+    QString s_FilenameOut   = "";
+
+// **********************************************************************************************
+
+    structParameter	*Parameter_0001_ptr	= NULL;
+    structParameter	*Parameter_0009_ptr	= NULL;
+
+    Parameter_0001_ptr	= new structParameter[MAX_NUM_OF_PARAMETER+1];
+    Parameter_0009_ptr	= new structParameter[MAX_NUM_OF_PARAMETER+1];
 
 // **********************************************************************************************
 
@@ -365,7 +373,7 @@ void MainWindow::doOtherMinuteMeasurementsConverter()
 
         while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( stopProgress != _APPBREAK_ ) )
         {
-            err = OtherMinuteMeasurementsConverter( false, gsl_FilenameList.at( i ), g_Staff_ptr, g_Station_ptr, P, gsl_FilenameList.count() );
+            err = BasicMeasurementsConverter( false, true, LR0300, gsl_FilenameList.at( i ), s_FilenameOut, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }
@@ -380,6 +388,22 @@ void MainWindow::doOtherMinuteMeasurementsConverter()
 // **********************************************************************************************
 
     endTool( err, stopProgress, gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList, tr( "Done" ), tr( "Other minute measurements converter was canceled" ), false, false );
+
+// **********************************************************************************************
+
+    if ( Parameter_0001_ptr != NULL )
+    {
+        delete []Parameter_0001_ptr;
+        Parameter_0001_ptr = NULL;
+    }
+
+    if ( Parameter_0009_ptr != NULL )
+    {
+        delete []Parameter_0009_ptr;
+        Parameter_0009_ptr = NULL;
+    }
+
+// **********************************************************************************************
 
     onError( err );
 }

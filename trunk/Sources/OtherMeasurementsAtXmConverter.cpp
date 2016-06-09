@@ -418,14 +418,14 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
 
 // ***********************************************************************************************************************
 
-    QString s_FilenameOut = s_EventLabel + "_" + dt.toString( "yyyy-MM" ) + "_" + d.sprintf( "3%03d", i_Height );
+    QString s_FilenameOut = fi.absolutePath() + "/" + s_EventLabel + "_" + dt.toString( "yyyy-MM" ) + "_" + d.sprintf( "3%03d", i_Height );
 
     if ( b_Import == true )
         s_FilenameOut.append( "_imp.txt" );
     else
         s_FilenameOut.append( ".txt" );
 
-    QFile fout( fi.absolutePath() + "/" + s_FilenameOut );
+    QFile fout( s_FilenameOut );
 
     if ( fout.open( QIODevice::WriteOnly | QIODevice::Text ) == false )
     {
