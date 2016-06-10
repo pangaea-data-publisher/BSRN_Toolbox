@@ -2,12 +2,12 @@
 echo
 echo BSRN Toolbox
 
-echo - macdeployqt 
+echo - macdeployqt
 
 cd ~/Development/GitHub/BSRN_Toolbox
 
 rm -R '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app'
-cp -R './build-BSRN_Toolbox-Desktop_Qt_5_6_0_clang_64bit-Release/BSRN_Toolbox.app' '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app'
+cp -R './build-BSRN_Toolbox-Desktop_Qt_5_6_1_clang_64bit-Release/BSRN_Toolbox.app' '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app'
 cp './trunk/Tools/f_check/BSRN_fcheck_MacOS' '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app/Contents/MacOS/BSRN_fcheck'
 cp './trunk/Resources/Info.plist' '../../Distribution/BSRN_Toolbox/BSRN_Toolbox.app/Contents/Info.plist'
 
