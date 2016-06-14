@@ -2769,6 +2769,11 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
 
 // ***********************************************************************************************************************
 
+    for ( int i=0; i<=MAX_NUM_OF_PARAMETER; ++i )
+        P[i] = 0;
+
+// ***********************************************************************************************************************
+
     i_Format = SYNOPTest( s_FilenameIn, P, i_NumOfFiles );
 
     if ( i_Format == 0 )

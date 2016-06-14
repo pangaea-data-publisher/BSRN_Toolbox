@@ -208,6 +208,11 @@ int MainWindow::RadiosondeMeasurementsConverter( const bool b_Import, const QStr
 
 // ***********************************************************************************************************************
 
+        for ( int i=0; i<=MAX_NUM_OF_PARAMETER; ++i )
+            P[i] = 0;
+
+// ***********************************************************************************************************************
+
     err = RadiosondeMeasurementsTest( s_FilenameIn, P, i_NumOfFiles );
 
     if ( err == _NODATAFOUND_ )

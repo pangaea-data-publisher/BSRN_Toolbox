@@ -262,6 +262,19 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
 
 // ***********************************************************************************************************************
 
+    for ( int i=0; i<=MAX_NUM_OF_PARAMETER; ++i )
+    {
+        Parameter_0001[i].ParameterID = -1;
+        Parameter_0001[i].MethodID    = -1;
+
+        Parameter_0009[i].ParameterID = -1;
+        Parameter_0009[i].MethodID    = -1;
+
+        P[i] = 0;
+    }
+
+// ***********************************************************************************************************************
+
     err = OtherMeasurementsAtXmTest( s_FilenameIn, P, i_Height, i_NumOfFiles );
 
     if ( err == _NODATAFOUND_ )
@@ -269,17 +282,6 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
 
     if ( err == _APPBREAK_ )
         return( _APPBREAK_ );
-
-// ***********************************************************************************************************************
-
-    for ( int i=0; i<=MAX_NUM_OF_PARAMETER; ++i )
-    {
-        Parameter_0001[i].ParameterID = -1;
-        Parameter_0001[i].MethodID = -1;
-
-        Parameter_0009[i].ParameterID = -1;
-        Parameter_0009[i].MethodID = -1;
-    }
 
 // ***********************************************************************************************************************
 

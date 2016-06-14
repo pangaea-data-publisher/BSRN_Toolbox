@@ -184,6 +184,11 @@ int MainWindow::ExpandedMeasurementsConverter( const bool b_Import, const QStrin
 
 // ***********************************************************************************************************************
 
+    for ( int i=0; i<=MAX_NUM_OF_PARAMETER; ++i )
+        P[i] = 0;
+
+// ***********************************************************************************************************************
+
     err = ExpandedMeasurementsTest( s_FilenameIn, P, i_NumOfFiles );
 
     if ( err == _NODATAFOUND_ )

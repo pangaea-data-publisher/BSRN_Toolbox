@@ -293,6 +293,20 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
 
 // ***********************************************************************************************************************
 
+    for ( int i=0; i<=MAX_NUM_OF_PARAMETER; ++i )
+    {
+        Parameter_0001[i].ParameterID = -1;
+        Parameter_0001[i].MethodID    = -1;
+
+        Parameter_0009[i].ParameterID = -1;
+        Parameter_0009[i].MethodID    = -1;
+
+        P[i]   = 0;
+        PoM[i] = 0;
+    }
+
+// ***********************************************************************************************************************
+
     if ( i_Mode != LR0300 )
         err = BasicMeasurementsTest( s_FilenameIn, P, i_NumOfFiles );
 
@@ -301,17 +315,6 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
 
     if ( err == _APPBREAK_ )
         return( _APPBREAK_ );
-
-// ***********************************************************************************************************************
-
-    for ( int i=0; i<=MAX_NUM_OF_PARAMETER; ++i )
-    {
-        Parameter_0001[i].ParameterID = -1;
-        Parameter_0001[i].MethodID = -1;
-
-        Parameter_0009[i].ParameterID = -1;
-        Parameter_0009[i].MethodID = -1;
-    }
 
 // ***********************************************************************************************************************
 
@@ -493,6 +496,10 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
 // ***********************************************************************************************************************
 // Test data file and build LR0300 temp file
 
+    QFile fin0300( fi.absolutePath() + "/" + s_EventLabel + "_" + dt.toString( "yyyy-MM" ) + "_0300_temp.txt" );
+
+    QTextStream tin0300( &fin0300 );
+
     if ( b_LR0300 == true )
     {
         if ( ( err = OtherMinuteMeasurementsConverter( true, s_FilenameIn, Staff_ptr, Station_ptr, PoM, i_NumOfFiles ) ) != _NOERROR_ )
@@ -503,22 +510,16 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
 
             return( err );
         }
+
+        if ( fin0300.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
+        {
+            fin.close();
+            fout.close();
+            fout.remove();
+
+            return( -20 );
+        }
     }
-
-// ***********************************************************************************************************************
-
-    QFile fin0300( fi.absolutePath() + "/" + s_EventLabel + "_" + dt.toString( "yyyy-MM" ) + "_0300_temp.txt" );
-
-    if ( fin0300.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
-    {
-        fin.close();
-        fout.close();
-        fout.remove();
-
-        return( -20 );
-    }
-
-    QTextStream tin0300( &fin0300 );
 
 // ***********************************************************************************************************************
 

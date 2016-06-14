@@ -218,6 +218,20 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
 
 // ***********************************************************************************************************************
 
+    for ( int i=0; i<=MAX_NUM_OF_PARAMETER; ++i )
+    {
+        Parameter_0001[i].ParameterID = -1;
+        Parameter_0001[i].MethodID    = -1;
+
+        Parameter_0009[i].ParameterID = -1;
+        Parameter_0009[i].MethodID    = -1;
+
+        P[i] = 0;
+    }
+
+
+// ***********************************************************************************************************************
+
     err = UltraVioletMeasurementsTest( s_FilenameIn, P, i_NumOfFiles );
 
     if ( err == _NODATAFOUND_ )
@@ -238,17 +252,6 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
             if ( ( err = checkSelectedParameter( offset, P ) ) != _NOERROR_ )
                  return( err );
         }
-    }
-
-// ***********************************************************************************************************************
-
-    for ( int i=0; i<=MAX_NUM_OF_PARAMETER; ++i )
-    {
-        Parameter_0001[i].ParameterID = -1;
-        Parameter_0001[i].MethodID = -1;
-
-        Parameter_0009[i].ParameterID = -1;
-        Parameter_0009[i].MethodID = -1;
     }
 
 // ***********************************************************************************************************************
