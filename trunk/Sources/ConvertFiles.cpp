@@ -31,40 +31,32 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const int i_NumOfFiles
     s_FilenameOut.replace( "_temp", "" );
     s_FilenameSDW.replace( "_temp", "_SDW_SumSW" );
 
+    QFile::remove( s_FilenameOut );
+    QFile::remove( s_FilenameSDW );
+
 // ************************************************************************************************
 
     n = readFile( s_FilenameIn, sl_Input, _SYSTEM_, i_NumOfFiles );
 
 // ***********************************************************************************************************************
 
-    QFile fout( s_FilenameOut );
-
-    if ( fout.open( QIODevice::WriteOnly | QIODevice::Text) == false )
-        return( -20 );
-
-    QTextStream tout( &fout );
-
-// ***********************************************************************************************************************
-
     setStatusBarFileInProgress( s_FilenameIn );
 
-    if ( sl_Input.at( i ) == "/* DATA DESCRIPTION:" )
+    if ( sl_Input.at( 0 ) == "/* DATA DESCRIPTION:" )
     {
         while ( ( sl_Input.at( i ).contains( "*/" ) == false ) && ( i < n ) )
-        {
-            if ( ( sl_Input.at( i ).contains( tr("Latitude") ) == false ) && ( sl_Input.at( i ).contains( tr("Longitude") ) == false ) )
-                tout << sl_Input.at( i ) << endl;
-
             i++;
-        }
 
-        tout << sl_Input.at( i++ ) << endl;
+        if ( i == n )
+            return( _NODATAFOUND_ );
 
-        m = NumOfSections( sl_Input.at( i ) ) - 1;
+        m = NumOfSections( sl_Input.at( ++i ) ) - 1;
         s = i;
 
 // ***********************************************************************************************************************
 // Output of SWD and SumSW
+
+        i = s;
 
         for ( int j=0; j<m; j++ )
         {
@@ -86,6 +78,8 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const int i_NumOfFiles
 
         if ( ( i_PosSWD > -1 ) && ( i_PosSumSW > -1 ) )
         {
+            QFile::remove( s_FilenameSDW );
+
             QFile foutSWD( s_FilenameSDW );
 
             if ( foutSWD.open( QIODevice::WriteOnly | QIODevice::Text) == false )
@@ -97,7 +91,7 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const int i_NumOfFiles
 
             while ( i < n )
             {
-                toutSWD << sl_Input.at( i ).section( "\t", 0, 0 ) << "\t";                     // Date/Time
+//              toutSWD << sl_Input.at( i ).section( "\t", 0, 0 ) << "\t";                     // Date/Time
                 toutSWD << sl_Input.at( i ).section( "\t", i_PosSWD, i_PosSWD ) << "\t";       // SWD
                 toutSWD << sl_Input.at( i ).section( "\t", i_PosSumSW, i_PosSumSW ) << endl;   // SumSW
 
@@ -123,7 +117,26 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const int i_NumOfFiles
 
         if ( i_PosPosition > -1 )
         {
-            QFile::remove( s_FilenameIn );
+            QFile fout( s_FilenameOut );
+
+            if ( fout.open( QIODevice::WriteOnly | QIODevice::Text) == false )
+                return( -20 );
+
+            QTextStream tout( &fout );
+
+            i = 0;
+
+            while ( ( sl_Input.at( i ).contains( "*/" ) == false ) && ( i < n ) )
+            {
+                if ( ( sl_Input.at( i ).contains( tr("Latitude") ) == false ) && ( sl_Input.at( i ).contains( tr("Longitude") ) == false ) )
+                    tout << sl_Input.at( i ) << endl;
+
+                i++;
+            }
+
+            tout << sl_Input.at( i++ ) << endl;
+
+            i = s;
 
             while ( i < n )
             {
@@ -134,19 +147,17 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const int i_NumOfFiles
             }
 
             fout.close();
+
+            QFile::remove( s_FilenameIn );
         }
         else
         {
-            fout.close();
-            fout.remove();
-
+            QFile::remove( s_FilenameOut );
             QFile::rename( s_FilenameIn, s_FilenameOut );
-
-            return( LATITUDENOTFOUND );
         }
-    }
 
-// *************************************************************************************
+
+    }
 
     return( _NOERROR_ );
 }
