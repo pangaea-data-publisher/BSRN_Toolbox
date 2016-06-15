@@ -10,15 +10,26 @@
 // 2016-06-09
 // remove Latitude and Longitude from Quality Check output file
 
-int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_FilenameOut, const int i_NumOfFiles )
+int MainWindow::convertFile( const QString& s_FilenameIn, const int i_NumOfFiles )
 {
     int         i             = 0;
     int         n             = 0;
     int         m             = 0;
+    int         s             = 0;
 
     int         i_PosPosition = -1;
+    int         i_PosSWD      = -1;
+    int         i_PosSumSW    = -1;
+
+    QString     s_FilenameOut = s_FilenameIn;
+    QString     s_FilenameSDW = s_FilenameIn;
 
     QStringList sl_Input;
+
+// ************************************************************************************************
+
+    s_FilenameOut.replace( "_temp", "" );
+    s_FilenameSDW.replace( "_temp", "_SDW_SumSW" );
 
 // ************************************************************************************************
 
@@ -50,6 +61,56 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_Filen
         tout << sl_Input.at( i++ ) << endl;
 
         m = NumOfSections( sl_Input.at( i ) ) - 1;
+        s = i;
+
+// ***********************************************************************************************************************
+// Output of SWD and SumSW
+
+        for ( int j=0; j<m; j++ )
+        {
+            if ( sl_Input.at( i ).section( "\t", j, j ).toLower() == "swd [w/m**2]" )
+            {
+                i_PosSWD = j;
+                break;
+            }
+        }
+
+        for ( int j=0; j<m; j++ )
+        {
+            if ( sl_Input.at( i ).section( "\t", j, j ).toLower() == "sumsw [w/m**2]" )
+            {
+                i_PosSumSW = j;
+                break;
+            }
+        }
+
+        if ( ( i_PosSWD > -1 ) && ( i_PosSumSW > -1 ) )
+        {
+            QFile foutSWD( s_FilenameSDW );
+
+            if ( foutSWD.open( QIODevice::WriteOnly | QIODevice::Text) == false )
+                return( -20 );
+
+            QTextStream toutSWD( &foutSWD );
+
+            i = s;
+
+            while ( i < n )
+            {
+                toutSWD << sl_Input.at( i ).section( "\t", 0, 0 ) << "\t";                     // Date/Time
+                toutSWD << sl_Input.at( i ).section( "\t", i_PosSWD, i_PosSWD ) << "\t";       // SWD
+                toutSWD << sl_Input.at( i ).section( "\t", i_PosSumSW, i_PosSumSW ) << endl;   // SumSW
+
+                i++;
+            }
+
+            foutSWD.close();
+        }
+
+// ***********************************************************************************************************************
+// Output of data whitout position
+
+        i = s;
 
         for ( int j=0; j<m; j++ )
         {
@@ -71,6 +132,8 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_Filen
 
                 i++;
             }
+
+            fout.close();
         }
         else
         {
@@ -84,8 +147,6 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_Filen
     }
 
 // *************************************************************************************
-
-    fout.close();
 
     return( _NOERROR_ );
 }

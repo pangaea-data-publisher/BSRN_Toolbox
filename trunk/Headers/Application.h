@@ -426,7 +426,7 @@ private:
 
     int concatenateFiles( const QString& FilenameOut, const QStringList Filenames, const QString& ProgressMessage, const int SkipLines = 0, const bool RemoveFile = false );
     int convertEOL( const QString& FilenameIn, const bool convertEOL, const int OS );
-    int convertFile( const QString& FilenameIn, const QString& FilenameOut, const int NumOfFiles );
+    int convertFile( const QString& FilenameIn, const int NumOfFiles );
     int convertFile( const QString& FilenameIn, const QString& FilenameOut, const QString& MissingValue, const int FieldDelimiter, const int NumOfFiles );
     int convertFile( const QString& FilenameIn, const QString& FilenameOut, const int FieldAlignment, const int FieldWidth, const QString& MissingValue, const int NumOfFiles );
     int createReplaceDatabase( const QString& FilenameIn, const int firstReferenceID, const int NumOfFiles );

@@ -456,9 +456,8 @@ void MainWindow::doQualityCheckRecommendedV20()
                 if ( err == _NOERROR_ )
                 {
                     s_FilenameIn = s_FilenameOut;
-                    s_FilenameOut.replace( "_temp", "" );
 
-                    err = convertFile( s_FilenameIn, s_FilenameOut, gsl_FilenameList.count() );
+                    err = convertFile( s_FilenameIn, gsl_FilenameList.count() );
                 }
 
                 stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
