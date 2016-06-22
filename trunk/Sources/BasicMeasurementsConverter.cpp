@@ -368,7 +368,6 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
 
     if ( checkFilename( fi.fileName(), s_EventLabel, InputStr_LR0100.mid( 4, 2 ), InputStr_LR0100.mid( 9, 2 ) ) == false )
     {
-        resetProgress( i_NumOfFiles );
         fin.close();
         return( -41 );
     }
@@ -403,6 +402,12 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
 
             j += 8;
         }
+    }
+
+    if ( ( i_Mode == LR0300 ) && ( b_Import == false ) && ( b_LR0300 == false ) )
+    {
+        fin.close();
+        return( _NOERROR_ );
     }
 
 // ***********************************************************************************************************************

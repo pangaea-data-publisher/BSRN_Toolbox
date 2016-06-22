@@ -91,9 +91,12 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const int i_NumOfFiles
 
             while ( i < n )
             {
-//              toutSWD << sl_Input.at( i ).section( "\t", 0, 0 ) << "\t";                     // Date/Time
-                toutSWD << sl_Input.at( i ).section( "\t", i_PosSWD, i_PosSWD ) << "\t";       // SWD
-                toutSWD << sl_Input.at( i ).section( "\t", i_PosSumSW, i_PosSumSW ) << endl;   // SumSW
+                if ( ( sl_Input.at( i ).section( "\t", i_PosSWD, i_PosSWD ).isEmpty() == false ) && ( sl_Input.at( i ).section( "\t", i_PosSumSW, i_PosSumSW ).isEmpty() == false ) )
+                {
+//                  toutSWD << sl_Input.at( i ).section( "\t", 0, 0 ) << "\t";                     // Date/Time
+                    toutSWD << sl_Input.at( i ).section( "\t", i_PosSWD, i_PosSWD ) << "\t";       // SWD
+                    toutSWD << sl_Input.at( i ).section( "\t", i_PosSumSW, i_PosSumSW ) << endl;   // SumSW
+                }
 
                 i++;
             }
