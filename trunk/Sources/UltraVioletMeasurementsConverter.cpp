@@ -161,7 +161,7 @@ int MainWindow::UltraVioletMeasurementsTest( const QString& s_FilenameIn, int *P
 *   @return Fehlercode
 */
 
-int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const bool b_showSelectParameterDialog, const QString& s_FilenameIn, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
+int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const bool b_showSelectParameterDialog, const QString& s_FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
 {
     int				err				= 0;
 
@@ -215,6 +215,14 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
     bool			b_UV_up_r		= false;
 
     int				P[MAX_NUM_OF_PARAMETER+1];
+
+// **********************************************************************************************
+
+    structParameter	*Parameter_0001	= NULL;
+    structParameter	*Parameter_0009	= NULL;
+
+    Parameter_0001	= new structParameter[MAX_NUM_OF_PARAMETER+1];
+    Parameter_0009	= new structParameter[MAX_NUM_OF_PARAMETER+1];
 
 // ***********************************************************************************************************************
 
@@ -904,6 +912,22 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
     if ( ( b_UV_a_g == false ) && ( b_UV_b_d == false ) && ( b_UV_b_g == false ) && ( b_UV_b_diff == false ) && ( b_UV_up_r == false ) )
         fout.remove();
 
+// **********************************************************************************************
+
+    if ( Parameter_0001 != NULL )
+    {
+        delete []Parameter_0001;
+        Parameter_0001 = NULL;
+    }
+
+    if ( Parameter_0009 != NULL )
+    {
+        delete []Parameter_0009;
+        Parameter_0009 = NULL;
+    }
+
+// **********************************************************************************************
+
     if ( ui_length == (unsigned int) _APPBREAK_ )
         return( _APPBREAK_ );
 
@@ -925,14 +949,6 @@ void MainWindow::doUltraVioletMeasurementsConverter( const bool b_Import )
 
 // **********************************************************************************************
 
-    structParameter	*Parameter_0001_ptr	= NULL;
-    structParameter	*Parameter_0009_ptr	= NULL;
-
-    Parameter_0001_ptr	= new structParameter[MAX_NUM_OF_PARAMETER+1];
-    Parameter_0009_ptr	= new structParameter[MAX_NUM_OF_PARAMETER+1];
-
-// **********************************************************************************************
-
     if ( existsFirstFile( gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList ) == true )
     {
         if ( b_Import == true )
@@ -942,7 +958,7 @@ void MainWindow::doUltraVioletMeasurementsConverter( const bool b_Import )
 
         while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( stopProgress != _APPBREAK_ ) )
         {
-            err = UltraVioletMeasurementsConverter( b_Import, true, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+            err = UltraVioletMeasurementsConverter( b_Import, true, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }
@@ -957,22 +973,6 @@ void MainWindow::doUltraVioletMeasurementsConverter( const bool b_Import )
 // **********************************************************************************************
 
     endTool( err, stopProgress, gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList, tr( "Done" ), tr( "Ultra-violet measurements converter was canceled" ), false, false );
-
-// **********************************************************************************************
-
-    if ( Parameter_0001_ptr != NULL )
-    {
-        delete []Parameter_0001_ptr;
-        Parameter_0001_ptr = NULL;
-    }
-
-    if ( Parameter_0009_ptr != NULL )
-    {
-        delete []Parameter_0009_ptr;
-        Parameter_0009_ptr = NULL;
-    }
-
-// **********************************************************************************************
 
     onError( err );
 }

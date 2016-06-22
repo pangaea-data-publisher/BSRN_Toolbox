@@ -359,21 +359,13 @@ void MainWindow::doOtherMinuteMeasurementsConverter()
 
 // **********************************************************************************************
 
-    structParameter	*Parameter_0001_ptr	= NULL;
-    structParameter	*Parameter_0009_ptr	= NULL;
-
-    Parameter_0001_ptr	= new structParameter[MAX_NUM_OF_PARAMETER+1];
-    Parameter_0009_ptr	= new structParameter[MAX_NUM_OF_PARAMETER+1];
-
-// **********************************************************************************************
-
     if ( existsFirstFile( gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList ) == true )
     {
         initFileProgress( gsl_FilenameList.count(), gsl_FilenameList.at( 0 ), tr( "Other minute measurements convert working..." ) );
 
         while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( stopProgress != _APPBREAK_ ) )
         {
-            err = BasicMeasurementsConverter( false, true, LR0300, gsl_FilenameList.at( i ), s_FilenameOut, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+            err = BasicMeasurementsConverter( false, true, LR0300, gsl_FilenameList.at( i ), s_FilenameOut, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }
@@ -388,22 +380,6 @@ void MainWindow::doOtherMinuteMeasurementsConverter()
 // **********************************************************************************************
 
     endTool( err, stopProgress, gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList, tr( "Done" ), tr( "Other minute measurements converter was canceled" ), false, false );
-
-// **********************************************************************************************
-
-    if ( Parameter_0001_ptr != NULL )
-    {
-        delete []Parameter_0001_ptr;
-        Parameter_0001_ptr = NULL;
-    }
-
-    if ( Parameter_0009_ptr != NULL )
-    {
-        delete []Parameter_0009_ptr;
-        Parameter_0009_ptr = NULL;
-    }
-
-// **********************************************************************************************
 
     onError( err );
 }

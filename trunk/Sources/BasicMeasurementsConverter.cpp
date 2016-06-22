@@ -227,7 +227,7 @@ int MainWindow::BasicMeasurementsTest( const QString& s_FilenameIn, int *P, cons
 *   @return Fehlercode
 */
 
-int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_showSelectParameterDialog, const int i_Mode, const QString& s_FilenameIn, QString& s_FilenameOut, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
+int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_showSelectParameterDialog, const int i_Mode, const QString& s_FilenameIn, QString& s_FilenameOut, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
 {
     int				err				= 0;
 
@@ -290,6 +290,14 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
 
     int				P[MAX_NUM_OF_PARAMETER+1];
     int				PoM[MAX_NUM_OF_PARAMETER+1];
+
+// **********************************************************************************************
+
+    structParameter	*Parameter_0001	= NULL;
+    structParameter	*Parameter_0009	= NULL;
+
+    Parameter_0001	= new structParameter[MAX_NUM_OF_PARAMETER+1];
+    Parameter_0009	= new structParameter[MAX_NUM_OF_PARAMETER+1];
 
 // ***********************************************************************************************************************
 
@@ -605,15 +613,25 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
                 PoM[i] = 0;
 
             P[1] = 1; P[2] = 1; P[3] = 1; // Date/Time, Latitutude, Longitude
-            P[1+offset] = 1; P[5+offset] = 1; P[9+offset] = 1; P[13+offset] = 1;
+
+            if ( i_Mode != LR0300)
+            {
+                P[1+offset]  = 1; // Short-wave downward (GLOBAL) radiation
+                P[5+offset]  = 1; // Direct radiation [W/m**2]
+                P[9+offset]  = 1; // Diffuse radiation [W/m**2]
+                P[13+offset] = 1; // Long-wave downward radiation [W/m**2]
+                P[17+offset] = 1; // Air temperature [°C]
+                P[18+offset] = 1; // relative Humidity [%]
+                P[19+offset] = 1; // Station pressure [hPa]
+            }
 
             if ( b_LR0300 == true )
             {
-                PoM[1] = 1; // Date/Time
-                PoM[1+offset] = 1; PoM[5+offset] = 1; PoM[9+offset] = 1;
+                PoM[1]        = 1; // Date/Time
+                PoM[1+offset] = 1; // Short-wave upward (REFLEX) radiation [W/m**2]
+                PoM[5+offset] = 1; // Long-wave upward radiation [W/m**2]
+                PoM[9+offset] = 1; // Net radiation [W/m**2]
             }
-
-            P[17+offset] = 1; P[18+offset] = 1; P[19+offset] = 1; // Air temperature, relative Humidity, Station pressure
         }
 
         if ( ( err = checkSelectedParameter( offset, P, PoM ) ) != _NOERROR_ )
@@ -1628,6 +1646,22 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
         fin0300.remove();
     }
 
+// **********************************************************************************************
+
+    if ( Parameter_0001 != NULL )
+    {
+        delete []Parameter_0001;
+        Parameter_0001 = NULL;
+    }
+
+    if ( Parameter_0009 != NULL )
+    {
+        delete []Parameter_0009;
+        Parameter_0009 = NULL;
+    }
+
+// **********************************************************************************************
+
     if ( ui_length == (unsigned int) _APPBREAK_ )
         return( _APPBREAK_ );
 
@@ -1657,14 +1691,6 @@ void MainWindow::doBasicMeasurementsConverter( const bool b_Import )
 
 // **********************************************************************************************
 
-    structParameter	*Parameter_0001_ptr	= NULL;
-    structParameter	*Parameter_0009_ptr	= NULL;
-
-    Parameter_0001_ptr	= new structParameter[MAX_NUM_OF_PARAMETER+1];
-    Parameter_0009_ptr	= new structParameter[MAX_NUM_OF_PARAMETER+1];
-
-// **********************************************************************************************
-
     if ( existsFirstFile( gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList ) == true )
     {
         if ( b_Import == true )
@@ -1674,7 +1700,7 @@ void MainWindow::doBasicMeasurementsConverter( const bool b_Import )
 
         while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( stopProgress != _APPBREAK_ ) )
         {
-            err = BasicMeasurementsConverter( b_Import, true, LR0100, gsl_FilenameList.at( i ), s_FilenameOut, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+            err = BasicMeasurementsConverter( b_Import, true, LR0100, gsl_FilenameList.at( i ), s_FilenameOut, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }
@@ -1689,22 +1715,6 @@ void MainWindow::doBasicMeasurementsConverter( const bool b_Import )
 // **********************************************************************************************
 
     endTool( err, stopProgress, gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList, tr( "Done" ), tr( "Basic measurements converter was canceled" ), false, false );
-
-// **********************************************************************************************
-
-    if ( Parameter_0001_ptr != NULL )
-    {
-        delete []Parameter_0001_ptr;
-        Parameter_0001_ptr = NULL;
-    }
-
-    if ( Parameter_0009_ptr != NULL )
-    {
-        delete []Parameter_0009_ptr;
-        Parameter_0009_ptr = NULL;
-    }
-
-// **********************************************************************************************
 
     onError( err );
 }

@@ -206,7 +206,7 @@ int MainWindow::OtherMeasurementsAtXmTest( const QString& s_FilenameIn, int *P, 
 *   @return Fehlercode
 */
 
-int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QString& s_FilenameIn, const int i_Height, structParameter *Parameter_0001, structParameter *Parameter_0009, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
+int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QString& s_FilenameIn, const int i_Height, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
 {
     int				err				= 0;
 
@@ -259,6 +259,14 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
     bool			b_swu			= false;
     bool			b_lwd			= false;
     bool			b_lwu			= false;
+
+// **********************************************************************************************
+
+    structParameter	*Parameter_0001	= NULL;
+    structParameter	*Parameter_0009	= NULL;
+
+    Parameter_0001	= new structParameter[MAX_NUM_OF_PARAMETER+1];
+    Parameter_0009	= new structParameter[MAX_NUM_OF_PARAMETER+1];
 
 // ***********************************************************************************************************************
 
@@ -1028,8 +1036,23 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
     resetProgress( i_NumOfFiles );
 
     fin.close();
-
     fout.close();
+
+// **********************************************************************************************
+
+    if ( Parameter_0001 != NULL )
+    {
+        delete []Parameter_0001;
+        Parameter_0001 = NULL;
+    }
+
+    if ( Parameter_0009 != NULL )
+    {
+        delete []Parameter_0009;
+        Parameter_0009 = NULL;
+    }
+
+// **********************************************************************************************
 
     if ( ui_length == (unsigned int) _APPBREAK_ )
         return( _APPBREAK_ );
@@ -1052,14 +1075,6 @@ void MainWindow::doOtherMeasurementsAtXmConverter( const bool b_Import, const in
 
 // **********************************************************************************************
 
-    structParameter	*Parameter_0001_ptr	= NULL;
-    structParameter	*Parameter_0009_ptr	= NULL;
-
-    Parameter_0001_ptr	= new structParameter[MAX_NUM_OF_PARAMETER+1];
-    Parameter_0009_ptr	= new structParameter[MAX_NUM_OF_PARAMETER+1];
-
-// **********************************************************************************************
-
     if ( existsFirstFile( gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList ) == true )
     {
         if ( b_Import == true )
@@ -1069,7 +1084,7 @@ void MainWindow::doOtherMeasurementsAtXmConverter( const bool b_Import, const in
 
         while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( stopProgress != _APPBREAK_ ) )
         {
-            err = OtherMeasurementsAtXmConverter( b_Import, gsl_FilenameList.at( i ), i_Height, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+            err = OtherMeasurementsAtXmConverter( b_Import, gsl_FilenameList.at( i ), i_Height, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }
@@ -1084,22 +1099,6 @@ void MainWindow::doOtherMeasurementsAtXmConverter( const bool b_Import, const in
 // **********************************************************************************************
 
     endTool( err, stopProgress, gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList, tr( "Done" ), tr( "Other measurements at X m converter was canceled" ), false, false );
-
-// **********************************************************************************************
-
-    if ( Parameter_0001_ptr != NULL )
-    {
-        delete []Parameter_0001_ptr;
-        Parameter_0001_ptr = NULL;
-    }
-
-    if ( Parameter_0009_ptr != NULL )
-    {
-        delete []Parameter_0009_ptr;
-        Parameter_0009_ptr = NULL;
-    }
-
-// **********************************************************************************************
 
     onError( err );
 }

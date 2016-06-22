@@ -416,14 +416,6 @@ void MainWindow::doQualityCheckRecommendedV20()
     QString s_FilenameIn    = "";
     QString s_FilenameOut   = "";
 
-// *************************************************************************************
-
-    structParameter	*Parameter_0001_ptr	= NULL;
-    structParameter	*Parameter_0009_ptr	= NULL;
-
-    Parameter_0001_ptr	= new structParameter[MAX_NUM_OF_PARAMETER+1];
-    Parameter_0009_ptr	= new structParameter[MAX_NUM_OF_PARAMETER+1];
-
 // **********************************************************************************************
 
     if ( gsl_FilenameList.isEmpty() == true )
@@ -446,7 +438,7 @@ void MainWindow::doQualityCheckRecommendedV20()
 
                 if ( s_FilenameIn.endsWith( ".dat" ) == true )
                 {
-                    err = BasicMeasurementsConverter( false, false, LR0100, s_FilenameIn, s_FilenameOut, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                    err = BasicMeasurementsConverter( false, false, LR0100, s_FilenameIn, s_FilenameOut, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
                     s_FilenameIn = s_FilenameOut;
                 }
@@ -478,22 +470,6 @@ void MainWindow::doQualityCheckRecommendedV20()
 // *************************************************************************************
 
     endTool( err, stopProgress, gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList, tr( "Done" ), tr( "Quality check - Recommended V2.0 was canceled" ), false, false );
-
-// **********************************************************************************************
-
-    if ( Parameter_0001_ptr != NULL )
-    {
-        delete []Parameter_0001_ptr;
-        Parameter_0001_ptr = NULL;
-    }
-
-    if ( Parameter_0009_ptr != NULL )
-    {
-        delete []Parameter_0009_ptr;
-        Parameter_0009_ptr = NULL;
-    }
-
-// **********************************************************************************************
 
     onError( err );
 }

@@ -170,16 +170,6 @@ void MainWindow::doAllDataConverter()
 
     QStringList sl_FilenameOut;
 
-// **********************************************************************************************
-
-    structParameter	*Parameter_0001_ptr	= NULL;
-    structParameter	*Parameter_0009_ptr	= NULL;
-
-    Parameter_0001_ptr	= new structParameter[MAX_NUM_OF_PARAMETER+1];
-    Parameter_0009_ptr	= new structParameter[MAX_NUM_OF_PARAMETER+1];
-
-// **********************************************************************************************
-
     if ( existsFirstFile( gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList ) == true )
     {
         sl_FilenameOut.clear();
@@ -191,14 +181,15 @@ void MainWindow::doAllDataConverter()
 
 // LR 0100
             if ( err == _NOERROR_ )
-                err = BasicMeasurementsConverter( false, false, LR0100, gsl_FilenameList.at( i ), s_FilenameOut, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = BasicMeasurementsConverter( false, false, LR0100, gsl_FilenameList.at( i ), s_FilenameOut, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 0300
             if ( err == _NOERROR_ )
-                err = BasicMeasurementsConverter( false, false, LR0300, gsl_FilenameList.at( i ), s_FilenameOut, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = BasicMeasurementsConverter( false, false, LR0300, gsl_FilenameList.at( i ), s_FilenameOut, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+
 // LR 0500
             if ( err == _NOERROR_ )
-                err = UltraVioletMeasurementsConverter( false, false, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = UltraVioletMeasurementsConverter( false, false, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 1000
             if ( err == _NOERROR_ )
@@ -218,15 +209,15 @@ void MainWindow::doAllDataConverter()
 
 // LR 3010
             if ( err == _NOERROR_ )
-                err = OtherMeasurementsAtXmConverter( false, gsl_FilenameList.at( i ), 10, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = OtherMeasurementsAtXmConverter( false, gsl_FilenameList.at( i ), 10, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 3030
             if ( err == _NOERROR_ )
-                err = OtherMeasurementsAtXmConverter( false, gsl_FilenameList.at( i ), 30, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = OtherMeasurementsAtXmConverter( false, gsl_FilenameList.at( i ), 30, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 3300
             if ( err == _NOERROR_ )
-                err = OtherMeasurementsAtXmConverter( false, gsl_FilenameList.at( i ), 300, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = OtherMeasurementsAtXmConverter( false, gsl_FilenameList.at( i ), 300, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }
@@ -241,22 +232,6 @@ void MainWindow::doAllDataConverter()
 // **********************************************************************************************
 
     endTool( err, stopProgress, gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList, tr( "Done" ), tr( "Data converter was canceled" ), false, false );
-
-// **********************************************************************************************
-
-    if ( Parameter_0001_ptr != NULL )
-    {
-        delete []Parameter_0001_ptr;
-        Parameter_0001_ptr = NULL;
-    }
-
-    if ( Parameter_0009_ptr != NULL )
-    {
-        delete []Parameter_0009_ptr;
-        Parameter_0009_ptr = NULL;
-    }
-
-// **********************************************************************************************
 
     onError( err );
 }
@@ -280,14 +255,6 @@ void MainWindow::doAllImportConverter()
 
 // **********************************************************************************************
 
-    structParameter	*Parameter_0001_ptr	= NULL;
-    structParameter	*Parameter_0009_ptr	= NULL;
-
-    Parameter_0001_ptr	= new structParameter[MAX_NUM_OF_PARAMETER+1];
-    Parameter_0009_ptr	= new structParameter[MAX_NUM_OF_PARAMETER+1];
-
-// **********************************************************************************************
-
     if ( existsFirstFile( gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList ) == true )
     {
         sl_FilenameOut.clear();
@@ -301,11 +268,11 @@ void MainWindow::doAllImportConverter()
 
 // LR 0100
             if ( err == _NOERROR_ )
-                err = BasicMeasurementsConverter( true, false, LR0100, gsl_FilenameList.at( i ), s_FilenameOut, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = BasicMeasurementsConverter( true, false, LR0100, gsl_FilenameList.at( i ), s_FilenameOut, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 0500
             if ( err == _NOERROR_ )
-                err = UltraVioletMeasurementsConverter( true, false, gsl_FilenameList.at( i ), Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = UltraVioletMeasurementsConverter( true, false, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 1000
             if ( err == _NOERROR_ )
@@ -325,15 +292,15 @@ void MainWindow::doAllImportConverter()
 
 // LR 3010
             if ( err == _NOERROR_ )
-                err = OtherMeasurementsAtXmConverter( true, gsl_FilenameList.at( i ), 10, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = OtherMeasurementsAtXmConverter( true, gsl_FilenameList.at( i ), 10, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 3030
             if ( err == _NOERROR_ )
-                err = OtherMeasurementsAtXmConverter( true, gsl_FilenameList.at( i ), 30, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = OtherMeasurementsAtXmConverter( true, gsl_FilenameList.at( i ), 30, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
 // LR 3300
             if ( err == _NOERROR_ )
-                err = OtherMeasurementsAtXmConverter( true, gsl_FilenameList.at( i ), 300, Parameter_0001_ptr, Parameter_0009_ptr, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+                err = OtherMeasurementsAtXmConverter( true, gsl_FilenameList.at( i ), 300, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }
@@ -348,22 +315,6 @@ void MainWindow::doAllImportConverter()
 // **********************************************************************************************
 
     endTool( err, stopProgress, gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList, tr( "Done" ), tr( "Import converter was canceled" ), false, false );
-
-// **********************************************************************************************
-
-    if ( Parameter_0001_ptr != NULL )
-    {
-        delete []Parameter_0001_ptr;
-        Parameter_0001_ptr = NULL;
-    }
-
-    if ( Parameter_0009_ptr != NULL )
-    {
-        delete []Parameter_0009_ptr;
-        Parameter_0009_ptr = NULL;
-    }
-
-// **********************************************************************************************
 
     onError( err );
 }
