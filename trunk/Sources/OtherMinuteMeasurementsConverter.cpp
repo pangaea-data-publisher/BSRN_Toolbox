@@ -8,7 +8,7 @@
 // **********************************************************************************************
 // 2008-01-20
 
-/*! @brief Konvertiert den LR 0300.
+/*! @brief Konvertiert den LR0300.
 *
 *   @param b_Import Erzeugt Import- oder Datendatei
 *   @param FilenameIn Dateiname der Inputdatei
@@ -52,8 +52,10 @@ int MainWindow::OtherMinuteMeasurementsConverter( const bool b_Import, const QSt
     QFileInfo fi( s_FilenameIn );
 
     QFile fin( s_FilenameIn );
+
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
     QTextStream tin( &fin );
@@ -339,6 +341,8 @@ int MainWindow::OtherMinuteMeasurementsConverter( const bool b_Import, const QSt
     if ( ui_length == (unsigned int) _APPBREAK_ )
         return( _APPBREAK_ );
 
+    removeEmptyFile( s_FilenameIn, s_FilenameOut, 100 );
+
     return( _NOERROR_ );
 }
 
@@ -347,7 +351,7 @@ int MainWindow::OtherMinuteMeasurementsConverter( const bool b_Import, const QSt
 // **********************************************************************************************
 // 2007-11-12
 
-/*! @brief Steuerung des Other Minute Measurements Converters, LR 0300 */
+/*! @brief Steuerung des Other Minute Measurements Converters, LR0300 */
 
 void MainWindow::doOtherMinuteMeasurementsConverter()
 {

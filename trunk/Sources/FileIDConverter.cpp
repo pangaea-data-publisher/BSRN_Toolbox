@@ -47,6 +47,7 @@ int MainWindow::FileIDConverter( const QString& s_FilenameIn, QStringList& sl_Fi
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
 // ***********************************************************************************************************************
@@ -163,7 +164,7 @@ int MainWindow::FileIDConverter( const QString& s_FilenameIn, QStringList& sl_Fi
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des FileID Converters, LR 0001 */
+/*! @brief Steuerung des FileID Converters, LR0001 */
 
 void MainWindow::doFileIDConverter()
 {

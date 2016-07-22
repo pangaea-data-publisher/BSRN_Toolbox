@@ -54,6 +54,7 @@ int MainWindow::RadiosondeEquipmentConverter( const QString& s_FilenameIn, QStri
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
 // ***********************************************************************************************************************
@@ -121,7 +122,7 @@ int MainWindow::RadiosondeEquipmentConverter( const QString& s_FilenameIn, QStri
     appendItem( sl_FilenameOut, fout.fileName() );
 
 // ***********************************************************************************************************************
-// LR 0005
+// LR0005
 
     tout << "File name\tStation ID\tEvent label\tStation\tYYYY-MM\t";
     tout << "Manufacturer\tLocation\tDistance from radiation site [km]\t";
@@ -196,7 +197,7 @@ int MainWindow::RadiosondeEquipmentConverter( const QString& s_FilenameIn, QStri
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Radiosonde Equipment Converters, LR 0005 */
+/*! @brief Steuerung des Radiosonde Equipment Converters, LR0005 */
 
 void MainWindow::doRadiosondeEquipmentConverter()
 {

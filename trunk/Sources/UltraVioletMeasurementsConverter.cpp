@@ -8,7 +8,7 @@
 // **********************************************************************************************
 // 2008-01-20
 
-/*! @brief Testet den LR 0500.
+/*! @brief Testet den LR0500.
 *
 *   @param FilenameIn Dateiname der Inputdatei
 *   @param P Pointer auf ein Array von Integern
@@ -19,7 +19,7 @@
 
 int MainWindow::UltraVioletMeasurementsTest( const QString& s_FilenameIn, int *P, const int i_NumOfFiles )
 {
-    int				err				= _NOERROR_;
+    int             i_hasData       = 0;
     int				i_P_sum			= 0;
 
     QString			InputStr		= "";
@@ -44,6 +44,7 @@ int MainWindow::UltraVioletMeasurementsTest( const QString& s_FilenameIn, int *P
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
     QTextStream tin( &fin );
@@ -74,19 +75,19 @@ int MainWindow::UltraVioletMeasurementsTest( const QString& s_FilenameIn, int *P
         {
             InputStr.append( " " );
 
-            if ( InputStr.contains( " 121 " ) ) err++;
-            if ( InputStr.contains( " 122 " ) ) err++;
-            if ( InputStr.contains( " 123 " ) ) err++;
-            if ( InputStr.contains( " 124 " ) ) err++;
-            if ( InputStr.contains( " 125 " ) ) err++;
+            if ( InputStr.contains( " 121 " ) ) i_hasData++;
+            if ( InputStr.contains( " 122 " ) ) i_hasData++;
+            if ( InputStr.contains( " 123 " ) ) i_hasData++;
+            if ( InputStr.contains( " 124 " ) ) i_hasData++;
+            if ( InputStr.contains( " 125 " ) ) i_hasData++;
         }
     }
 
-    if ( err == _NOERROR_ )
+    if ( i_hasData == 0 )
     {
         resetProgress( i_NumOfFiles );
         fin.close();
-        return( _NODATAFOUND_ );
+        return( _RECORDNOTFOUND_ );
     }
 
     while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
@@ -138,6 +139,20 @@ int MainWindow::UltraVioletMeasurementsTest( const QString& s_FilenameIn, int *P
 
     fin.close();
 
+    i_P_sum = 0;
+
+    for ( int i=1; i<=20 ; ++i )
+        i_P_sum += P[i];
+
+    if ( i_P_sum == 0 )
+    {
+        QFileInfo fin( s_FilenameIn );
+        QString s_Message = tr( "No LR0500 data found. Something must be wrong. Please check the station-to-archive file:\n\n    " ) + fin.fileName();
+        QMessageBox::warning( this, getApplicationName( true ), s_Message  );
+
+        return( _APPBREAK_ );
+    }
+
     return( _NOERROR_ );
 }
 
@@ -146,13 +161,13 @@ int MainWindow::UltraVioletMeasurementsTest( const QString& s_FilenameIn, int *P
 // **********************************************************************************************
 // 2007-11-07
 
-/*! @brief Konvertiert den LR 0500.
+/*! @brief Konvertiert den LR0500.
 *
 *   @param b_showSelectParameterDialog soll der Select Parameter Dialog anzeigt werden?
 *   @param b_Import Erzeugt Import- oder Datendatei
 *   @param s_FilenameIn Dateiname der Inputdatei
-*   @param Parameter_0001 Pointer auf Array aller Parameter aus LR 0001
-*   @param Parameter_0009 Pointer auf Array aller Parameter aus LR 0009
+*   @param Parameter_0001 Pointer auf Array aller Parameter aus LR0001
+*   @param Parameter_0009 Pointer auf Array aller Parameter aus LR0009
 *   @param Method_ptr Pointer auf Array aller Methoden
 *   @param Staff_ptr Pointer auf Array aller Personen
 *   @param Station_ptr Pointer auf Array aller Stationen
@@ -242,11 +257,10 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
 
     err = UltraVioletMeasurementsTest( s_FilenameIn, P, i_NumOfFiles );
 
-    if ( err == _NODATAFOUND_ )
-        return( _NOERROR_ );
+    if ( err != _NOERROR_ )
+        return( setErr( err ) );
 
-    if ( err == _APPBREAK_ )
-        return( _APPBREAK_ );
+// ***********************************************************************************************************************
 
     if ( b_Import == false )
     {
@@ -275,6 +289,7 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
     QTextStream tin( &fin );
@@ -424,7 +439,7 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
     QTextStream tout( &fout );
 
 // ***********************************************************************************************************************
-// LR 0009
+// LR0009
 
     i = 0;
     j = 0;
@@ -931,6 +946,8 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
     if ( ui_length == (unsigned int) _APPBREAK_ )
         return( _APPBREAK_ );
 
+    removeEmptyFile( s_FilenameIn, s_FilenameOut, 100 );
+
     return( _NOERROR_ );
 }
 
@@ -939,7 +956,7 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Expanded Measurements Converters, LR 0500 */
+/*! @brief Steuerung des Expanded Measurements Converters, LR0500 */
 
 void MainWindow::doUltraVioletMeasurementsConverter( const bool b_Import )
 {
@@ -982,7 +999,7 @@ void MainWindow::doUltraVioletMeasurementsConverter( const bool b_Import )
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Basic Measurements Converters im Import-Mode, LR 0500 */
+/*! @brief Steuerung des Basic Measurements Converters im Import-Mode, LR0500 */
 
 void MainWindow::doUltraVioletMeasurementsImportConverter()
 {

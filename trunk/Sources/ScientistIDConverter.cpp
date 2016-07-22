@@ -49,6 +49,7 @@ int MainWindow::ScientistIDConverter( const QString& s_FilenameIn, QStringList& 
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
 // ***********************************************************************************************************************
@@ -199,7 +200,7 @@ int MainWindow::ScientistIDConverter( const QString& s_FilenameIn, QStringList& 
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Scientist Converters, LR 0002 */
+/*! @brief Steuerung des Scientist Converters, LR0002 */
 
 void MainWindow::doScientistIDConverter()
 {

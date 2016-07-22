@@ -185,6 +185,7 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_Filen
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
     QFile fout( s_FilenameOut );
@@ -275,6 +276,7 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_Filen
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
     QFile fout( s_FilenameOut );

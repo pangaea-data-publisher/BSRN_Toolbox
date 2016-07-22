@@ -8,7 +8,7 @@
 // **********************************************************************************************
 // 2008-01-20
 
-/*! @brief Testet den LR 1300.
+/*! @brief Testet den LR1300.
 *
 *   @param FilenameIn Dateiname der Inputdatei
 *   @param P Pointer auf ein Array von Integern
@@ -19,7 +19,6 @@
 
 int MainWindow::ExpandedMeasurementsTest( const QString& s_FilenameIn, int *P, const int i_NumOfFiles )
 {
-    int				err				= _NODATAFOUND_;
     int				i_P_sum			= 0;
 
     QString			InputStr		= "";
@@ -29,6 +28,7 @@ int MainWindow::ExpandedMeasurementsTest( const QString& s_FilenameIn, int *P, c
     unsigned int	ui_length		= 1;
     unsigned int	ui_filesize		= 1;
 
+    bool            b_hasRecord     = false;
     bool			b_Stop			= false;
 
 // ***********************************************************************************************************************
@@ -44,6 +44,7 @@ int MainWindow::ExpandedMeasurementsTest( const QString& s_FilenameIn, int *P, c
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
     QTextStream tin( &fin );
@@ -68,6 +69,8 @@ int MainWindow::ExpandedMeasurementsTest( const QString& s_FilenameIn, int *P, c
 
         if ( ( InputStr.startsWith( SearchString1 ) == true ) || ( InputStr.startsWith( SearchString2 ) == true ) )
         {
+            b_hasRecord = true;
+
             while ( ( tin.atEnd() == false ) && ( b_Stop == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) )
             {
                 InputStr	= tin.readLine();
@@ -100,9 +103,6 @@ int MainWindow::ExpandedMeasurementsTest( const QString& s_FilenameIn, int *P, c
 
                     if ( i_P_sum == 6 )
                         b_Stop = true;
-
-                    if ( i_P_sum > 0 )
-                        err = _DATAFOUND_;
                 }
                 else
                     b_Stop = true;
@@ -116,17 +116,35 @@ int MainWindow::ExpandedMeasurementsTest( const QString& s_FilenameIn, int *P, c
 
     fin.close();
 
-    if ( err == _DATAFOUND_ )
-        err = _NOERROR_;
+    if ( b_hasRecord == true )
+    {
+        i_P_sum = 0;
 
-    return( err );
+        for ( int i=1; i<=6 ; ++i )
+            i_P_sum += P[i];
+
+        if ( i_P_sum == 0 )
+        {
+            QFileInfo fin( s_FilenameIn );
+            QString s_Message = tr( "No LR1300 data found. Something must be wrong. Please check the station-to-archive file:\n\n    " ) + fin.fileName();
+            QMessageBox::warning( this, getApplicationName( true ), s_Message  );
+
+            return( _APPBREAK_ );
+        }
+        else
+        {
+            return( _NOERROR_ );
+        }
+    }
+
+    return( _APPBREAK_ );
 }
 
 // **********************************************************************************************
 // **********************************************************************************************
 // **********************************************************************************************
 
-/*! @brief Konvertiert den LR 1300.
+/*! @brief Konvertiert den LR1300.
 *
 *   @param b_Import Erzeugt Import- oder Datendatei
 *   @param s_FilenameIn Dateiname der Inputdatei
@@ -191,19 +209,18 @@ int MainWindow::ExpandedMeasurementsConverter( const bool b_Import, const QStrin
 
     err = ExpandedMeasurementsTest( s_FilenameIn, P, i_NumOfFiles );
 
-    if ( err == _NODATAFOUND_ )
-        return( _NOERROR_ );
-
-    if ( err == _APPBREAK_ )
-        return( _APPBREAK_ );
+    if ( err != _NOERROR_ )
+        return( err );
 
 // ***********************************************************************************************************************
 
     QFileInfo fi( s_FilenameIn );
 
     QFile fin( s_FilenameIn );
+
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
     QTextStream tin( &fin );
@@ -326,7 +343,7 @@ int MainWindow::ExpandedMeasurementsConverter( const bool b_Import, const QStrin
     QTextStream tout( &fout );
 
 // ***********************************************************************************************************************
-// LR 0007
+// LR0007
 
     while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
     {
@@ -587,11 +604,12 @@ int MainWindow::ExpandedMeasurementsConverter( const bool b_Import, const QStrin
     resetProgress( i_NumOfFiles );
 
     fin.close();
-
     fout.close();
 
     if ( ui_length == (unsigned int) _APPBREAK_ )
         return( _APPBREAK_ );
+
+    removeEmptyFile( s_FilenameIn, s_FilenameOut, 100 );
 
     return( _NOERROR_ );
 }
@@ -601,7 +619,7 @@ int MainWindow::ExpandedMeasurementsConverter( const bool b_Import, const QStrin
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Expanded Measurements Converters, LR 1300 */
+/*! @brief Steuerung des Expanded Measurements Converters, LR1300 */
 
 void MainWindow::doExpandedMeasurementsConverter( const bool b_Import )
 {
@@ -644,7 +662,7 @@ void MainWindow::doExpandedMeasurementsConverter( const bool b_Import )
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Expanded Measurements Converters im Import-Mode, LR 1300 */
+/*! @brief Steuerung des Expanded Measurements Converters im Import-Mode, LR1300 */
 
 void MainWindow::doExpandedMeasurementsImportConverter()
 {

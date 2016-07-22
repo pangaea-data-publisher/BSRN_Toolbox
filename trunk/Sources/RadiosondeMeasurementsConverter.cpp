@@ -8,7 +8,7 @@
 // **********************************************************************************************
 // 2008-01-20
 
-/*! @brief Testet den LR 1100.
+/*! @brief Testet den LR1100.
 *
 *   @param FilenameIn Dateiname der Inputdatei
 *   @param P Pointer auf ein Array von Integern
@@ -46,6 +46,7 @@ int MainWindow::RadiosondeMeasurementsTest( const QString& s_FilenameIn, int *P,
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
     QTextStream tin( &fin );
@@ -82,7 +83,7 @@ int MainWindow::RadiosondeMeasurementsTest( const QString& s_FilenameIn, int *P,
     {
         resetProgress( i_NumOfFiles );
         fin.close();
-        return( _NODATAFOUND_ );
+        return( _NOERROR_ );
     }
 
     b_Stop = false;
@@ -142,6 +143,20 @@ int MainWindow::RadiosondeMeasurementsTest( const QString& s_FilenameIn, int *P,
     if ( ui_length == (unsigned int) _APPBREAK_ )
         return( _APPBREAK_ );
 
+    i_P_sum = 0;
+
+    for ( int i=1; i<=6 ; ++i )
+        i_P_sum += P[i];
+
+    if ( i_P_sum == 0 )
+    {
+        QFileInfo fin( s_FilenameIn );
+        QString s_Message = tr( "No LR1100 data found. Something must be wrong. Please check the station-to-archive file:\n\n    " ) + fin.fileName();
+        QMessageBox::warning( this, getApplicationName( true ), s_Message  );
+
+        return( _APPBREAK_ );
+    }
+
     return( _NOERROR_ );
 }
 
@@ -149,7 +164,7 @@ int MainWindow::RadiosondeMeasurementsTest( const QString& s_FilenameIn, int *P,
 // **********************************************************************************************
 // **********************************************************************************************
 
-/*! @brief Konvertiert den LR 1100.
+/*! @brief Konvertiert den LR1100.
 *
 *   @param b_Import Erzeugt Import- oder Datendatei
 *   @param s_FilenameIn Dateiname der Inputdatei
@@ -215,19 +230,18 @@ int MainWindow::RadiosondeMeasurementsConverter( const bool b_Import, const QStr
 
     err = RadiosondeMeasurementsTest( s_FilenameIn, P, i_NumOfFiles );
 
-    if ( err == _NODATAFOUND_ )
-        return( _NOERROR_ );
-
-    if ( err == _APPBREAK_ )
-        return( _APPBREAK_ );
+    if ( err != _NOERROR_ )
+        return( err );
 
 // ***********************************************************************************************************************
 
     QFileInfo fi( s_FilenameIn );
 
     QFile fin( s_FilenameIn );
+
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
     QTextStream tin( &fin );
@@ -349,7 +363,7 @@ int MainWindow::RadiosondeMeasurementsConverter( const bool b_Import, const QStr
     QTextStream tout( &fout );
 
 // ***********************************************************************************************************************
-// 1100
+// LR1100
 
     while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
     {
@@ -597,8 +611,6 @@ int MainWindow::RadiosondeMeasurementsConverter( const bool b_Import, const QStr
                     }
 
                     tout << eol;
-
-//					b_Stop = true;
                 }
                 else
                 {
@@ -613,11 +625,12 @@ int MainWindow::RadiosondeMeasurementsConverter( const bool b_Import, const QStr
     resetProgress( i_NumOfFiles );
 
     fin.close();
-
     fout.close();
 
     if ( ui_length == (unsigned int) _APPBREAK_ )
         return( _APPBREAK_ );
+
+    removeEmptyFile( s_FilenameIn, s_FilenameOut, 100 );
 
     return( _NOERROR_ );
 }
@@ -627,7 +640,7 @@ int MainWindow::RadiosondeMeasurementsConverter( const bool b_Import, const QStr
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Radiosonde Measurements Converters, LR 1100 */
+/*! @brief Steuerung des Radiosonde Measurements Converters, LR1100 */
 
 void MainWindow::doRadiosondeMeasurementsConverter( const bool b_Import )
 {
@@ -670,7 +683,7 @@ void MainWindow::doRadiosondeMeasurementsConverter( const bool b_Import )
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Radiosonde Measurements Converters im Import-Mode, LR 1100 */
+/*! @brief Steuerung des Radiosonde Measurements Converters im Import-Mode, LR1100 */
 
 void MainWindow::doRadiosondeMeasurementsImportConverter()
 {

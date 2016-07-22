@@ -14,21 +14,22 @@ void MainWindow::onError( const int err )
 {
     switch ( err )
     {
-    case _APPBREAK_:      // Progress aborted
+    case _APPBREAK_:        // Progress aborted
         break;
-    case _ERROR_:         // Error
+    case _ERROR_:           // Error
         break;
-    case _NOERROR_:       // No error
+    case _NOERROR_:         // No error
         break;
-    case _CHOOSEABORTED_: // Choose aborted
+    case _RECORDNOTFOUND_:  // No data but no error
         break;
-    case _FILENOEXISTS_: // File not exists
+    case _CHOOSEABORTED_:   // Choose aborted
+        break;
+    case _FILENOEXISTS_:    // File not exists
         QMessageBox::information( this, getApplicationName( true ), tr( "Import file not exists" ) );
         break;
     case _NODATAFOUND_:
         QMessageBox::information( this, getApplicationName( true ), tr( "No data found. Read the station-to-archive\nfile format description (hdl:10013/epic.42596)" ) );
         break ;
-
     case -10:
         QMessageBox::information( this, getApplicationName( true ), tr( "Can't open file.\nPossible locked by another application." ) );
         break;

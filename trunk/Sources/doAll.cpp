@@ -56,48 +56,38 @@ void MainWindow::doAllMetadataConverter()
 
         initFileProgress( gsl_FilenameList.count(), gsl_FilenameList.at( 0 ), tr( "Metadata converter working..." ) );
 
-        while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( stopProgress != _APPBREAK_ ) )
+        while ( ( i < gsl_FilenameList.count() ) && ( stopProgress != _APPBREAK_ ) )
         {
 
-// LR 0001
-            if ( err == _NOERROR_ )
-                err = FileIDConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Station_ptr, gsl_FilenameList.count() );
+// LR0001
+            err = FileIDConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Station_ptr, gsl_FilenameList.count() );
 
-// LR 0002
-            if ( err == _NOERROR_ )
-                err = ScientistIDConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Staff_ptr, g_Station_ptr, gsl_FilenameList.count() );
+// LR0002
+            err = ScientistIDConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Staff_ptr, g_Station_ptr, gsl_FilenameList.count() );
 
-// LR 0003
-            if ( err == _NOERROR_ )
-                err = MessagesConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Station_ptr, gsl_FilenameList.count() );
+// LR0003
+            err = MessagesConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Station_ptr, gsl_FilenameList.count() );
 
-// LR 0004
-            if ( err == _NOERROR_ )
-                err = StationDescriptionConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Station_ptr, gsl_FilenameList.count() );
+// LR0004
+            err = StationDescriptionConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Station_ptr, gsl_FilenameList.count() );
 
-// LR 0005
-            if ( err == _NOERROR_ )
-                err = RadiosondeEquipmentConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Method_ptr, g_Station_ptr, gsl_FilenameList.count() );
+// LR0005
+            err = RadiosondeEquipmentConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Method_ptr, g_Station_ptr, gsl_FilenameList.count() );
 
-// LR 0006
-            if ( err == _NOERROR_ )
-                err = OzoneEquipmentConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Method_ptr, g_Station_ptr, gsl_FilenameList.count() );
+// LR0006
+            err = OzoneEquipmentConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Method_ptr, g_Station_ptr, gsl_FilenameList.count() );
 
-// LR 0007
-            if ( err == _NOERROR_ )
-                err = StationHistoryConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Station_ptr, gsl_FilenameList.count() );
+// LR0007
+            err = StationHistoryConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Station_ptr, gsl_FilenameList.count() );
 
-// LR 0008
-            if ( err == _NOERROR_ )
-                err = RadiationInstrumentsConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Method_ptr, g_Station_ptr, gsl_FilenameList.count() );
+// LR0008
+            err = RadiationInstrumentsConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Method_ptr, g_Station_ptr, gsl_FilenameList.count() );
 
-// LR 0009
-            if ( err == _NOERROR_ )
-                err = AssignmentConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Method_ptr, g_Station_ptr, gsl_FilenameList.count() );
+// LR0009
+            err = AssignmentConverter( gsl_FilenameList.at( i ), sl_FilenameOut, g_Method_ptr, g_Station_ptr, gsl_FilenameList.count() );
 
 // Reference import file
-            if ( err == _NOERROR_ )
-                err = CreateReferenceImportFile( gsl_FilenameList.at( i ), sl_FilenameOut, g_Staff_ptr, g_Station_ptr,  gsl_FilenameList.count() );
+            err = CreateReferenceImportFile( gsl_FilenameList.at( i ), sl_FilenameOut, g_Staff_ptr, g_Station_ptr,  gsl_FilenameList.count() );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }
@@ -176,48 +166,38 @@ void MainWindow::doAllDataConverter()
 
         initFileProgress( gsl_FilenameList.count(), gsl_FilenameList.at( 0 ), tr( "Data converter working..." ) );
 
-        while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( stopProgress != _APPBREAK_ ) )
+        while ( ( i < gsl_FilenameList.count() ) && ( stopProgress != _APPBREAK_ ) )
         {
 
-// LR 0100
-            if ( err == _NOERROR_ )
-                err = BasicMeasurementsConverter( false, false, LR0100, gsl_FilenameList.at( i ), s_FilenameOut, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR0100
+            err = BasicMeasurementsConverter( false, false, LR0100, gsl_FilenameList.at( i ), s_FilenameOut, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
-// LR 0300
-            if ( err == _NOERROR_ )
-                err = BasicMeasurementsConverter( false, false, LR0300, gsl_FilenameList.at( i ), s_FilenameOut, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR0300
+            err = BasicMeasurementsConverter( false, false, LR0300, gsl_FilenameList.at( i ), s_FilenameOut, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
-// LR 0500
-            if ( err == _NOERROR_ )
-                err = UltraVioletMeasurementsConverter( false, false, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR0500
+            err = UltraVioletMeasurementsConverter( false, false, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
-// LR 1000
-            if ( err == _NOERROR_ )
-                err = SYNOPConverter( false, gsl_FilenameList.at( i ), g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR1000
+            err = SYNOPConverter( false, gsl_FilenameList.at( i ), g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
-// LR 1100
-            if ( err == _NOERROR_ )
-                err = RadiosondeMeasurementsConverter( false, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR1100
+            err = RadiosondeMeasurementsConverter( false, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
-// LR 1200
-            if ( err == _NOERROR_ )
-                err = OzoneMeasurementsConverter( false, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR1200
+            err = OzoneMeasurementsConverter( false, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
-// LR 1300
-            if ( err == _NOERROR_ )
-                err = ExpandedMeasurementsConverter( false, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR1300
+            err = ExpandedMeasurementsConverter( false, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
-// LR 3010
-            if ( err == _NOERROR_ )
-                err = OtherMeasurementsAtXmConverter( false, gsl_FilenameList.at( i ), 10, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR3010
+            err = OtherMeasurementsAtXmConverter( false, gsl_FilenameList.at( i ), 10, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
-// LR 3030
-            if ( err == _NOERROR_ )
-                err = OtherMeasurementsAtXmConverter( false, gsl_FilenameList.at( i ), 30, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR3030
+            err = OtherMeasurementsAtXmConverter( false, gsl_FilenameList.at( i ), 30, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
-// LR 3300
-            if ( err == _NOERROR_ )
-                err = OtherMeasurementsAtXmConverter( false, gsl_FilenameList.at( i ), 300, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR3300
+            err = OtherMeasurementsAtXmConverter( false, gsl_FilenameList.at( i ), 300, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }
@@ -263,44 +243,35 @@ void MainWindow::doAllImportConverter()
 
         initFileProgress( gsl_FilenameList.count(), gsl_FilenameList.at( 0 ), tr( "Import converter working..." ) );
 
-        while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( stopProgress != _APPBREAK_ ) )
+        while ( ( i < gsl_FilenameList.count() ) && ( stopProgress != _APPBREAK_ ) )
         {
 
-// LR 0100
-            if ( err == _NOERROR_ )
-                err = BasicMeasurementsConverter( true, false, LR0100, gsl_FilenameList.at( i ), s_FilenameOut, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR0100
+            err = BasicMeasurementsConverter( true, false, LR0100, gsl_FilenameList.at( i ), s_FilenameOut, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
-// LR 0500
-            if ( err == _NOERROR_ )
-                err = UltraVioletMeasurementsConverter( true, false, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR0500
+            err = UltraVioletMeasurementsConverter( true, false, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
-// LR 1000
-            if ( err == _NOERROR_ )
-                err = SYNOPConverter( true, gsl_FilenameList.at( i ), g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR1000
+            err = SYNOPConverter( true, gsl_FilenameList.at( i ), g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
-// LR 1100
-            if ( err == _NOERROR_ )
-                err = RadiosondeMeasurementsConverter( true, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR1100
+            err = RadiosondeMeasurementsConverter( true, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
-// LR 1200
-            if ( err == _NOERROR_ )
-                err = OzoneMeasurementsConverter( true, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR1200
+            err = OzoneMeasurementsConverter( true, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
-// LR 1300
-            if ( err == _NOERROR_ )
-                err = ExpandedMeasurementsConverter( true, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR1300
+            err = ExpandedMeasurementsConverter( true, gsl_FilenameList.at( i ), g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
-// LR 3010
-            if ( err == _NOERROR_ )
-                err = OtherMeasurementsAtXmConverter( true, gsl_FilenameList.at( i ), 10, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR3010
+            err = OtherMeasurementsAtXmConverter( true, gsl_FilenameList.at( i ), 10, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
-// LR 3030
-            if ( err == _NOERROR_ )
-                err = OtherMeasurementsAtXmConverter( true, gsl_FilenameList.at( i ), 30, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR3030
+            err = OtherMeasurementsAtXmConverter( true, gsl_FilenameList.at( i ), 30, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
-// LR 3300
-            if ( err == _NOERROR_ )
-                err = OtherMeasurementsAtXmConverter( true, gsl_FilenameList.at( i ), 300, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
+// LR3300
+            err = OtherMeasurementsAtXmConverter( true, gsl_FilenameList.at( i ), 300, g_Method_ptr, g_Staff_ptr, g_Station_ptr, g_Reference_ptr, gb_OverwriteDataset, g_Dataset_ptr, gsl_FilenameList.count() );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }

@@ -58,6 +58,7 @@ int MainWindow::OzoneEquipmentConverter( const QString& s_FilenameIn, QStringLis
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
 // ***********************************************************************************************************************
@@ -125,7 +126,7 @@ int MainWindow::OzoneEquipmentConverter( const QString& s_FilenameIn, QStringLis
     appendItem( sl_FilenameOut, fout.fileName() );
 
 // ***********************************************************************************************************************
-// LR 0006
+// LR0006
 
     tout << "File name\tStation ID\tEvent label\tStation\tYYYY-MM\t";
     tout << "Manufacturer\tLocation\tDistance from radiation site [km]\t";
@@ -193,7 +194,7 @@ int MainWindow::OzoneEquipmentConverter( const QString& s_FilenameIn, QStringLis
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Ozone Equipment Converters, LR 0006 */
+/*! @brief Steuerung des Ozone Equipment Converters, LR0006 */
 
 void MainWindow::doOzoneEquipmentConverter()
 {

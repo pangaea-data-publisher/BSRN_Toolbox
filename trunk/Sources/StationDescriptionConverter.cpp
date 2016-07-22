@@ -50,6 +50,7 @@ int MainWindow::StationDescriptionConverter( const QString& s_FilenameIn, QStrin
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
 // ***********************************************************************************************************************
@@ -117,7 +118,7 @@ int MainWindow::StationDescriptionConverter( const QString& s_FilenameIn, QStrin
     appendItem( sl_FilenameOut, fout.fileName() );
 
 // ***********************************************************************************************************************
-// LR 0004
+// LR0004
 
     tout << "File name\tStation ID\tEvent label\tStation\tYYYY-MM\t";
     tout << "Surface type\tTopography type" << endl;
@@ -166,7 +167,7 @@ int MainWindow::StationDescriptionConverter( const QString& s_FilenameIn, QStrin
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Station Description Converters, LR 0004 */
+/*! @brief Steuerung des Station Description Converters, LR0004 */
 
 void MainWindow::doStationDescriptionConverter()
 {

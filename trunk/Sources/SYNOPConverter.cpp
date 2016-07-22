@@ -8,7 +8,7 @@
 // **********************************************************************************************
 // 2016-07-05
 
-/*! @brief Testet den LR 1000.
+/*! @brief Testet den LR1000.
 *
 *   @param FilenameIn Dateiname der Inputdatei
 *   @param P Pointer auf ein Array von Integern
@@ -44,6 +44,7 @@ int MainWindow::SYNOPTest( const QString& s_FilenameIn, int *P, const int i_NumO
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
     QTextStream tin( &fin );
@@ -2728,7 +2729,7 @@ QString MainWindow::buildSYNOPDataOutputStr6( const QString s_EventLabel, const 
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
 
-/*! @brief Konvertiert den LR 1000.
+/*! @brief Konvertiert den LR1000.
 *
 *   @param b_Import Erzeugt Import- oder Datendatei
 *   @param s_FilenameIn Dateiname der Inputdatei
@@ -2790,6 +2791,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
     QFile fin( s_FilenameIn );
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
     QTextStream tin( &fin );
@@ -3076,11 +3078,12 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
     resetProgress( i_NumOfFiles );
 
     fin.close();
-
     fout.close();
 
     if ( ui_length == (unsigned int) _APPBREAK_ )
         return( _APPBREAK_ );
+
+    removeEmptyFile( s_FilenameIn, s_FilenameOut, 100 );
 
     return( _NOERROR_ );
 }
@@ -3134,7 +3137,7 @@ float MainWindow::calcGeopotentialHeight( const QString& InputStr )
 // **********************************************************************************************
 // 2003-08-02
 
-/*! @brief Steuerung des Expanded Measurements Converters, LR 1000 */
+/*! @brief Steuerung des Expanded Measurements Converters, LR1000 */
 
 void MainWindow::doSYNOPConverter( const bool b_Import )
 {
@@ -3177,7 +3180,7 @@ void MainWindow::doSYNOPConverter( const bool b_Import )
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des SYNOP Converters im Import-Mode, LR 1000 */
+/*! @brief Steuerung des SYNOP Converters im Import-Mode, LR1000 */
 
 void MainWindow::doSYNOPImportConverter()
 {

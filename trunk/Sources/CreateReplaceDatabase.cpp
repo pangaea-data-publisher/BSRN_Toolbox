@@ -36,6 +36,7 @@ int MainWindow::createReplaceDatabase( const QString& s_FilenameIn, const int i_
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
 // ***********************************************************************************************************************

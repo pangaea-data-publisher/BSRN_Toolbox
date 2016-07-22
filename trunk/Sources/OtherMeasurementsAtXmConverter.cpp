@@ -8,7 +8,7 @@
 // **********************************************************************************************
 // 2008-01-20
 
-/*! @brief Testet den LR 3xxx.
+/*! @brief Testet den LR3xxx.
 *
 *   @param FilenameIn Dateiname der Inputdatei
 *   @param P Pointer auf ein Array von Integern
@@ -20,7 +20,7 @@
 
 int MainWindow::OtherMeasurementsAtXmTest( const QString& s_FilenameIn, int *P, const int i_Height, const int i_NumOfFiles )
 {
-    int				err				= _NOERROR_;
+    int             i_hasData       = 0;
     int				i_P_sum			= 0;
 
     QString			InputStr		= "";
@@ -31,6 +31,7 @@ int MainWindow::OtherMeasurementsAtXmTest( const QString& s_FilenameIn, int *P, 
     unsigned int	ui_length		= 1;
     unsigned int	ui_filesize		= 1;
 
+    bool            b_hasRecord     = false;
     bool			b_Stop			= false;
 
 // ***********************************************************************************************************************
@@ -46,6 +47,7 @@ int MainWindow::OtherMeasurementsAtXmTest( const QString& s_FilenameIn, int *P, 
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
     QTextStream tin( &fin );
@@ -76,20 +78,20 @@ int MainWindow::OtherMeasurementsAtXmTest( const QString& s_FilenameIn, int *P, 
         {
             InputStr.append( " " );
 
-            if ( InputStr.contains( d.sprintf( " 2%06d ", i_Height*100 ) ) )	err++;
-            if ( InputStr.contains( d.sprintf( " 131%06d ", i_Height*100 ) ) )	err++;
-            if ( InputStr.contains( d.sprintf( " 5%06d ", i_Height*100 ) ) )	err++;
-            if ( InputStr.contains( d.sprintf( " 132%06d ", i_Height*100 ) ) )	err++;
-            if ( InputStr.contains( d.sprintf( " 21%06d ", i_Height*100 ) ) )	err++;
-            if ( InputStr.contains( d.sprintf( " 22%06d ", i_Height*100 ) ) )	err++;
+            if ( InputStr.contains( d.sprintf( " 2%06d ", i_Height*100 ) ) )	i_hasData++;
+            if ( InputStr.contains( d.sprintf( " 131%06d ", i_Height*100 ) ) )	i_hasData++;
+            if ( InputStr.contains( d.sprintf( " 5%06d ", i_Height*100 ) ) )	i_hasData++;
+            if ( InputStr.contains( d.sprintf( " 132%06d ", i_Height*100 ) ) )	i_hasData++;
+            if ( InputStr.contains( d.sprintf( " 21%06d ", i_Height*100 ) ) )	i_hasData++;
+            if ( InputStr.contains( d.sprintf( " 22%06d ", i_Height*100 ) ) )	i_hasData++;
         }
     }
 
-    if ( err == _NOERROR_ )
+    if ( i_hasData == 0 )
     {
         resetProgress( i_NumOfFiles );
         fin.close();
-        return( _NODATAFOUND_ );
+        return( _RECORDNOTFOUND_ );
     }
 
     while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
@@ -99,6 +101,8 @@ int MainWindow::OtherMeasurementsAtXmTest( const QString& s_FilenameIn, int *P, 
 
         if ( ( InputStr.startsWith( SearchString1 ) == true ) || ( InputStr.startsWith( SearchString2 ) == true ) )
         {
+            b_hasRecord = true;
+
             while ( ( tin.atEnd() == false ) && ( b_Stop == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) )
             {
                 InputStr	= tin.readLine();
@@ -183,7 +187,28 @@ int MainWindow::OtherMeasurementsAtXmTest( const QString& s_FilenameIn, int *P, 
 
     fin.close();
 
-    return( _NOERROR_ );
+    if ( b_hasRecord == true )
+    {
+        i_P_sum = 0;
+
+        for ( int i=1; i<=18 ; ++i )
+            i_P_sum += P[i];
+
+        if ( i_P_sum == 0 )
+        {
+            QFileInfo fin( s_FilenameIn );
+            QString s_Message = tr( "No LR3xxx data found. Something must be wrong. Please check the station-to-archive file:\n\n    " ) + fin.fileName();
+            QMessageBox::warning( this, getApplicationName( true ), s_Message  );
+
+            return( _APPBREAK_ );
+        }
+        else
+        {
+            return( _NOERROR_ );
+        }
+    }
+
+    return( _APPBREAK_ );
 }
 
 // **********************************************************************************************
@@ -191,13 +216,13 @@ int MainWindow::OtherMeasurementsAtXmTest( const QString& s_FilenameIn, int *P, 
 // **********************************************************************************************
 // 2007-11-07
 
-/*! @brief Konvertiert den LR 1100.
+/*! @brief Konvertiert den LR3xxx.
 *
 *   @param b_Import Erzeugt Import- oder Datendatei
 *   @param s_FilenameIn Dateiname der Inputdatei
 *   @param i_Height Hoehe des Messortes ueber Grund
-*   @param Parameter_0001 Pointer auf Array aller Parameter aus LR 0001
-*   @param Parameter_0009 Pointer auf Array aller Parameter aus LR 0009
+*   @param Parameter_0001 Pointer auf Array aller Parameter aus LR0001
+*   @param Parameter_0009 Pointer auf Array aller Parameter aus LR0009
 *   @param Method_ptr Pointer auf Array aller Methoden
 *   @param Staff_ptr Pointer auf Array aller Personen
 *   @param Station_ptr Pointer auf Array aller Stationen
@@ -285,19 +310,18 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
 
     err = OtherMeasurementsAtXmTest( s_FilenameIn, P, i_Height, i_NumOfFiles );
 
-    if ( err == _NODATAFOUND_ )
-        return( _NOERROR_ );
-
-    if ( err == _APPBREAK_ )
-        return( _APPBREAK_ );
+    if ( err != _NOERROR_ )
+        return( setErr( err ) );
 
 // ***********************************************************************************************************************
 
     QFileInfo fi( s_FilenameIn );
 
     QFile fin( s_FilenameIn );
+
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
     QTextStream tin( &fin );
@@ -447,7 +471,7 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
     QTextStream tout( &fout );
 
 // ***********************************************************************************************************************
-// LR 0009
+// LR0009
 
     i = 0;
     j = 0;
@@ -1015,8 +1039,6 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
 
                     if ( b_Out == true )
                         tout << OutputStr << eol;
-
-//					b_Stop = true;
                 }
                 else
                 {
@@ -1057,6 +1079,8 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
     if ( ui_length == (unsigned int) _APPBREAK_ )
         return( _APPBREAK_ );
 
+    removeEmptyFile( s_FilenameIn, s_FilenameOut, 100 );
+
     return( _NOERROR_ );
 }
 
@@ -1065,7 +1089,7 @@ int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QStri
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Other Measurements at X m Converters, LR 3xxx */
+/*! @brief Steuerung des Other Measurements at X m Converters, LR3xxx */
 
 void MainWindow::doOtherMeasurementsAtXmConverter( const bool b_Import, const int i_Height )
 {
@@ -1108,7 +1132,7 @@ void MainWindow::doOtherMeasurementsAtXmConverter( const bool b_Import, const in
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Other Measurements at 10 m Converters, LR 3010 */
+/*! @brief Steuerung des Other Measurements at 10 m Converters, LR3010 */
 
 void MainWindow::doOtherMeasurementsAt10mConverter()
 {
@@ -1117,7 +1141,7 @@ void MainWindow::doOtherMeasurementsAt10mConverter()
 
 // **********************************************************************************************
 
-/*! @brief Steuerung des Other Measurements at 10 m Converters im Import-Mode, LR 3010 */
+/*! @brief Steuerung des Other Measurements at 10 m Converters im Import-Mode, LR3010 */
 
 void MainWindow::doOtherMeasurementsAt10mImportConverter()
 {
@@ -1129,7 +1153,7 @@ void MainWindow::doOtherMeasurementsAt10mImportConverter()
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Other Measurements at 30 m Converters, LR 3030 */
+/*! @brief Steuerung des Other Measurements at 30 m Converters, LR3030 */
 
 void MainWindow::doOtherMeasurementsAt30mConverter()
 {
@@ -1138,7 +1162,7 @@ void MainWindow::doOtherMeasurementsAt30mConverter()
 
 // **********************************************************************************************
 
-/*! @brief Steuerung des Other Measurements at 30 m Converters im Import-Mode, LR 3030 */
+/*! @brief Steuerung des Other Measurements at 30 m Converters im Import-Mode, LR3030 */
 
 void MainWindow::doOtherMeasurementsAt30mImportConverter()
 {
@@ -1150,7 +1174,7 @@ void MainWindow::doOtherMeasurementsAt30mImportConverter()
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Other Measurements at 300 m Converters, LR 3300 */
+/*! @brief Steuerung des Other Measurements at 300 m Converters, LR3300 */
 
 void MainWindow::doOtherMeasurementsAt300mConverter()
 {
@@ -1159,7 +1183,7 @@ void MainWindow::doOtherMeasurementsAt300mConverter()
 
 // **********************************************************************************************
 
-/*! @brief Steuerung des Other Measurements at 300 m Converters im Import-Mode, LR 3300 */
+/*! @brief Steuerung des Other Measurements at 300 m Converters im Import-Mode, LR3300 */
 
 void MainWindow::doOtherMeasurementsAt300mImportConverter()
 {

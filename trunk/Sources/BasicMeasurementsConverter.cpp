@@ -8,7 +8,7 @@
 // **********************************************************************************************
 // 2008-01-20
 
-/*! @brief Testet den LR 0100 und den LR 0300.
+/*! @brief Testet den LR0100 und den LR0300.
 *
 *   @param s_FilenameIn Dateiname der Inputdatei
 *   @param P Pointer auf ein Array von Integern
@@ -44,6 +44,7 @@ int MainWindow::BasicMeasurementsTest( const QString& s_FilenameIn, int *P, cons
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
     QTextStream tin( &fin );
@@ -204,6 +205,20 @@ int MainWindow::BasicMeasurementsTest( const QString& s_FilenameIn, int *P, cons
 
     fin.close();
 
+    i_P_sum = 0;
+
+    for ( int i=1; i<=19 ; ++i )
+        i_P_sum += P[i];
+
+    if ( i_P_sum == 0 )
+    {
+        QFileInfo fin( s_FilenameIn );
+        QString s_Message = tr( "No LR0100 data found. Something must be wrong. Please check the station-to-archive file:\n\n    " ) + fin.fileName();
+        QMessageBox::warning( this, getApplicationName( true ), s_Message  );
+
+        return( _APPBREAK_ );
+    }
+
     return( _NOERROR_ );
 }
 
@@ -211,14 +226,14 @@ int MainWindow::BasicMeasurementsTest( const QString& s_FilenameIn, int *P, cons
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
 
-/*! @brief Konvertiert den LR 0100.
+/*! @brief Konvertiert den LR0100.
 *
 *   @param b_Import Erzeugt Import- oder Datendatei
 *   @param b_showSelectParameterDialog soll der Select Parameter Dialog anzeigt werden?
 *   @param i_Mode mit oder ohne LR0300
 *   @param s_FilenameIn Dateiname der Inputdatei
-*   @param Parameter_0001 Pointer auf Array aller Parameter aus LR 0001
-*   @param Parameter_0009 Pointer auf Array aller Parameter aus LR 0009
+*   @param Parameter_0001 Pointer auf Array aller Parameter aus LR0001
+*   @param Parameter_0009 Pointer auf Array aller Parameter aus LR0009
 *   @param Method_ptr Pointer auf Array aller Methoden
 *   @param Staff_ptr Pointer auf Array aller Personen
 *   @param Station_ptr Pointer auf Array aller Stationen
@@ -318,11 +333,8 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
     if ( i_Mode != LR0300 )
         err = BasicMeasurementsTest( s_FilenameIn, P, i_NumOfFiles );
 
-    if ( err == _ERROR_ )
-        return( _ERROR_ );
-
-    if ( err == _APPBREAK_ )
-        return( _APPBREAK_ );
+    if ( err != _NOERROR_ )
+        return( err );
 
 // ***********************************************************************************************************************
 
@@ -337,6 +349,7 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
     QTextStream tin( &fin );
@@ -665,7 +678,7 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
         InputStr_LR0300 = tin0300.readLine(); // read header
 
 // ***********************************************************************************************************************
-// LR 0009
+// LR0009
 
     l = 0;
     j = 0;
@@ -1665,11 +1678,12 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
     if ( ui_length == (unsigned int) _APPBREAK_ )
         return( _APPBREAK_ );
 
-    if ( ( err = checkSelectedParameter( offset, PoM ) ) != _NOERROR_ )
-    {
-        QString s_FilenameLR0100 = s_FilenameOut;
+    QString s_FilenameLR0100 = s_FilenameOut;
+
+    if ( checkSelectedParameter( offset, PoM ) != _NOERROR_ )
         QFile::rename( s_FilenameOut, s_FilenameLR0100.replace( "0100+0300", "0100" ) );
-    }
+
+    removeEmptyFile( s_FilenameIn, s_FilenameLR0100, 100 );
 
     return( _NOERROR_ );
 }
@@ -1679,7 +1693,7 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
 // **********************************************************************************************
 // 2003-08-02
 
-/*! @brief Steuerung des Basic Measurements Converters, LR 0100 */
+/*! @brief Steuerung des Basic Measurements Converters, LR0100 */
 
 void MainWindow::doBasicMeasurementsConverter( const bool b_Import )
 {
@@ -1724,7 +1738,7 @@ void MainWindow::doBasicMeasurementsConverter( const bool b_Import )
 // **********************************************************************************************
 // 2003-08-02
 
-/*! @brief Steuerung des Basic Measurements Converters im Import-Mode, LR 0100 */
+/*! @brief Steuerung des Basic Measurements Converters im Import-Mode, LR0100 */
 
 void MainWindow::doBasicMeasurementsImportConverter()
 {

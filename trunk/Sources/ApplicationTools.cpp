@@ -1327,3 +1327,48 @@ int MainWindow::checkSelectedParameter( const int offset, int *P )
 
     return( _NOERROR_ );
 }
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+// 2016-07-21
+
+bool MainWindow::removeEmptyFile( const QString& s_FilenameIn, const QString& s_FilenameOut, const int i_minFilesize )
+{
+    QFileInfo fin( s_FilenameIn );
+    QFileInfo fout( s_FilenameOut );
+
+    if ( ( fout.exists() == true ) && ( fout.isFile() == true ) && ( fout.size() < i_minFilesize ) )
+    {
+        QFile f( s_FilenameOut );
+        f.remove();
+
+        QString s_Message = tr( "Output file\n\n    ") + fout.fileName() + tr( "\n\nwas empty and has been deleted.\n\nSomething must be wrong. Please\ncheck the station-to-archive file\n\n    " ) + fin.fileName();
+        QMessageBox::warning( this, getApplicationName( true ), s_Message  );
+
+        return( true );
+    }
+
+    return( false );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+// 2016-07-22
+
+int MainWindow::setErr( const int err )
+{
+    switch ( err )
+    {
+    case _RECORDNOTFOUND_:
+        return( _NOERROR_ );
+        break;
+    case _APPBREAK_:
+        return( _NOERROR_ );
+        break;
+    }
+
+    return( err );
+}
+

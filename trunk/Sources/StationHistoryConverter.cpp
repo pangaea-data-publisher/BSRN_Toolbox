@@ -51,6 +51,7 @@ int MainWindow::StationHistoryConverter( const QString& s_FilenameIn, QStringLis
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
 // ***********************************************************************************************************************
@@ -118,7 +119,7 @@ int MainWindow::StationHistoryConverter( const QString& s_FilenameIn, QStringLis
     appendItem( sl_FilenameOut, fout.fileName() );
 
 // ***********************************************************************************************************************
-// LR 0007
+// LR0007
 
     tout << "File name\tStation ID\tEvent label\tStation\tYYYY-MM\t";
     tout << "Date/Time when change occured\tMethod est. cloud amount (digital proc.)\t";
@@ -228,7 +229,7 @@ int MainWindow::StationHistoryConverter( const QString& s_FilenameIn, QStringLis
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Station History Converters, LR 0007 */
+/*! @brief Steuerung des Station History Converters, LR0007 */
 
 void MainWindow::doStationHistoryConverter()
 {

@@ -407,7 +407,12 @@ private:
 
     QString findEventLabel( const int StationNumber, structStation *Station_ptr );
     QString findStationName( const int StationNumber, structStation *Station_ptr );
+
     bool checkFilename( const QString& s_Filename, const QString& s_EventLabel, const QString& s_Month, const QString& s_Year );
+    bool removeEmptyFile( const QString& FilenameIn, const QString& FilenameOut, const int minFilesize = 0 );
+
+    int setErr( const int err );
+
     int checkSelectedParameter( const int offset, int *P, int *PoM );
     int checkSelectedParameter( const int offset, int *P );
 

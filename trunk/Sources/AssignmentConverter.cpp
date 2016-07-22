@@ -55,6 +55,7 @@ int MainWindow::AssignmentConverter( const QString& s_FilenameIn, QStringList& s
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
 // ***********************************************************************************************************************
@@ -122,7 +123,7 @@ int MainWindow::AssignmentConverter( const QString& s_FilenameIn, QStringList& s
     appendItem( sl_FilenameOut, fout.fileName() );
 
 // ***********************************************************************************************************************
-// LR 0009
+// LR0009
 
     tout << "File name\tStation ID\tEvent label\tStation\tYYYY-MM\t";
     tout << "Date/Time\tParameter\tWRMC ID of instrument\tPANGAEA method ID" << endl;
@@ -187,7 +188,7 @@ int MainWindow::AssignmentConverter( const QString& s_FilenameIn, QStringList& s
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Assignment Converters, LR 0009 */
+/*! @brief Steuerung des Assignment Converters, LR0009 */
 
 void MainWindow::doAssignmentConverter()
 {

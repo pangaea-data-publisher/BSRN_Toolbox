@@ -50,6 +50,7 @@ int MainWindow::MessagesConverter(const QString& s_FilenameIn, QStringList& sl_F
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
     QTextStream tin( &fin );
@@ -115,7 +116,7 @@ int MainWindow::MessagesConverter(const QString& s_FilenameIn, QStringList& sl_F
     appendItem( sl_FilenameOut, fout.fileName() );
 
 // ***********************************************************************************************************************
-// LR 0003
+// LR0003
 
     tout << "File name\tStation ID\tEvent label\tStation\tYYYY-MM" << endl;
 
@@ -168,7 +169,7 @@ int MainWindow::MessagesConverter(const QString& s_FilenameIn, QStringList& sl_F
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Messages Converters, LR 0003 */
+/*! @brief Steuerung des Messages Converters, LR0003 */
 
 void MainWindow::doMessagesConverter()
 {

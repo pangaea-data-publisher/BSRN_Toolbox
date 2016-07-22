@@ -54,6 +54,7 @@ int MainWindow::RadiationInstrumentsConverter(const QString& s_FilenameIn, QStri
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
 // ***********************************************************************************************************************
@@ -121,7 +122,7 @@ int MainWindow::RadiationInstrumentsConverter(const QString& s_FilenameIn, QStri
     appendItem( sl_FilenameOut, fout.fileName() );
 
 // ***********************************************************************************************************************
-// LR 0008
+// LR0008
 
     tout << "File name\tStation ID\tEvent label\tStation\tYYYY-MM\t";
     tout << "PANGAEA method\tPANGAEA method ID" << endl;
@@ -257,7 +258,7 @@ int MainWindow::RadiationInstrumentsConverter(const QString& s_FilenameIn, QStri
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Radiation Instruments Converters, LR 0008 */
+/*! @brief Steuerung des Radiation Instruments Converters, LR0008 */
 
 void MainWindow::doRadiationInstrumentsConverter()
 {

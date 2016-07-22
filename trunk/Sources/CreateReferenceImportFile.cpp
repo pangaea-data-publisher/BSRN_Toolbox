@@ -49,6 +49,7 @@ int MainWindow::CreateReferenceImportFile( const QString& s_FilenameIn, QStringL
 
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
 // ***********************************************************************************************************************

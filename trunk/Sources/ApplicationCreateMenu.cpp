@@ -52,31 +52,31 @@ void MainWindow::createActions()
     connect(checkStationToArchiveFilesAction, SIGNAL(triggered()), this, SLOT(doCheckStationToArchiveFiles()));
 
 // Metadata menu
-    fileIDAction = new QAction(tr("&File ID, LR 0001"), this);
+    fileIDAction = new QAction(tr("&File ID, LR0001"), this);
     connect(fileIDAction, SIGNAL(triggered()), this, SLOT(doFileIDConverter()));
 
-    scientistIDAction = new QAction(tr("&Scientist description, LR 0002"), this);
+    scientistIDAction = new QAction(tr("&Scientist description, LR0002"), this);
     connect(scientistIDAction, SIGNAL(triggered()), this, SLOT(doScientistIDConverter()));
 
-    messagesAction = new QAction(tr("&Messages, LR 0003"), this);
+    messagesAction = new QAction(tr("&Messages, LR0003"), this);
     connect(messagesAction, SIGNAL(triggered()), this, SLOT(doMessagesConverter()));
 
-    stationDescriptionAction = new QAction(tr("Station &description, LR 0004"), this);
+    stationDescriptionAction = new QAction(tr("Station &description, LR0004"), this);
     connect(stationDescriptionAction, SIGNAL(triggered()), this, SLOT(doStationDescriptionConverter()));
 
-    radiosondeEquipmentAction = new QAction(tr("&Radiosonde equipment, LR 0005"), this);
+    radiosondeEquipmentAction = new QAction(tr("&Radiosonde equipment, LR0005"), this);
     connect(radiosondeEquipmentAction, SIGNAL(triggered()), this, SLOT(doRadiosondeEquipmentConverter()));
 
-    ozoneEquipmentAction = new QAction(tr("&Ozone equipment, LR 0006"), this);
+    ozoneEquipmentAction = new QAction(tr("&Ozone equipment, LR0006"), this);
     connect(ozoneEquipmentAction, SIGNAL(triggered()), this, SLOT(doOzoneEquipmentConverter()));
 
-    stationHistoryAction = new QAction(tr("Station &history, LR 0007"), this);
+    stationHistoryAction = new QAction(tr("Station &history, LR0007"), this);
     connect(stationHistoryAction, SIGNAL(triggered()), this, SLOT(doStationHistoryConverter()));
 
-    radiationInstrumentsAction = new QAction(tr("R&adiation instruments, LR 0008"), this);
+    radiationInstrumentsAction = new QAction(tr("R&adiation instruments, LR0008"), this);
     connect(radiationInstrumentsAction, SIGNAL(triggered()), this, SLOT(doRadiationInstrumentsConverter()));
 
-    assignmentAction = new QAction(tr("Assig&nment of radiation quantities, LR 0009"), this);
+    assignmentAction = new QAction(tr("Assig&nment of radiation quantities, LR0009"), this);
     connect(assignmentAction, SIGNAL(triggered()), this, SLOT(doAssignmentConverter()));
 
     createRefFileAction = new QAction(tr("Create reference import file"), this);
@@ -92,65 +92,65 @@ void MainWindow::createActions()
     connect(refreshBsrnReferenceIDsAction, SIGNAL(triggered()), this, SLOT(doRefreshBsrnReferenceIDs()));
 
     // Data menu
-    basicMeasurementsAction = new QAction(tr("&Basic and other measurements, LR 0100 + LR 0300"), this);
+    basicMeasurementsAction = new QAction(tr("&Basic and other measurements, LR0100 + LR0300"), this);
     connect(basicMeasurementsAction, SIGNAL(triggered()), this, SLOT(doBasicMeasurementsConverter()));
 
-    otherMinuteMeasurementsAction = new QAction(tr("&Other measurements in minutes intervals, LR 0300"), this);
+    otherMinuteMeasurementsAction = new QAction(tr("&Other measurements in minutes intervals, LR0300"), this);
     connect(otherMinuteMeasurementsAction, SIGNAL(triggered()), this, SLOT(doOtherMinuteMeasurementsConverter()));
 
-    uvMeasurementsAction = new QAction(tr("&Ultra-violet measurements, LR 0500"), this);
+    uvMeasurementsAction = new QAction(tr("&Ultra-violet measurements, LR0500"), this);
     connect(uvMeasurementsAction, SIGNAL(triggered()), this, SLOT(doUltraVioletMeasurementsConverter()));
 
-    synopAction = new QAction(tr("&SYNOP, LR 1000"), this);
+    synopAction = new QAction(tr("&SYNOP, LR1000"), this);
     connect(synopAction, SIGNAL(triggered()), this, SLOT(doSYNOPConverter()));
 
-    radiosondeMeasurementsAction = new QAction(tr("&Radiosonde measurements, LR 1100"), this);
+    radiosondeMeasurementsAction = new QAction(tr("&Radiosonde measurements, LR1100"), this);
     connect(radiosondeMeasurementsAction, SIGNAL(triggered()), this, SLOT(doRadiosondeMeasurementsConverter()));
 
-    ozoneMeasurementsAction = new QAction(tr("&Ozone measurements, LR 1200"), this);
+    ozoneMeasurementsAction = new QAction(tr("&Ozone measurements, LR1200"), this);
     connect(ozoneMeasurementsAction, SIGNAL(triggered()), this, SLOT(doOzoneMeasurementsConverter()));
 
-    expandedMeasurementsAction = new QAction(tr("&Expanded measurements in hours intervals, LR 1300"), this);
+    expandedMeasurementsAction = new QAction(tr("&Expanded measurements in hours intervals, LR1300"), this);
     connect(expandedMeasurementsAction, SIGNAL(triggered()), this, SLOT(doExpandedMeasurementsConverter()));
 
-    otherMeasurementsAt10mAction = new QAction(tr("&Other measurements at 10 m, LR 3010"), this);
+    otherMeasurementsAt10mAction = new QAction(tr("&Other measurements at 10 m, LR3010"), this);
     connect(otherMeasurementsAt10mAction, SIGNAL(triggered()), this, SLOT(doOtherMeasurementsAt10mConverter()));
 
-    otherMeasurementsAt30mAction = new QAction(tr("&Other measurements at 30 m, LR 3030"), this);
+    otherMeasurementsAt30mAction = new QAction(tr("&Other measurements at 30 m, LR3030"), this);
     connect(otherMeasurementsAt30mAction, SIGNAL(triggered()), this, SLOT(doOtherMeasurementsAt30mConverter()));
 
-    otherMeasurementsAt300mAction = new QAction(tr("&Other measurements at 300 m, LR 3300"), this);
+    otherMeasurementsAt300mAction = new QAction(tr("&Other measurements at 300 m, LR3300"), this);
     connect(otherMeasurementsAt300mAction, SIGNAL(triggered()), this, SLOT(doOtherMeasurementsAt300mConverter()));
 
     allDataAction = new QAction(tr("Create all data files"), this);
     connect(allDataAction, SIGNAL(triggered()), this, SLOT(doAllDataConverter()));
 
     // Import menu
-    basicMeasurementsImportAction = new QAction(tr("&Basic and other measurements, LR 0100 + LR 0300"), this);
+    basicMeasurementsImportAction = new QAction(tr("&Basic and other measurements, LR0100 + LR0300"), this);
     connect(basicMeasurementsImportAction, SIGNAL(triggered()), this, SLOT(doBasicMeasurementsImportConverter()));
 
-    uvMeasurementsImportAction = new QAction(tr("&Ultra-violet measurements, LR 0500"), this);
+    uvMeasurementsImportAction = new QAction(tr("&Ultra-violet measurements, LR0500"), this);
     connect(uvMeasurementsImportAction, SIGNAL(triggered()), this, SLOT(doUltraVioletMeasurementsImportConverter()));
 
-    synopImportAction = new QAction(tr("&SYNOP, LR 1000"), this);
+    synopImportAction = new QAction(tr("&SYNOP, LR1000"), this);
     connect(synopImportAction, SIGNAL(triggered()), this, SLOT(doSYNOPImportConverter()));
 
-    radiosondeMeasurementsImportAction = new QAction(tr("&Radiosonde measurements, LR 1100"), this);
+    radiosondeMeasurementsImportAction = new QAction(tr("&Radiosonde measurements, LR1100"), this);
     connect(radiosondeMeasurementsImportAction, SIGNAL(triggered()), this, SLOT(doRadiosondeMeasurementsImportConverter()));
 
-    ozoneMeasurementsImportAction = new QAction(tr("&Ozone measurements, LR 1200"), this);
+    ozoneMeasurementsImportAction = new QAction(tr("&Ozone measurements, LR1200"), this);
     connect(ozoneMeasurementsImportAction, SIGNAL(triggered()), this, SLOT(doOzoneMeasurementsImportConverter()));
 
-    expandedMeasurementsImportAction = new QAction(tr("&Expanded measurements in hours intervals, Part I, LR 1300"), this);
+    expandedMeasurementsImportAction = new QAction(tr("&Expanded measurements in hours intervals, Part I, LR1300"), this);
     connect(expandedMeasurementsImportAction, SIGNAL(triggered()), this, SLOT(doExpandedMeasurementsImportConverter()));
 
-    otherMeasurementsAt10mImportAction = new QAction(tr("&Other measurements at 10 m, LR 3010"), this);
+    otherMeasurementsAt10mImportAction = new QAction(tr("&Other measurements at 10 m, LR3010"), this);
     connect(otherMeasurementsAt10mImportAction, SIGNAL(triggered()), this, SLOT(doOtherMeasurementsAt10mImportConverter()));
 
-    otherMeasurementsAt30mImportAction = new QAction(tr("&Other measurements at 30 m, LR 3030"), this);
+    otherMeasurementsAt30mImportAction = new QAction(tr("&Other measurements at 30 m, LR3030"), this);
     connect(otherMeasurementsAt30mImportAction, SIGNAL(triggered()), this, SLOT(doOtherMeasurementsAt30mImportConverter()));
 
-    otherMeasurementsAt300mImportAction = new QAction(tr("&Other measurements at 300 m, LR 3300"), this);
+    otherMeasurementsAt300mImportAction = new QAction(tr("&Other measurements at 300 m, LR3300"), this);
     connect(otherMeasurementsAt300mImportAction, SIGNAL(triggered()), this, SLOT(doOtherMeasurementsAt300mImportConverter()));
 
     allImportAction = new QAction(tr("Create all import files"), this);

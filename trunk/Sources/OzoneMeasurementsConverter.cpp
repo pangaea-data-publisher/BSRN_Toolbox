@@ -8,7 +8,7 @@
 // **********************************************************************************************
 // 2008-01-20
 
-/*! @brief Konvertiert den LR 1200.
+/*! @brief Konvertiert den LR1200.
 *
 *   @param b_Import Erzeugt Import- oder Datendatei
 *   @param FilenameIn Dateiname der Inputdatei
@@ -72,8 +72,10 @@ int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& 
 // ***********************************************************************************************************************
 
     QFile fin( s_FilenameIn );
+
     if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
         return( -10 );
+
     ui_filesize = fin.size();
 
     QTextStream tin( &fin );
@@ -195,7 +197,7 @@ int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& 
     QTextStream tout( &fout );
 
 // ***********************************************************************************************************************
-// LR 0006
+// LR0006
 
     while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
     {
@@ -371,6 +373,8 @@ int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& 
     if ( ui_length == (unsigned int) _APPBREAK_ )
         return( _APPBREAK_ );
 
+    removeEmptyFile( s_FilenameIn, s_FilenameOut, 100 );
+
     return( _NOERROR_ );
 }
 
@@ -379,7 +383,7 @@ int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& 
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Ozone Measurements Converters, LR 1200 */
+/*! @brief Steuerung des Ozone Measurements Converters, LR1200 */
 
 void MainWindow::doOzoneMeasurementsConverter( const bool b_Import )
 {
@@ -422,7 +426,7 @@ void MainWindow::doOzoneMeasurementsConverter( const bool b_Import )
 // **********************************************************************************************
 // 02.08.2003
 
-/*! @brief Steuerung des Ozone Measurements Converters im Import-Mode, LR 1200 */
+/*! @brief Steuerung des Ozone Measurements Converters im Import-Mode, LR1200 */
 
 void MainWindow::doOzoneMeasurementsImportConverter()
 {
