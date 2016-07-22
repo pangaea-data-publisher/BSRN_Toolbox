@@ -274,6 +274,19 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
             if ( ( err = checkSelectedParameter( offset, P ) ) != _NOERROR_ )
                  return( err );
         }
+        else
+        {
+            for ( int i=0; i<=20+offset; i++ )
+                P[i] = 0;
+
+            P[1] = 1; P[2] = 1; P[3] = 1; // Date/Time, Latitutude, Longitude
+
+            P[1+offset]  = 1;  // UV-a global [W/m**2]
+            P[5+offset]  = 1;  // UV-b direct [W/m**2]
+            P[9+offset]  = 1;  // UV-b global [W/m**2]
+            P[13+offset] = 1;  // UV-b diffuse [W/m**2]
+            P[17+offset] = 1;  // UV upward reflected [W/m**2]
+        }
     }
 
 // ***********************************************************************************************************************
@@ -901,8 +914,6 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
 
                     if ( b_Out == true )
                         tout << OutputStr << eol;
-
-//					b_Stop = true;
                 }
                 else
                 {
