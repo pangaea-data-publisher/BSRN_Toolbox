@@ -390,7 +390,7 @@ void MainWindow::doConvertFormatted()
     {
         err = doFormatFormattedOptionsDialog( gi_FieldAlignment, gi_FieldWidth, gs_MissingValue );
 
-        if ( err == _NOERROR_ )
+        if ( err == QDialog::Accepted )
         {
             initFileProgress( gsl_FilenameList.count(), gsl_FilenameList.at( 0 ), tr( "Converting tab files..." ) );
 
@@ -442,7 +442,7 @@ void MainWindow::doConvertUnformatted()
 
     err = doFormatUnformattedOptionsDialog( gs_MissingValue, gi_FieldDelimiter );
 
-    if ( err == _NOERROR_ )
+    if ( err == QDialog::Accepted )
     {
         initFileProgress( gsl_FilenameList.count(), gsl_FilenameList.at( 0 ), tr( "Converting tab files..." ) );
 
