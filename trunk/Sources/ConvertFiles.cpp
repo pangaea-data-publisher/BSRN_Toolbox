@@ -172,40 +172,31 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const int i_NumOfFiles
 
 int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_FilenameOut, const QString& s_MissingValue, const int i_FieldDelimiter, const int i_NumOfFiles )
 {
-    int   n             = 0;
-    int	  stopProgress	= 0;
+    int          i                = 0;
+    int          n                = 0;
+    int          m                = 0;
 
-    unsigned int	ui_length	= 1;
-    unsigned int	ui_filesize = 1;
+    int          stopProgress     = 0;
 
-    QString InputStr            = "";
-    QString s_FieldDelimiter    = "";
+    QString      s_FieldDelimiter = "\t";
+    QString      InputStr         = "";
+
+    QStringList  sl_Input;
+
 
 // ************************************************************************************************
 
-    QFile fin( s_FilenameIn );
-
-    if ( fin.open( QIODevice::ReadOnly | QIODevice::Text ) == false )
+    if ( ( n = readFile( s_FilenameIn, sl_Input, _SYSTEM_ ) ) < 1 )
         return( -10 );
-
-    ui_filesize = fin.size();
 
     QFile fout( s_FilenameOut );
 
     if ( fout.open( QIODevice::WriteOnly | QIODevice::Text) == false )
         return( -20 );
 
-// ***********************************************************************************************************************
-
-    QTextStream tin( &fin );
     QTextStream tout( &fout );
 
-    initProgress( i_NumOfFiles, s_FilenameIn, tr( "Tab converter working..." ), 100 );
-
-    setStatusBarFileInProgress( s_FilenameIn );
-
 // ***********************************************************************************************************************
-// field delimiter
 
     switch ( i_FieldDelimiter )
     {
@@ -224,26 +215,34 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_Filen
     }
 
 // ***********************************************************************************************************************
+
+    initProgress( i_NumOfFiles, s_FilenameIn, tr( "Tab converter working..." ), sl_Input.count() );
+
+    setStatusBarFileInProgress( s_FilenameIn );
+
+// ***********************************************************************************************************************
 // Header
 
-    InputStr  = tin.readLine();
-    ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
-    n         = NumOfSections( InputStr );
+    InputStr = sl_Input.at( 0 );
+
+    m = NumOfSections( InputStr );
 
     tout << "\"" << InputStr.section( "\t", 0, 0 ) << "\"";
 
-    for ( int i=1; i<n; ++i )
-        tout << s_FieldDelimiter << "\"" << InputStr.section( "\t", i, i ) << "\"";
+    for ( int j=1; j<m; ++j )
+        tout << s_FieldDelimiter << "\"" << InputStr.section( "\t", j, j ) << "\"";
 
     tout << endl;
 
+    stopProgress = incProgress( i_NumOfFiles, ++i );
+
 // ***********************************************************************************************************************
 
-    while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) )
+    while ( ( i<n ) && ( stopProgress != _APPBREAK_ ) )
     {
-        InputStr  = tin.readLine();
-        ui_length = incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
-        n         = NumOfSections( InputStr );
+        InputStr = sl_Input.at( i );
+
+        m = NumOfSections( InputStr );
 
         if ( InputStr.isEmpty() == false )
         {
@@ -252,27 +251,25 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_Filen
             else
                 tout << InputStr.section( "\t", 0, 0 );
 
-            for ( int i=1; i<n; ++i )
+            for ( int j=1; j<m; ++j )
             {
-                if ( InputStr.section( "\t", i, i ).isEmpty() == true )
+                if ( InputStr.section( "\t", j, j ).isEmpty() == true )
                     tout << s_FieldDelimiter << s_MissingValue;
                 else
-                    tout << s_FieldDelimiter << InputStr.section( "\t", i, i );
+                    tout << s_FieldDelimiter << InputStr.section( "\t", j, j );
             }
         }
 
         tout << endl;
+
+        stopProgress = incProgress( i_NumOfFiles, ++i );
     }
 
 // *************************************************************************************
 
     resetProgress( i_NumOfFiles );
 
-    fin.close();
     fout.close();
-
-    if ( ui_length == (unsigned int) _APPBREAK_ )
-        return( _APPBREAK_ );
 
     if ( stopProgress == _APPBREAK_ )
         return( _APPBREAK_ );
@@ -287,36 +284,31 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_Filen
 
 int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_FilenameOut, const int i_FieldAlignment, const int i_FieldWidth, const QString& s_MissingValue, const int i_NumOfFiles )
 {
-    int   i             = 0;
-    int   n             = 0;
-    int   m             = 0;
+    int          i                = 0;
+    int          n                = 0;
+    int          m                = 0;
 
-    int	  stopProgress	= 0;
+    int          stopProgress     = 0;
 
-    unsigned int	ui_filesize = 1;
+    QString      s_FieldDelimiter = " ";
+    QString      InputStr         = "";
 
-    QString         InputStr    = "";
-
-    QStringList     sl_Input;
+    QStringList  sl_Input;
 
 
 // ************************************************************************************************
 
-    QFile fin( s_FilenameIn );
-
     if ( ( n = readFile( s_FilenameIn, sl_Input, _SYSTEM_ ) ) < 1 )
         return( -10 );
-
-    ui_filesize = fin.size();
 
     QFile fout( s_FilenameOut );
 
     if ( fout.open( QIODevice::WriteOnly | QIODevice::Text) == false )
         return( -20 );
 
-// ***********************************************************************************************************************
-
     QTextStream tout( &fout );
+
+// ***********************************************************************************************************************
 
     switch ( i_FieldAlignment )
     {
@@ -328,6 +320,8 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_Filen
             break;
     }
 
+// ***********************************************************************************************************************
+
     initProgress( i_NumOfFiles, s_FilenameIn, tr( "Tab converter working..." ), sl_Input.count() );
 
     setStatusBarFileInProgress( s_FilenameIn );
@@ -336,7 +330,7 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_Filen
 
     while ( ( i<n ) && ( stopProgress != _APPBREAK_ ) )
     {
-        InputStr  = sl_Input.at( i );
+        InputStr = sl_Input.at( i );
 
         m = NumOfSections( InputStr );
 
@@ -349,9 +343,9 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_Filen
             for ( int j=1; j<m; ++j )
             {
                 if ( InputStr.section( "\t", j, j ).isEmpty() == true )
-                    tout << " " + s_MissingValue;
+                    tout << s_FieldDelimiter + s_MissingValue;
                 else
-                    tout << " " + InputStr.section( "\t", j, j );
+                    tout << s_FieldDelimiter + InputStr.section( "\t", j, j );
             }
         }
 
