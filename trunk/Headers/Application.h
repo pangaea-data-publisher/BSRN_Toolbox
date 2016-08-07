@@ -234,6 +234,7 @@ private slots:
     void doWinConvertEOL();
     void doMacOSConvertEOL();
     void doCompressFile();
+    void doDecompressFiles();
     void doConvertUnformatted();
     void doConvertFormatted();
     void doCreateReplaceDatabase();
@@ -523,6 +524,7 @@ private:
     QAction *WinConvertEOLAction;
     QAction *MacOSConvertEOLAction;
     QAction *compressFileAction;
+    QAction *decompressFilesAction;
     QAction *createReplaceDatabaseAction;
 
     QAction *QualityCheckRecommendedV20Action;

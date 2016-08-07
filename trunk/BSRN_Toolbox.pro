@@ -103,6 +103,7 @@ SOURCES = ./Sources/ApplicationInit.cpp \
     ./Sources/UltraVioletMeasurementsConverter.cpp \
     ./Sources/Webfile.cpp \
     ./Sources/simplecrypt.cpp \
+    ./Sources/decompressFiles.cpp \
     ./Forms/AboutDialog/AboutDialog.cpp \
     ./Forms/ConcatenateOptionsDialog/ConcatenateOptionsDialog.cpp \
     ./Forms/DownloadManagerDialog/DownloadManagerDialog.cpp \

@@ -172,6 +172,9 @@ void MainWindow::createActions()
     MacOSConvertEOLAction = new QAction(tr("Convert MacOS 9 End-of-Line to UNIX"), this);
     connect(MacOSConvertEOLAction, SIGNAL(triggered()), this, SLOT(doMacOSConvertEOL()));
 
+    decompressFilesAction = new QAction(trUtf8("Decompress files"), this);
+    connect(decompressFilesAction, SIGNAL(triggered()), this, SLOT(doDecompressFiles()));
+
     compressFileAction = new QAction(tr("Compress files with gzip"), this);
     connect(compressFileAction, SIGNAL(triggered()), this, SLOT(doCompressFile()));
 
@@ -310,6 +313,7 @@ void MainWindow::createMenus()
     toolsMenu->addAction( WinConvertEOLAction );
     toolsMenu->addAction( MacOSConvertEOLAction );
     toolsMenu->addSeparator();
+    toolsMenu->addAction( decompressFilesAction );
     toolsMenu->addAction( compressFileAction );
     toolsMenu->addSeparator();
     toolsMenu->addAction( convertUnformattedAction );
@@ -406,6 +410,8 @@ void MainWindow::enableMenuItems( const QStringList sl_FilenameList )
     {
         for ( int i=0; i<toolsMenuAction.count(); ++i )
             toolsMenuAction.at( i )->setEnabled( false );
+
+        decompressFilesAction->setEnabled( true );
     }
 
 // **********************************************************************************************

@@ -19,7 +19,6 @@
 
 int MainWindow::UltraVioletMeasurementsTest( const QString& s_FilenameIn, int *P, const int i_NumOfFiles )
 {
-    int             i_hasData       = 0;
     int				i_P_sum			= 0;
 
     QString			InputStr		= "";
@@ -29,6 +28,7 @@ int MainWindow::UltraVioletMeasurementsTest( const QString& s_FilenameIn, int *P
     unsigned int	ui_length		= 1;
     unsigned int	ui_filesize		= 1;
 
+    bool            b_hasRecord     = false;
     bool			b_Stop			= false;
 
 // ***********************************************************************************************************************
@@ -75,22 +75,15 @@ int MainWindow::UltraVioletMeasurementsTest( const QString& s_FilenameIn, int *P
         {
             InputStr.append( " " );
 
-            if ( InputStr.contains( " 121 " ) ) i_hasData++;
-            if ( InputStr.contains( " 122 " ) ) i_hasData++;
-            if ( InputStr.contains( " 123 " ) ) i_hasData++;
-            if ( InputStr.contains( " 124 " ) ) i_hasData++;
-            if ( InputStr.contains( " 125 " ) ) i_hasData++;
+            if ( InputStr.contains( " 121 " ) ) b_hasRecord = true;
+            if ( InputStr.contains( " 122 " ) ) b_hasRecord = true;
+            if ( InputStr.contains( " 123 " ) ) b_hasRecord = true;
+            if ( InputStr.contains( " 124 " ) ) b_hasRecord = true;
+            if ( InputStr.contains( " 125 " ) ) b_hasRecord = true;
         }
     }
 
-    if ( i_hasData == 0 )
-    {
-        resetProgress( i_NumOfFiles );
-        fin.close();
-        return( _RECORDNOTFOUND_ );
-    }
-
-    while ( ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
+    while ( ( b_hasRecord == true ) && ( tin.atEnd() == false ) && ( ui_length != (unsigned int) _APPBREAK_ ) && ( b_Stop == false ) )
     {
         InputStr	= tin.readLine();
         ui_length	= incProgress( i_NumOfFiles, ui_filesize, ui_length, InputStr );
@@ -139,21 +132,28 @@ int MainWindow::UltraVioletMeasurementsTest( const QString& s_FilenameIn, int *P
 
     fin.close();
 
-    i_P_sum = 0;
-
-    for ( int i=1; i<=20 ; ++i )
-        i_P_sum += P[i];
-
-    if ( i_P_sum == 0 )
+    if ( b_hasRecord == true )
     {
-        QFileInfo fin( s_FilenameIn );
-        QString s_Message = tr( "No LR0500 data found. Something must be wrong. Please check the station-to-archive file:\n\n    " ) + fin.fileName();
-        QMessageBox::warning( this, getApplicationName( true ), s_Message  );
+        i_P_sum = 0;
 
-        return( _APPBREAK_ );
+        for ( int i=1; i<=20 ; ++i )
+            i_P_sum += P[i];
+
+        if ( i_P_sum == 0 )
+        {
+            QFileInfo fin( s_FilenameIn );
+            QString s_Message = tr( "No LR0500 data found. Something must be wrong. Please check the station-to-archive file:\n\n    " ) + fin.fileName();
+            QMessageBox::warning( this, getApplicationName( true ), s_Message  );
+
+            return( _APPBREAK_ );
+        }
+        else
+        {
+            return( _NOERROR_ );
+        }
     }
 
-    return( _NOERROR_ );
+    return( _APPBREAK_ );
 }
 
 // **********************************************************************************************

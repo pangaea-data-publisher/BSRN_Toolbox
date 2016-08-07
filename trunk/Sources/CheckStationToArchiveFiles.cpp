@@ -80,7 +80,13 @@ void MainWindow::doCheckStationToArchiveFiles()
 // Concatenate report files
 
             if ( ( err == _NOERROR_ ) && ( stopProgress != _APPBREAK_ ) )
+            {
+                QFile frep( gs_Path + "BSRN_fcheck_reports.txt" );
+                if ( frep.exists() == true )
+                    frep.remove();
+
                 err = concatenateFiles( gs_Path + "/" + "BSRN_fcheck_reports.txt", sl_FilenameOut, tr( "Building report file ..." ), 0, true );
+            }
         }
     }
     else
