@@ -202,7 +202,8 @@ int MainWindow::downloadStationToArchiveFiles( structStation *Station_ptr,
         }
 
         tcmd << endl;
-        tcmd << "rm get_BSRN_Files.*" << endl;
+        tcmd << "rm get_BSRN_Files.sh" << endl;    // Linux and macOS
+        tcmd << "del get_BSRN_Files.cmd" << endl;  // Windows
         tcmd << "echo All done" << endl;
     }
 
@@ -238,11 +239,7 @@ void MainWindow::doDownloadStationToArchiveFiles()
 
 // **********************************************************************************************
 
-    qDebug() << gb_DecompressFiles << gb_CheckFiles << gb_CheckAvailability;
-
     err = doDownloadManagerDialog( gs_DownloadPath, gs_FTPServer, gs_User, gs_Password, gb_DecompressFiles, gb_CheckFiles, gb_CheckAvailability, gb_Station, gb_Month, gb_Year );
-
-    qDebug() << gb_DecompressFiles << gb_CheckFiles << gb_CheckAvailability;
 
     if ( err == QDialog::Accepted )
     {
