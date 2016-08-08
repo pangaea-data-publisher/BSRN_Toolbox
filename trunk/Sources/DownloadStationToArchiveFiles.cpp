@@ -159,17 +159,17 @@ int MainWindow::downloadStationToArchiveFiles( structStation *Station_ptr,
         {
             #if defined(Q_OS_LINUX)
                 tcmd << "rm *.rep" << endl;
-                tcmd << "mv temp.txt BSRN_fcheck_reports.txt" << endl << endl;
+                tcmd << "mv temp.txt BSRN_fcheck_report.txt" << endl << endl;
             #endif
 
             #if defined(Q_OS_MAC)
                 tcmd << "rm *.rep" << endl << endl;
-                tcmd << "mv temp.txt BSRN_fcheck_reports.txt" << endl << endl;
+                tcmd << "mv temp.txt BSRN_fcheck_report.txt" << endl << endl;
             #endif
 
             #if defined(Q_OS_WIN)
                 tcmd << "del *.rep" << endl;
-                tcmd << "ren temp.txt BSRN_fcheck_reports.txt" << endl << endl;
+                tcmd << "ren temp.txt BSRN_fcheck_report.txt" << endl << endl;
             #endif
 
             tcmd << "echo All done" << endl;
@@ -196,10 +196,13 @@ int MainWindow::downloadStationToArchiveFiles( structStation *Station_ptr,
                 tcmd << " -u " << s_User << ":" << s_Password;
                 tcmd << " -o " << s_EventLabel << "_filelist.txt";
                 tcmd << " ftp://" << s_FTPServer << "//pub/" << s_EventLabel << "/" << endl;
+
+                i_Num_of_Files++;
             }
         }
 
         tcmd << endl;
+        tcmd << "rm get_BSRN_Files.*" << endl;
         tcmd << "echo All done" << endl;
     }
 
@@ -221,25 +224,31 @@ int MainWindow::downloadStationToArchiveFiles( structStation *Station_ptr,
 
 void MainWindow::doDownloadStationToArchiveFiles()
 {
-    int		 err          = _NOERROR_;
-    int      stopProgress = _NOERROR_;
+    int		 err            = _NOERROR_;
+    int      stopProgress   = _NOERROR_;
 
-    QString  s_arg        = "";
-    QString  s_Message    = "";
+    int      i_Num_of_Files = 0;
+
+    QString  s_arg          = "";
+    QString  s_Message      = "";
 
     QProcess process;
 
-    bool     b_startScript = true;
+    bool     b_startScript  = true;
 
 // **********************************************************************************************
 
+    qDebug() << gb_DecompressFiles << gb_CheckFiles << gb_CheckAvailability;
+
     err = doDownloadManagerDialog( gs_DownloadPath, gs_FTPServer, gs_User, gs_Password, gb_DecompressFiles, gb_CheckFiles, gb_CheckAvailability, gb_Station, gb_Month, gb_Year );
+
+    qDebug() << gb_DecompressFiles << gb_CheckFiles << gb_CheckAvailability;
 
     if ( err == QDialog::Accepted )
     {
-        err = downloadStationToArchiveFiles( g_Station_ptr, gs_DownloadPath, gs_FTPServer, gs_User, gs_Password, gb_DecompressFiles, gb_CheckFiles, gb_CheckAvailability, gb_Station, gb_Month, gb_Year );
+        i_Num_of_Files = downloadStationToArchiveFiles( g_Station_ptr, gs_DownloadPath, gs_FTPServer, gs_User, gs_Password, gb_DecompressFiles, gb_CheckFiles, gb_CheckAvailability, gb_Station, gb_Month, gb_Year );
 
-        if ( err > 0 )
+        if ( i_Num_of_Files > 0 )
         {
             #if defined(Q_OS_LINUX)
                 QFile fcmd( gs_DownloadPath + "get_BSRN_Files.sh" );
@@ -255,7 +264,7 @@ void MainWindow::doDownloadStationToArchiveFiles()
 
             if ( fcmd.exists() == true )
             {
-                QFile frep( gs_DownloadPath + "BSRN_fcheck_reports.txt" );
+                QFile frep( gs_DownloadPath + "BSRN_fcheck_report.txt" );
                 if ( frep.exists() == true )
                     frep.remove();
 
@@ -284,9 +293,9 @@ void MainWindow::doDownloadStationToArchiveFiles()
                         }
                         else
                         {
-                            if ( gb_CheckFiles == true )
+                            if ( ( gb_CheckFiles == true ) && ( gb_CheckAvailability == false ) )
                             {
-                                QFileInfo fi( gs_DownloadPath + "fcheck_report.txt" );
+                                QFileInfo fi( gs_DownloadPath + "BSRN_fcheck_report.txt" );
                                 while ( fi.exists() == false )
                                     wait( 1000 );
                             }
@@ -318,9 +327,9 @@ void MainWindow::doDownloadStationToArchiveFiles()
                         }
                         else
                         {
-                            if ( gb_CheckFiles == true )
+                            if ( ( gb_CheckFiles == true ) && ( gb_CheckAvailability == false ) )
                             {
-                                QFileInfo fi( gs_DownloadPath + "fcheck_report.txt" );
+                                QFileInfo fi( gs_DownloadPath + "BSRN_fcheck_report.txt" );
                                 while ( fi.exists() == false )
                                     wait( 1000 );
                             }
@@ -341,9 +350,9 @@ void MainWindow::doDownloadStationToArchiveFiles()
                         }
                         else
                         {
-                            if ( gb_CheckFiles == true )
+                            if ( ( gb_CheckFiles == true ) && ( gb_CheckAvailability == false ) )
                             {
-                                QFileInfo fi( gs_DownloadPath + "fcheck_report.txt" );
+                                QFileInfo fi( gs_DownloadPath + "BSRN_fcheck_report.txt" );
                                 while ( fi.exists() == false )
                                     wait( 1000 );
                             }

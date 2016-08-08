@@ -16,6 +16,7 @@ DownloadManagerDialog::DownloadManagerDialog( QWidget *parent ) : QDialog( paren
     connect(SelectAllYears_pushButton, SIGNAL(clicked()), this, SLOT(SelectAllYears()));
     connect(SelectNoneYear_pushButton, SIGNAL(clicked()), this, SLOT(SelectNoneYear()));
     connect(BrowseDownloadDirectory_pushButton, SIGNAL(clicked()), this, SLOT(BrowseDownloadDirectory()));
+    connect(CheckAvailability_checkBox, SIGNAL(toggled(bool)), this, SLOT(on_CheckAvailability_checkBox_toggled()));
 }
 
 // ***********************************************************************************************************************
@@ -600,6 +601,24 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
     posDialog = dialog.pos();
 
     return( i_DialogResult );
+}
+
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+
+void DownloadManagerDialog::on_CheckAvailability_checkBox_toggled()
+{
+    if ( CheckAvailability_checkBox->isChecked() == true )
+    {
+        DecompressFiles_checkBox->setEnabled( false );
+        CheckFiles_checkBox->setEnabled( false );
+    }
+    else
+    {
+        DecompressFiles_checkBox->setEnabled( true );
+        CheckFiles_checkBox->setEnabled( true );
+    }
 }
 
 // ***********************************************************************************************************************

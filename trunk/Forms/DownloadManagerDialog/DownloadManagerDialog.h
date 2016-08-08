@@ -26,6 +26,7 @@ private slots:
     void on_FTPServer_lineEdit_textChanged();
     void on_User_lineEdit_textChanged();
     void on_Password_lineEdit_textChanged();
+    void on_CheckAvailability_checkBox_toggled();
 
 private:
     bool checkAccount();
