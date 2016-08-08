@@ -60,6 +60,7 @@ Section "MainSection" SEC01
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\libwinpthread-1.dll"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\libeay32.dll"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\ssleay32.dll"
+  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\curl.exe"
 
 SetOutPath "$INSTDIR\platforms"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\platforms\qminimal.dll"
@@ -104,6 +105,7 @@ FunctionEnd
 Section Uninstall
   Delete "$INSTDIR\BSRN_Toolbox.exe"
   Delete "$INSTDIR\BSRN_fcheck.exe"
+  Delete "$INSTDIR\curl.exe"
   Delete "$INSTDIR\gzip.exe"
   Delete "$INSTDIR\unzip.exe"
   Delete "$INSTDIR\libgcc_s_dw2-1.dll"
