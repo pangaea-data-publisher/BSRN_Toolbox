@@ -1262,7 +1262,7 @@ bool MainWindow::buildFilename( const int i_ActionNumber, const QString &s_Filen
 *   @param s_WindowTitle Der Fenstertitel
 */
 
-void MainWindow::setWTitle(const int i_ActionNumber, const QString &s_FilenameFormat, const int i_Extension, const QStringList sl_FilenameList )
+void MainWindow::setWTitle(const int i_ActionNumber, const QString &s_FilenameFormat, const int i_Extension, const QStringList &sl_FilenameList )
 {
     QString   s_FilenameIn    = "";
     QString   s_FilenameOut   = "";
@@ -1497,7 +1497,7 @@ void MainWindow::appendItem( QStringList &sl_List, const QString &s_Item, const 
 *   @param sl_List Liste, die angezeigt werden soll.
 */
 
-void MainWindow::showList( const QStringList sl_List )
+void MainWindow::showList( const QStringList &sl_List )
 {
     Model->setStringList( sl_List );
     QApplication::processEvents();
@@ -1512,7 +1512,7 @@ void MainWindow::showList( const QStringList sl_List )
 *   @param sl_FilenameList Liste der Dateinamen, die angezeigt werden soll.
 */
 
-void MainWindow::showFilenameList( const int i_ActionNumber, const QString &s_FilenameFormat, const int i_Extension, const QStringList sl_FilenameList )
+void MainWindow::showFilenameList( const int i_ActionNumber, const QString &s_FilenameFormat, const int i_Extension, const QStringList &sl_FilenameList )
 {
     QString     s_FilenameIn    = "";
     QString     s_FilenameOut   = "";
@@ -2005,7 +2005,7 @@ int MainWindow::NumOfSections( const QString &String )
 *	@return Anzahl der Elemente in der neuen StringList
 */
 
-int MainWindow::copyStringList( const QStringList InStringList, QStringList &OutStringList, const QString &s_Pattern )
+int MainWindow::copyStringList( const QStringList &InStringList, QStringList &OutStringList, const QString &s_Pattern )
 {
     OutStringList.clear();
 
@@ -2191,7 +2191,7 @@ void MainWindow::newWindow()
 // **********************************************************************************************
 // Filename list contains binary file
 
-bool MainWindow::containsBinaryFile( const QStringList sl_FilenameList )
+bool MainWindow::containsBinaryFile( const QStringList &sl_FilenameList )
 {
     QFileInfo fi;
     QString   s_Extension = "";

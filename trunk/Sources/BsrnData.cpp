@@ -32,7 +32,7 @@ BsrnData::BsrnData(const BsrnData & DataIn)
 
 
 // Member function: readFromStringList
-void BsrnData::readFromStringList(const QStringList & sl_Input)
+void BsrnData::readFromStringList(const QStringList &sl_Input)
 {
     //   Preliminaries
     int Progress = 0;
@@ -395,7 +395,7 @@ void BsrnData::toBsrnUnits()
 
 
 // Member function: appendToKeys
-void BsrnData::appendToKeys(const QString &StringToAdd, const QStringList & KeyList)
+void BsrnData::appendToKeys(const QString &StringToAdd, const QStringList &KeyList)
 {
     for (QStringList::ConstIterator Key = KeyList.constBegin(); Key != KeyList.constEnd(); ++Key)
         if (Parameters.contains(*Key))
@@ -416,7 +416,7 @@ void BsrnData::renameKey(const QString &OldKey, const QString &NewKey)
 
 
 // Member function: appendToParameters
-void BsrnData::appendToParameters(const QString &StringToAdd, const QStringList & KeyList)
+void BsrnData::appendToParameters(const QString &StringToAdd, const QStringList &KeyList)
 {
     for (QStringList::ConstIterator Key = KeyList.constBegin(); Key != KeyList.constEnd(); ++Key)
         if (Parameters.contains(*Key))
@@ -425,7 +425,7 @@ void BsrnData::appendToParameters(const QString &StringToAdd, const QStringList 
 
 
 // Member function: appendToAbbreviations
-void BsrnData::appendToAbbreviations(const QString &StringToAdd, const QStringList & KeyList)
+void BsrnData::appendToAbbreviations(const QString &StringToAdd, const QStringList &KeyList)
 {
     for (QStringList::ConstIterator Key = KeyList.constBegin(); Key != KeyList.constEnd(); ++Key)
         if (Abbreviations.contains(*Key))
@@ -435,7 +435,7 @@ void BsrnData::appendToAbbreviations(const QString &StringToAdd, const QStringLi
 /*
 // Holger Schmithüsen
 // Member function: removeOther
-void BsrnData::removeOther(const QStringList & KeepList)
+void BsrnData::removeOther(const QStringList &KeepList)
 {
     for (QMap<QString, QString>::Iterator p = Parameters.begin(); p != Parameters.end(); ++p)
     {
@@ -457,7 +457,7 @@ void BsrnData::removeOther(const QStringList & KeepList)
 
 // Rainer Sieger, 2013-07-30
 // Member function: removeOther
-void BsrnData::removeOther(const QStringList & KeepList)
+void BsrnData::removeOther(const QStringList &KeepList)
 {
     QMapIterator<QString, QString> p(Parameters);
 
@@ -481,7 +481,7 @@ void BsrnData::removeOther(const QStringList & KeepList)
 }
 
 // Member function: setUnits
-void BsrnData::setUnits(const QString &Unit, const QStringList & KeyList)
+void BsrnData::setUnits(const QString &Unit, const QStringList &KeyList)
 {
     for (QStringList::ConstIterator Key = KeyList.constBegin(); Key != KeyList.constEnd(); ++Key)
         if (Parameters.contains(*Key))

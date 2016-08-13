@@ -350,7 +350,7 @@ void MainWindow::doDownloadStationToArchiveFiles()
 // **********************************************************************************************
 // 2016-08-13
 
-QString MainWindow::checkScriptResults( const bool b_CheckFiles, const QString &s_DownloadPath, const QStringList sl_FilenameList )
+QString MainWindow::checkScriptResults( const bool b_CheckFiles, const QString &s_DownloadPath, const QStringList &sl_FilenameList )
 {
     int         i_NumOfTurns        = 0;
     int         i_NumOfFiles        = 0;

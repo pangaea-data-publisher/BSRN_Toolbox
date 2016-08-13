@@ -991,7 +991,7 @@ QString MainWindow::Parameter( const QString &s_ParameterID, const QString &s_PI
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::Parameter( const QStringList sl_Parameter )
+QString MainWindow::Parameter( const QStringList &sl_Parameter )
 {
     int     NumOfParameters = sl_Parameter.count() - 1;
 

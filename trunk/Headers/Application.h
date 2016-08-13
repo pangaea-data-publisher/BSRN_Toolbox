@@ -255,16 +255,16 @@ private slots:
 
 private:
     QStringList expandCommandline();
-    QStringList renameFiles( const QStringList Filename, const QString &searchStr, const QString &replaceStr );
+    QStringList renameFiles( const QStringList &Filename, const QString &searchStr, const QString &replaceStr );
     bool buildFilename( const int ActionNumber, const QString &FilenameFormat, const int Extension, const QString &Filename, QString &FilenameIn, QString &FilenameOut );
-    bool containsBinaryFile( const QStringList FilenameList );
+    bool containsBinaryFile( const QStringList &FilenameList );
     bool existsFirstFile( const int ActionNumber, const QString &FilenameFormat, const int Extension, QStringList &FilenameList );
     bool isEmptyLine( const QString &String );
     bool check7z();
     int NumOfSections( const QString &String );
     int addToFilenameList( QStringList &FilenameList, const QString &Filename, const bool showAllFiles = true, const bool decompressFile = false );
     int calcFileSizeClass( const QString &FilenameIn, const int NumOfFiles, const int lowerLimit = 100, const int upperLimit = 1000 );
-    int copyStringList( const QStringList InStringList, QStringList &OutStringList, const QString &s_Pattern = "*" );
+    int copyStringList( const QStringList &InStringList, QStringList &OutStringList, const QString &s_Pattern = "*" );
     int emptyDir( const QString &Dir );
     int decompressFile( const QString &Filename, const bool delZipFile = false );
     int incFileProgress( const int NumOfFiles, const int FileNumber );
@@ -281,7 +281,7 @@ private:
     void createActions();
     void createMenus();
     void createStatusBar( const bool showProgressBar );
-    void enableMenuItems( const QStringList FilenameList );
+    void enableMenuItems( const QStringList &FilenameList );
     void endTool( const int err, const int stopProgress, int &ActionNumber, const QString &FilenameFormat, const int Extension, QStringList &FilenameList, const QString &doneMessage = "Done", const QString &canceledMessage = "Converter was canceled", const bool clearList = false, const bool incActionNumber = true );
     void initFileProgress( const int NumOfFiles, const QString &FilenameIn, const QString &MessageText );
     void initProgress( const int NumOfFiles, const QString &Filename, const QString &MessageText, const int totalNumberOfSteps );
@@ -294,10 +294,10 @@ private:
     void setNormalCursor();
     void setStatusBar( const QString &Message = "", const int seconds = 0 );
     void setStatusBarFileInProgress( const QString &Filename, const QString &Message = "", const int i_seconds = 0 );
-    void setWTitle( const int ActionNumber, const QString &FilenameFormat, const int Extension, const QStringList sl_FilenameList );
+    void setWTitle( const int ActionNumber, const QString &FilenameFormat, const int Extension, const QStringList &sl_FilenameList );
     void setWaitCursor();
-    void showFilenameList( const int ActionNumber, const QString &FilenameFormat, const int Extension, const QStringList FilenameList );
-    void showList( const QStringList List );
+    void showFilenameList( const int ActionNumber, const QString &FilenameFormat, const int Extension, const QStringList &FilenameList );
+    void showList( const QStringList &List );
     void showMessage( const QString &Message, QStringList &MessageList );
     void wait( const int msec );
 
@@ -314,7 +314,7 @@ private:
 
 // Station-to-archive
     int downloadStationToArchiveFiles( structStation *Station_ptr, const QString &FilenameOut, const QString &FTPServer, const QString &User, const QString &Password, const bool DecompressFiles, const bool CheckFiles, const bool CheckAvailability, bool Station[MAX_NUM_OF_STATIONS+1], bool Month[MAX_NUM_OF_MONTHS+1], bool Year[MAX_NUM_OF_YEARS+1], QStringList &FilenameList );
-    QString checkScriptResults( const bool CheckFiles, const QString &DownloadPath, const QStringList FilenameList );
+    QString checkScriptResults( const bool CheckFiles, const QString &DownloadPath, const QStringList &FilenameList );
 
 // Metadata
     int FileIDConverter( const QString &FilenameIn, QStringList &FilenameOut, structStation *Station_ptr, const int NumOfFiles );
@@ -396,7 +396,7 @@ private:
     QString ExportFilename( const QString &EventLabel, const QString &Text, const QDateTime dt );
     QString EventLabel( const QString &EventLabel = "" );
     QString Parameter( const QString &ParameterID = "-999", const QString &PIID = "506", const QString &MethodID = "43", const QString &Format = "", const QString &Comment = "" );
-    QString Parameter( const QStringList Parameter );
+    QString Parameter( const QStringList &Parameter );
     QString DatasetComment( const QString &DatasetComment = "" );
     QString ProjectIDs( const QString &ProjectID = "-999" );
     QString TopologicTypeID( const QString &TopologicTypeID = "-999" );
@@ -432,7 +432,7 @@ private:
 
     int writeDefaultIDsBSRN( const QString &Filename );
 
-    int concatenateFiles( const QString &FilenameOut, const QStringList Filenames, const QString &ProgressMessage, const int SkipLines = 0, const bool RemoveFile = false );
+    int concatenateFiles( const QString &FilenameOut, const QStringList &Filenames, const QString &ProgressMessage, const int SkipLines = 0, const bool RemoveFile = false );
     int convertEOL( const QString &FilenameIn, const bool convertEOL, const int OS );
     int convertFile( const QString &FilenameIn, const int NumOfFiles );
     int convertFile( const QString &FilenameIn, const QString &FilenameOut, const QString &MissingValue, const int FieldDelimiter, const int NumOfFiles );
