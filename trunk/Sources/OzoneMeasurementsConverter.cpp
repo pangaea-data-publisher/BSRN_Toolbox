@@ -20,7 +20,7 @@
 *   @return Fehlercode
 */
 
-int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString& s_FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
+int MainWindow::OzoneMeasurementsConverter( const bool b_Import, const QString &s_FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
 {
     int				i_PIID			= 506;
     int				i_SourceID		= 17;

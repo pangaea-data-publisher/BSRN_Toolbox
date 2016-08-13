@@ -17,7 +17,7 @@
 *   @return Fehlercode
 */
 
-int MainWindow::SYNOPTest( const QString& s_FilenameIn, int *P, const int i_NumOfFiles )
+int MainWindow::SYNOPTest( const QString &s_FilenameIn, int *P, const int i_NumOfFiles )
 {
     int				i_Format		= 0;
     int             i_Year          = 2000;
@@ -2739,7 +2739,7 @@ QString MainWindow::buildSYNOPDataOutputStr6( const QString s_EventLabel, const 
 *
 *   @return Fehlercode
 */
-int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
+int MainWindow::SYNOPConverter( const bool b_Import, const QString &s_FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
 {
     int				i_Format		= 0;
 
@@ -3094,7 +3094,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString& s_FilenameIn
 // **********************************************************************************************
 // 2013-03-11
 
-float MainWindow::calcGeopotentialHeight( const QString& InputStr )
+float MainWindow::calcGeopotentialHeight( const QString &InputStr )
 {
     // http://weather.unisys.com/wxp/Appendices/Formats/SYNOP.html
     // http://weather.unisys.com/wxp/Appendices/Formats/TEMP.html

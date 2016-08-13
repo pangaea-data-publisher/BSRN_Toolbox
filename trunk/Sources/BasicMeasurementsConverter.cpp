@@ -17,7 +17,7 @@
 *   @return Fehlercode
 */
 
-int MainWindow::BasicMeasurementsTest( const QString& s_FilenameIn, int *P, const int i_NumOfFiles )
+int MainWindow::BasicMeasurementsTest( const QString &s_FilenameIn, int *P, const int i_NumOfFiles )
 {
     int				n				= 0;
     int				i_P_sum			= 0;
@@ -242,7 +242,7 @@ int MainWindow::BasicMeasurementsTest( const QString& s_FilenameIn, int *P, cons
 *   @return Fehlercode
 */
 
-int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_showSelectParameterDialog, const int i_Mode, const QString& s_FilenameIn, QString& s_FilenameOut, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
+int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_showSelectParameterDialog, const int i_Mode, const QString &s_FilenameIn, QString &s_FilenameOut, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
 {
     int				err				= 0;
 

@@ -18,7 +18,7 @@ public:
 
 
 private:
-    void addParameter(const QString & Key);
+    void addParameter(const QString &Key);
 };
 
 #endif // AUXILIARYDATARECOMMENDETV20_H

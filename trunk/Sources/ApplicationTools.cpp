@@ -10,7 +10,7 @@ const QString PrefDate = "BSRN Toolbox, 2008-05-20";
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::ReferenceImportFile( const QString& s_EventLabel, const QDateTime DateOfData, const int i_PIID, const QString& s_StationName )
+QString MainWindow::ReferenceImportFile( const QString &s_EventLabel, const QDateTime DateOfData, const int i_PIID, const QString &s_StationName )
 {
     QDate   date;
 
@@ -49,7 +49,7 @@ QString MainWindow::ReferenceImportFile( const QString& s_EventLabel, const QDat
 *	@return false, wenn Fehler
 */
 
-bool  MainWindow::checkFilename( const QString& s_Filename, const QString& s_EventLabel, const QString& s_Month, const QString& s_Year )
+bool  MainWindow::checkFilename( const QString &s_Filename, const QString &s_EventLabel, const QString &s_Month, const QString &s_Year )
 {
     QString s_testFilename = s_EventLabel.toLower();
 
@@ -76,7 +76,7 @@ bool  MainWindow::checkFilename( const QString& s_Filename, const QString& s_Eve
 *	@return ID des Datensatzes. -999 wird zurueckgegeben wenn keine ID gefunden wurde
 */
 
-int MainWindow::findDatasetID( const QString& s_ExportFilename, structDataset *Dataset_ptr )
+int MainWindow::findDatasetID( const QString &s_ExportFilename, structDataset *Dataset_ptr )
 {
     for ( int i=1; i<=MAX_NUM_OF_DATASETS; ++i )
     {
@@ -99,7 +99,7 @@ int MainWindow::findDatasetID( const QString& s_ExportFilename, structDataset *D
 *	@return ID der Referenz. -999 wird zurueckgegeben wenn keine ID gefunden wurde
 */
 
-int MainWindow::findReferenceID( const QString& s_ReferenceURI, structReference *Reference_ptr )
+int MainWindow::findReferenceID( const QString &s_ReferenceURI, structReference *Reference_ptr )
 {
     for ( int i=1; i<=MAX_NUM_OF_REFERENCES; ++i )
     {
@@ -122,7 +122,7 @@ int MainWindow::findReferenceID( const QString& s_ReferenceURI, structReference 
 *	@return ID der Person. -999 wird zurueckgegeben wenn keine ID gefunden wurde
 */
 
-int MainWindow::findPiID( const QString& s_StationScientist, structStaff *Staff_ptr )
+int MainWindow::findPiID( const QString &s_StationScientist, structStaff *Staff_ptr )
 {
     for ( int i=1; i<=MAX_NUM_OF_STAFFS; ++i )
     {
@@ -169,7 +169,7 @@ int MainWindow::findMethodID( const int i_StationNumber, const int i_WRMCnumber,
 *	@return ID der Methode. -999 wird zurueckgegeben wenn keine ID gefunden wurde
 */
 
-int MainWindow::findMethodID( const QString& s_InstrumentIdentificationNumber, structMethod *Method_ptr )
+int MainWindow::findMethodID( const QString &s_InstrumentIdentificationNumber, structMethod *Method_ptr )
 {
     for ( int i=1; i<=MAX_NUM_OF_METHODS; ++i )
     {
@@ -647,7 +647,7 @@ int MainWindow::readBsrnDatasetIDs()
 *   @return Fehlercode
 */
 
-int MainWindow::writeDefaultIDsBSRN( const QString& s_Filename )
+int MainWindow::writeDefaultIDsBSRN( const QString &s_Filename )
 {
     QFile fout( QDir::toNativeSeparators( s_Filename ) );
 
@@ -792,7 +792,7 @@ QString MainWindow::CloseDataDescriptionHeader()
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::ParentID( const QString& s_ParentID )
+QString MainWindow::ParentID( const QString &s_ParentID )
 {
     QString s_OutputStr = "";
 
@@ -812,7 +812,7 @@ QString MainWindow::ParentID( const QString& s_ParentID )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::DataSetID( const QString& s_DatasetID )
+QString MainWindow::DataSetID( const QString &s_DatasetID )
 {
     QString s_OutputStr = "";
 
@@ -832,7 +832,7 @@ QString MainWindow::DataSetID( const QString& s_DatasetID )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::AuthorIDs( const QString& s_AuthorIDs )
+QString MainWindow::AuthorIDs( const QString &s_AuthorIDs )
 {
     QString s_OutputStr = "";
 
@@ -852,7 +852,7 @@ QString MainWindow::AuthorIDs( const QString& s_AuthorIDs )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::SourceID( const QString& s_SourceID )
+QString MainWindow::SourceID( const QString &s_SourceID )
 {
     QString s_OutputStr = "";
 
@@ -872,7 +872,7 @@ QString MainWindow::SourceID( const QString& s_SourceID )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::DatasetTitle( const QString& s_Text, const QString& s_StationName, const QDateTime dt )
+QString MainWindow::DatasetTitle( const QString &s_Text, const QString &s_StationName, const QDateTime dt )
 {
     QString s_OutputStr = "  ";
     QString sd_Text     = s_Text;
@@ -901,7 +901,7 @@ QString MainWindow::DatasetTitle( const QString& s_Text, const QString& s_Statio
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::Reference( const QString& s_ReferenceID, const int i_RelationTypeID, const QString& s_ReferenceType, const QString& s_EventLabel )
+QString MainWindow::Reference( const QString &s_ReferenceID, const int i_RelationTypeID, const QString &s_ReferenceType, const QString &s_EventLabel )
 {
     QString s_OutputStr = "";
 
@@ -922,7 +922,7 @@ QString MainWindow::Reference( const QString& s_ReferenceID, const int i_Relatio
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::ExportFilename( const QString& s_EventLabel, const QString& s_Text, const QDateTime dt )
+QString MainWindow::ExportFilename( const QString &s_EventLabel, const QString &s_Text, const QDateTime dt )
 {
     QString s_OutputStr = "";
 
@@ -943,7 +943,7 @@ QString MainWindow::ExportFilename( const QString& s_EventLabel, const QString& 
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::EventLabel( const QString& s_EventLabel )
+QString MainWindow::EventLabel( const QString &s_EventLabel )
 {
     QString s_OutputStr = "";
 
@@ -963,7 +963,7 @@ QString MainWindow::EventLabel( const QString& s_EventLabel )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::Parameter( const QString& s_ParameterID, const QString& s_PIID, const QString& s_MethodID, const QString& s_Format, const QString& s_Comment )
+QString MainWindow::Parameter( const QString &s_ParameterID, const QString &s_PIID, const QString &s_MethodID, const QString &s_Format, const QString &s_Comment )
 {
     QString s_OutputStr = "";
 
@@ -1029,7 +1029,7 @@ QString MainWindow::Parameter( const QStringList sl_Parameter )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::DatasetComment( const QString& s_DatasetComment )
+QString MainWindow::DatasetComment( const QString &s_DatasetComment )
 {
     QString s_OutputStr = "";
     QString sd_DatasetComment = s_DatasetComment;
@@ -1053,7 +1053,7 @@ QString MainWindow::DatasetComment( const QString& s_DatasetComment )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::ProjectIDs( const QString& s_ProjectIDs )
+QString MainWindow::ProjectIDs( const QString &s_ProjectIDs )
 {
     QString s_OutputStr = "";
 
@@ -1073,7 +1073,7 @@ QString MainWindow::ProjectIDs( const QString& s_ProjectIDs )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::TopologicTypeID( const QString& s_TopologicTypeID )
+QString MainWindow::TopologicTypeID( const QString &s_TopologicTypeID )
 {
     QString s_OutputStr = "";
 
@@ -1093,7 +1093,7 @@ QString MainWindow::TopologicTypeID( const QString& s_TopologicTypeID )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::StatusID( const QString& s_StatusID )
+QString MainWindow::StatusID( const QString &s_StatusID )
 {
     QString s_OutputStr = "";
 
@@ -1113,7 +1113,7 @@ QString MainWindow::StatusID( const QString& s_StatusID )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::UserIDs( const QString& s_UserIDs )
+QString MainWindow::UserIDs( const QString &s_UserIDs )
 {
     QString s_OutputStr = "";
 
@@ -1133,7 +1133,7 @@ QString MainWindow::UserIDs( const QString& s_UserIDs )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::LoginID( const QString& s_LoginID )
+QString MainWindow::LoginID( const QString &s_LoginID )
 {
     QString s_OutputStr = "  ";
 
@@ -1148,7 +1148,7 @@ QString MainWindow::LoginID( const QString& s_LoginID )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::ReferenceOtherVersion( const QString& s_EventLabel, structReference *Reference_ptr, const QDateTime dt )
+QString MainWindow::ReferenceOtherVersion( const QString &s_EventLabel, structReference *Reference_ptr, const QDateTime dt )
 {
     QString s_OutputStr = "  ";
     QString s_URI       = "ftp://ftp.bsrn.awi.de/" + s_EventLabel.toLower() + "/" + s_EventLabel.toLower() + dt.toString( "MMyy" ) + ".dat.gz";
@@ -1333,7 +1333,7 @@ int MainWindow::checkSelectedParameter( const int offset, int *P )
 // **********************************************************************************************
 // 2016-07-21
 
-bool MainWindow::removeEmptyFile( const QString& s_FilenameIn, const QString& s_FilenameOut, const int i_minFilesize )
+bool MainWindow::removeEmptyFile( const QString &s_FilenameIn, const QString &s_FilenameOut, const int i_minFilesize )
 {
     QFileInfo fin( s_FilenameIn );
     QFileInfo fout( s_FilenameOut );

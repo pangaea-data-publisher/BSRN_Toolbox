@@ -75,7 +75,7 @@ QUrl webfile::url() const
     return m_url;
 }
 
-void webfile::setUrl(const QString & strUrl)
+void webfile::setUrl(const QString &strUrl)
 {
     m_url = QUrl::fromEncoded(strUrl.toUtf8());
 }
@@ -86,12 +86,12 @@ void webfile::setUrl(const QUrl & Url)
 }
 
 // Username and password for site, if required
-void webfile::setUser(const QString & strUser)
+void webfile::setUser(const QString &strUser)
 {
     m_strUser = strUser;
 }
 
-void webfile::setPassword(const QString & strPassword)
+void webfile::setPassword(const QString &strPassword)
 {
     m_strPassword = strPassword;
 }

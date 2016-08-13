@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>633</width>
-    <height>683</height>
+    <width>683</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -902,7 +902,7 @@
           <item row="0" column="0">
            <widget class="QCheckBox" name="DecompressFiles_checkBox">
             <property name="text">
-             <string>Decompress</string>
+             <string>Decompress files</string>
             </property>
            </widget>
           </item>
@@ -916,7 +916,14 @@
           <item row="0" column="2">
            <widget class="QCheckBox" name="CheckAvailability_checkBox">
             <property name="text">
-             <string>Check availability only</string>
+             <string>Check availability</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QCheckBox" name="RunScript_checkBox">
+            <property name="text">
+             <string>Run script</string>
             </property>
            </widget>
           </item>
@@ -1075,7 +1082,7 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
-  <tabstop>ALE_checkBox</tabstop>  
+  <tabstop>ALE_checkBox</tabstop>
   <tabstop>ASP_checkBox</tabstop>
   <tabstop>BAR_checkBox</tabstop>
   <tabstop>BER_checkBox</tabstop>
@@ -1188,6 +1195,7 @@
   <tabstop>DecompressFiles_checkBox</tabstop>
   <tabstop>CheckFiles_checkBox</tabstop>
   <tabstop>CheckAvailability_checkBox</tabstop>
+  <tabstop>RunScript_checkBox</tabstop>
   <tabstop>OK_pushButton</tabstop>
   <tabstop>Cancel_pushButton</tabstop>
   <tabstop>FTPServer_lineEdit</tabstop>

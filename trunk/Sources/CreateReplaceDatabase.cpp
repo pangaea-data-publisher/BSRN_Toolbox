@@ -11,7 +11,7 @@
 // *************************************************************************************
 // *************************************************************************************
 
-int MainWindow::createReplaceDatabase( const QString& s_FilenameIn, const int i_fristReferenceID, const int i_NumOfFiles )
+int MainWindow::createReplaceDatabase( const QString &s_FilenameIn, const int i_fristReferenceID, const int i_NumOfFiles )
 {
     QString			InputStr		= "";
 

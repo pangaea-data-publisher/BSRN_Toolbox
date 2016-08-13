@@ -247,6 +247,46 @@ void DownloadManagerDialog::SelectNoneMonth()
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
 
+void DownloadManagerDialog::EnableAllMonths()
+{
+    January_checkBox->setEnabled( true );
+    February_checkBox->setEnabled( true );
+    March_checkBox->setEnabled( true );
+    April_checkBox->setEnabled( true );
+    May_checkBox->setEnabled( true );
+    June_checkBox->setEnabled( true );
+    July_checkBox->setEnabled( true );
+    August_checkBox->setEnabled( true );
+    September_checkBox->setEnabled( true );
+    October_checkBox->setEnabled( true );
+    November_checkBox->setEnabled( true );
+    December_checkBox->setEnabled( true );
+}
+
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+
+void DownloadManagerDialog::DisableAllMonths()
+{
+    January_checkBox->setEnabled( false );
+    February_checkBox->setEnabled( false );
+    March_checkBox->setEnabled( false );
+    April_checkBox->setEnabled( false );
+    May_checkBox->setEnabled( false );
+    June_checkBox->setEnabled( false );
+    July_checkBox->setEnabled( false );
+    August_checkBox->setEnabled( false );
+    September_checkBox->setEnabled( false );
+    October_checkBox->setEnabled( false );
+    November_checkBox->setEnabled( false );
+    December_checkBox->setEnabled( false );
+}
+
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+
 void DownloadManagerDialog::SelectAllYears()
 {
     Year1992_checkBox->setChecked( true );
@@ -319,9 +359,81 @@ void DownloadManagerDialog::SelectNoneYear()
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
 
+void DownloadManagerDialog::EnableAllYears()
+{
+    Year1992_checkBox->setEnabled( true );
+    Year1993_checkBox->setEnabled( true );
+    Year1994_checkBox->setEnabled( true );
+    Year1995_checkBox->setEnabled( true );
+    Year1996_checkBox->setEnabled( true );
+    Year1997_checkBox->setEnabled( true );
+    Year1998_checkBox->setEnabled( true );
+    Year1999_checkBox->setEnabled( true );
+    Year2000_checkBox->setEnabled( true );
+    Year2001_checkBox->setEnabled( true );
+    Year2002_checkBox->setEnabled( true );
+    Year2003_checkBox->setEnabled( true );
+    Year2004_checkBox->setEnabled( true );
+    Year2005_checkBox->setEnabled( true );
+    Year2006_checkBox->setEnabled( true );
+    Year2007_checkBox->setEnabled( true );
+    Year2008_checkBox->setEnabled( true );
+    Year2009_checkBox->setEnabled( true );
+    Year2010_checkBox->setEnabled( true );
+    Year2011_checkBox->setEnabled( true );
+    Year2012_checkBox->setEnabled( true );
+    Year2013_checkBox->setEnabled( true );
+    Year2014_checkBox->setEnabled( true );
+    Year2015_checkBox->setEnabled( true );
+    Year2016_checkBox->setEnabled( true );
+    Year2017_checkBox->setEnabled( true );
+    Year2018_checkBox->setEnabled( true );
+    Year2019_checkBox->setEnabled( true );
+}
+
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+
+void DownloadManagerDialog::DisableAllYears()
+{
+    Year1992_checkBox->setEnabled( false );
+    Year1993_checkBox->setEnabled( false );
+    Year1994_checkBox->setEnabled( false );
+    Year1995_checkBox->setEnabled( false );
+    Year1996_checkBox->setEnabled( false );
+    Year1997_checkBox->setEnabled( false );
+    Year1998_checkBox->setEnabled( false );
+    Year1999_checkBox->setEnabled( false );
+    Year2000_checkBox->setEnabled( false );
+    Year2001_checkBox->setEnabled( false );
+    Year2002_checkBox->setEnabled( false );
+    Year2003_checkBox->setEnabled( false );
+    Year2004_checkBox->setEnabled( false );
+    Year2005_checkBox->setEnabled( false );
+    Year2006_checkBox->setEnabled( false );
+    Year2007_checkBox->setEnabled( false );
+    Year2008_checkBox->setEnabled( false );
+    Year2009_checkBox->setEnabled( false );
+    Year2010_checkBox->setEnabled( false );
+    Year2011_checkBox->setEnabled( false );
+    Year2012_checkBox->setEnabled( false );
+    Year2013_checkBox->setEnabled( false );
+    Year2014_checkBox->setEnabled( false );
+    Year2015_checkBox->setEnabled( false );
+    Year2016_checkBox->setEnabled( false );
+    Year2017_checkBox->setEnabled( false );
+    Year2018_checkBox->setEnabled( false );
+    Year2019_checkBox->setEnabled( false );
+}
+
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+// ***********************************************************************************************************************
+
 int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTPServer, QString &s_User,
                                          QString &s_Password, bool &b_DecompressFiles, bool &b_CheckFiles,
-                                         bool &b_CheckAvailability, bool b_Station[MAX_NUM_OF_STATIONS+1],
+                                         bool &b_CheckAvailability, bool &b_RunScript, bool b_Station[MAX_NUM_OF_STATIONS+1],
                                          bool b_Month[MAX_NUM_OF_MONTHS+1], bool b_Year[MAX_NUM_OF_YEARS+1] )
 {
     int i_DialogResult = QDialog::Rejected;
@@ -442,6 +554,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
     dialog.DecompressFiles_checkBox->setChecked( b_DecompressFiles );
     dialog.CheckFiles_checkBox->setChecked( b_CheckFiles );
     dialog.CheckAvailability_checkBox->setChecked( b_CheckAvailability );
+    dialog.RunScript_checkBox->setChecked( b_RunScript );
 
     if ( s_DownloadPath.isEmpty() == false )
     {
@@ -579,6 +692,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
         b_DecompressFiles	= dialog.DecompressFiles_checkBox->isChecked();
         b_CheckFiles		= dialog.CheckFiles_checkBox->isChecked();
         b_CheckAvailability	= dialog.CheckAvailability_checkBox->isChecked();
+        b_RunScript         = dialog.RunScript_checkBox->isChecked();
 
         s_FTPServer			= dialog.FTPServer_lineEdit->text();
         s_User				= dialog.User_lineEdit->text();
@@ -613,11 +727,17 @@ void DownloadManagerDialog::on_CheckAvailability_checkBox_toggled()
     {
         DecompressFiles_checkBox->setEnabled( false );
         CheckFiles_checkBox->setEnabled( false );
+
+        DisableAllYears();
+        DisableAllMonths();
     }
     else
     {
         DecompressFiles_checkBox->setEnabled( true );
         CheckFiles_checkBox->setEnabled( true );
+
+        EnableAllYears();
+        EnableAllMonths();
     }
 }
 

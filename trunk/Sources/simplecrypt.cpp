@@ -70,7 +70,7 @@ void SimpleCrypt::splitKey()
     }
 }
  
-QByteArray SimpleCrypt::encryptToByteArray(const QString& plaintext)
+QByteArray SimpleCrypt::encryptToByteArray(const QString &plaintext)
 {
     QByteArray plaintextArray = plaintext.toUtf8();
     return encryptToByteArray(plaintextArray);
@@ -136,7 +136,7 @@ QByteArray SimpleCrypt::encryptToByteArray(QByteArray plaintext)
     return resultArray;
 }
  
-QString SimpleCrypt::encryptToString(const QString& plaintext)
+QString SimpleCrypt::encryptToString(const QString &plaintext)
 {
     QByteArray plaintextArray = plaintext.toUtf8();
     QByteArray cypher = encryptToByteArray(plaintextArray);
@@ -168,7 +168,7 @@ QString SimpleCrypt::decryptToString(QByteArray cypher)
     return plaintext;
 }
  
-QByteArray SimpleCrypt::decryptToByteArray(const QString& cyphertext)
+QByteArray SimpleCrypt::decryptToByteArray(const QString &cyphertext)
 {
     QByteArray cyphertextArray = QByteArray::fromBase64(cyphertext.toLatin1());
     QByteArray ba = decryptToByteArray(cyphertextArray);

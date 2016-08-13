@@ -163,7 +163,7 @@ void AstroData::calculate (const QString &AlgorithmIn)
 
 
 // Member function: addParameter
-void AstroData::addParameter(const QString & Key)
+void AstroData::addParameter(const QString &Key)
 {
     if      (Key == "SolarZenithAngle"      ) BsrnData::addParameter(Key, "Solar zenith angle", "deg", "SZA");
     else if (Key == "EarthSunDistance"      ) BsrnData::addParameter(Key, "Distance Earth-Sun", "m", "EarthSunDistance");

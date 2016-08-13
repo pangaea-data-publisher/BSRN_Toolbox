@@ -32,11 +32,11 @@ public:
     virtual ~webfile();
 
     QUrl                        url() const;
-    void                        setUrl(const QString & strUrl);
+    void                        setUrl(const QString &strUrl);
     void                        setUrl(const QUrl & Url);
 
-    void                        setUser(const QString & strUser);
-    void                        setPassword(const QString & strPassword);
+    void                        setUser(const QString &strUser);
+    void                        setPassword(const QString &strPassword);
 
     bool                        open(qint64 offset = 0);
     virtual void                close();

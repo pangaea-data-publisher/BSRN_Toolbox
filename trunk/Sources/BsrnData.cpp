@@ -2,7 +2,7 @@
 #include "BsrnData.h"
 #include "Globals.h"
 
-int NumOfSections(const QString & String);
+int NumOfSections(const QString &String);
 
 
 // Constructor
@@ -215,7 +215,7 @@ void BsrnData::readFromStringList(const QStringList & sl_Input)
 
 
 // Member function: writeToFile
-int BsrnData::writeToFile(const QString & FileName)
+int BsrnData::writeToFile(const QString &FileName)
 {
     //   Initialise file output
     QFile File(FileName);
@@ -395,7 +395,7 @@ void BsrnData::toBsrnUnits()
 
 
 // Member function: appendToKeys
-void BsrnData::appendToKeys(const QString & StringToAdd, const QStringList & KeyList)
+void BsrnData::appendToKeys(const QString &StringToAdd, const QStringList & KeyList)
 {
     for (QStringList::ConstIterator Key = KeyList.constBegin(); Key != KeyList.constEnd(); ++Key)
         if (Parameters.contains(*Key))
@@ -404,7 +404,7 @@ void BsrnData::appendToKeys(const QString & StringToAdd, const QStringList & Key
 
 
 // Member function: renameKey
-void BsrnData::renameKey(const QString & OldKey, const QString & NewKey)
+void BsrnData::renameKey(const QString &OldKey, const QString &NewKey)
 {
     if (OldKey != "Date/Time")
         Values[NewKey] = Values.take(OldKey);
@@ -416,7 +416,7 @@ void BsrnData::renameKey(const QString & OldKey, const QString & NewKey)
 
 
 // Member function: appendToParameters
-void BsrnData::appendToParameters(const QString & StringToAdd, const QStringList & KeyList)
+void BsrnData::appendToParameters(const QString &StringToAdd, const QStringList & KeyList)
 {
     for (QStringList::ConstIterator Key = KeyList.constBegin(); Key != KeyList.constEnd(); ++Key)
         if (Parameters.contains(*Key))
@@ -425,7 +425,7 @@ void BsrnData::appendToParameters(const QString & StringToAdd, const QStringList
 
 
 // Member function: appendToAbbreviations
-void BsrnData::appendToAbbreviations(const QString & StringToAdd, const QStringList & KeyList)
+void BsrnData::appendToAbbreviations(const QString &StringToAdd, const QStringList & KeyList)
 {
     for (QStringList::ConstIterator Key = KeyList.constBegin(); Key != KeyList.constEnd(); ++Key)
         if (Abbreviations.contains(*Key))
@@ -481,7 +481,7 @@ void BsrnData::removeOther(const QStringList & KeepList)
 }
 
 // Member function: setUnits
-void BsrnData::setUnits(const QString & Unit, const QStringList & KeyList)
+void BsrnData::setUnits(const QString &Unit, const QStringList & KeyList)
 {
     for (QStringList::ConstIterator Key = KeyList.constBegin(); Key != KeyList.constEnd(); ++Key)
         if (Parameters.contains(*Key))
@@ -530,7 +530,7 @@ QMap<QString, QString> BsrnData::getAllBsrnParameters()
 
 
 // Member function: addParameter
-void BsrnData::addParameter(const QString & Key, const BsrnData DataIn)
+void BsrnData::addParameter(const QString &Key, const BsrnData DataIn)
 {
     if (Parameters.contains(Key) == false && DataIn.Parameters.contains(Key) == true)
     {
@@ -546,7 +546,7 @@ void BsrnData::addParameter(const QString & Key, const BsrnData DataIn)
 
 
 // Member function: addParameter
-void BsrnData::addParameter(const QString & Key, const QString & ParameterName, const QString & Unit, const QString & Abbreviation)
+void BsrnData::addParameter(const QString &Key, const QString &ParameterName, const QString &Unit, const QString &Abbreviation)
 {
     if (Parameters.contains(Key) == false)
     {
@@ -580,7 +580,7 @@ void BsrnData::setSortedOrder()
 
 
 // Helper function: NumOfSections
-int NumOfSections( const QString & String )
+int NumOfSections( const QString &String )
 {
     return( String.count( "\t" ) + 1 );
 }

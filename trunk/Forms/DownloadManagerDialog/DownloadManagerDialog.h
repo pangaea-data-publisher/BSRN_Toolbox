@@ -22,6 +22,11 @@ private slots:
     void SelectAllYears();
     void SelectNoneYear();
 
+    void EnableAllYears();
+    void DisableAllYears();
+    void EnableAllMonths();
+    void DisableAllMonths();
+
     void on_DownloadDirectory_lineEdit_textChanged();
     void on_FTPServer_lineEdit_textChanged();
     void on_User_lineEdit_textChanged();

@@ -155,7 +155,7 @@ void QualityCheckRecommendedV20OptionsDialog::ShowSolposInfo()
 
 
 // do-Function
-int MainWindow::doQualityCheckRecommendedV20OptionsDialog(bool & b_CheckPhysicallyPossibleLimits, bool & b_CheckExtremelyRareLimits, bool & b_CheckComparisons, QString & s_AuxiliaryDataAlgorithm, bool & b_OutputCodes, bool & b_OutputCleanedValues, bool & b_OutputOriginalValues, bool & b_OutputAuxiliaryData, bool & b_OutputOneFile)
+int MainWindow::doQualityCheckRecommendedV20OptionsDialog(bool & b_CheckPhysicallyPossibleLimits, bool & b_CheckExtremelyRareLimits, bool & b_CheckComparisons, QString &s_AuxiliaryDataAlgorithm, bool & b_OutputCodes, bool & b_OutputCleanedValues, bool & b_OutputOriginalValues, bool & b_OutputAuxiliaryData, bool & b_OutputOneFile)
 {
     // Initialise dialog
     int i_DialogResult = QDialog::Rejected;

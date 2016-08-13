@@ -18,7 +18,7 @@
 *   @return Fehlercode
 */
 
-int MainWindow::OtherMeasurementsAtXmTest( const QString& s_FilenameIn, int *P, const int i_Height, const int i_NumOfFiles )
+int MainWindow::OtherMeasurementsAtXmTest( const QString &s_FilenameIn, int *P, const int i_Height, const int i_NumOfFiles )
 {
     int             i_hasData       = 0;
     int				i_P_sum			= 0;
@@ -231,7 +231,7 @@ int MainWindow::OtherMeasurementsAtXmTest( const QString& s_FilenameIn, int *P, 
 *   @return Fehlercode
 */
 
-int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QString& s_FilenameIn, const int i_Height, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
+int MainWindow::OtherMeasurementsAtXmConverter( const bool b_Import, const QString &s_FilenameIn, const int i_Height, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool b_overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles )
 {
     int				err				= 0;
 

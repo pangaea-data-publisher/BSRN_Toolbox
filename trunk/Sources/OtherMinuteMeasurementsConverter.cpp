@@ -20,7 +20,7 @@
 *   @return Fehlercode
 */
 
-int MainWindow::OtherMinuteMeasurementsConverter( const bool b_Import, const QString& s_FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, int *P, const int i_NumOfFiles )
+int MainWindow::OtherMinuteMeasurementsConverter( const bool b_Import, const QString &s_FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, int *P, const int i_NumOfFiles )
 {
     int				i_StationNumber				= 0;
     int             i_SourceID                  = 0;

@@ -10,7 +10,7 @@
 // 2016-06-09
 // remove Latitude and Longitude from Quality Check output file
 
-int MainWindow::convertFile( const QString& s_FilenameIn, const int i_NumOfFiles )
+int MainWindow::convertFile( const QString &s_FilenameIn, const int i_NumOfFiles )
 {
     int         i             = 0;
     int         n             = 0;
@@ -170,7 +170,7 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const int i_NumOfFiles
 // *************************************************************************************
 // unformated
 
-int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_FilenameOut, const QString& s_MissingValue, const int i_FieldDelimiter, const int i_NumOfFiles )
+int MainWindow::convertFile( const QString &s_FilenameIn, const QString &s_FilenameOut, const QString &s_MissingValue, const int i_FieldDelimiter, const int i_NumOfFiles )
 {
     int          i                = 0;
     int          n                = 0;
@@ -282,7 +282,7 @@ int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_Filen
 // *************************************************************************************
 // formated
 
-int MainWindow::convertFile( const QString& s_FilenameIn, const QString& s_FilenameOut, const int i_FieldAlignment, const int i_FieldWidth, const QString& s_MissingValue, const int i_NumOfFiles )
+int MainWindow::convertFile( const QString &s_FilenameIn, const QString &s_FilenameOut, const int i_FieldAlignment, const int i_FieldWidth, const QString &s_MissingValue, const int i_NumOfFiles )
 {
     int          i                = 0;
     int          n                = 0;

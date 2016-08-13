@@ -8,7 +8,7 @@
 // *************************************************************************************
 // *************************************************************************************
 
-int MainWindow::convertEOL( const QString& s_FilenameIn, const bool b_convertEOL, const int i_OS )
+int MainWindow::convertEOL( const QString &s_FilenameIn, const bool b_convertEOL, const int i_OS )
 {
     bool	b_isWindowsEOL	= false;
     bool	b_isMacOS9EOL	= false;

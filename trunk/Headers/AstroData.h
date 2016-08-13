@@ -14,14 +14,14 @@ class AstroData : public BsrnData
 
 public:
     AstroData (BsrnData & DataIn);
-    void calculate (const QString & AlgorithmIn);
+    void calculate (const QString &AlgorithmIn);
 
     QString Algorithm;
     qreal   SolarConstant;
 
 
 private:
-    void addParameter(const QString & Key);
+    void addParameter(const QString &Key);
 };
 
 

@@ -17,7 +17,7 @@
 *   @return Fehlercode
 */
 
-int MainWindow::MessagesConverter(const QString& s_FilenameIn, QStringList& sl_FilenameOut, structStation *Station_ptr, const int i_NumOfFiles )
+int MainWindow::MessagesConverter(const QString &s_FilenameIn, QStringList &sl_FilenameOut, structStation *Station_ptr, const int i_NumOfFiles )
 {
     int				i_Year			= 2000;
     int				i_Month			= 1;

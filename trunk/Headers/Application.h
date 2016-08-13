@@ -134,6 +134,7 @@ public:
     bool		gb_DecompressFiles;		//!< Wenn true werden die Dateien mit GZip entpackt
     bool		gb_CheckFiles;			//!< Wenn true werden die Dateien mit BSRN_fcheck geprueft
     bool		gb_CheckAvailability;	//!< Wenn true wird nur die Verfuegbarkeit der Dateien geprueft
+    bool        gb_RunScript;           //!< Wenn true wird das Script automatisch gestartet
     bool		gb_DeleteOriginalFiles;	//!< Wenn true werden die Original-Dateien nach dem Verbinden geloescht.
     bool        gb_OverwriteDataset;    //!< Wenn true wird der Datensatz berschrieben.
 
@@ -171,7 +172,7 @@ signals:
 private slots:
     int  chooseFile();
     int  chooseFiles();
-    int  chooseFolder( const QString& Folder = "" );
+    int  chooseFolder( const QString &Folder = "" );
     int  saveFile();
     int  saveFileAs();
 
@@ -275,7 +276,7 @@ private:
     void appendItem( QStringList &List, const QString &Item, const QString &SS = "", const QString &RS = "" );
     void compressFile( const QString &FilenameIn );
     void clearFilenameList( int &ActionNumber, QStringList &FilenameList );
-    void clearList( QStringList& List );
+    void clearList( QStringList &List );
     void clearMessage();
     void createActions();
     void createMenus();
@@ -309,22 +310,23 @@ private:
     QString setExtension( const int Extension );
     QString getFileChecksum( const QString &FilenameIn );
 
-    bool warning( const QString & Message, const QString & Title = tr("Warning"));
+    bool warning( const QString &Message, const QString &Title = tr( "Warning" ) );
 
 // Station-to-archive
-    int downloadStationToArchiveFiles( structStation *Station_ptr, const QString& FilenameOut, const QString& FTPServer, const QString& User, const QString& Password, const bool DecompressFiles, const bool CheckFiles, const bool CheckAvailability, bool Station[MAX_NUM_OF_STATIONS+1], bool Month[MAX_NUM_OF_MONTHS+1], bool Year[MAX_NUM_OF_YEARS+1] );
+    int downloadStationToArchiveFiles( structStation *Station_ptr, const QString &FilenameOut, const QString &FTPServer, const QString &User, const QString &Password, const bool DecompressFiles, const bool CheckFiles, const bool CheckAvailability, bool Station[MAX_NUM_OF_STATIONS+1], bool Month[MAX_NUM_OF_MONTHS+1], bool Year[MAX_NUM_OF_YEARS+1], QStringList &FilenameList );
+    QString checkScriptResults( const bool CheckFiles, const QString &DownloadPath, const QStringList FilenameList );
 
 // Metadata
-    int FileIDConverter( const QString& FilenameIn, QStringList& FilenameOut, structStation *Station_ptr, const int NumOfFiles );
-    int ScientistIDConverter( const QString& FilenameIn, QStringList& FilenameOut, structStaff *Staff_ptr, structStation *Station_ptr, const int NumOfFiles );
-    int MessagesConverter( const QString& FilenameIn, QStringList& FilenameOut, structStation *Station_ptr, const int NumOfFiles );
-    int StationDescriptionConverter( const QString& FilenameIn, QStringList& FilenameOut, structStation *Station_ptr, const int NumOfFiles );
-    int RadiosondeEquipmentConverter( const QString& FilenameIn, QStringList& FilenameOut, structMethod *Method_ptr, structStation *Station_ptr, const int NumOfFiles );
-    int OzoneEquipmentConverter( const QString& FilenameIn, QStringList& FilenameOut, structMethod *Method_ptr, structStation *Station_ptr, const int NumOfFiles );
-    int StationHistoryConverter( const QString& FilenameIn, QStringList& FilenameOut, structStation *Station_ptr, const int NumOfFiles );
-    int RadiationInstrumentsConverter( const QString& FilenameIn, QStringList& FilenameOut, structMethod *Method_ptr, structStation *Station_ptr, const int NumOfFiles );
-    int AssignmentConverter( const QString& FilenameIn, QStringList& FilenameOut, structMethod *Method_ptr, structStation *Station_ptr, const int NumOfFiles );
-    int CreateReferenceImportFile( const QString& FilenameIn, QStringList& FilenameOut, structStaff *Staff_ptr, structStation *Station_ptr, const int NumOfFiles );
+    int FileIDConverter( const QString &FilenameIn, QStringList &FilenameOut, structStation *Station_ptr, const int NumOfFiles );
+    int ScientistIDConverter( const QString &FilenameIn, QStringList &FilenameOut, structStaff *Staff_ptr, structStation *Station_ptr, const int NumOfFiles );
+    int MessagesConverter( const QString &FilenameIn, QStringList &FilenameOut, structStation *Station_ptr, const int NumOfFiles );
+    int StationDescriptionConverter( const QString &FilenameIn, QStringList &FilenameOut, structStation *Station_ptr, const int NumOfFiles );
+    int RadiosondeEquipmentConverter( const QString &FilenameIn, QStringList &FilenameOut, structMethod *Method_ptr, structStation *Station_ptr, const int NumOfFiles );
+    int OzoneEquipmentConverter( const QString &FilenameIn, QStringList &FilenameOut, structMethod *Method_ptr, structStation *Station_ptr, const int NumOfFiles );
+    int StationHistoryConverter( const QString &FilenameIn, QStringList &FilenameOut, structStation *Station_ptr, const int NumOfFiles );
+    int RadiationInstrumentsConverter( const QString &FilenameIn, QStringList &FilenameOut, structMethod *Method_ptr, structStation *Station_ptr, const int NumOfFiles );
+    int AssignmentConverter( const QString &FilenameIn, QStringList &FilenameOut, structMethod *Method_ptr, structStation *Station_ptr, const int NumOfFiles );
+    int CreateReferenceImportFile( const QString &FilenameIn, QStringList &FilenameOut, structStaff *Staff_ptr, structStation *Station_ptr, const int NumOfFiles );
 
 // Data
     bool SYNOPTest1( const QString &InputStr, int *P );
@@ -355,52 +357,52 @@ private:
     QString buildSYNOPDataOutputStr5( const QString EventLabel, const QString DataStr, int *P, const int Year, const int Month, const float Latitude, const float Longitude, const bool Import );
     QString buildSYNOPDataOutputStr6( const QString EventLabel, const QString DataStr, int *P, const int Year, const int Month, const float Latitude, const float Longitude, const bool Import );
 
-    int BasicMeasurementsTest( const QString& FilenameIn, int *P, const int NumOfFiles );
-    int UltraVioletMeasurementsTest( const QString& FilenameIn, int *P, const int NumOfFiles );
-    int SYNOPTest( const QString& FilenameIn, int *P, const int NumOfFiles );
-    int RadiosondeMeasurementsTest( const QString& FilenameIn, int *P, const int NumOfFiles );
-    int ExpandedMeasurementsTest( const QString& FilenameIn, int *P, const int NumOfFiles );
-    int OtherMeasurementsAtXmTest( const QString& FilenameIn, int *P, const int Height, const int NumOfFiles );
+    int BasicMeasurementsTest( const QString &FilenameIn, int *P, const int NumOfFiles );
+    int UltraVioletMeasurementsTest( const QString &FilenameIn, int *P, const int NumOfFiles );
+    int SYNOPTest( const QString &FilenameIn, int *P, const int NumOfFiles );
+    int RadiosondeMeasurementsTest( const QString &FilenameIn, int *P, const int NumOfFiles );
+    int ExpandedMeasurementsTest( const QString &FilenameIn, int *P, const int NumOfFiles );
+    int OtherMeasurementsAtXmTest( const QString &FilenameIn, int *P, const int Height, const int NumOfFiles );
 
-    int BasicMeasurementsConverter( const bool Import, const bool showSelectParameterDialog, const int Mode, const QString& FilenameIn, QString& FilenameOut, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
-    int OtherMinuteMeasurementsConverter( const bool Import, const QString& FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, int *P, const int NumOfFiles );
-    int UltraVioletMeasurementsConverter( const bool Import, const bool showSelectParameterDialog, const QString& FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
-    int SYNOPConverter( const bool Import, const QString& FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
-    int RadiosondeMeasurementsConverter( const bool Import, const QString& FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
-    int OzoneMeasurementsConverter( const bool Import, const QString& FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
-    int ExpandedMeasurementsConverter( const bool Import, const QString& FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
-    int OtherMeasurementsAtXmConverter( const bool Import, const QString& FilenameIn, const int Height, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles );
+    int BasicMeasurementsConverter( const bool Import, const bool showSelectParameterDialog, const int Mode, const QString &FilenameIn, QString &FilenameOut, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
+    int OtherMinuteMeasurementsConverter( const bool Import, const QString &FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, int *P, const int NumOfFiles );
+    int UltraVioletMeasurementsConverter( const bool Import, const bool showSelectParameterDialog, const QString &FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
+    int SYNOPConverter( const bool Import, const QString &FilenameIn, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
+    int RadiosondeMeasurementsConverter( const bool Import, const QString &FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
+    int OzoneMeasurementsConverter( const bool Import, const QString &FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
+    int ExpandedMeasurementsConverter( const bool Import, const QString &FilenameIn, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int NumOfFiles );
+    int OtherMeasurementsAtXmConverter( const bool Import, const QString &FilenameIn, const int Height, structMethod *Method_ptr, structStaff *Staff_ptr, structStation *Station_ptr, structReference *Reference_ptr, const bool overwriteDataset, structDataset *Dataset_ptr, const int i_NumOfFiles );
 
 // Dialogs
     int doConcatenateOptionsDialog( int &SkipNFirstLines, bool &deleteOriginalFiles );
-    int doDownloadManagerDialog( QString &DownloadPath, QString &FTPServer, QString &User, QString &Password, bool &DecompressFiles, bool &CheckFiles, bool &CheckAvailability, bool Station[MAX_NUM_OF_STATIONS+1], bool Month[MAX_NUM_OF_MONTHS+1], bool Year[MAX_NUM_OF_YEARS+1] );
-    int doQualityCheckRecommendedV20OptionsDialog( bool & b_CheckPhysicallyPossibleLimits, bool & b_CheckExtremelyRareLimits, bool & b_CheckComparisons, QString & s_AuxiliaryDataAlgorithm, bool & b_OutputCodes, bool & b_OutputCleanedValues, bool & b_OutputOriginalValues, bool & b_OutputAuxiliaryData, bool & b_OutputOneFile);
+    int doDownloadManagerDialog( QString &DownloadPath, QString &FTPServer, QString &User, QString &Password, bool &DecompressFiles, bool &CheckFiles, bool &CheckAvailability, bool &RunScript, bool Station[MAX_NUM_OF_STATIONS+1], bool Month[MAX_NUM_OF_MONTHS+1], bool Year[MAX_NUM_OF_YEARS+1] );
+    int doQualityCheckRecommendedV20OptionsDialog( bool & b_CheckPhysicallyPossibleLimits, bool & b_CheckExtremelyRareLimits, bool & b_CheckComparisons, QString &s_AuxiliaryDataAlgorithm, bool & b_OutputCodes, bool & b_OutputCleanedValues, bool & b_OutputOriginalValues, bool & b_OutputAuxiliaryData, bool & b_OutputOneFile);
     int doFormatUnformattedOptionsDialog( QString &MissingValue, int &FieldDelimiter );
     int doFormatFormattedOptionsDialog( int &FieldAlignment, int &FieldWidth, QString &MissingValue );
     int doSelectParametersDialog( const int mode, int *P );
 
 // Tools
-    QString ReferenceOtherVersion( const QString& EventLabel, structReference *Reference_ptr, const QDateTime dt );
-    QString ReferenceImportFile( const QString& EventLabel, const QDateTime DateOfData, const int PIID, const QString &StationName );
+    QString ReferenceOtherVersion( const QString &EventLabel, structReference *Reference_ptr, const QDateTime dt );
+    QString ReferenceImportFile( const QString &EventLabel, const QDateTime DateOfData, const int PIID, const QString &StationName );
 
     QString OpenDataDescriptionHeader();
     QString CloseDataDescriptionHeader();
-    QString ParentID( const QString& ParentID = "-999" );
-    QString DataSetID( const QString& DatasetID = "-999" );
-    QString AuthorIDs( const QString& AuthorIDs = "-999" );
-    QString SourceID( const QString& SourceID = "-999" );
-    QString DatasetTitle( const QString& Text, const QString& StationName, const QDateTime dt );
-    QString Reference( const QString &ReferenceID = "-999", const int RelationTypeID = -999, const QString &ReferenceType = "-999", const QString& EventLabel = "" );
-    QString ExportFilename( const QString& EventLabel, const QString& Text, const QDateTime dt );
-    QString EventLabel( const QString& EventLabel = "" );
-    QString Parameter( const QString& ParameterID = "-999", const QString& PIID = "506", const QString& MethodID = "43", const QString& Format = "", const QString& Comment = "" );
+    QString ParentID( const QString &ParentID = "-999" );
+    QString DataSetID( const QString &DatasetID = "-999" );
+    QString AuthorIDs( const QString &AuthorIDs = "-999" );
+    QString SourceID( const QString &SourceID = "-999" );
+    QString DatasetTitle( const QString &Text, const QString &StationName, const QDateTime dt );
+    QString Reference( const QString &ReferenceID = "-999", const int RelationTypeID = -999, const QString &ReferenceType = "-999", const QString &EventLabel = "" );
+    QString ExportFilename( const QString &EventLabel, const QString &Text, const QDateTime dt );
+    QString EventLabel( const QString &EventLabel = "" );
+    QString Parameter( const QString &ParameterID = "-999", const QString &PIID = "506", const QString &MethodID = "43", const QString &Format = "", const QString &Comment = "" );
     QString Parameter( const QStringList Parameter );
-    QString DatasetComment( const QString& DatasetComment = "" );
-    QString ProjectIDs( const QString& ProjectID = "-999" );
-    QString TopologicTypeID( const QString& TopologicTypeID = "-999" );
-    QString StatusID( const QString& StatusID = "-999" );
-    QString UserIDs( const QString& UserIDs = "-999" );
-    QString LoginID( const QString& LoginID = "-999" );
+    QString DatasetComment( const QString &DatasetComment = "" );
+    QString ProjectIDs( const QString &ProjectID = "-999" );
+    QString TopologicTypeID( const QString &TopologicTypeID = "-999" );
+    QString StatusID( const QString &StatusID = "-999" );
+    QString UserIDs( const QString &UserIDs = "-999" );
+    QString LoginID( const QString &LoginID = "-999" );
 
     QString num2str( const int num ) { return( QString::number( num ) ); }
     QString num2str( const float num ) { return( QString::number( num ) ); }
@@ -409,8 +411,8 @@ private:
     QString findEventLabel( const int StationNumber, structStation *Station_ptr );
     QString findStationName( const int StationNumber, structStation *Station_ptr );
 
-    bool checkFilename( const QString& s_Filename, const QString& s_EventLabel, const QString& s_Month, const QString& s_Year );
-    bool removeEmptyFile( const QString& FilenameIn, const QString& FilenameOut, const int minFilesize = 0 );
+    bool checkFilename( const QString &s_Filename, const QString &s_EventLabel, const QString &s_Month, const QString &s_Year );
+    bool removeEmptyFile( const QString &FilenameIn, const QString &FilenameOut, const int minFilesize = 0 );
 
     int setErr( const int err );
 
@@ -418,37 +420,36 @@ private:
     int checkSelectedParameter( const int offset, int *P );
 
     int findInstituteID( const int StationNumber, structStation *Station_ptr );
-    int findPiID( const QString& Name, structStaff *Staff_ptr );
+    int findPiID( const QString &Name, structStaff *Staff_ptr );
     int findMethodID( const int StationNumber, const int WRMCnumber, structMethod *Method_ptr );
-    int findMethodID( const QString& RadiosondeIdentification, structMethod *Method_ptr );
-    int findDatasetID( const QString& ExportFilename, structDataset *Dataset_ptr );
-    int findReferenceID( const QString& ReferenceURI, structReference *Reference_ptr );
+    int findMethodID( const QString &RadiosondeIdentification, structMethod *Method_ptr );
+    int findDatasetID( const QString &ExportFilename, structDataset *Dataset_ptr );
+    int findReferenceID( const QString &ReferenceURI, structReference *Reference_ptr );
 
     int readBsrnIDs();
     int readBsrnDatasetIDs();
     int readBsrnReferenceIDs( const bool updateReferenceIDs );
 
-    int writeDefaultIDsBSRN( const QString& Filename );
+    int writeDefaultIDsBSRN( const QString &Filename );
 
-    int concatenateFiles( const QString& FilenameOut, const QStringList Filenames, const QString& ProgressMessage, const int SkipLines = 0, const bool RemoveFile = false );
-    int convertEOL( const QString& FilenameIn, const bool convertEOL, const int OS );
-    int convertFile( const QString& FilenameIn, const int NumOfFiles );
-    int convertFile( const QString& FilenameIn, const QString& FilenameOut, const QString& MissingValue, const int FieldDelimiter, const int NumOfFiles );
-    int convertFile( const QString& FilenameIn, const QString& FilenameOut, const int FieldAlignment, const int FieldWidth, const QString& MissingValue, const int NumOfFiles );
-    int createReplaceDatabase( const QString& FilenameIn, const int firstReferenceID, const int NumOfFiles );
+    int concatenateFiles( const QString &FilenameOut, const QStringList Filenames, const QString &ProgressMessage, const int SkipLines = 0, const bool RemoveFile = false );
+    int convertEOL( const QString &FilenameIn, const bool convertEOL, const int OS );
+    int convertFile( const QString &FilenameIn, const int NumOfFiles );
+    int convertFile( const QString &FilenameIn, const QString &FilenameOut, const QString &MissingValue, const int FieldDelimiter, const int NumOfFiles );
+    int convertFile( const QString &FilenameIn, const QString &FilenameOut, const int FieldAlignment, const int FieldWidth, const QString &MissingValue, const int NumOfFiles );
+    int createReplaceDatabase( const QString &FilenameIn, const int firstReferenceID, const int NumOfFiles );
 
-    float calcGeopotentialHeight( const QString& ahhh );
+    float calcGeopotentialHeight( const QString &ahhh );
 
     void OpenExternalURL( const int URL = 1 );
 
     QString writeGeocodeHeader( const bool Import, int *P );
     QString buildGeocodeEntries( const bool Import, int *P, const QDateTime dt, const QString EventLabel, const float Latitude, const float Longitude );
 
-
 //  Quality check
-    int QualityCheckRecommendedV20( const QString & FileNameIn, QString & FileNameOut, const bool & b_CheckPhysicallyPossibleLimits, const bool & b_CheckExtremelyRareLimits, const bool & b_CheckComparisons, const QString & s_AuxiliaryDataAlgorithm, const bool & b_OutputCodes, const bool & b_OutputCleanedValues, const bool & b_OutputOriginalValues, const bool & b_OutputAuxiliaryData, const bool & b_OutputOneFile);
-    //int QualityCheckTechnicalReport1( const QString& FilenameIn );
-    //int QualityCheckUserDefined( const QString& FilenameIn );
+    int QualityCheckRecommendedV20( const QString &FileNameIn, QString &FileNameOut, const bool & b_CheckPhysicallyPossibleLimits, const bool & b_CheckExtremelyRareLimits, const bool & b_CheckComparisons, const QString &s_AuxiliaryDataAlgorithm, const bool & b_OutputCodes, const bool & b_OutputCleanedValues, const bool & b_OutputOriginalValues, const bool & b_OutputAuxiliaryData, const bool & b_OutputOneFile);
+    //int QualityCheckTechnicalReport1( const QString &FilenameIn );
+    //int QualityCheckUserDefined( const QString &FilenameIn );
 
     QMenu	*fileMenu;
     QMenu	*stationMenu;

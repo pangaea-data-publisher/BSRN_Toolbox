@@ -20,8 +20,8 @@
 *   @return Fehlercode
 */
 
-int MainWindow::concatenateFiles( const QString& s_FilenameOut, const QStringList sl_FilenameList,
-                                    const QString& s_ProgressMessage, const int i_SkipNFirstLines,
+int MainWindow::concatenateFiles( const QString &s_FilenameOut, const QStringList sl_FilenameList,
+                                    const QString &s_ProgressMessage, const int i_SkipNFirstLines,
                                     const bool b_deleteOriginalFiles )
 {
     int   i				   = 0;

@@ -15,7 +15,7 @@ AuxiliaryDataRecommendedV20::AuxiliaryDataRecommendedV20(BsrnData & DataIn)
 
 // Member function: calculate
 //  This is excluded from the constructor enable display of progress during calculation
-void AuxiliaryDataRecommendedV20::calculate(const QString & AlgorithmIn)
+void AuxiliaryDataRecommendedV20::calculate(const QString &AlgorithmIn)
 {
     AstroData::calculate(AlgorithmIn);
     renameKey("SolarZenithAngle", "SZA");
@@ -55,7 +55,7 @@ void AuxiliaryDataRecommendedV20::calculate(const QString & AlgorithmIn)
 
 
 // Member function: addParameter
-void AuxiliaryDataRecommendedV20::addParameter(const QString & Key)
+void AuxiliaryDataRecommendedV20::addParameter(const QString &Key)
 {
     if      (Key == "AU"   ) BsrnData::addParameter(Key, "Earth-sun distance", "AU", "AU");
     else if (Key == "Mu0"  ) BsrnData::addParameter(Key, "Cosine of solar zenith angle", "", "Mu0");
