@@ -57,7 +57,7 @@ void webfile::clear()
     m_nSize             = 0;
     m_nOpenTimeOutms    = 5000; /* ms */
     m_nReadTimeOutms    = 5000; /* ms */
-    m_nBufferSize       = (1024*1204); /* = 1 MB */
+    m_nBufferSize       = (1024*1024); /* = 1 MB */
 
     m_bReadTimeOut      = false;
     m_bResetMonitor     = false;

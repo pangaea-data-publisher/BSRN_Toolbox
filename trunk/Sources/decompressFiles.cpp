@@ -14,13 +14,17 @@ void MainWindow::doDecompressFiles()
     int		  err            = 0;
     int       stopProgress   = 0;
 
+    QString   s_ProgramUnzip = "";
+    QString   s_ProgramGzip  = "";
+
     QFileInfo fi;
 
 // **********************************************************************************************
 
-    err = check7z();
+    s_ProgramUnzip = findUnzip( _ZIP_ );
+    s_ProgramGzip  = findUnzip( _GZIP_ );
 
-    if ( err == _NOERROR_ )
+    if ( ( s_ProgramUnzip != "Unzip not found" ) && ( s_ProgramGzip != "Unzip not found" ) )
     {
         existsFirstFile( gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList );
 
@@ -34,8 +38,11 @@ void MainWindow::doDecompressFiles()
 
                 fi.setFile( gsl_FilenameList.at( i ) );
 
-                if ( ( fi.suffix().toLower() == "zip" ) || ( fi.suffix().toLower() == "gz" ) )
-                    decompressFile( gsl_FilenameList.at( i ), false );
+                if ( fi.suffix().toLower() == "zip" )
+                    err = decompressFile( gsl_FilenameList.at( i ), false, _ZIP_, s_ProgramUnzip );
+
+                if ( fi.suffix().toLower() == "gz" )
+                    err = decompressFile( gsl_FilenameList.at( i ), false, _GZIP_, s_ProgramGzip );
 
                 stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
             }

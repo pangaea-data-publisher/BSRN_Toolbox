@@ -14,26 +14,26 @@
 
 void MainWindow::doCompressFile()
 {
-    int		i                   = 0;
-    int		err                 = 0;
-    int		stopProgress        = 0;
+    int		i              = 0;
+    int		err            = 0;
+    int		stopProgress   = 0;
 
-    QString s_GZipProgramName   = "";
+    QString s_Program      = "";
 
     QProcess process;
 
 // **********************************************************************************************
 
     #if defined(Q_OS_LINUX)
-        s_GZipProgramName = "gzip";
-    #endif
-
-    #if defined(Q_OS_WIN)
-        s_GZipProgramName = "\"" + QDir::toNativeSeparators( QCoreApplication::applicationDirPath() + "/" ) + "gzip.exe" + "\"";
+        s_Program = "gzip";
     #endif
 
     #if defined(Q_OS_MAC)
-        s_GZipProgramName = "gzip";
+        s_Program = "gzip";
+    #endif
+
+    #if defined(Q_OS_WIN)
+        s_Program = QCoreApplication::applicationDirPath() + "/" + "gzip.exe";
     #endif
 
     if ( existsFirstFile( gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList ) == true )
@@ -42,10 +42,9 @@ void MainWindow::doCompressFile()
 
         while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( stopProgress != _APPBREAK_ ) )
         {
-            setStatusBar( tr( "Compress " ) + QDir::toNativeSeparators( gsl_FilenameList.at( i ) ) + tr( " ..." ) );
+            setStatusBar( tr( "Compress " ) + gsl_FilenameList.at( i ) + tr( " ..." ) );
 
-            process.start( s_GZipProgramName + " \"" + QDir::toNativeSeparators( gsl_FilenameList.at( i ) ) + "\"" );
-            process.waitForFinished();
+            compressFile( "\"" + QDir::toNativeSeparators( gsl_FilenameList.at( i ) ) + "\"", _ZIP_, s_Program );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }

@@ -254,7 +254,7 @@ void MainWindow::doDownloadStationToArchiveFiles()
             #if defined(Q_OS_LINUX)
                 QFile fcmd( gs_DownloadPath + "get_BSRN_Files.sh" );
 
-                s_arg = "chmod u+x \"" + QDir::toNativeSeparators( fcmd.fileName() ) + "\"";
+                s_arg = "chmod u+x \"" + fcmd.fileName() + "\"";
                 process.startDetached( s_arg );
 
                 wait( 500 );
@@ -263,7 +263,7 @@ void MainWindow::doDownloadStationToArchiveFiles()
             #if defined(Q_OS_MAC)
                 QFile fcmd( gs_DownloadPath + "get_BSRN_Files.sh" );
 
-                s_arg = "chmod u+x \"" + QDir::toNativeSeparators( fcmd.fileName() ) + "\"";
+                s_arg = "chmod u+x \"" + fcmd.fileName() + "\"";
                 process.startDetached( s_arg );
 
                 wait( 500 );
