@@ -115,7 +115,7 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent )
 
     setStatusBar( tr( "Reading BSRN IDs database - please wait" ) );
 
-    downloadFile( QLatin1String( "https://pangaea.de/PHP/bsrn/BSRN_IDs.txt" ), getDataLocation() + "/" + "BSRN_IDs.txt" );
+    downloadFile( findCurl(), QLatin1String( "https://pangaea.de/PHP/bsrn/BSRN_IDs.txt" ), getDataLocation() + "/" + "BSRN_IDs.txt" );
 
 // **********************************************************************************************
 

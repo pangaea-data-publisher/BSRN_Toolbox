@@ -30,10 +30,6 @@ macx {
 }
 
 win32 {
-    # OpenSSL
-    LIBS += -LC:/Qt/OpenSSL-Win32/bin -lubsec
-    INCLUDEPATH += C:/Qt/OpenSSL-Win32/include
-
     # Icon
     RC_FILE = ./Resources/Application.rc
 }
@@ -54,7 +50,6 @@ HEADERS = ./Headers/Application.h \
     ./Headers/BsrnData.h \
     ./Headers/Globals.h \
     ./Headers/solpos00.h \
-    ./Headers/Webfile.h \
     ./Headers/simplecrypt.h \
     ./Forms/AboutDialog/AboutDialog.h \
     ./Forms/ConcatenateOptionsDialog/ConcatenateOptionsDialog.h \
@@ -101,7 +96,6 @@ SOURCES = ./Sources/ApplicationInit.cpp \
     ./Sources/StationHistoryConverter.cpp \
     ./Sources/SYNOPConverter.cpp \
     ./Sources/UltraVioletMeasurementsConverter.cpp \
-    ./Sources/Webfile.cpp \
     ./Sources/simplecrypt.cpp \
     ./Sources/decompressFiles.cpp \
     ./Forms/AboutDialog/AboutDialog.cpp \

@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "BSRN Toolbox"
-!define PRODUCT_VERSION "2.28"
+!define PRODUCT_VERSION "2.29"
 !define PRODUCT_PUBLISHER "PANGAEA"
 !define PRODUCT_WEB_SITE "http://www.pangaea.de"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\BSRN_Toolbox.exe"
@@ -49,6 +49,7 @@ Section "MainSection" SEC01
   SetOutPath "$INSTDIR"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\BSRN_Toolbox.exe"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\BSRN_fcheck.exe"
+  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\curl.exe"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\gzip.exe"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\unzip.exe"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\Qt5Core.dll"
@@ -58,9 +59,6 @@ Section "MainSection" SEC01
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\libgcc_s_dw2-1.dll"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\libstdc++-6.dll"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\libwinpthread-1.dll"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\libeay32.dll"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\ssleay32.dll"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\curl.exe"
 
 SetOutPath "$INSTDIR\platforms"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\platforms\qminimal.dll"
@@ -111,8 +109,6 @@ Section Uninstall
   Delete "$INSTDIR\libgcc_s_dw2-1.dll"
   Delete "$INSTDIR\libstdc++-6.dll"
   Delete "$INSTDIR\libwinpthread-1.dll"
-  Delete "$INSTDIR\libeay32.dll"
-  Delete "$INSTDIR\ssleay32.dll"
   Delete "$INSTDIR\Qt5Core.dll"
   Delete "$INSTDIR\Qt5Gui.dll"
   Delete "$INSTDIR\Qt5Network.dll"

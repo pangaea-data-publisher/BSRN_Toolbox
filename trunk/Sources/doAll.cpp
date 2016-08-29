@@ -304,7 +304,7 @@ void MainWindow::doRefreshBsrnIDs()
 
 // **********************************************************************************************
 
-    downloadFile( QLatin1String( "https://pangaea.de/PHP/bsrn/BSRN_IDs.txt" ), getDataLocation() + "/" + "BSRN_IDs.txt" );
+    downloadFile( findCurl(), QLatin1String( "https://pangaea.de/PHP/bsrn/BSRN_IDs.txt" ), getDataLocation() + "/" + "BSRN_IDs.txt" );
 
 // **********************************************************************************************
 
@@ -334,7 +334,7 @@ void MainWindow::doRefreshBsrnReferenceIDs()
 
 // **********************************************************************************************
 
-    downloadFile( QLatin1String( "https://pangaea.de/ddi?request=bsrn/BSRNReferences&format=textfile&charset=UTF-8" ), getDataLocation() + "/" + "BSRN_Reference_IDs.txt" );
+    downloadFile( findCurl(), QLatin1String( "https://pangaea.de/ddi?request=bsrn/BSRNReferences&format=textfile&charset=UTF-8" ), getDataLocation() + "/" + "BSRN_Reference_IDs.txt" );
 
 // **********************************************************************************************
 

@@ -586,7 +586,7 @@ int MainWindow::readBsrnDatasetIDs()
 
 // ***********************************************************************************************************************
 
-    downloadFile( QLatin1String( "https://pangaea.de/PHP/bsrn/BSRN_Dataset_IDs.txt" ), IDsFilename );
+    downloadFile( findCurl(), QLatin1String( "https://pangaea.de/PHP/bsrn/BSRN_Dataset_IDs.txt" ), IDsFilename );
 
 // ***********************************************************************************************************************
 

@@ -98,8 +98,9 @@ QString MainWindow::getVersion()
     int             n                   = 0;
     int             err                 = _NOERROR_;
 
-    QString         s_Version           = tr( "unknown" );
+    QString         s_Version           = QCoreApplication::applicationName() + "\t" + tr( "unknown" );
 
+    QString         s_Curl              = "";
     QString         s_Url               = "";
     QString         s_Version_Filename  = "";
 
@@ -107,10 +108,11 @@ QString MainWindow::getVersion()
 
 // **********************************************************************************************
 
+    s_Curl             = findCurl();
     s_Url              = QLatin1String( "https://pangaea.de/software" ) + "/" + QCoreApplication::applicationName() + "/" + QCoreApplication::applicationName() + QLatin1String( "_version.txt" );
     s_Version_Filename = getDataLocation() + "/" + QCoreApplication::applicationName() + QLatin1String( "_version.txt" );
 
-    err = downloadFile( s_Url, s_Version_Filename );
+    err = downloadFile( s_Curl, s_Url, s_Version_Filename );
 
     if ( err == _NOERROR_ )
     {
@@ -126,47 +128,25 @@ QString MainWindow::getVersion()
 // **********************************************************************************************
 // **********************************************************************************************
 // **********************************************************************************************
-// 2015-01-10
+// 2016-08-28
 
-/*! @brief Download einer Datei von einem beliebigen Webserver. Ablage in eine locale Datei.
+/*! @brief Download einer Datei mit Curl von einem beliebigen Webserver. Ablage in eine lokale Datei.
 *
-*   @param s_Message Nachricht, die in der Statusleiste angezeigt werden soll.
+*   @param s_Curl, Pfad zum Programm curl wird mit findCurl() ermittelt
 *   @param s_Url, Link zur Datei auf Webserver
-*   @param s_absoluteFilePath, Verzeichnis und Name der lokalen Datei
-*
-*   @retval _NOERROR_ Es wurde eine oder mehrere Dateien ausgewaehlt.
-*   @retval _ERROR_ Auswahl von Dateien wurde abgebrochen.
+*   @param s_Filename, Pfad und Name der lokalen Datei
 */
 
-int MainWindow::downloadFile( const QString &s_Url, const QString &s_absoluteFilePath )
+int MainWindow::downloadFile( const QString &s_Curl, const QString &s_Url, const QString &s_Filename )
 {
-    int err = _ERROR_;
+    QProcess process;
 
-    QFile fi( s_absoluteFilePath );
+    removeFile( s_Filename );
 
-    if ( fi.open( QIODevice::WriteOnly | QIODevice::Text ) == true )
-    {
-        webfile m_webfile;
+    process.start( "\"" + QDir::toNativeSeparators( s_Curl ) + "\" -o \"" + QDir::toNativeSeparators( s_Filename ) + "\"" + " " + s_Url );
+    process.waitForFinished( -1 );
 
-        m_webfile.setUrl( s_Url );
-
-        if ( m_webfile.open() == true )
-        {
-            char    buffer[1024];
-            qint64  nSize = 0;
-
-            while ( ( nSize = m_webfile.read( buffer, sizeof( buffer ) ) ) > 0 )
-                fi.write( buffer, nSize );
-
-            m_webfile.close();
-
-            err = _NOERROR_;
-        }
-
-        fi.close();
-    }
-
-    return( err );
+    return( _ERROR_ );
 }
 
 // **********************************************************************************************
@@ -1063,8 +1043,7 @@ void MainWindow::compressFolder( const QString &s_Program, const QString &s_Fold
 
     QDir::setCurrent( fdir.absolutePath() );
 
-    if ( farchive.exists() == true )
-        removeFile( farchive.fileName() );
+    removeFile( farchive.fileName() );
 
     showMessage( tr( "Compressing " ) + QDir::toNativeSeparators( farchive.fileName() ) + tr( " ..." ), sl_Message );
 
@@ -2049,10 +2028,15 @@ void MainWindow::setNormalCursor()
 
 int MainWindow::removeFile( const QString &s_Filename )
 {
-    QFile fi( s_Filename );
-    fi.remove();
+    QFile file( s_Filename );
 
-    return( fi.error() );
+    if( file.exists() == true )
+    {
+        file.remove();
+        return( file.error() );
+    }
+
+    return( _NOERROR_ );
 }
 
 // **********************************************************************************************
@@ -2442,6 +2426,30 @@ QString MainWindow::findUnzip( const int mode )
         s_Program = fi_7zX86exe.absoluteFilePath();
     }
 #endif
+
+    return( s_Program );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+// find Curl
+
+QString MainWindow::findCurl()
+{
+    QString s_Program = "";
+
+    #if defined(Q_OS_LINUX)
+        s_Program = "curl";
+    #endif
+
+    #if defined(Q_OS_MAC)
+        s_Program = "curl";
+    #endif
+
+    #if defined(Q_OS_WIN)
+        s_Program = QCoreApplication::applicationDirPath() + "/" + "curl.exe" );
+    #endif
 
     return( s_Program );
 }
