@@ -6,7 +6,7 @@
 // **********************************************************************************************
 // **********************************************************************************************
 // **********************************************************************************************
-// 2007-12-30
+// 2016-08-30
 
 /*! @brief Erzeugen und ausfuehren einer Batch-Datei. Die Batch-Datei liesst mit Hilfe eines
 *          ftp Clients Station-to-archive Dateien und speichert sie ab.
@@ -24,85 +24,63 @@
 *	@param b_Year Array von Jahren
 */
 
-int MainWindow::downloadStationToArchiveFiles( structStation *Station_ptr,
-                                                  const QString &s_DownloadPath,
-                                                  const QString &s_FTPServer,
-                                                  const QString &s_User, const QString &s_Password,
-                                                  const bool b_DecompressFiles, const bool b_CheckFiles,
-                                                  const bool b_CheckAvailability,
-                                                  bool b_Station[MAX_NUM_OF_STATIONS+1],
-                                                  bool b_Month[MAX_NUM_OF_MONTHS+1],
-                                                  bool b_Year[MAX_NUM_OF_YEARS+1],
-                                                  QStringList &sl_FilenameList )
+QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_ptr,
+                                                       const QString &s_DownloadPath,
+                                                       const QString &s_FTPServer,
+                                                       const QString &s_User, const QString &s_Password,
+                                                       const bool b_DecompressFiles, const bool b_CheckFiles,
+                                                       const bool b_CheckAvailability,
+                                                       bool b_Station[MAX_NUM_OF_STATIONS+1],
+                                                       bool b_Month[MAX_NUM_OF_MONTHS+1],
+                                                       bool b_Year[MAX_NUM_OF_YEARS+1] )
 {
-    QString     s_Filename      = "";
+    int         i               = 0;
+    int         stopProgress    = 0;
 
     QString     s_EventLabel	= "";
     QString     s_Month			= "";
     QString     s_Year			= "";
 
     QString     s_GZIP    		= "";
-    QString     s_cURL          = "";
+    QString     s_Curl          = "";
     QString     s_BSRN_fcheck   = "";
+
+    QString     s_arg           = "";
+
     QString     s_Message       = "";
 
-//-----------------------------------------------------------------------------------------------------------------------
+    QStringList sl_FilenameList;
+    QStringList sl_ReportList;
 
-    #if defined(Q_OS_LINUX)
-        QFile fcmd( s_DownloadPath + "get_BSRN_Files.sh" );
-    #endif
-
-    #if defined(Q_OS_WIN)
-        QFile fcmd( s_DownloadPath + "get_BSRN_Files.cmd" );
-    #endif
-
-    #if defined(Q_OS_MAC)
-        QFile fcmd( s_DownloadPath + "get_BSRN_Files.sh" );
-    #endif
-
-    if ( fcmd.open( QIODevice::WriteOnly | QIODevice::Text) == false )
-        return( -20 );
-
-    QTextStream tcmd( &fcmd );
+    QProcess    process;
 
 //-----------------------------------------------------------------------------------------------------------------------
 
     #if defined(Q_OS_LINUX)
-        s_cURL        = "curl";
+        s_Curl        = "curl";
         s_GZIP        = "gzip";
         s_BSRN_fcheck = "\"" + QDir::toNativeSeparators( QCoreApplication::applicationDirPath() + "/" + "BSRN_fcheck\"" );
     #endif
 
     #if defined(Q_OS_MAC)
-        s_cURL        = "curl";
+        s_Curl        = "curl";
         s_GZIP        = "gzip";
         s_BSRN_fcheck = "\"" + QDir::toNativeSeparators( QCoreApplication::applicationDirPath() + "/" + "BSRN_fcheck\"" );
+//      s_BSRN_fcheck = "\"/Users/rsieger/Development/GitHub/BSRN_Toolbox/trunk/Tools/f_check/BSRN_fcheck_MacOS\"";
     #endif
 
     #if defined(Q_OS_WIN)
-        s_cURL        = "\"" + QDir::toNativeSeparators( QCoreApplication::applicationDirPath() + "/" + "curl.exe\"" );
+        s_Curl        = "\"" + QDir::toNativeSeparators( QCoreApplication::applicationDirPath() + "/" + "curl.exe\"" );
         s_GZIP        = "\"" + QDir::toNativeSeparators( QCoreApplication::applicationDirPath() + "/" + "gzip.exe\"" );;
         s_BSRN_fcheck = "\"" + QDir::toNativeSeparators( QCoreApplication::applicationDirPath() + "/" + "BSRN_fcheck.exe\"" );
     #endif
 
+    QDir::setCurrent( s_DownloadPath );
+
 //-----------------------------------------------------------------------------------------------------------------------
-
-    #if defined(Q_OS_LINUX)
-        tcmd << "#!/bin/bash" << endl;
-    #endif
-
-    #if defined(Q_OS_MAC)
-        tcmd << "#!/bin/bash" << endl;
-    #endif
-
-    #if defined(Q_OS_WIN)
-        tcmd << "@echo off" << endl;
-    #endif
 
     if ( b_CheckAvailability == false )
     {
-        tcmd << "cd \"" << s_DownloadPath << "\"" << endl << endl;
-
         s_Message = tr( "Download BSRN station-to-archive files" );
 
         if ( ( b_CheckFiles == false ) && ( b_DecompressFiles == true ) )
@@ -111,10 +89,11 @@ int MainWindow::downloadStationToArchiveFiles( structStation *Station_ptr,
         if ( b_CheckFiles == true )
             s_Message = tr( "Download, decompress, and check BSRN station-to-archive files" );
 
-        tcmd << "echo " << s_Message << endl;
-        tcmd << "echo Please wait..." << endl << endl;
+//-----------------------------------------------------------------------------------------------------------------------
 
-        for ( int i=1; i<=MAX_NUM_OF_STATIONS; ++i )
+        initFileProgress( MAX_NUM_OF_STATIONS, "Start download of station-to-archive files", s_Message );
+
+        while ( ( i < MAX_NUM_OF_STATIONS ) && ( stopProgress != _APPBREAK_ ) )
         {
             if ( b_Station[i] == true )
             {
@@ -134,215 +113,123 @@ int MainWindow::downloadStationToArchiveFiles( structStation *Station_ptr,
 
                                 QFileInfo fi_GZ( s_DownloadPath + "/" + s_EventLabel + s_Month + s_Year + ".dat.gz" );
                                 QFileInfo fi_DAT( s_DownloadPath + "/" + s_EventLabel + s_Month + s_Year + ".dat" );
+                                QFileInfo fi_REP( s_DownloadPath + "/" + s_EventLabel + s_Month + s_Year + ".rep" );
 
-                                tcmd << s_cURL;
-                                tcmd << " -u " << s_User << ":" << s_Password;
-                                tcmd << " -o " << fi_GZ.fileName();
-                                tcmd << " ftp://" << s_FTPServer << "//pub/" << s_EventLabel << "/" << fi_GZ.fileName() << endl;
+                                setStatusBar( tr( "Downloading " ) + QDir::toNativeSeparators( fi_GZ.fileName() ) + tr( " ..." ) );
 
-                                s_Filename = fi_GZ.fileName();
+                                s_arg = s_Curl;
+                                s_arg.append( " -u " + s_User + ":" + s_Password );
+                                s_arg.append( " -o " + fi_GZ.fileName() );
+                                s_arg.append( " ftp://" + s_FTPServer + "//pub/" + s_EventLabel + "/" + fi_GZ.fileName() );
+
+                                process.start( s_arg );
+                                process.waitForFinished( -1 );
 
                                 if ( ( b_DecompressFiles == true ) || ( b_CheckFiles == true ) )
                                 {
-                                    s_Filename = fi_DAT.fileName();
-                                    tcmd << s_GZIP << " -df " << fi_GZ.fileName() << endl;
+                                    s_arg = s_GZIP + " -df " + fi_DAT.fileName();
+
+                                    process.start( s_arg );
+                                    process.waitForFinished( -1 );
                                 }
 
                                 if ( b_CheckFiles == true )
-                                    tcmd << s_BSRN_fcheck << " " << fi_DAT.fileName() << " >> temp.txt" << endl << endl;
-                                else
-                                    tcmd << endl;
+                                {
+                                    s_arg = s_BSRN_fcheck + " " + fi_DAT.fileName();
 
-                                sl_FilenameList.append( s_DownloadPath + s_Filename );
+                                    process.start( s_arg );
+                                    process.waitForFinished( -1 );
+                                }
+
+                                if ( ( b_DecompressFiles == true ) || ( b_CheckFiles == true ) )
+                                    sl_FilenameList.append( fi_DAT.absoluteFilePath() );
+                                else
+                                    sl_FilenameList.append( fi_DAT.absoluteFilePath() );
+
+                                if ( b_CheckFiles == true )
+                                    sl_ReportList.append( fi_REP.absoluteFilePath() );
                             }
                         }
                     }
                 }
             }
+
+            stopProgress = incFileProgress( MAX_NUM_OF_STATIONS, ++i );
         }
+
+        resetFileProgress( MAX_NUM_OF_STATIONS );
 
         if ( b_CheckFiles == true )
-        {
-            #if defined(Q_OS_LINUX)
-                tcmd << "rm *.rep" << endl;
-                tcmd << "mv temp.txt BSRN_fcheck_report.txt" << endl << endl;
-            #endif
-
-            #if defined(Q_OS_MAC)
-                tcmd << "rm *.rep" << endl << endl;
-                tcmd << "mv temp.txt BSRN_fcheck_report.txt" << endl << endl;
-            #endif
-
-            #if defined(Q_OS_WIN)
-                tcmd << "del *.rep" << endl;
-                tcmd << "ren temp.txt BSRN_fcheck_report.txt" << endl << endl;
-            #endif
-
-            tcmd << "echo All done" << endl;
-        }
-        else
-        {
-            tcmd << "echo All done";
-            tcmd << endl;
-        }
+            concatenateFiles( s_DownloadPath + "/" + "BSRN_fcheck_report.txt", sl_ReportList, tr( "Concatenate files working ..." ), 0, true );
     }
     else
     {
-        tcmd << "echo Check availability of BSRN files" << endl;
-        tcmd << "echo Please wait..." << endl;
-        tcmd << "cd \"" << s_DownloadPath << "\"" << endl << endl;
+        initFileProgress( MAX_NUM_OF_STATIONS, tr( "Check availability for station " ), tr( "Check Availability" ) );
 
-        for ( int i=1; i<=MAX_NUM_OF_STATIONS; ++i )
+        while ( ( i < MAX_NUM_OF_STATIONS ) && ( stopProgress != _APPBREAK_ ) )
         {
             if ( b_Station[i] == true )
             {
                 s_EventLabel = findEventLabel( i, Station_ptr ).toLower();
 
-                tcmd << s_cURL;
-                tcmd << " -u " << s_User << ":" << s_Password;
-                tcmd << " -o " << s_EventLabel << "_filelist.txt";
-                tcmd << " ftp://" << s_FTPServer << "//pub/" << s_EventLabel << "/" << endl;
+                setStatusBar( tr( "Check availability for station " ) + QDir::toNativeSeparators( s_EventLabel ) + tr( " ..." ) );
+
+                s_arg = s_Curl;
+                s_arg.append( " -u " + s_User + ":" + s_Password );
+                s_arg.append( " -o " + s_EventLabel + "_filelist.txt" );
+                s_arg.append( " ftp://" + s_FTPServer + "//pub/" + s_EventLabel + "/" );
+
+                process.start( s_arg );
+                process.waitForFinished( -1 );
 
                 sl_FilenameList.append( s_DownloadPath + s_EventLabel + "_filelist.txt" );
             }
+
+            stopProgress = incFileProgress( MAX_NUM_OF_STATIONS, ++i );
         }
 
-        tcmd << endl;
-        tcmd << "rm get_BSRN_Files.sh" << endl;    // Linux and macOS
-        tcmd << "del get_BSRN_Files.cmd" << endl;  // Windows
-        tcmd << "echo All done" << endl;
+        resetFileProgress( MAX_NUM_OF_STATIONS );
     }
 
 //-------------------------------------------------------------------------------------------------------
 
-    fcmd.close();
+    setStatusBar( tr( "Done" ) );
 
-//-------------------------------------------------------------------------------------------------------
-
-    return( _NOERROR_ );
+    return( sl_FilenameList );
 }
 
 // **********************************************************************************************
 // **********************************************************************************************
 // **********************************************************************************************
-// 2007-12-30
+// 2016-08-30
 
 /*! @brief Steuerung des Downloads */
 
 void MainWindow::doDownloadStationToArchiveFiles()
 {
-    int		    err                 = _NOERROR_;
-    int         stopProgress        = _NOERROR_;
-
-    QString     s_arg               = "";
-    QString     s_Message           = "";
+    int         err = _NOERROR_;
 
     QStringList sl_FilenameList;
 
-    QProcess    process;
-
 // **********************************************************************************************
 
-    err = doDownloadManagerDialog( gs_DownloadPath, gs_FTPServer, gs_User, gs_Password, gb_DecompressFiles, gb_CheckFiles, gb_CheckAvailability, gb_RunScript, gb_Station, gb_Month, gb_Year );
+    err = doDownloadManagerDialog( gs_DownloadPath, gs_FTPServer, gs_User, gs_Password, gb_DecompressFiles,
+                                   gb_CheckFiles, gb_CheckAvailability, gb_Station, gb_Month, gb_Year );
 
     if ( err == QDialog::Accepted )
     {
-        err = downloadStationToArchiveFiles( g_Station_ptr, gs_DownloadPath, gs_FTPServer, gs_User, gs_Password, gb_DecompressFiles, gb_CheckFiles, gb_CheckAvailability, gb_Station, gb_Month, gb_Year, sl_FilenameList );
+        sl_FilenameList = downloadStationToArchiveFiles( g_Station_ptr, gs_DownloadPath, gs_FTPServer, gs_User, gs_Password,
+                                                         gb_DecompressFiles, gb_CheckFiles, gb_CheckAvailability,
+                                                         gb_Station, gb_Month, gb_Year );
 
-        if ( sl_FilenameList.count() > 0 )
-        {
-            #if defined(Q_OS_LINUX)
-                QFile fcmd( gs_DownloadPath + "get_BSRN_Files.sh" );
-
-                s_arg = "chmod u+x \"" + fcmd.fileName() + "\"";
-                process.startDetached( s_arg );
-
-                wait( 500 );
-            #endif
-
-            #if defined(Q_OS_MAC)
-                QFile fcmd( gs_DownloadPath + "get_BSRN_Files.sh" );
-
-                s_arg = "chmod u+x \"" + fcmd.fileName() + "\"";
-                process.startDetached( s_arg );
-
-                wait( 500 );
-            #endif
-
-            #if defined(Q_OS_WIN)
-                QFile fcmd( gs_DownloadPath + "get_BSRN_Files.cmd" );
-            #endif
-
-            if ( fcmd.exists() == true )
-            {
-                QFile frep( gs_DownloadPath + "BSRN_fcheck_report.txt" );
-
-                if ( frep.exists() == true )
-                    frep.remove();
-
-                if ( gb_RunScript == true )
-                {
-                    s_arg = "\"" + QDir::toNativeSeparators( fcmd.fileName() ) + "\"";
-
-                    #if defined(Q_OS_LINUX)
-                        if ( process.startDetached( s_arg ) == false )
-                        {
-                            s_Message = "Cannot start the script\n\n    " + QDir::toNativeSeparators( fcmd.fileName() ) + ".sh\n\n Please start the script manually from your shell.";
-                            QMessageBox::warning( this, getApplicationName( true ), s_Message );
-                        }
-                        else
-                        {
-                            s_Message = checkScriptResults( gb_CheckFiles, gs_DownloadPath, sl_FilenameList );
-                            QMessageBox::information( this, getApplicationName( true ), s_Message );
-                        }
-                    #endif
-
-                    #if defined(Q_OS_MAC)
-                        if ( process.startDetached( s_arg ) == false )
-                        {
-                            s_Message = "Cannot start the script\n\n    " + QDir::toNativeSeparators( fcmd.fileName() ) + ".sh\n\n Please start the script manually from your shell.";
-                            QMessageBox::warning( this, getApplicationName( true ), s_Message );
-                        }
-                        else
-                        {
-                            s_Message = checkScriptResults( gb_CheckFiles, gs_DownloadPath, sl_FilenameList );
-                            QMessageBox::information( this, getApplicationName( true ), s_Message );
-                        }
-                    #endif
-
-                    #if defined(Q_OS_WIN)
-                        if ( process.startDetached( s_arg ) == false )
-                        {
-                            s_Message = "Cannot start the script\n\n    " + QDir::toNativeSeparators( fcmd.fileName() ) + ".cmd\n\n Please start the script manually from your shell.";
-                            QMessageBox::warning( this, getApplicationName( true ), s_Message );
-                        }
-                        else
-                        {
-                            s_Message = checkScriptResults( gb_CheckFiles, gs_DownloadPath, sl_FilenameList );
-                            QMessageBox::information( this, getApplicationName( true ), s_Message );
-                        }
-                    #endif
-                }
-                else
-                {
-                    s_Message = tr( "Please start the script manually from your shell." );
-                    QMessageBox::information( this, getApplicationName( true ), s_Message );
-                }
-            }
-
-            err = _NOERROR_;
-        }
-    }
-    else
-    {
-        err = _CHOOSEABORTED_;
+        checkScriptResults( sl_FilenameList );
     }
 
 // **********************************************************************************************
 
-    endTool( err, stopProgress, gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList, tr( "Done" ), tr( "Concatenate files was canceled" ), false, false );
+    endTool( _NOERROR_, _NOERROR_, gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList, tr( "Done" ), tr( "Download of files was canceled" ), false, false );
 
-    onError( err );
+    onError( _NOERROR_ );
 }
 
 // **********************************************************************************************
@@ -350,9 +237,8 @@ void MainWindow::doDownloadStationToArchiveFiles()
 // **********************************************************************************************
 // 2016-08-13
 
-QString MainWindow::checkScriptResults( const bool b_CheckFiles, const QString &s_DownloadPath, const QStringList &sl_FilenameList )
+void MainWindow::checkScriptResults( const QStringList &sl_FilenameList )
 {
-    int         i_NumOfTurns        = 0;
     int         i_NumOfFiles        = 0;
     int         i_NumOfEmptyFiles   = 0;
     int         i_NumOfMissingFiles = 0;
@@ -365,28 +251,9 @@ QString MainWindow::checkScriptResults( const bool b_CheckFiles, const QString &
 
     i_NumOfFiles = sl_FilenameList.count();
 
-    if ( b_CheckFiles == true )
-    {
-        QFileInfo fi( s_DownloadPath + "BSRN_fcheck_report.txt" );
-
-        while ( fi.exists() == false )
-            wait( 1000 );
-    }
-
     for ( int i=0; i<i_NumOfFiles; i++ )
     {
         QFileInfo fi( sl_FilenameList.at( i ) );
-
-        if ( b_CheckFiles == false )
-        {
-            while ( fi.exists() == false )
-            {
-                wait( 1000 );
-
-                if ( ++i_NumOfTurns > 10 )
-                    break;
-            }
-        }
 
         if ( fi.exists() == true )
         {
@@ -454,5 +321,5 @@ QString MainWindow::checkScriptResults( const bool b_CheckFiles, const QString &
         s_Message.append( tr( "Before calling the support, please check the availibilty of files." ) );
     }
 
-    return( s_Message );
+    QMessageBox::information( this, getApplicationName( true ), s_Message );
 }

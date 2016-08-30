@@ -135,7 +135,6 @@ public:
     bool		gb_DecompressFiles;		//!< Wenn true werden die Dateien mit GZip entpackt
     bool		gb_CheckFiles;			//!< Wenn true werden die Dateien mit BSRN_fcheck geprueft
     bool		gb_CheckAvailability;	//!< Wenn true wird nur die Verfuegbarkeit der Dateien geprueft
-    bool        gb_RunScript;           //!< Wenn true wird das Script automatisch gestartet
     bool		gb_DeleteOriginalFiles;	//!< Wenn true werden die Original-Dateien nach dem Verbinden geloescht.
     bool        gb_OverwriteDataset;    //!< Wenn true wird der Datensatz berschrieben.
 
@@ -317,8 +316,8 @@ private:
     bool warning( const QString &Message, const QString &Title = tr( "Warning" ) );
 
 // Station-to-archive
-    int downloadStationToArchiveFiles( structStation *Station_ptr, const QString &FilenameOut, const QString &FTPServer, const QString &User, const QString &Password, const bool DecompressFiles, const bool CheckFiles, const bool CheckAvailability, bool Station[MAX_NUM_OF_STATIONS+1], bool Month[MAX_NUM_OF_MONTHS+1], bool Year[MAX_NUM_OF_YEARS+1], QStringList &FilenameList );
-    QString checkScriptResults( const bool CheckFiles, const QString &DownloadPath, const QStringList &FilenameList );
+    QStringList downloadStationToArchiveFiles( structStation *Station_ptr, const QString &FilenameOut, const QString &FTPServer, const QString &User, const QString &Password, const bool DecompressFiles, const bool CheckFiles, const bool CheckAvailability, bool Station[MAX_NUM_OF_STATIONS+1], bool Month[MAX_NUM_OF_MONTHS+1], bool Year[MAX_NUM_OF_YEARS+1] );
+    void checkScriptResults( const QStringList &FilenameList );
 
 // Metadata
     int FileIDConverter( const QString &FilenameIn, QStringList &FilenameOut, structStation *Station_ptr, const int NumOfFiles );
@@ -379,7 +378,7 @@ private:
 
 // Dialogs
     int doConcatenateOptionsDialog( int &SkipNFirstLines, bool &deleteOriginalFiles );
-    int doDownloadManagerDialog( QString &DownloadPath, QString &FTPServer, QString &User, QString &Password, bool &DecompressFiles, bool &CheckFiles, bool &CheckAvailability, bool &RunScript, bool Station[MAX_NUM_OF_STATIONS+1], bool Month[MAX_NUM_OF_MONTHS+1], bool Year[MAX_NUM_OF_YEARS+1] );
+    int doDownloadManagerDialog( QString &DownloadPath, QString &FTPServer, QString &User, QString &Password, bool &DecompressFiles, bool &CheckFiles, bool &CheckAvailability, bool Station[MAX_NUM_OF_STATIONS+1], bool Month[MAX_NUM_OF_MONTHS+1], bool Year[MAX_NUM_OF_YEARS+1] );
     int doQualityCheckRecommendedV20OptionsDialog( bool & b_CheckPhysicallyPossibleLimits, bool & b_CheckExtremelyRareLimits, bool & b_CheckComparisons, QString &s_AuxiliaryDataAlgorithm, bool & b_OutputCodes, bool & b_OutputCleanedValues, bool & b_OutputOriginalValues, bool & b_OutputAuxiliaryData, bool & b_OutputOneFile);
     int doFormatUnformattedOptionsDialog( QString &MissingValue, int &FieldDelimiter );
     int doFormatFormattedOptionsDialog( int &FieldAlignment, int &FieldWidth, QString &MissingValue );

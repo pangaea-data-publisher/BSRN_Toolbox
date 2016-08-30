@@ -99,7 +99,6 @@ void MainWindow::savePreferences()
     settings.setValue( "DecompressFiles", gb_DecompressFiles );
     settings.setValue( "CheckFiles", gb_CheckFiles );
     settings.setValue( "CheckAvailability", gb_CheckAvailability );
-    settings.setValue( "RunScript", gb_RunScript );
     settings.endGroup();
 
     settings.beginGroup( "FormatedTextfileOptionsDialog" );
@@ -255,7 +254,6 @@ void MainWindow::loadPreferences()
     gb_DecompressFiles   = settings.value( "DecompressFiles", true ).toBool();
     gb_CheckFiles        = settings.value( "CheckFiles", true ).toBool();
     gb_CheckAvailability = settings.value( "CheckAvailability", false ).toBool();
-    gb_RunScript         = settings.value( "RunScript", true ).toBool();
     settings.endGroup();
 
     settings.beginGroup( "FormatedTextfileOptionsDialog" );

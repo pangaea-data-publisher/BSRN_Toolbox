@@ -433,7 +433,7 @@ void DownloadManagerDialog::DisableAllYears()
 
 int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTPServer, QString &s_User,
                                          QString &s_Password, bool &b_DecompressFiles, bool &b_CheckFiles,
-                                         bool &b_CheckAvailability, bool &b_RunScript, bool b_Station[MAX_NUM_OF_STATIONS+1],
+                                         bool &b_CheckAvailability, bool b_Station[MAX_NUM_OF_STATIONS+1],
                                          bool b_Month[MAX_NUM_OF_MONTHS+1], bool b_Year[MAX_NUM_OF_YEARS+1] )
 {
     int i_DialogResult = QDialog::Rejected;
@@ -554,7 +554,6 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
     dialog.DecompressFiles_checkBox->setChecked( b_DecompressFiles );
     dialog.CheckFiles_checkBox->setChecked( b_CheckFiles );
     dialog.CheckAvailability_checkBox->setChecked( b_CheckAvailability );
-    dialog.RunScript_checkBox->setChecked( b_RunScript );
 
     if ( s_DownloadPath.isEmpty() == false )
     {
@@ -692,7 +691,6 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
         b_DecompressFiles	= dialog.DecompressFiles_checkBox->isChecked();
         b_CheckFiles		= dialog.CheckFiles_checkBox->isChecked();
         b_CheckAvailability	= dialog.CheckAvailability_checkBox->isChecked();
-        b_RunScript         = dialog.RunScript_checkBox->isChecked();
 
         s_FTPServer			= dialog.FTPServer_lineEdit->text();
         s_User				= dialog.User_lineEdit->text();
