@@ -115,6 +115,10 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
                                 QFileInfo fi_DAT( s_DownloadPath + "/" + s_EventLabel + s_Month + s_Year + ".dat" );
                                 QFileInfo fi_REP( s_DownloadPath + "/" + s_EventLabel + s_Month + s_Year + ".rep" );
 
+                                removeFile( fi_GZ.absoluteFilePath() );
+                                removeFile( fi_DAT.absoluteFilePath() );
+                                removeFile( fi_REP.absoluteFilePath() );
+
                                 setStatusBar( tr( "Downloading " ) + QDir::toNativeSeparators( fi_GZ.fileName() ) + tr( " ..." ) );
 
                                 s_arg = s_Curl;
@@ -160,7 +164,10 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
         resetFileProgress( MAX_NUM_OF_STATIONS );
 
         if ( b_CheckFiles == true )
+        {
+            removeFile( s_DownloadPath + "/" + "BSRN_fcheck_report.txt" );
             concatenateFiles( s_DownloadPath + "/" + "BSRN_fcheck_report.txt", sl_ReportList, tr( "Concatenate files working ..." ), 0, true );
+        }
     }
     else
     {
