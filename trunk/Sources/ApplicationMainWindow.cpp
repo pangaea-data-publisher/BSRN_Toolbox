@@ -1056,7 +1056,7 @@ void MainWindow::compressFolder( const QString &s_Program, const QString &s_Fold
     #endif
 
     #if defined(Q_OS_WIN)
-        s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" a -tzip \"" + farchive.fileName() + "\"" + " \"" + fdir.fileName() + "\";
+        s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" a -tzip \"" + farchive.fileName() + "\"" + " \"" + fdir.fileName() + "\"";
     #endif
 
     process.start( s_arg );
