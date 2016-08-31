@@ -1120,7 +1120,7 @@ void MainWindow::compressFile( const QString &s_Filename, const int mode, const 
             #endif
 
             #if defined(Q_OS_WIN)
-                s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" a -tgzip\"" + QDir::toNativeSeparators( fi.absolutePath() + "/" + fi.completeBaseName() + ".gz" ) + "\"" + " \"" + QDir::toNativeSeparators( s_FilenameIn ) + "\"";
+                s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" a -tgzip\"" + QDir::toNativeSeparators( fi.absolutePath() + "/" + fi.completeBaseName() + ".gz" ) + "\"" + " \"" + QDir::toNativeSeparators( s_Filename ) + "\"";
             #endif
         }
 
