@@ -1102,7 +1102,7 @@ void MainWindow::compressFile( const QString &s_Filename, const int mode, const 
             #endif
 
             #if defined(Q_OS_WIN)
-                s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" a -tzip \"" + QDir::toNativeSeparators( fi.absolutePath() + "/" + fi.completeBaseName() + ".zip" ) + "\"" + " \"" + QDir::toNativeSeparators( s_Filename ) + "\""
+                s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" a -tzip \"" + QDir::toNativeSeparators( fi.absolutePath() + "/" + fi.completeBaseName() + ".zip" ) + "\"" + " \"" + QDir::toNativeSeparators( s_Filename ) + "\"";
             #endif
         }
 
@@ -1157,6 +1157,8 @@ int MainWindow::decompressFile( const QString &s_Filename, const bool b_delZipFi
 
 // **********************************************************************************************
 
+    if ( mode < 1 ) return( -999 );
+
     sl_Message.clear();
 
     QFileInfo fi( s_Filename );
@@ -1165,53 +1167,48 @@ int MainWindow::decompressFile( const QString &s_Filename, const bool b_delZipFi
     {
         showMessage( tr( "Decompressing " ) + QDir::toNativeSeparators( s_Filename ) + tr( " ..." ), sl_Message );
 
-// **********************************************************************************************
-// unzip -o archive.zip -d file.txt , -o = overwrite existing files without prompting, -d = directory to which to extract files.
-// 7z x -o archive.gzip , x = extract with full paths, -o = output directory
-
-        if ( mode == _ZIP_ )
-        {
-            #if defined(Q_OS_LINUX)
+        #if defined(Q_OS_LINUX)
+            switch ( mode )
+            {
+            case _ZIP_:
                 s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" -o \"" + QDir::toNativeSeparators( s_Filename ) + "\" -d \"" + QDir::toNativeSeparators( fi.absolutePath() ) + "\"";
-            #endif
+                break;
 
-            #if defined(Q_OS_MAC)
+            case _GZIP_:
+                s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" -d \"" + QDir::toNativeSeparators( s_Filename ) + "\"";
+                break;
+
+            default:
+                break;
+            }
+        #endif
+
+        #if defined(Q_OS_MAC)
+            switch ( mode )
+            {
+            case _ZIP_:
                 s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" -o \"" + QDir::toNativeSeparators( s_Filename ) + "\" -d \"" + QDir::toNativeSeparators( fi.absolutePath() ) + "\"";
-            #endif
+                break;
 
-            #if defined(Q_OS_WIN)
-                s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" x \"" + QDir::toNativeSeparators( s_Filename ) + "\" -o\"" + QDir::toNativeSeparators( fi.absolutePath() ) + "\"";
-            #endif
-        }
-
-// **********************************************************************************************
-// gzip -d archive.gz , -d = decompress file
-// 7z x -o archive.gz , x = extract with full paths, -o = output directory
-
-        if ( mode == _GZIP_ )
-        {
-            #if defined(Q_OS_LINUX)
+            case _GZIP_:
                 s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" -d \"" + QDir::toNativeSeparators( s_Filename ) + "\"";
-            #endif
+                break;
 
-            #if defined(Q_OS_MAC)
-                s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" -d \"" + QDir::toNativeSeparators( s_Filename ) + "\"";
-            #endif
+            default:
+                break;
+            }
+        #endif
 
-            #if defined(Q_OS_WIN)
-                s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" x \"" + QDir::toNativeSeparators( s_Filename ) + "\" -o\"" + QDir::toNativeSeparators( fi.absolutePath() ) + "\"";
-            #endif
-        }
+        #if defined(Q_OS_WIN)
+            s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" x \"" + QDir::toNativeSeparators( s_Filename ) + "\" -o\"" + QDir::toNativeSeparators( fi.absolutePath() ) + "\"";
+        #endif
 
         process.start( s_arg );
         process.waitForFinished( -1 );
-
-// **********************************************************************************************
+    }
 
     if ( b_delZipFile == true )
         err = removeFile( s_Filename );
-
-    }
 
     return( err );
 }
@@ -2353,7 +2350,7 @@ QString MainWindow::findZip( const int mode )
         }
         else
         {
-            s_Program = fi_7z64exe.absoluteFilePath() );
+            s_Program = fi_7z64exe.absoluteFilePath();
         }
     }
     else
@@ -2418,7 +2415,7 @@ QString MainWindow::findUnzip( const int mode )
         }
         else
         {
-            s_Program = fi_7z64exe.absoluteFilePath() );
+            s_Program = fi_7z64exe.absoluteFilePath();
         }
     }
     else
