@@ -659,7 +659,7 @@ int MainWindow::writeDefaultIDsBSRN( const QString &s_Filename )
     QTextStream tout( &fout );
 
     tout << "[Version]" << endl;
-    tout << PrefDate << "\t" << "from https://pangaea.de/PHP/bsrn/BSRN_IDs.txt" << endl;
+    tout << PrefDate << "\t" << "of https://pangaea.de/PHP/bsrn/BSRN_IDs.txt" << endl;
 
     tout << "[Station]" << endl;
     tout << "BSRN Station ID\tPANGAEA Event label\tFull name\tPANGAEA Institute ID" << endl;
