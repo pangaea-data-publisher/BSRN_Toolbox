@@ -2448,7 +2448,7 @@ QString MainWindow::findCurl()
     #endif
 
     #if defined(Q_OS_WIN)
-        s_Program = QCoreApplication::applicationDirPath() + "/" + "curl.exe" );
+        s_Program = QCoreApplication::applicationDirPath() + "/" + "curl.exe";
     #endif
 
     return( s_Program );
