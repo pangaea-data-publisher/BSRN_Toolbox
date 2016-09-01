@@ -59,6 +59,7 @@ Section "MainSection" SEC01
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\libgcc_s_dw2-1.dll"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\libstdc++-6.dll"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\libwinpthread-1.dll"
+  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\curl-ca-bundle.crt"
 
 SetOutPath "$INSTDIR\platforms"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\platforms\qminimal.dll"
@@ -119,6 +120,7 @@ Section Uninstall
   Delete "$INSTDIR\License\Readme.txt"
   Delete "$INSTDIR\License\License.txt"
   Delete "$INSTDIR\License\gpl-3.0.txt"
+  Delete "$INSTDIR\curl-ca-bundle.crt"
 
   Delete "$SMPROGRAMS\PANGAEA\BSRN Toolbox\Uninstall.lnk"
   Delete "$SMPROGRAMS\PANGAEA\BSRN Toolbox\BSRN Toolbox.lnk"
