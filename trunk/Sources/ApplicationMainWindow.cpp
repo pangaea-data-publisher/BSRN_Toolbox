@@ -2028,6 +2028,7 @@ int MainWindow::removeFile( const QString &s_Filename )
     if( file.exists() == true )
     {
         file.remove();
+        wait( 500 );
         return( file.error() );
     }
 
