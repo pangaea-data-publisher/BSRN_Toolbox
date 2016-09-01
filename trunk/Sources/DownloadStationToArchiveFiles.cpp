@@ -34,7 +34,7 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
                                                        bool b_Month[MAX_NUM_OF_MONTHS+1],
                                                        bool b_Year[MAX_NUM_OF_YEARS+1] )
 {
-    int         i               = 0;
+    int         i               = 1;
     int         stopProgress    = 0;
 
     QString     s_EventLabel	= "";
@@ -282,6 +282,7 @@ void MainWindow::checkScriptResults( const QStringList &sl_FilenameList )
         switch ( i_NumOfFiles )
         {
         case 0:
+            s_Message.append( tr( "No file has been downloaded. " ) );
             break;
 
         case 1:

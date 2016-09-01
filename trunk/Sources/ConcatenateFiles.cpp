@@ -35,6 +35,11 @@ int MainWindow::concatenateFiles( const QString &s_FilenameOut, const QStringLis
 
 // ************************************************************************************************
 
+    if ( sl_FilenameList.count() < 2 )
+        return( -50 );
+
+// ************************************************************************************************
+
     QFile fout( s_FilenameOut );
 
     if ( fout.open( QIODevice::WriteOnly | QIODevice::Text) == false )
@@ -118,9 +123,6 @@ void MainWindow::doConcatenateFiles()
 
     if ( existsFirstFile( gi_ActionNumber, gs_FilenameFormat, gi_Extension, gsl_FilenameList ) == true )
     {
-        if ( gsl_FilenameList.count() < 2 )
-            err = -50;
-
         if ( err == _NOERROR_ )
         {
             err = doConcatenateOptionsDialog( gi_SkipNFirstLines, gb_DeleteOriginalFiles );
