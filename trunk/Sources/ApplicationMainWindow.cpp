@@ -100,7 +100,6 @@ QString MainWindow::getVersion()
 
     QString         s_Version           = QCoreApplication::applicationName() + "\t" + tr( "unknown" );
 
-    QString         s_Curl              = "";
     QString         s_Url               = "";
     QString         s_Version_Filename  = "";
 
@@ -108,11 +107,10 @@ QString MainWindow::getVersion()
 
 // **********************************************************************************************
 
-    s_Curl             = findCurl();
     s_Url              = QLatin1String( "https://pangaea.de/software" ) + "/" + QCoreApplication::applicationName() + "/" + QCoreApplication::applicationName() + QLatin1String( "_version.txt" );
     s_Version_Filename = getDataLocation() + "/" + QCoreApplication::applicationName() + QLatin1String( "_version.txt" );
 
-    err = downloadFile( s_Curl, s_Url, s_Version_Filename );
+    err = downloadFile( findCurl(), s_Url, s_Version_Filename );
 
     if ( err == _NOERROR_ )
     {
