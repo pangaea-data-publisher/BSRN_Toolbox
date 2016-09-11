@@ -8,8 +8,8 @@
 // **********************************************************************************************
 // 2008-09-27
 
-/*! @brief Komprimieren von Dateien mit gzip. Gzip
-*   muss sich im gleichen Verzeichnis befinden wie das Programm "BSRN Toolbox".
+/*! @brief Komprimieren von Dateien mit gzip. Unter Windows muss sich das Programm gzip.exe
+*   im gleichen Verzeichnis befinden wie das Programm "BSRN Toolbox".
 */
 
 void MainWindow::doCompressFile()
@@ -19,8 +19,6 @@ void MainWindow::doCompressFile()
     int		stopProgress   = 0;
 
     QString s_Program      = "";
-
-    QProcess process;
 
 // **********************************************************************************************
 
@@ -44,7 +42,7 @@ void MainWindow::doCompressFile()
         {
             setStatusBar( tr( "Compress " ) + gsl_FilenameList.at( i ) + tr( " ..." ) );
 
-            compressFile( "\"" + QDir::toNativeSeparators( gsl_FilenameList.at( i ) ) + "\"", _ZIP_, s_Program );
+            compressFile( gsl_FilenameList.at( i ), _GZIP_, s_Program );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }

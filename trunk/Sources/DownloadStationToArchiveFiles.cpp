@@ -2,6 +2,7 @@
 /* Dr. Rainer Sieger          */
 
 #include "Application.h"
+#include <QDebug>
 
 // **********************************************************************************************
 // **********************************************************************************************
@@ -34,20 +35,26 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
                                                        bool b_Month[MAX_NUM_OF_MONTHS+1],
                                                        bool b_Year[MAX_NUM_OF_YEARS+1] )
 {
-    int         i               = 1;
-    int         stopProgress    = 0;
+    int         i                   = 1;
+    int         m                   = 0;
+    int         stopProgress        = 0;
 
-    QString     s_EventLabel	= "";
-    QString     s_Month			= "";
-    QString     s_Year			= "";
+    int         i_NumOfDownloads    = 0;
+    int         i_NumOfStations     = 0;
+    int         i_NumOfYears        = 0;
+    int         i_NumOfMonths       = 0;
 
-    QString     s_GZIP    		= "";
-    QString     s_Curl          = "";
-    QString     s_BSRN_fcheck   = "";
+    QString     s_EventLabel        = "";
+    QString     s_Month             = "";
+    QString     s_Year              = "";
 
-    QString     s_arg           = "";
+    QString     s_GZIP              = "";
+    QString     s_Curl              = "";
+    QString     s_BSRN_fcheck       = "";
 
-    QString     s_Message       = "";
+    QString     s_arg               = "";
+
+    QString     s_Message           = "";
 
     QStringList sl_FilenameList;
     QStringList sl_ReportList;
@@ -78,6 +85,21 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
     QDir::setCurrent( s_DownloadPath );
 
 //-----------------------------------------------------------------------------------------------------------------------
+// calculate number of downloads
+
+        for ( int i=1; i<MAX_NUM_OF_STATIONS; i++ )
+            if ( b_Station[i] == true )
+                i_NumOfStations++;
+
+        for ( int i=1; i<MAX_NUM_OF_MONTHS; i++ )
+            if ( b_Month[i] == true )
+                i_NumOfMonths++;
+
+        for ( int i=1; i<MAX_NUM_OF_YEARS; i++ )
+            if ( b_Year[i] == true )
+                i_NumOfYears++;
+
+//-----------------------------------------------------------------------------------------------------------------------
 
     if ( b_CheckAvailability == false )
     {
@@ -91,7 +113,11 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
 
 //-----------------------------------------------------------------------------------------------------------------------
 
-        initFileProgress( MAX_NUM_OF_STATIONS, "Start download of station-to-archive files", s_Message );
+        i_NumOfDownloads = i_NumOfStations * i_NumOfYears * i_NumOfMonths;
+
+        initFileProgress( i_NumOfDownloads, "Start download of station-to-archive files", s_Message );
+
+//-----------------------------------------------------------------------------------------------------------------------
 
         while ( ( i < MAX_NUM_OF_STATIONS ) && ( stopProgress != _APPBREAK_ ) )
         {
@@ -152,16 +178,18 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
 
                                 if ( b_CheckFiles == true )
                                     sl_ReportList.append( fi_REP.absoluteFilePath() );
+
+                                stopProgress = incFileProgress( i_NumOfDownloads, ++m );
                             }
                         }
                     }
                 }
             }
 
-            stopProgress = incFileProgress( MAX_NUM_OF_STATIONS, ++i );
+            i++;
         }
 
-        resetFileProgress( MAX_NUM_OF_STATIONS );
+        resetFileProgress( i_NumOfDownloads );
 
         if ( b_CheckFiles == true )
         {
@@ -171,7 +199,7 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
     }
     else
     {
-        initFileProgress( MAX_NUM_OF_STATIONS, tr( "Check availability for station " ), tr( "Check Availability" ) );
+        initFileProgress( i_NumOfStations, tr( "Check availability for station " ), tr( "Check Availability" ) );
 
         while ( ( i < MAX_NUM_OF_STATIONS ) && ( stopProgress != _APPBREAK_ ) )
         {
@@ -190,12 +218,14 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
                 process.waitForFinished( -1 );
 
                 sl_FilenameList.append( s_DownloadPath + s_EventLabel + "_filelist.txt" );
+
+                stopProgress = incFileProgress( i_NumOfStations, ++m );
             }
 
-            stopProgress = incFileProgress( MAX_NUM_OF_STATIONS, ++i );
+            i++;
         }
 
-        resetFileProgress( MAX_NUM_OF_STATIONS );
+        resetFileProgress( i_NumOfStations );
     }
 
 //-------------------------------------------------------------------------------------------------------
