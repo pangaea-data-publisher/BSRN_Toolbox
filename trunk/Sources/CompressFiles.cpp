@@ -14,11 +14,14 @@
 
 void MainWindow::doCompressFile()
 {
-    int		i              = 0;
-    int		err            = 0;
-    int		stopProgress   = 0;
+    int		 i              = 0;
+    int		 err            = 0;
+    int		 stopProgress   = 0;
 
-    QString s_Program      = "";
+    QString  s_Program      = "";
+    QString  s_arg          = "";
+
+    QProcess process;
 
 // **********************************************************************************************
 
@@ -40,9 +43,12 @@ void MainWindow::doCompressFile()
 
         while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( stopProgress != _APPBREAK_ ) )
         {
-            setStatusBar( tr( "Compress " ) + gsl_FilenameList.at( i ) + tr( " ..." ) );
+            setStatusBar( tr( "Compressing " ) + gsl_FilenameList.at( i ) + tr( " ..." ) );
 
-            compressFile( gsl_FilenameList.at( i ), _GZIP_, s_Program );
+            s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" \"" + QDir::toNativeSeparators( gsl_FilenameList.at( i ) ) + "\"";
+
+            process.start( s_arg );
+            process.waitForFinished( -1 );
 
             stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }
