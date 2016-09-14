@@ -115,7 +115,7 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent )
 
     setStatusBar( tr( "Reading BSRN IDs database - please wait" ) );
 
-    downloadFile( findCurl(), QLatin1String( "https://pangaea.de/PHP/bsrn/BSRN_IDs.txt" ), getDataLocation() + "/" + "BSRN_IDs.txt" );
+    downloadFile( findCurl(), QLatin1String( "https://store.pangaea.de/config/bsrn/BSRN_IDs.txt" ), getDataLocation() + "/" + "BSRN_IDs.txt" );
 
 // **********************************************************************************************
 
@@ -142,7 +142,7 @@ void MainWindow::OpenExternalURL( const int i_URL )
         QDesktopServices::openUrl( QUrl( tr( "https://wiki.pangaea.de/wiki/BSRN_Toolbox" ) ) );
         break;
     case _BSRNSTATUS_:
-        QDesktopServices::openUrl( QUrl( tr( "https://pangaea.de/PHP/BSRN_Status.php" ) ) );
+        QDesktopServices::openUrl( QUrl( tr( "https://www.pangaea.de/PHP/BSRN_Status.php" ) ) );
         break;
     case _BSRNSTATIONTOARCHIVEFORMAT_:
         QDesktopServices::openUrl( QUrl( tr( "http://bsrn.awi.de/data/station-to-archive-file-format.html" ) ) );
@@ -157,7 +157,7 @@ void MainWindow::OpenExternalURL( const int i_URL )
         QDesktopServices::openUrl( QUrl( tr( "http://bsrn.awi.de/data/data-retrieval-via-pangaea.html" ) ) );
         break;
     default:
-        QDesktopServices::openUrl( QUrl( tr( "https://pangaea.de" ) ) );
+        QDesktopServices::openUrl( QUrl( tr( "https://www.pangaea.de" ) ) );
         break;
     }
 }
