@@ -8,7 +8,7 @@ macx {
     cache()
 
     # Set SDK
-    QMAKE_MAC_SDK = macosx10.11
+    QMAKE_MAC_SDK = macosx10.12
 
     # Only Intel binaries are accepted so force this
     CONFIG += x86_64
