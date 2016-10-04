@@ -141,7 +141,7 @@ int MainWindow::downloadFile( const QString &s_Curl, const QString &s_Url, const
 
     removeFile( s_Filename );
 
-    process.start( "\"" + QDir::toNativeSeparators( s_Curl ) + "\" -o \"" + QDir::toNativeSeparators( s_Filename ) + "\"" + " " + s_Url );
+    process.start( "\"" + QDir::toNativeSeparators( s_Curl ) + "\" -o \"" + QDir::toNativeSeparators( s_Filename ) + "\" \"" + s_Url + "\"" );
     process.waitForFinished( -1 );
 
     return( _NOERROR_ );
