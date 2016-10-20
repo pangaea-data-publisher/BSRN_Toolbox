@@ -1019,12 +1019,12 @@ int MainWindow::calcFileSizeClass( const QString &s_Filename, const int i_NumOfF
 // **********************************************************************************************
 // **********************************************************************************************
 // **********************************************************************************************
-// 2016-08-27
+// 2016-10-20
 
-/*! @brief Komprimieren eines Verzeichnisses mit zip.
+/*! @brief Komprimieren eines Verzeichnisses mit zip, tar+gz oder 7-Zip..
 */
 
-void MainWindow::compressFolder( const QString &s_Program, const QString &s_Folder )
+void MainWindow::compressFolder( const QString &s_Folder, const int mode, const QString &s_Program )
 {
     QString     s_arg = "";
 
@@ -1037,28 +1037,67 @@ void MainWindow::compressFolder( const QString &s_Program, const QString &s_Fold
     sl_Message.clear();
 
     QFileInfo fdir( s_Folder );
-    QFileInfo farchive( fdir.fileName() + ".zip" );
 
-    QDir::setCurrent( fdir.absolutePath() );
+    if ( fdir.exists() == true )
+    {
+        if ( mode == _ZIP_ )
+        {
+            QFileInfo farchive( fdir.fileName() + ".zip" );
 
-    removeFile( farchive.fileName() );
+            QDir::setCurrent( fdir.absolutePath() );
 
-    showMessage( tr( "Compressing " ) + QDir::toNativeSeparators( farchive.fileName() ) + tr( " ..." ), sl_Message );
+            removeFile( farchive.fileName() );
 
-    #if defined(Q_OS_LINUX)
-        s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" -r \"" + farchive.fileName() + "\"" + " \"" + fdir.fileName() + "\" -x *.DS_Store";
-    #endif
+            showMessage( tr( "Compressing " ) + QDir::toNativeSeparators( farchive.fileName() ) + tr( " ..." ), sl_Message );
 
-    #if defined(Q_OS_MAC)
-        s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" -r \"" + farchive.fileName() + "\"" + " \"" + fdir.fileName() + "\" -x *.DS_Store";
-    #endif
+            #if defined(Q_OS_LINUX)
+                s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" -r \"" + farchive.fileName() + "\"" + " \"" + fdir.fileName() + "\" -x *.DS_Store";
+            #endif
 
-    #if defined(Q_OS_WIN)
-        s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" a -tzip \"" + farchive.fileName() + "\"" + " \"" + fdir.fileName() + "\"";
-    #endif
+            #if defined(Q_OS_MAC)
+                s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" -r \"" + farchive.fileName() + "\"" + " \"" + fdir.fileName() + "\" -x *.DS_Store";
+            #endif
 
-    process.start( s_arg );
-    process.waitForFinished( -1 );
+            #if defined(Q_OS_WIN)
+                s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" a -tzip \"" + farchive.fileName() + "\"" + " \"" + fdir.fileName() + "\"";
+            #endif
+        }
+
+        if ( mode == _GZIP_ )
+        {
+            QFileInfo farchive( fdir.fileName() );
+
+            QDir::setCurrent( fdir.absolutePath() );
+
+            removeFile( farchive.fileName() + ".tar.gz" );
+
+            showMessage( tr( "Compressing " ) + QDir::toNativeSeparators( farchive.fileName() ) + tr( " ..." ), sl_Message );
+
+            #if defined(Q_OS_LINUX)
+                s_arg.append( "tar --exclude=.DS_Store -zcf " );
+                s_arg.append( "\"" + farchive.fileName() + ".tar.gz" + \"" + " " );
+                s_arg.append( "\"" + fdir.fileName() + "\"" );
+            #endif
+
+            #if defined(Q_OS_MAC)
+                s_arg.append( "tar --disable-copyfile --exclude=.DS_Store -zcf " );
+                s_arg.append( "\"" + farchive.fileName() + ".tar.gz" + "\"" + " " );
+                s_arg.append( "\"" + fdir.fileName() + "\"" );
+            #endif
+
+            #if defined(Q_OS_WIN)
+                s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" a -ttar \"" + farchive.fileName() + ".tar" + "\"" + " \"" + fdir.fileName() + "\\" + "\"";
+                process.start( s_arg );
+                process.waitForFinished( -1 );
+
+                s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" a -tgz \"" + farchive.fileName() + ".tar.gz" + "\"" + " \"" + farchive.fileName() + ".tar" + "\"";
+            #endif
+        }
+
+        process.start( s_arg );
+        process.waitForFinished( -1 );
+    }
+
 }
 
 // **********************************************************************************************
@@ -1066,7 +1105,7 @@ void MainWindow::compressFolder( const QString &s_Program, const QString &s_Fold
 // **********************************************************************************************
 // 2016-01-08
 
-/*! @brief Komprimieren von Dateien mit zip bzw. 7-Zip. */
+/*! @brief Komprimieren von Dateien mit zip, gz oder 7-Zip. */
 
 void MainWindow::compressFile( const QString &s_Filename, const int mode, const QString &s_Program )
 {
@@ -1145,7 +1184,7 @@ void MainWindow::compressFile( const QString &s_Filename, const int mode, const 
 
 int MainWindow::decompressFile( const QString &s_Filename, const bool b_delZipFile, const int mode, const QString &s_Program )
 {
-    int         err					= _NOERROR_;
+    int         err   = _NOERROR_;
 
     QString     s_arg = "";
 
@@ -1173,7 +1212,11 @@ int MainWindow::decompressFile( const QString &s_Filename, const bool b_delZipFi
                 break;
 
             case _GZIP_:
-                s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" -d \"" + QDir::toNativeSeparators( s_Filename ) + "\"";
+                if ( fi.completeSuffix().toLower() == "tar.gz" )
+                    s_arg = "tar -xzf \"" + QDir::toNativeSeparators( s_Filename ) + "\" -C \"" + QDir::toNativeSeparators( fi.absolutePath() ) + "\"";
+
+                if ( ( fi.completeSuffix().toLower() != "tar.gz" ) && ( fi.suffix().toLower() == "gz" ) )
+                    s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" -d \"" + QDir::toNativeSeparators( s_Filename ) + "\"";
                 break;
 
             default:
@@ -1189,7 +1232,11 @@ int MainWindow::decompressFile( const QString &s_Filename, const bool b_delZipFi
                 break;
 
             case _GZIP_:
-                s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" -d \"" + QDir::toNativeSeparators( s_Filename ) + "\"";
+                if ( fi.completeSuffix().toLower() == "tar.gz" )
+                    s_arg = "tar -xzf \"" + QDir::toNativeSeparators( s_Filename ) + "\" -C \"" + QDir::toNativeSeparators( fi.absolutePath() ) + "\"";
+
+                if ( ( fi.completeSuffix().toLower() != "tar.gz" ) && ( fi.suffix().toLower() == "gz" ) )
+                    s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" -d \"" + QDir::toNativeSeparators( s_Filename ) + "\"";
                 break;
 
             default:
