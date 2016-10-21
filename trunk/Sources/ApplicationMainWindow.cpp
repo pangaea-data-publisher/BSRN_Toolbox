@@ -1075,7 +1075,7 @@ void MainWindow::compressFolder( const QString &s_Folder, const int mode, const 
 
             #if defined(Q_OS_LINUX)
                 s_arg.append( "tar --exclude=.DS_Store -zcf " );
-                s_arg.append( "\"" + farchive.fileName() + ".tar.gz" + \"" + " " );
+                s_arg.append( "\"" + farchive.fileName() + ".tar.gz" + "\"" + " " );
                 s_arg.append( "\"" + fdir.fileName() + "\"" );
             #endif
 
