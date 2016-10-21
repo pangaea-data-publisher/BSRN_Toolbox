@@ -2384,7 +2384,7 @@ QString MainWindow::findZip( const int mode )
 
     if ( fi_7zX86exe.exists() == false )
     {
-        QString s_7z64exe( getenv( "ProgramFiles" ) );
+        QString s_7z64exe( getenv( "ProgramFiles" ) ); s_7z64exe.replace( " (x86)", "" ); // Bug in Qt5 ?
         s_7z64exe.append( "/7-Zip/7z.exe" );
         QFileInfo fi_7z64exe( s_7z64exe );
 
@@ -2449,7 +2449,7 @@ QString MainWindow::findUnzip( const int mode )
 
     if ( fi_7zX86exe.exists() == false )
     {
-        QString s_7z64exe( getenv( "ProgramFiles" ) );
+        QString s_7z64exe( getenv( "ProgramFiles" ) ); s_7z64exe.replace( " (x86)", "" ); // Bug in Qt5 ?
         s_7z64exe.append( "/7-Zip/7z.exe" );
         QFileInfo fi_7z64exe( s_7z64exe );
 
