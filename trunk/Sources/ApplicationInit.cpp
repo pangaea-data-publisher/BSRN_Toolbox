@@ -156,6 +156,9 @@ void MainWindow::OpenExternalURL( const int i_URL )
     case _BSRNACCOUNT_:
         QDesktopServices::openUrl( QUrl( tr( "http://bsrn.awi.de/data/data-retrieval-via-pangaea.html" ) ) );
         break;
+    case _BSRNCHECK_:
+        QDesktopServices::openUrl( QUrl( tr( "http://hdl.handle.net/10013/epic.48977" ) ) );
+        break;
     default:
         QDesktopServices::openUrl( QUrl( tr( "https://www.pangaea.de" ) ) );
         break;

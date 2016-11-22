@@ -19,7 +19,7 @@
     const QString   _PROGRAMDOI_        = "doi:10.1594/PANGAEA.774827";
     const QString   _PROGRAMREADME_     = "https://wiki.pangaea.de/wiki/BSRN_Toolbox";
 
-    const QString   _VERSION_           = "2.30";                       // Version number, 2016-09-11
+    const QString   _VERSION_           = "2.31";                       // Version number, 2016-11-22
     const QString   _DOI_               = "doi:10.1594/PANGAEA.774827"; // Dataset
 
     // EOL
@@ -53,6 +53,7 @@
     const int   _BSRNHOMEPAGE_               = 13;
     const int   _BSRNLATESTSNAPSHOT_         = 14;
     const int   _BSRNACCOUNT_                = 15;
+    const int   _BSRNCHECK_                  = 16;
 
     const int   FILENOTWRITABLE         = -20;
     const int   DATETIMENOTFOUND        = 1000;

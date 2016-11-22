@@ -217,6 +217,9 @@ void MainWindow::createActions()
 
     openExternalURLBSRNStationToArchiveFormatAction = new QAction(tr("Station-to-archiv file format description"), this);
     connect(openExternalURLBSRNStationToArchiveFormatAction, SIGNAL(triggered()), this, SLOT(doOpenExternalURLBSRNStationToArchiveFormat()));
+
+    openExternalURLBSRNCheckAction = new QAction(tr("Macro-enabled Excel spreadsheet to calculate hourly-averages from BSRN .dat files"), this);
+    connect(openExternalURLBSRNCheckAction, SIGNAL(triggered()), this, SLOT(doOpenExternalURLBSRNCheck()));
 }
 
 // **********************************************************************************************
@@ -342,6 +345,8 @@ void MainWindow::createMenus()
     helpMenu->addAction( openExternalURLBSRNStatusAction );
     helpMenu->addAction( openExternalURLBSRNLatestSnapshotAction );
     helpMenu->addAction( openExternalURLBSRNStationToArchiveFormatAction );
+    helpMenu->addSeparator();
+    helpMenu->addAction( openExternalURLBSRNCheckAction );
 }
 
 // **********************************************************************************************
