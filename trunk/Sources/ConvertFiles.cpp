@@ -22,17 +22,17 @@ int MainWindow::convertFile( const QString &s_FilenameIn, const int i_NumOfFiles
     int         i_PosSumSW    = -1;
 
     QString     s_FilenameOut = s_FilenameIn;
-    QString     s_FilenameSDW = s_FilenameIn;
+    QString     s_FilenameSWD = s_FilenameIn;
 
     QStringList sl_Input;
 
 // ************************************************************************************************
 
     s_FilenameOut.replace( "_temp", "" );
-    s_FilenameSDW.replace( "_temp", "_SDW_SumSW" );
+    s_FilenameSWD.replace( "_temp", "_SWD_SumSW" );
 
     QFile::remove( s_FilenameOut );
-    QFile::remove( s_FilenameSDW );
+    QFile::remove( s_FilenameSWD );
 
 // ************************************************************************************************
 
@@ -78,9 +78,9 @@ int MainWindow::convertFile( const QString &s_FilenameIn, const int i_NumOfFiles
 
         if ( ( i_PosSWD > -1 ) && ( i_PosSumSW > -1 ) )
         {
-            QFile::remove( s_FilenameSDW );
+            QFile::remove( s_FilenameSWD );
 
-            QFile foutSWD( s_FilenameSDW );
+            QFile foutSWD( s_FilenameSWD );
 
             if ( foutSWD.open( QIODevice::WriteOnly | QIODevice::Text) == false )
                 return( -20 );
