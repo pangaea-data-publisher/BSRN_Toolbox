@@ -142,7 +142,8 @@ int MainWindow::CreateReferenceImportFile( const QString &s_FilenameIn, QStringL
             b_Stop = true;
     }
 
-    tout << tr( "Author(s)" ) << "\t" << tr( "Year" ) << "\t" << tr( "Title" ) << "\t" << tr( "URI" ) << endl;
+    tout << tr( "Author(s)" ) << "\t" << tr( "Year" ) << "\t" << tr( "Title" ) << "\t" << tr( "URI" ) << "\t";
+    tout << tr( "PublicationStatus" ) << "\t" << tr( "PublicationType" ) << endl;
     tout << ReferenceImportFile( s_EventLabel, dt, i_PiID, s_StationName ) << endl;
 
 //---------------------------------------------------------------------------------------------------

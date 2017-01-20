@@ -19,6 +19,8 @@ QString MainWindow::ReferenceImportFile( const QString &s_EventLabel, const QDat
     QString s_Year         = QString( "%1\t" ).arg( date.currentDate().toString( "yyyy") );
     QString s_Title        = "BSRN Station-to-archive file for ";
     QString s_URI          = "ftp://ftp.bsrn.awi.de/" + s_EventLabel.toLower() + "/" + s_EventLabel.toLower() + DateOfData.toString( "MMyy" ) + ".dat.gz";
+    QString s_RefStatus    = "5";
+    QString s_RefType      = "10";
 
 // **********************************************************************************************
 
@@ -31,6 +33,8 @@ QString MainWindow::ReferenceImportFile( const QString &s_EventLabel, const QDat
     s_ReferenceStr.append( s_Year );
     s_ReferenceStr.append( s_Title );
     s_ReferenceStr.append( s_URI );
+    s_ReferenceStr.append( s_RefStatus );
+    s_ReferenceStr.append( s_RefType );
 
     return( s_ReferenceStr );
 }
