@@ -91,6 +91,7 @@ void DownloadManagerDialog::SelectAllStations()
     DRA_checkBox->setChecked( true );
     DWN_checkBox->setChecked( true );
     E13_checkBox->setChecked( true );
+    ENA_checkBox->setChecked( true );
     EUR_checkBox->setChecked( true );
     FLO_checkBox->setChecked( true );
     FPE_checkBox->setChecked( true );
@@ -161,6 +162,7 @@ void DownloadManagerDialog::SelectNoneStation()
     DRA_checkBox->setChecked( false );
     DWN_checkBox->setChecked( false );
     E13_checkBox->setChecked( false );
+    ENA_checkBox->setChecked( false );
     EUR_checkBox->setChecked( false );
     FLO_checkBox->setChecked( false );
     FPE_checkBox->setChecked( false );
@@ -465,6 +467,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
     dialog.DRA_checkBox->setChecked( b_Station[DRA] );
     dialog.DWN_checkBox->setChecked( b_Station[DWN] );
     dialog.E13_checkBox->setChecked( b_Station[E13] );
+    dialog.ENA_checkBox->setChecked( b_Station[ENA] );
     dialog.EUR_checkBox->setChecked( b_Station[EUR] );
     dialog.FLO_checkBox->setChecked( b_Station[FLO] );
     dialog.FPE_checkBox->setChecked( b_Station[FPE] );
@@ -603,6 +606,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
         b_Station[DRA]  = dialog.DRA_checkBox->isChecked();
         b_Station[DWN]  = dialog.DWN_checkBox->isChecked();
         b_Station[E13]  = dialog.E13_checkBox->isChecked();
+        b_Station[ENA]  = dialog.ENA_checkBox->isChecked();
         b_Station[EUR]  = dialog.EUR_checkBox->isChecked();
         b_Station[FLO]  = dialog.FLO_checkBox->isChecked();
         b_Station[FPE]  = dialog.FPE_checkBox->isChecked();
