@@ -15,25 +15,25 @@ QString MainWindow::ReferenceImportFile( const QString &s_EventLabel, const QDat
     QDate   date;
 
     QString s_ReferenceStr = "";
-    QString s_Authors      = QString( "%1\t" ).arg( i_PIID );
-    QString s_Year         = QString( "%1\t" ).arg( date.currentDate().toString( "yyyy") );
+    QString s_Authors      = QString( "%1" ).arg( i_PIID );
+    QString s_Year         = QString( "%1" ).arg( date.currentDate().toString( "yyyy") );
     QString s_Title        = "BSRN Station-to-archive file for ";
     QString s_URI          = "ftp://ftp.bsrn.awi.de/" + s_EventLabel.toLower() + "/" + s_EventLabel.toLower() + DateOfData.toString( "MMyy" ) + ".dat.gz";
-    QString s_RefStatus    = "5";
-    QString s_RefType      = "10";
+    QString s_RefStatus    = "published";
+    QString s_RefType      = "data set";
 
 // **********************************************************************************************
 
     if ( s_StationName.endsWith( "Station" ) == false )
-        s_Title.append( "station " );
+        s_Title.append( tr( "station " ) );
 
-    s_Title.append( s_StationName + " (" + DateOfData.toString( "yyyy-MM" ) + ")\t" );
+    s_Title.append( s_StationName + tr( " (" ) + DateOfData.toString( "yyyy-MM" ) + tr( ")" ) + tr( "\t" ) );
 
-    s_ReferenceStr.append( s_Authors );
-    s_ReferenceStr.append( s_Year );
-    s_ReferenceStr.append( s_Title );
-    s_ReferenceStr.append( s_URI );
-    s_ReferenceStr.append( s_RefStatus );
+    s_ReferenceStr.append( s_Authors + tr( "\t" ) );
+    s_ReferenceStr.append( s_Year + tr( "\t" ) );
+    s_ReferenceStr.append( s_Title + tr( "\t" ) );
+    s_ReferenceStr.append( s_URI + tr( "\t" ) );
+    s_ReferenceStr.append( s_RefStatus + tr( "\t" ) );
     s_ReferenceStr.append( s_RefType );
 
     return( s_ReferenceStr );
