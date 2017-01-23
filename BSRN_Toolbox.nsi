@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "BSRN Toolbox"
-!define PRODUCT_VERSION "2.31"
+!define PRODUCT_VERSION "2.32"
 !define PRODUCT_PUBLISHER "PANGAEA"
 !define PRODUCT_WEB_SITE "http://www.pangaea.de"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\BSRN_Toolbox.exe"
@@ -68,7 +68,7 @@ SetOutPath "$INSTDIR\platforms"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\License\gpl-3.0.txt"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\License\License.txt"
   File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\License\Readme.txt"
-  
+
   CreateDirectory "$SMPROGRAMS\PANGAEA"
   CreateDirectory "$SMPROGRAMS\PANGAEA\BSRN Toolbox"
   CreateShortCut "$SMPROGRAMS\PANGAEA\BSRN Toolbox\BSRN Toolbox.lnk" "$INSTDIR\BSRN_Toolbox.exe"
@@ -124,7 +124,7 @@ Section Uninstall
   Delete "$SMPROGRAMS\PANGAEA\BSRN Toolbox\BSRN Toolbox.lnk"
   Delete "$DESKTOP\BSRN Toolbox.lnk"
 
-  RMDir "$SMPROGRAMS\PANGAEA\BSRN Toolbox"  
+  RMDir "$SMPROGRAMS\PANGAEA\BSRN Toolbox"
   RMDir "$INSTDIR\License"
   RMDir "$INSTDIR\platforms"
   RMDir "$INSTDIR"
