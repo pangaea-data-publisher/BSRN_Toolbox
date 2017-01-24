@@ -27,7 +27,7 @@ QString MainWindow::ReferenceImportFile( const QString &s_EventLabel, const QDat
     if ( s_StationName.endsWith( "Station" ) == false )
         s_Title.append( tr( "station " ) );
 
-    s_Title.append( s_StationName + tr( " (" ) + DateOfData.toString( "yyyy-MM" ) + tr( ")" ) + tr( "\t" ) );
+    s_Title.append( s_StationName + tr( " (" ) + DateOfData.toString( "yyyy-MM" ) + tr( ")" ) );
 
     s_ReferenceStr.append( s_Authors + tr( "\t" ) );
     s_ReferenceStr.append( s_Year + tr( "\t" ) );
