@@ -199,6 +199,7 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
     int				i_Hour			= 0;
     int				i_Minute		= 0;
 
+
     float           f_Latitude      = 0.;
     float           f_Longitude     = 0.;
 
@@ -214,20 +215,24 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
     QString			s_EventLabel	= "";
     QString         s_DatasetID     = "";
     QString         s_Comment       = "";
+    QString         s_Format        = "";
 
+    QStringList     sl_wrong_UV_b_Stations;
     QStringList     sl_Parameter;
 
-    unsigned int	ui_length		= 1;
-    unsigned int	ui_filesize		= 1;
+    unsigned int	ui_length		  = 1;
+    unsigned int	ui_filesize		  = 1;
 
-    bool			b_Stop			= false;
-    bool			b_Out			= false;
+    bool			b_Stop			  = false;
+    bool			b_Out			  = false;
 
-    bool			b_UV_a_g		= false;
-    bool			b_UV_b_d		= false;
-    bool			b_UV_b_g		= false;
-    bool			b_UV_b_diff		= false;
-    bool			b_UV_up_r		= false;
+    bool			b_UV_a_g		  = false;
+    bool			b_UV_b_d		  = false;
+    bool			b_UV_b_g		  = false;
+    bool			b_UV_b_diff		  = false;
+    bool			b_UV_up_r		  = false;
+
+    bool            b_wrong_UV_b_Unit = false;
 
     int				P[MAX_NUM_OF_PARAMETER+1];
 
@@ -452,6 +457,21 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
     QTextStream tout( &fout );
 
 // ***********************************************************************************************************************
+
+    sl_wrong_UV_b_Stations << "BON" << "BOS" << "DRA" << "FPE" << "GCR" << "MAN" << "NAU" << "PAY" << "PSU" << "SXF" << "TOR";
+
+    if ( sl_wrong_UV_b_Stations.contains( s_EventLabel ) == true )
+    {
+        b_wrong_UV_b_Unit = true;   // UV-b given in mW/m**2
+        s_Format = tr( "#0.0000" );
+    }
+    else
+    {
+        b_wrong_UV_b_Unit = false;  // UV-b given in W/m**2
+        s_Format = tr( "###0.0" );
+    }
+
+// ***********************************************************************************************************************
 // LR0009
 
     i = 0;
@@ -558,13 +578,13 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
                     s_Comment = tr( "Changed to WRMC No. " ) + num2str( Parameter_0009[k].MethodID ) + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
 
                 if ( P[5] > 0 )
-                    sl_Parameter.append( Parameter( num2str( 55926 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55926 ), num2str( i_PIID ), num2str( i_MethodID ), s_Format, s_Comment ) );
                 if ( P[6] > 0 )
-                    sl_Parameter.append( Parameter( num2str( 55927 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55927 ), num2str( i_PIID ), num2str( i_MethodID ), s_Format, s_Comment ) );
                 if ( P[7] > 0 )
-                    sl_Parameter.append( Parameter( num2str( 55928 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55928 ), num2str( i_PIID ), num2str( i_MethodID ), s_Format, s_Comment ) );
                 if ( P[8] > 0 )
-                    sl_Parameter.append( Parameter( num2str( 55929 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55929 ), num2str( i_PIID ), num2str( i_MethodID ), s_Format, s_Comment ) );
 
                 b_UV_b_d = true;
             }
@@ -584,13 +604,13 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
                     s_Comment = tr( "Changed to WRMC No. " ) + num2str( Parameter_0009[k].MethodID ) + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
 
                 if ( P[9] > 0 )
-                    sl_Parameter.append( Parameter( num2str( 55930 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55930 ), num2str( i_PIID ), num2str( i_MethodID ), s_Format, s_Comment ) );
                 if ( P[10] > 0 )
-                    sl_Parameter.append( Parameter( num2str( 55931 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55931 ), num2str( i_PIID ), num2str( i_MethodID ), s_Format, s_Comment ) );
                 if ( P[11] > 0 )
-                    sl_Parameter.append( Parameter( num2str( 55932 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55932 ), num2str( i_PIID ), num2str( i_MethodID ), s_Format, s_Comment ) );
                 if ( P[12] > 0 )
-                    sl_Parameter.append( Parameter( num2str( 55933 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55933 ), num2str( i_PIID ), num2str( i_MethodID ), s_Format, s_Comment ) );
 
                 b_UV_b_g = true;
             }
@@ -610,13 +630,13 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
                     s_Comment = tr( "Changed to WRMC No. " ) + num2str( Parameter_0009[k].MethodID ) + tr( " at " ) + Parameter_0009[k].DateTime.toString( "yyyy-MM-ddThh:mm" );
 
                 if ( P[13] > 0 )
-                    sl_Parameter.append( Parameter( num2str( 55934 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55934 ), num2str( i_PIID ), num2str( i_MethodID ), s_Format, s_Comment ) );
                 if ( P[14] > 0 )
-                    sl_Parameter.append( Parameter( num2str( 55935 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55935 ), num2str( i_PIID ), num2str( i_MethodID ), s_Format, s_Comment ) );
                 if ( P[15] > 0 )
-                    sl_Parameter.append( Parameter( num2str( 55936 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55936 ), num2str( i_PIID ), num2str( i_MethodID ), s_Format, s_Comment ) );
                 if ( P[16] > 0 )
-                    sl_Parameter.append( Parameter( num2str( 55937 ), num2str( i_PIID ), num2str( i_MethodID ), tr( "###0.0" ), s_Comment ) );
+                    sl_Parameter.append( Parameter( num2str( 55937 ), num2str( i_PIID ), num2str( i_MethodID ), s_Format, s_Comment ) );
 
                 b_UV_b_diff = true;
             }
@@ -843,17 +863,36 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
 
                     if ( b_UV_b_d == true )
                     {
-                        for ( i=5; i<=8; ++i )
+                        if ( b_wrong_UV_b_Unit == true )
                         {
-                            if ( P[i+offset] > 0 )
+                            for ( i=5; i<=8; ++i )
                             {
-                                if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
+                                if ( P[i+offset] > 0 )
                                 {
-                                    OutputStr.append( "\t" + InputStr.mid( i*6+3, 5 ).simplified() );
-                                    b_Out = true;
+                                    if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
+                                    {
+                                        OutputStr.append( "\t" + QString( "%1" ).arg( InputStr.mid( i*6+3, 5 ).simplified().toFloat()/1000. ) );
+                                        b_Out = true;
+                                    }
+                                    else
+                                        OutputStr.append( "\t" );
                                 }
-                                else
-                                    OutputStr.append( "\t" );
+                            }
+                        }
+                        else
+                        {
+                            for ( i=5; i<=8; ++i )
+                            {
+                                if ( P[i+offset] > 0 )
+                                {
+                                    if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
+                                    {
+                                        OutputStr.append( "\t" + InputStr.mid( i*6+3, 5 ).simplified() );
+                                        b_Out = true;
+                                    }
+                                    else
+                                        OutputStr.append( "\t" );
+                                }
                             }
                         }
                     }
@@ -863,34 +902,72 @@ int MainWindow::UltraVioletMeasurementsConverter( const bool b_Import, const boo
 
                     if ( b_UV_b_g == true )
                     {
-                        for ( int i=1; i<=4; ++i )
+                        if ( b_wrong_UV_b_Unit == true )
                         {
-                            if ( P[i+8+offset] > 0 )
+                            for ( int i=1; i<=4; ++i )
                             {
-                                if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
+                                if ( P[i+8+offset] > 0 )
                                 {
-                                    OutputStr.append( "\t" + InputStr.mid( i*6+3, 5 ).simplified() );
-                                    b_Out = true;
+                                    if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
+                                    {
+                                        OutputStr.append( "\t" + QString( "%1" ).arg( InputStr.mid( i*6+3, 5 ).simplified().toFloat()/1000. ) );
+                                        b_Out = true;
+                                    }
+                                    else
+                                        OutputStr.append( "\t" );
                                 }
-                                else
-                                    OutputStr.append( "\t" );
+                            }
+                        }
+                        else
+                        {
+                            for ( int i=1; i<=4; ++i )
+                            {
+                                if ( P[i+8+offset] > 0 )
+                                {
+                                    if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
+                                    {
+                                        OutputStr.append( "\t" + InputStr.mid( i*6+3, 5 ).simplified() );
+                                        b_Out = true;
+                                    }
+                                    else
+                                        OutputStr.append( "\t" );
+                                }
                             }
                         }
                     }
 
                     if ( b_UV_b_diff == true )
                     {
-                        for ( i=5; i<=8; ++i )
+                        if ( b_wrong_UV_b_Unit == true )
                         {
-                            if ( P[i+8+offset] > 0 )
+                            for ( i=5; i<=8; ++i )
                             {
-                                if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
+                                if ( P[i+8+offset] > 0 )
                                 {
-                                    OutputStr.append( "\t" + InputStr.mid( i*6+3, 5 ).simplified() );
-                                    b_Out = true;
+                                    if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
+                                    {
+                                        OutputStr.append( "\t" + QString( "%1" ).arg( InputStr.mid( i*6+3, 5 ).simplified().toFloat()/1000. ) );
+                                        b_Out = true;
+                                    }
+                                    else
+                                        OutputStr.append( "\t" );
                                 }
-                                else
-                                    OutputStr.append( "\t" );
+                            }
+                        }
+                        else
+                        {
+                            for ( i=5; i<=8; ++i )
+                            {
+                                if ( P[i+8+offset] > 0 )
+                                {
+                                    if ( InputStr.mid( i*6+3, 5 ).simplified().toFloat() > -90 )
+                                    {
+                                        OutputStr.append( "\t" + InputStr.mid( i*6+3, 5 ).simplified() );
+                                        b_Out = true;
+                                    }
+                                    else
+                                        OutputStr.append( "\t" );
+                                }
                             }
                         }
                     }
