@@ -1816,7 +1816,7 @@ void MainWindow::initFileProgress( const int i_NumOfFiles, const QString &s_File
 
         FileProgressDialog->setWindowModality( Qt::WindowModal );
         FileProgressDialog->setMinimumDuration( 2 );
-        FileProgressDialog->setMinimumWidth( 300 );
+        FileProgressDialog->setMinimumWidth( qMax( 300, QFontMetrics( FileProgressDialog->font() ).width( s_MessageText ) + 50 ) );
         FileProgressDialog->show();
         FileProgressDialog->setValue( 0 );
 
@@ -1920,7 +1920,7 @@ void MainWindow::initProgress( const int i_NumOfFiles, const QString &s_Filename
         ProgressDialog = new QProgressDialog( s_MessageText, "Abort", 0, i_totalNumberOfSteps, this );
         ProgressDialog->setWindowModality( Qt::WindowModal );
         ProgressDialog->setMinimumDuration( 2 );
-        ProgressDialog->setMinimumWidth( 300 );
+        ProgressDialog->setMinimumWidth( qMax( 300, QFontMetrics( ProgressDialog->font() ).width( s_MessageText ) + 50 ) );
         ProgressDialog->show();
         setStatusBarFileInProgress( s_FilenameIn );
         break;
