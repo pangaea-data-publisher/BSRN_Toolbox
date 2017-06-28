@@ -150,7 +150,9 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
                                 s_arg = s_Curl;
                                 s_arg.append( " -u " + s_User + ":" + s_Password );
                                 s_arg.append( " -o " + fi_GZ.fileName() );
-                                s_arg.append( " ftp://" + s_FTPServer + "//pub/" + s_EventLabel + "/" + fi_GZ.fileName() );
+                                s_arg.append( " ftp://" + s_FTPServer + "/" + s_EventLabel + "/" + fi_GZ.fileName() );
+
+                                qDebug() << s_arg;
 
                                 process.start( s_arg );
                                 process.waitForFinished( -1 );
@@ -212,10 +214,12 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
                 s_arg = s_Curl;
                 s_arg.append( " -u " + s_User + ":" + s_Password );
                 s_arg.append( " -o " + s_EventLabel + "_filelist.txt" );
-                s_arg.append( " ftp://" + s_FTPServer + "//pub/" + s_EventLabel + "/" );
+                s_arg.append( " ftp://" + s_FTPServer + "/" + s_EventLabel + "/" );
 
                 process.start( s_arg );
                 process.waitForFinished( -1 );
+
+                qDebug() << s_arg;
 
                 sl_FilenameList.append( s_DownloadPath + s_EventLabel + "_filelist.txt" );
 
