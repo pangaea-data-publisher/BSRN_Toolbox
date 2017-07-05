@@ -2197,7 +2197,7 @@ bool MainWindow::isEmptyLine( const QString &String )
 
 QString MainWindow::setEOLChar( const int i_EOL )
 {
-    QString s_EOL = "\n"; // LF if compiled on MacOS X or Unix, CR+LF if compiled on Windows
+    QString s_EOL = "\n"; // LF if compiled on macOS or Unix, CR+LF if compiled on Windows
 
     switch ( i_EOL )
     {
