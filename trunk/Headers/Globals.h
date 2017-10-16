@@ -19,7 +19,7 @@
     const QString   _PROGRAMDOI_        = "doi:10.1594/PANGAEA.774827";
     const QString   _PROGRAMREADME_     = "https://wiki.pangaea.de/wiki/BSRN_Toolbox";
 
-    const QString   _VERSION_           = "2.34";                       // Version number, 2017-06-28
+    const QString   _VERSION_           = "2.35";                       // Version number, 2017-10-16
     const QString   _DOI_               = "doi:10.1594/PANGAEA.774827"; // Dataset
 
     // EOL
@@ -109,6 +109,7 @@
     const int   BUD = 14;
     const int   CAB = 53;
     const int   CAM = 50;
+    const int   CAP = 15; // 2017-10-16
     const int   CAR = 10;
     const int   CLH = 39;
     const int   CNR = 45;
@@ -116,6 +117,7 @@
     const int   DAA = 40;
     const int   DAR =  2;
     const int   DOM = 74;
+    const int   DON = 55; // 2017-10-16
     const int   DRA = 35;
     const int   DWN = 65;
     const int   E13 = 27;
@@ -124,9 +126,12 @@
     const int   FLO =  3;
     const int   FPE = 31;
     const int   FUA =  6;
+    const int   GAN = 58; // 2017-10-16
     const int   GCR = 33;
     const int   GOB = 20; // 2013-01-05
+    const int   GUR = 56; // 2017-10-16
     const int   GVN = 13;
+    const int   HOW = 57; // 2017-10-16
     const int   ILO = 38;
     const int   ISH =  7;
     const int   IZA = 61;
@@ -134,10 +139,12 @@
     const int   LAU = 60;
     const int   LER = 51;
     const int   LIN = 12;
+    const int   LLN = 54; // 2017-10-16
     const int   LRC = 49; // 2015-02-05
     const int   MAN = 29;
     const int   MNM =  8;
     const int   NAU = 30;
+    const int   NEW = 52; // 2017-10-16
     const int   NYA = 11;
     const int   PAL = 63;
     const int   PAY = 21;
@@ -157,6 +164,7 @@
     const int   TAM = 42;
     const int   TAT = 16;
     const int   TIK = 48;
+    const int   TIR = 59; // 2017-10-16
     const int   TOR =  9;
     const int   XIA = 44;
     const int   ZVE = 46;

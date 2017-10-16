@@ -81,6 +81,7 @@ void DownloadManagerDialog::SelectAllStations()
     BUD_checkBox->setChecked( true );
     CAB_checkBox->setChecked( true );
     CAM_checkBox->setChecked( true );
+    CAP_checkBox->setChecked( true );
     CAR_checkBox->setChecked( true );
     CLH_checkBox->setChecked( true );
     CNR_checkBox->setChecked( true );
@@ -88,6 +89,7 @@ void DownloadManagerDialog::SelectAllStations()
     DAA_checkBox->setChecked( true );
     DAR_checkBox->setChecked( true );
     DOM_checkBox->setChecked( true );
+    DON_checkBox->setChecked( true );
     DRA_checkBox->setChecked( true );
     DWN_checkBox->setChecked( true );
     E13_checkBox->setChecked( true );
@@ -96,9 +98,12 @@ void DownloadManagerDialog::SelectAllStations()
     FLO_checkBox->setChecked( true );
     FPE_checkBox->setChecked( true );
     FUA_checkBox->setChecked( true );
+    GAN_checkBox->setChecked( true );
     GCR_checkBox->setChecked( true );
     GOB_checkBox->setChecked( true );
+    GUR_checkBox->setChecked( true );
     GVN_checkBox->setChecked( true );
+    HOW_checkBox->setChecked( true );
     ILO_checkBox->setChecked( true );
     ISH_checkBox->setChecked( true );
     IZA_checkBox->setChecked( true );
@@ -106,10 +111,12 @@ void DownloadManagerDialog::SelectAllStations()
     LAU_checkBox->setChecked( true );
     LER_checkBox->setChecked( true );
     LIN_checkBox->setChecked( true );
+    LLN_checkBox->setChecked( true );
     LRC_checkBox->setChecked( true );
     MAN_checkBox->setChecked( true );
     MNM_checkBox->setChecked( true );
     NAU_checkBox->setChecked( true );
+    NEW_checkBox->setChecked( true );
     NYA_checkBox->setChecked( true );
     PAL_checkBox->setChecked( true );
     PAY_checkBox->setChecked( true );
@@ -129,6 +136,7 @@ void DownloadManagerDialog::SelectAllStations()
     TAM_checkBox->setChecked( true );
     TAT_checkBox->setChecked( true );
     TIK_checkBox->setChecked( true );
+    TIR_checkBox->setChecked( true );
     TOR_checkBox->setChecked( true );
     XIA_checkBox->setChecked( true );
     ZVE_checkBox->setChecked( true );
@@ -152,6 +160,7 @@ void DownloadManagerDialog::SelectNoneStation()
     BUD_checkBox->setChecked( false );
     CAB_checkBox->setChecked( false );
     CAM_checkBox->setChecked( false );
+    CAP_checkBox->setChecked( false );
     CAR_checkBox->setChecked( false );
     CLH_checkBox->setChecked( false );
     CNR_checkBox->setChecked( false );
@@ -159,6 +168,7 @@ void DownloadManagerDialog::SelectNoneStation()
     DAA_checkBox->setChecked( false );
     DAR_checkBox->setChecked( false );
     DOM_checkBox->setChecked( false );
+    DON_checkBox->setChecked( false );
     DRA_checkBox->setChecked( false );
     DWN_checkBox->setChecked( false );
     E13_checkBox->setChecked( false );
@@ -167,9 +177,12 @@ void DownloadManagerDialog::SelectNoneStation()
     FLO_checkBox->setChecked( false );
     FPE_checkBox->setChecked( false );
     FUA_checkBox->setChecked( false );
+    GAN_checkBox->setChecked( false );
     GCR_checkBox->setChecked( false );
     GOB_checkBox->setChecked( false );
+    GUR_checkBox->setChecked( false );
     GVN_checkBox->setChecked( false );
+    HOW_checkBox->setChecked( false );
     ILO_checkBox->setChecked( false );
     ISH_checkBox->setChecked( false );
     IZA_checkBox->setChecked( false );
@@ -177,10 +190,12 @@ void DownloadManagerDialog::SelectNoneStation()
     LAU_checkBox->setChecked( false );
     LER_checkBox->setChecked( false );
     LIN_checkBox->setChecked( false );
+    LLN_checkBox->setChecked( false );
     LRC_checkBox->setChecked( false );
     MAN_checkBox->setChecked( false );
     MNM_checkBox->setChecked( false );
     NAU_checkBox->setChecked( false );
+    NEW_checkBox->setChecked( false );
     NYA_checkBox->setChecked( false );
     PAL_checkBox->setChecked( false );
     PAY_checkBox->setChecked( false );
@@ -200,6 +215,7 @@ void DownloadManagerDialog::SelectNoneStation()
     TAM_checkBox->setChecked( false );
     TAT_checkBox->setChecked( false );
     TIK_checkBox->setChecked( false );
+    TIR_checkBox->setChecked( false );
     TOR_checkBox->setChecked( false );
     XIA_checkBox->setChecked( false );
     ZVE_checkBox->setChecked( false );
@@ -457,6 +473,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
     dialog.BUD_checkBox->setChecked( b_Station[BUD] );
     dialog.CAB_checkBox->setChecked( b_Station[CAB] );
     dialog.CAM_checkBox->setChecked( b_Station[CAM] );
+    dialog.CAP_checkBox->setChecked( b_Station[CAP] );
     dialog.CAR_checkBox->setChecked( b_Station[CAR] );
     dialog.CLH_checkBox->setChecked( b_Station[CLH] );
     dialog.CNR_checkBox->setChecked( b_Station[CNR] );
@@ -464,6 +481,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
     dialog.DAA_checkBox->setChecked( b_Station[DAA] );
     dialog.DAR_checkBox->setChecked( b_Station[DAR] );
     dialog.DOM_checkBox->setChecked( b_Station[DOM] );
+    dialog.DON_checkBox->setChecked( b_Station[DON] );
     dialog.DRA_checkBox->setChecked( b_Station[DRA] );
     dialog.DWN_checkBox->setChecked( b_Station[DWN] );
     dialog.E13_checkBox->setChecked( b_Station[E13] );
@@ -472,9 +490,12 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
     dialog.FLO_checkBox->setChecked( b_Station[FLO] );
     dialog.FPE_checkBox->setChecked( b_Station[FPE] );
     dialog.FUA_checkBox->setChecked( b_Station[FUA] );
+    dialog.GAN_checkBox->setChecked( b_Station[GAN] );
     dialog.GCR_checkBox->setChecked( b_Station[GCR] );
     dialog.GOB_checkBox->setChecked( b_Station[GOB] );
+    dialog.GUR_checkBox->setChecked( b_Station[GUR] );
     dialog.GVN_checkBox->setChecked( b_Station[GVN] );
+    dialog.HOW_checkBox->setChecked( b_Station[HOW] );
     dialog.ILO_checkBox->setChecked( b_Station[ILO] );
     dialog.ISH_checkBox->setChecked( b_Station[ISH] );
     dialog.IZA_checkBox->setChecked( b_Station[IZA] );
@@ -482,10 +503,12 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
     dialog.LAU_checkBox->setChecked( b_Station[LAU] );
     dialog.LER_checkBox->setChecked( b_Station[LER] );
     dialog.LIN_checkBox->setChecked( b_Station[LIN] );
+    dialog.LLN_checkBox->setChecked( b_Station[LLN] );
     dialog.LRC_checkBox->setChecked( b_Station[LRC] );
     dialog.MAN_checkBox->setChecked( b_Station[MAN] );
     dialog.MNM_checkBox->setChecked( b_Station[MNM] );
     dialog.NAU_checkBox->setChecked( b_Station[NAU] );
+    dialog.NEW_checkBox->setChecked( b_Station[NEW] );
     dialog.NYA_checkBox->setChecked( b_Station[NYA] );
     dialog.PAL_checkBox->setChecked( b_Station[PAL] );
     dialog.PAY_checkBox->setChecked( b_Station[PAY] );
@@ -505,6 +528,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
     dialog.TAM_checkBox->setChecked( b_Station[TAM] );
     dialog.TAT_checkBox->setChecked( b_Station[TAT] );
     dialog.TIK_checkBox->setChecked( b_Station[TIK] );
+    dialog.TIR_checkBox->setChecked( b_Station[TIR] );
     dialog.TOR_checkBox->setChecked( b_Station[TOR] );
     dialog.XIA_checkBox->setChecked( b_Station[XIA] );
     dialog.ZVE_checkBox->setChecked( b_Station[ZVE] );
@@ -596,6 +620,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
         b_Station[BUD]  = dialog.BUD_checkBox->isChecked();
         b_Station[CAB]  = dialog.CAB_checkBox->isChecked();
         b_Station[CAM]  = dialog.CAM_checkBox->isChecked();
+        b_Station[CAP]  = dialog.CAP_checkBox->isChecked();
         b_Station[CAR]  = dialog.CAR_checkBox->isChecked();
         b_Station[CLH]  = dialog.CLH_checkBox->isChecked();
         b_Station[CNR]  = dialog.CNR_checkBox->isChecked();
@@ -603,6 +628,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
         b_Station[DAA]  = dialog.DAA_checkBox->isChecked();
         b_Station[DAR]  = dialog.DAR_checkBox->isChecked();
         b_Station[DOM]  = dialog.DOM_checkBox->isChecked();
+        b_Station[DON]  = dialog.DON_checkBox->isChecked();
         b_Station[DRA]  = dialog.DRA_checkBox->isChecked();
         b_Station[DWN]  = dialog.DWN_checkBox->isChecked();
         b_Station[E13]  = dialog.E13_checkBox->isChecked();
@@ -611,9 +637,12 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
         b_Station[FLO]  = dialog.FLO_checkBox->isChecked();
         b_Station[FPE]  = dialog.FPE_checkBox->isChecked();
         b_Station[FUA]  = dialog.FUA_checkBox->isChecked();
+        b_Station[GAN]  = dialog.GAN_checkBox->isChecked();
         b_Station[GCR]  = dialog.GCR_checkBox->isChecked();
         b_Station[GOB]  = dialog.GOB_checkBox->isChecked();
+        b_Station[GUR]  = dialog.GUR_checkBox->isChecked();
         b_Station[GVN]  = dialog.GVN_checkBox->isChecked();
+        b_Station[HOW]  = dialog.HOW_checkBox->isChecked();
         b_Station[ILO]  = dialog.ILO_checkBox->isChecked();
         b_Station[ISH]  = dialog.ISH_checkBox->isChecked();
         b_Station[IZA]  = dialog.IZA_checkBox->isChecked();
@@ -621,10 +650,12 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
         b_Station[LAU]  = dialog.LAU_checkBox->isChecked();
         b_Station[LER]  = dialog.LER_checkBox->isChecked();
         b_Station[LIN]  = dialog.LIN_checkBox->isChecked();
+        b_Station[LLN]  = dialog.LLN_checkBox->isChecked();
         b_Station[LRC]  = dialog.LRC_checkBox->isChecked();
         b_Station[MAN]  = dialog.MAN_checkBox->isChecked();
         b_Station[MNM]  = dialog.MNM_checkBox->isChecked();
         b_Station[NAU]  = dialog.NAU_checkBox->isChecked();
+        b_Station[NEW]  = dialog.NEW_checkBox->isChecked();
         b_Station[NYA]  = dialog.NYA_checkBox->isChecked();
         b_Station[PAL]  = dialog.PAL_checkBox->isChecked();
         b_Station[PAY]  = dialog.PAY_checkBox->isChecked();
@@ -644,6 +675,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
         b_Station[TAM]  = dialog.TAM_checkBox->isChecked();
         b_Station[TAT]  = dialog.TAT_checkBox->isChecked();
         b_Station[TIK]  = dialog.TIK_checkBox->isChecked();
+        b_Station[TIR]  = dialog.TIR_checkBox->isChecked();
         b_Station[TOR]  = dialog.TOR_checkBox->isChecked();
         b_Station[XIA]  = dialog.XIA_checkBox->isChecked();
         b_Station[ZVE]  = dialog.ZVE_checkBox->isChecked();
