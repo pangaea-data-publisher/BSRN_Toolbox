@@ -67,79 +67,164 @@ QString DownloadManagerDialog::getDocumentDir()
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
 
+void DownloadManagerDialog::selectAllStations(bool selected) {
+    ALE_checkBox->setChecked( selected );
+    ASP_checkBox->setChecked( selected );
+    BAR_checkBox->setChecked( selected );
+    BER_checkBox->setChecked( selected );
+    BIL_checkBox->setChecked( selected );
+    BON_checkBox->setChecked( selected );
+    BOS_checkBox->setChecked( selected );
+    BOU_checkBox->setChecked( selected );
+    BRB_checkBox->setChecked( selected );
+    BUD_checkBox->setChecked( selected );
+    CAB_checkBox->setChecked( selected );
+    CAM_checkBox->setChecked( selected );
+    CAP_checkBox->setChecked( selected );
+    CAR_checkBox->setChecked( selected );
+    CLH_checkBox->setChecked( selected );
+    CNR_checkBox->setChecked( selected );
+    COC_checkBox->setChecked( selected );
+    DAA_checkBox->setChecked( selected );
+    DAR_checkBox->setChecked( selected );
+    DOM_checkBox->setChecked( selected );
+    DON_checkBox->setChecked( selected );
+    DRA_checkBox->setChecked( selected );
+    DWN_checkBox->setChecked( selected );
+    E13_checkBox->setChecked( selected );
+    ENA_checkBox->setChecked( selected );
+    EUR_checkBox->setChecked( selected );
+    FLO_checkBox->setChecked( selected );
+    FPE_checkBox->setChecked( selected );
+    FUA_checkBox->setChecked( selected );
+    GAN_checkBox->setChecked( selected );
+    GIM_checkBox->setChecked( selected );
+    GCR_checkBox->setChecked( selected );
+    GOB_checkBox->setChecked( selected );
+    GUR_checkBox->setChecked( selected );
+    GVN_checkBox->setChecked( selected );
+    HOW_checkBox->setChecked( selected );
+    ILO_checkBox->setChecked( selected );
+    ISH_checkBox->setChecked( selected );
+    IZA_checkBox->setChecked( selected );
+    KWA_checkBox->setChecked( selected );
+    LAU_checkBox->setChecked( selected );
+    LER_checkBox->setChecked( selected );
+    LIN_checkBox->setChecked( selected );
+    LLN_checkBox->setChecked( selected );
+    LRC_checkBox->setChecked( selected );
+    LYU_checkBox->setChecked( selected );
+    MAN_checkBox->setChecked( selected );
+    MNM_checkBox->setChecked( selected );
+    NAU_checkBox->setChecked( selected );
+    NEW_checkBox->setChecked( selected );
+    NYA_checkBox->setChecked( selected );
+    OHY_checkBox->setChecked( selected );
+    PAL_checkBox->setChecked( selected );
+    PAR_checkBox->setChecked( selected );
+    PAY_checkBox->setChecked( selected );
+    PSA_checkBox->setChecked( selected );
+    PSU_checkBox->setChecked( selected );
+    PTR_checkBox->setChecked( selected );
+    REG_checkBox->setChecked( selected );
+    RLM_checkBox->setChecked( selected );
+    RUN_checkBox->setChecked( selected );
+    SAP_checkBox->setChecked( selected );
+    SBO_checkBox->setChecked( selected );
+    SEL_checkBox->setChecked( selected );
+    SMS_checkBox->setChecked( selected );
+    SON_checkBox->setChecked( selected );
+    SOV_checkBox->setChecked( selected );
+    SPO_checkBox->setChecked( selected );
+    SXF_checkBox->setChecked( selected );
+    SYO_checkBox->setChecked( selected );
+    TAM_checkBox->setChecked( selected );
+    TAT_checkBox->setChecked( selected );
+    TIK_checkBox->setChecked( selected );
+    TIR_checkBox->setChecked( selected );
+    TOR_checkBox->setChecked( selected );
+    XIA_checkBox->setChecked( selected );
+    YUS_checkBox->setChecked( selected );
+    ZVE_checkBox->setChecked( selected );
+}
+
+void DownloadManagerDialog::enableAllStations(bool selected) {
+    ALE_checkBox->setEnabled( selected );
+    ASP_checkBox->setEnabled( selected );
+    BAR_checkBox->setEnabled( selected );
+    BER_checkBox->setEnabled( selected );
+    BIL_checkBox->setEnabled( selected );
+    BON_checkBox->setEnabled( selected );
+    BOS_checkBox->setEnabled( selected );
+    BOU_checkBox->setEnabled( selected );
+    BRB_checkBox->setEnabled( selected );
+    BUD_checkBox->setEnabled( selected );
+    CAB_checkBox->setEnabled( selected );
+    CAM_checkBox->setEnabled( selected );
+    CAP_checkBox->setEnabled( selected );
+    CAR_checkBox->setEnabled( selected );
+    CLH_checkBox->setEnabled( selected );
+    CNR_checkBox->setEnabled( selected );
+    COC_checkBox->setEnabled( selected );
+    DAA_checkBox->setEnabled( selected );
+    DAR_checkBox->setEnabled( selected );
+    DOM_checkBox->setEnabled( selected );
+    DON_checkBox->setEnabled( selected );
+    DRA_checkBox->setEnabled( selected );
+    DWN_checkBox->setEnabled( selected );
+    E13_checkBox->setEnabled( selected );
+    ENA_checkBox->setEnabled( selected );
+    EUR_checkBox->setEnabled( selected );
+    FLO_checkBox->setEnabled( selected );
+    FPE_checkBox->setEnabled( selected );
+    FUA_checkBox->setEnabled( selected );
+    GAN_checkBox->setEnabled( selected );
+    GCR_checkBox->setEnabled( selected );
+    GOB_checkBox->setEnabled( selected );
+    GUR_checkBox->setEnabled( selected );
+    GVN_checkBox->setEnabled( selected );
+    HOW_checkBox->setEnabled( selected );
+    ILO_checkBox->setEnabled( selected );
+    ISH_checkBox->setEnabled( selected );
+    IZA_checkBox->setEnabled( selected );
+    KWA_checkBox->setEnabled( selected );
+    LAU_checkBox->setEnabled( selected );
+    LER_checkBox->setEnabled( selected );
+    LIN_checkBox->setEnabled( selected );
+    LLN_checkBox->setEnabled( selected );
+    LRC_checkBox->setEnabled( selected );
+    MAN_checkBox->setEnabled( selected );
+    MNM_checkBox->setEnabled( selected );
+    NAU_checkBox->setEnabled( selected );
+    NEW_checkBox->setEnabled( selected );
+    NYA_checkBox->setEnabled( selected );
+    PAL_checkBox->setEnabled( selected );
+    PAY_checkBox->setEnabled( selected );
+    PSA_checkBox->setEnabled( selected );
+    PSU_checkBox->setEnabled( selected );
+    PTR_checkBox->setEnabled( selected );
+    REG_checkBox->setEnabled( selected );
+    RLM_checkBox->setEnabled( selected );
+    SAP_checkBox->setEnabled( selected );
+    SBO_checkBox->setEnabled( selected );
+    SMS_checkBox->setEnabled( selected );
+    SON_checkBox->setEnabled( selected );
+    SOV_checkBox->setEnabled( selected );
+    SPO_checkBox->setEnabled( selected );
+    SXF_checkBox->setEnabled( selected );
+    SYO_checkBox->setEnabled( selected );
+    TAM_checkBox->setEnabled( selected );
+    TAT_checkBox->setEnabled( selected );
+    TIK_checkBox->setEnabled( selected );
+    TIR_checkBox->setEnabled( selected );
+    TOR_checkBox->setEnabled( selected );
+    XIA_checkBox->setEnabled( selected );
+    ZVE_checkBox->setEnabled( selected );
+}
+
 void DownloadManagerDialog::SelectAllStations()
 {
-    ALE_checkBox->setChecked( true );
-    ASP_checkBox->setChecked( true );
-    BAR_checkBox->setChecked( true );
-    BER_checkBox->setChecked( true );
-    BIL_checkBox->setChecked( true );
-    BON_checkBox->setChecked( true );
-    BOS_checkBox->setChecked( true );
-    BOU_checkBox->setChecked( true );
-    BRB_checkBox->setChecked( true );
-    BUD_checkBox->setChecked( true );
-    CAB_checkBox->setChecked( true );
-    CAM_checkBox->setChecked( true );
-    CAP_checkBox->setChecked( true );
-    CAR_checkBox->setChecked( true );
-    CLH_checkBox->setChecked( true );
-    CNR_checkBox->setChecked( true );
-    COC_checkBox->setChecked( true );
-    DAA_checkBox->setChecked( true );
-    DAR_checkBox->setChecked( true );
-    DOM_checkBox->setChecked( true );
-    DON_checkBox->setChecked( true );
-    DRA_checkBox->setChecked( true );
-    DWN_checkBox->setChecked( true );
-    E13_checkBox->setChecked( true );
-    ENA_checkBox->setChecked( true );
-    EUR_checkBox->setChecked( true );
-    FLO_checkBox->setChecked( true );
-    FPE_checkBox->setChecked( true );
-    FUA_checkBox->setChecked( true );
-    GAN_checkBox->setChecked( true );
-    GCR_checkBox->setChecked( true );
-    GOB_checkBox->setChecked( true );
-    GUR_checkBox->setChecked( true );
-    GVN_checkBox->setChecked( true );
-    HOW_checkBox->setChecked( true );
-    ILO_checkBox->setChecked( true );
-    ISH_checkBox->setChecked( true );
-    IZA_checkBox->setChecked( true );
-    KWA_checkBox->setChecked( true );
-    LAU_checkBox->setChecked( true );
-    LER_checkBox->setChecked( true );
-    LIN_checkBox->setChecked( true );
-    LLN_checkBox->setChecked( true );
-    LRC_checkBox->setChecked( true );
-    MAN_checkBox->setChecked( true );
-    MNM_checkBox->setChecked( true );
-    NAU_checkBox->setChecked( true );
-    NEW_checkBox->setChecked( true );
-    NYA_checkBox->setChecked( true );
-    PAL_checkBox->setChecked( true );
-    PAY_checkBox->setChecked( true );
-    PSA_checkBox->setChecked( true );
-    PSU_checkBox->setChecked( true );
-    PTR_checkBox->setChecked( true );
-    REG_checkBox->setChecked( true );
-    RLM_checkBox->setChecked( true );
-    SAP_checkBox->setChecked( true );
-    SBO_checkBox->setChecked( true );
-    SMS_checkBox->setChecked( true );
-    SON_checkBox->setChecked( true );
-    SOV_checkBox->setChecked( true );
-    SPO_checkBox->setChecked( true );
-    SXF_checkBox->setChecked( true );
-    SYO_checkBox->setChecked( true );
-    TAM_checkBox->setChecked( true );
-    TAT_checkBox->setChecked( true );
-    TIK_checkBox->setChecked( true );
-    TIR_checkBox->setChecked( true );
-    TOR_checkBox->setChecked( true );
-    XIA_checkBox->setChecked( true );
-    ZVE_checkBox->setChecked( true );
+    selectAllStations(true);
 }
 
 // ***********************************************************************************************************************
@@ -148,97 +233,45 @@ void DownloadManagerDialog::SelectAllStations()
 
 void DownloadManagerDialog::SelectNoneStation()
 {
-    ALE_checkBox->setChecked( false );
-    ASP_checkBox->setChecked( false );
-    BAR_checkBox->setChecked( false );
-    BER_checkBox->setChecked( false );
-    BIL_checkBox->setChecked( false );
-    BON_checkBox->setChecked( false );
-    BOS_checkBox->setChecked( false );
-    BOU_checkBox->setChecked( false );
-    BRB_checkBox->setChecked( false );
-    BUD_checkBox->setChecked( false );
-    CAB_checkBox->setChecked( false );
-    CAM_checkBox->setChecked( false );
-    CAP_checkBox->setChecked( false );
-    CAR_checkBox->setChecked( false );
-    CLH_checkBox->setChecked( false );
-    CNR_checkBox->setChecked( false );
-    COC_checkBox->setChecked( false );
-    DAA_checkBox->setChecked( false );
-    DAR_checkBox->setChecked( false );
-    DOM_checkBox->setChecked( false );
-    DON_checkBox->setChecked( false );
-    DRA_checkBox->setChecked( false );
-    DWN_checkBox->setChecked( false );
-    E13_checkBox->setChecked( false );
-    ENA_checkBox->setChecked( false );
-    EUR_checkBox->setChecked( false );
-    FLO_checkBox->setChecked( false );
-    FPE_checkBox->setChecked( false );
-    FUA_checkBox->setChecked( false );
-    GAN_checkBox->setChecked( false );
-    GCR_checkBox->setChecked( false );
-    GOB_checkBox->setChecked( false );
-    GUR_checkBox->setChecked( false );
-    GVN_checkBox->setChecked( false );
-    HOW_checkBox->setChecked( false );
-    ILO_checkBox->setChecked( false );
-    ISH_checkBox->setChecked( false );
-    IZA_checkBox->setChecked( false );
-    KWA_checkBox->setChecked( false );
-    LAU_checkBox->setChecked( false );
-    LER_checkBox->setChecked( false );
-    LIN_checkBox->setChecked( false );
-    LLN_checkBox->setChecked( false );
-    LRC_checkBox->setChecked( false );
-    MAN_checkBox->setChecked( false );
-    MNM_checkBox->setChecked( false );
-    NAU_checkBox->setChecked( false );
-    NEW_checkBox->setChecked( false );
-    NYA_checkBox->setChecked( false );
-    PAL_checkBox->setChecked( false );
-    PAY_checkBox->setChecked( false );
-    PSA_checkBox->setChecked( false );
-    PSU_checkBox->setChecked( false );
-    PTR_checkBox->setChecked( false );
-    REG_checkBox->setChecked( false );
-    RLM_checkBox->setChecked( false );
-    SAP_checkBox->setChecked( false );
-    SBO_checkBox->setChecked( false );
-    SMS_checkBox->setChecked( false );
-    SON_checkBox->setChecked( false );
-    SOV_checkBox->setChecked( false );
-    SPO_checkBox->setChecked( false );
-    SXF_checkBox->setChecked( false );
-    SYO_checkBox->setChecked( false );
-    TAM_checkBox->setChecked( false );
-    TAT_checkBox->setChecked( false );
-    TIK_checkBox->setChecked( false );
-    TIR_checkBox->setChecked( false );
-    TOR_checkBox->setChecked( false );
-    XIA_checkBox->setChecked( false );
-    ZVE_checkBox->setChecked( false );
+    selectAllStations(false);
 }
 
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
 
+void DownloadManagerDialog::selectAllMonths(bool selected)
+{
+    January_checkBox->setChecked( selected );
+    February_checkBox->setChecked( selected );
+    March_checkBox->setChecked( selected );
+    April_checkBox->setChecked( selected );
+    May_checkBox->setChecked( selected );
+    June_checkBox->setChecked( selected );
+    July_checkBox->setChecked( selected );
+    August_checkBox->setChecked( selected );
+    September_checkBox->setChecked( selected );
+    October_checkBox->setChecked( selected );
+    November_checkBox->setChecked( selected );
+    December_checkBox->setChecked( selected );
+}
+void DownloadManagerDialog::enableAllMonths(bool selected) {
+    January_checkBox->setEnabled( selected );
+    February_checkBox->setEnabled( selected );
+    March_checkBox->setEnabled( selected );
+    April_checkBox->setEnabled( selected );
+    May_checkBox->setEnabled( selected );
+    June_checkBox->setEnabled( selected );
+    July_checkBox->setEnabled( selected );
+    August_checkBox->setEnabled( selected );
+    September_checkBox->setEnabled( selected );
+    October_checkBox->setEnabled( selected );
+    November_checkBox->setEnabled( selected );
+    December_checkBox->setEnabled( selected );
+}
 void DownloadManagerDialog::SelectAllMonth()
 {
-    January_checkBox->setChecked( true );
-    February_checkBox->setChecked( true );
-    March_checkBox->setChecked( true );
-    April_checkBox->setChecked( true );
-    May_checkBox->setChecked( true );
-    June_checkBox->setChecked( true );
-    July_checkBox->setChecked( true );
-    August_checkBox->setChecked( true );
-    September_checkBox->setChecked( true );
-    October_checkBox->setChecked( true );
-    November_checkBox->setChecked( true );
-    December_checkBox->setChecked( true );
+    selectAllMonths(true);
 }
 
 // ***********************************************************************************************************************
@@ -247,18 +280,7 @@ void DownloadManagerDialog::SelectAllMonth()
 
 void DownloadManagerDialog::SelectNoneMonth()
 {
-    January_checkBox->setChecked( false );
-    February_checkBox->setChecked( false );
-    March_checkBox->setChecked( false );
-    April_checkBox->setChecked( false );
-    May_checkBox->setChecked( false );
-    June_checkBox->setChecked( false );
-    July_checkBox->setChecked( false );
-    August_checkBox->setChecked( false );
-    September_checkBox->setChecked( false );
-    October_checkBox->setChecked( false );
-    November_checkBox->setChecked( false );
-    December_checkBox->setChecked( false );
+    selectAllMonths(false);
 }
 
 // ***********************************************************************************************************************
@@ -267,18 +289,7 @@ void DownloadManagerDialog::SelectNoneMonth()
 
 void DownloadManagerDialog::EnableAllMonths()
 {
-    January_checkBox->setEnabled( true );
-    February_checkBox->setEnabled( true );
-    March_checkBox->setEnabled( true );
-    April_checkBox->setEnabled( true );
-    May_checkBox->setEnabled( true );
-    June_checkBox->setEnabled( true );
-    July_checkBox->setEnabled( true );
-    August_checkBox->setEnabled( true );
-    September_checkBox->setEnabled( true );
-    October_checkBox->setEnabled( true );
-    November_checkBox->setEnabled( true );
-    December_checkBox->setEnabled( true );
+    enableAllMonths(true);
 }
 
 // ***********************************************************************************************************************
@@ -287,54 +298,80 @@ void DownloadManagerDialog::EnableAllMonths()
 
 void DownloadManagerDialog::DisableAllMonths()
 {
-    January_checkBox->setEnabled( false );
-    February_checkBox->setEnabled( false );
-    March_checkBox->setEnabled( false );
-    April_checkBox->setEnabled( false );
-    May_checkBox->setEnabled( false );
-    June_checkBox->setEnabled( false );
-    July_checkBox->setEnabled( false );
-    August_checkBox->setEnabled( false );
-    September_checkBox->setEnabled( false );
-    October_checkBox->setEnabled( false );
-    November_checkBox->setEnabled( false );
-    December_checkBox->setEnabled( false );
+    enableAllMonths(false);
 }
 
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
 
+void DownloadManagerDialog::selectAllYears(bool selected) {
+    Year1992_checkBox->setChecked( selected );
+    Year1993_checkBox->setChecked( selected );
+    Year1994_checkBox->setChecked( selected );
+    Year1995_checkBox->setChecked( selected );
+    Year1996_checkBox->setChecked( selected );
+    Year1997_checkBox->setChecked( selected );
+    Year1998_checkBox->setChecked( selected );
+    Year1999_checkBox->setChecked( selected );
+    Year2000_checkBox->setChecked( selected );
+    Year2001_checkBox->setChecked( selected );
+    Year2002_checkBox->setChecked( selected );
+    Year2003_checkBox->setChecked( selected );
+    Year2004_checkBox->setChecked( selected );
+    Year2005_checkBox->setChecked( selected );
+    Year2006_checkBox->setChecked( selected );
+    Year2007_checkBox->setChecked( selected );
+    Year2008_checkBox->setChecked( selected );
+    Year2009_checkBox->setChecked( selected );
+    Year2010_checkBox->setChecked( selected );
+    Year2011_checkBox->setChecked( selected );
+    Year2012_checkBox->setChecked( selected );
+    Year2013_checkBox->setChecked( selected );
+    Year2014_checkBox->setChecked( selected );
+    Year2015_checkBox->setChecked( selected );
+    Year2016_checkBox->setChecked( selected );
+    Year2017_checkBox->setChecked( selected );
+    Year2018_checkBox->setChecked( selected );
+    Year2019_checkBox->setChecked( selected );
+    Year2020_checkBox->setChecked( selected );
+    Year2021_checkBox->setChecked( selected );
+}
+void DownloadManagerDialog::enableAllYears(bool selected) {
+    Year1992_checkBox->setEnabled( selected );
+    Year1993_checkBox->setEnabled( selected );
+    Year1994_checkBox->setEnabled( selected );
+    Year1995_checkBox->setEnabled( selected );
+    Year1996_checkBox->setEnabled( selected );
+    Year1997_checkBox->setEnabled( selected );
+    Year1998_checkBox->setEnabled( selected );
+    Year1999_checkBox->setEnabled( selected );
+    Year2000_checkBox->setEnabled( selected );
+    Year2001_checkBox->setEnabled( selected );
+    Year2002_checkBox->setEnabled( selected );
+    Year2003_checkBox->setEnabled( selected );
+    Year2004_checkBox->setEnabled( selected );
+    Year2005_checkBox->setEnabled( selected );
+    Year2006_checkBox->setEnabled( selected );
+    Year2007_checkBox->setEnabled( selected );
+    Year2008_checkBox->setEnabled( selected );
+    Year2009_checkBox->setEnabled( selected );
+    Year2010_checkBox->setEnabled( selected );
+    Year2011_checkBox->setEnabled( selected );
+    Year2012_checkBox->setEnabled( selected );
+    Year2013_checkBox->setEnabled( selected );
+    Year2014_checkBox->setEnabled( selected );
+    Year2015_checkBox->setEnabled( selected );
+    Year2016_checkBox->setEnabled( selected );
+    Year2017_checkBox->setEnabled( selected );
+    Year2018_checkBox->setEnabled( selected );
+    Year2019_checkBox->setEnabled( selected );
+    Year2020_checkBox->setEnabled( selected );
+    Year2021_checkBox->setEnabled( selected );
+}
 void DownloadManagerDialog::SelectAllYears()
 {
-    Year1992_checkBox->setChecked( true );
-    Year1993_checkBox->setChecked( true );
-    Year1994_checkBox->setChecked( true );
-    Year1995_checkBox->setChecked( true );
-    Year1996_checkBox->setChecked( true );
-    Year1997_checkBox->setChecked( true );
-    Year1998_checkBox->setChecked( true );
-    Year1999_checkBox->setChecked( true );
-    Year2000_checkBox->setChecked( true );
-    Year2001_checkBox->setChecked( true );
-    Year2002_checkBox->setChecked( true );
-    Year2003_checkBox->setChecked( true );
-    Year2004_checkBox->setChecked( true );
-    Year2005_checkBox->setChecked( true );
-    Year2006_checkBox->setChecked( true );
-    Year2007_checkBox->setChecked( true );
-    Year2008_checkBox->setChecked( true );
-    Year2009_checkBox->setChecked( true );
-    Year2010_checkBox->setChecked( true );
-    Year2011_checkBox->setChecked( true );
-    Year2012_checkBox->setChecked( true );
-    Year2013_checkBox->setChecked( true );
-    Year2014_checkBox->setChecked( true );
-    Year2015_checkBox->setChecked( true );
-    Year2016_checkBox->setChecked( true );
-    Year2017_checkBox->setChecked( true );
-    Year2018_checkBox->setChecked( true );
-    Year2019_checkBox->setChecked( true );
+    selectAllYears(true);
 }
 
 // ***********************************************************************************************************************
@@ -343,34 +380,7 @@ void DownloadManagerDialog::SelectAllYears()
 
 void DownloadManagerDialog::SelectNoneYear()
 {
-    Year1992_checkBox->setChecked( false );
-    Year1993_checkBox->setChecked( false );
-    Year1994_checkBox->setChecked( false );
-    Year1995_checkBox->setChecked( false );
-    Year1996_checkBox->setChecked( false );
-    Year1997_checkBox->setChecked( false );
-    Year1998_checkBox->setChecked( false );
-    Year1999_checkBox->setChecked( false );
-    Year2000_checkBox->setChecked( false );
-    Year2001_checkBox->setChecked( false );
-    Year2002_checkBox->setChecked( false );
-    Year2003_checkBox->setChecked( false );
-    Year2004_checkBox->setChecked( false );
-    Year2005_checkBox->setChecked( false );
-    Year2006_checkBox->setChecked( false );
-    Year2007_checkBox->setChecked( false );
-    Year2008_checkBox->setChecked( false );
-    Year2009_checkBox->setChecked( false );
-    Year2010_checkBox->setChecked( false );
-    Year2011_checkBox->setChecked( false );
-    Year2012_checkBox->setChecked( false );
-    Year2013_checkBox->setChecked( false );
-    Year2014_checkBox->setChecked( false );
-    Year2015_checkBox->setChecked( false );
-    Year2016_checkBox->setChecked( false );
-    Year2017_checkBox->setChecked( false );
-    Year2018_checkBox->setChecked( false );
-    Year2019_checkBox->setChecked( false );
+    selectAllYears(false);
 }
 
 // ***********************************************************************************************************************
@@ -379,34 +389,7 @@ void DownloadManagerDialog::SelectNoneYear()
 
 void DownloadManagerDialog::EnableAllYears()
 {
-    Year1992_checkBox->setEnabled( true );
-    Year1993_checkBox->setEnabled( true );
-    Year1994_checkBox->setEnabled( true );
-    Year1995_checkBox->setEnabled( true );
-    Year1996_checkBox->setEnabled( true );
-    Year1997_checkBox->setEnabled( true );
-    Year1998_checkBox->setEnabled( true );
-    Year1999_checkBox->setEnabled( true );
-    Year2000_checkBox->setEnabled( true );
-    Year2001_checkBox->setEnabled( true );
-    Year2002_checkBox->setEnabled( true );
-    Year2003_checkBox->setEnabled( true );
-    Year2004_checkBox->setEnabled( true );
-    Year2005_checkBox->setEnabled( true );
-    Year2006_checkBox->setEnabled( true );
-    Year2007_checkBox->setEnabled( true );
-    Year2008_checkBox->setEnabled( true );
-    Year2009_checkBox->setEnabled( true );
-    Year2010_checkBox->setEnabled( true );
-    Year2011_checkBox->setEnabled( true );
-    Year2012_checkBox->setEnabled( true );
-    Year2013_checkBox->setEnabled( true );
-    Year2014_checkBox->setEnabled( true );
-    Year2015_checkBox->setEnabled( true );
-    Year2016_checkBox->setEnabled( true );
-    Year2017_checkBox->setEnabled( true );
-    Year2018_checkBox->setEnabled( true );
-    Year2019_checkBox->setEnabled( true );
+    enableAllYears(true);
 }
 
 // ***********************************************************************************************************************
@@ -415,34 +398,7 @@ void DownloadManagerDialog::EnableAllYears()
 
 void DownloadManagerDialog::DisableAllYears()
 {
-    Year1992_checkBox->setEnabled( false );
-    Year1993_checkBox->setEnabled( false );
-    Year1994_checkBox->setEnabled( false );
-    Year1995_checkBox->setEnabled( false );
-    Year1996_checkBox->setEnabled( false );
-    Year1997_checkBox->setEnabled( false );
-    Year1998_checkBox->setEnabled( false );
-    Year1999_checkBox->setEnabled( false );
-    Year2000_checkBox->setEnabled( false );
-    Year2001_checkBox->setEnabled( false );
-    Year2002_checkBox->setEnabled( false );
-    Year2003_checkBox->setEnabled( false );
-    Year2004_checkBox->setEnabled( false );
-    Year2005_checkBox->setEnabled( false );
-    Year2006_checkBox->setEnabled( false );
-    Year2007_checkBox->setEnabled( false );
-    Year2008_checkBox->setEnabled( false );
-    Year2009_checkBox->setEnabled( false );
-    Year2010_checkBox->setEnabled( false );
-    Year2011_checkBox->setEnabled( false );
-    Year2012_checkBox->setEnabled( false );
-    Year2013_checkBox->setEnabled( false );
-    Year2014_checkBox->setEnabled( false );
-    Year2015_checkBox->setEnabled( false );
-    Year2016_checkBox->setEnabled( false );
-    Year2017_checkBox->setEnabled( false );
-    Year2018_checkBox->setEnabled( false );
-    Year2019_checkBox->setEnabled( false );
+    enableAllYears(false);
 }
 
 // ***********************************************************************************************************************
@@ -492,6 +448,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
     dialog.FUA_checkBox->setChecked( b_Station[FUA] );
     dialog.GAN_checkBox->setChecked( b_Station[GAN] );
     dialog.GCR_checkBox->setChecked( b_Station[GCR] );
+    dialog.GIM_checkBox->setChecked( b_Station[GIM] );
     dialog.GOB_checkBox->setChecked( b_Station[GOB] );
     dialog.GUR_checkBox->setChecked( b_Station[GUR] );
     dialog.GVN_checkBox->setChecked( b_Station[GVN] );
@@ -505,20 +462,25 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
     dialog.LIN_checkBox->setChecked( b_Station[LIN] );
     dialog.LLN_checkBox->setChecked( b_Station[LLN] );
     dialog.LRC_checkBox->setChecked( b_Station[LRC] );
+    dialog.LYU_checkBox->setChecked( b_Station[LYU] );
     dialog.MAN_checkBox->setChecked( b_Station[MAN] );
     dialog.MNM_checkBox->setChecked( b_Station[MNM] );
     dialog.NAU_checkBox->setChecked( b_Station[NAU] );
     dialog.NEW_checkBox->setChecked( b_Station[NEW] );
     dialog.NYA_checkBox->setChecked( b_Station[NYA] );
+    dialog.OHY_checkBox->setChecked( b_Station[OHY] );
     dialog.PAL_checkBox->setChecked( b_Station[PAL] );
+    dialog.PAR_checkBox->setChecked( b_Station[PAR] );
     dialog.PAY_checkBox->setChecked( b_Station[PAY] );
     dialog.PSA_checkBox->setChecked( b_Station[PSA] );
     dialog.PSU_checkBox->setChecked( b_Station[PSU] );
     dialog.PTR_checkBox->setChecked( b_Station[PTR] );
     dialog.REG_checkBox->setChecked( b_Station[REG] );
     dialog.RLM_checkBox->setChecked( b_Station[RLM] );
+    dialog.RUN_checkBox->setChecked( b_Station[RUN] );
     dialog.SAP_checkBox->setChecked( b_Station[SAP] );
     dialog.SBO_checkBox->setChecked( b_Station[SBO] );
+    dialog.SEL_checkBox->setChecked( b_Station[SEL] );
     dialog.SMS_checkBox->setChecked( b_Station[SMS] );
     dialog.SON_checkBox->setChecked( b_Station[SON] );
     dialog.SOV_checkBox->setChecked( b_Station[SOV] );
@@ -531,6 +493,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
     dialog.TIR_checkBox->setChecked( b_Station[TIR] );
     dialog.TOR_checkBox->setChecked( b_Station[TOR] );
     dialog.XIA_checkBox->setChecked( b_Station[XIA] );
+    dialog.YUS_checkBox->setChecked( b_Station[YUS] );
     dialog.ZVE_checkBox->setChecked( b_Station[ZVE] );
 
     // Month
@@ -576,6 +539,8 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
     dialog.Year2017_checkBox->setChecked( b_Year[26] );
     dialog.Year2018_checkBox->setChecked( b_Year[27] );
     dialog.Year2019_checkBox->setChecked( b_Year[28] );
+    dialog.Year2020_checkBox->setChecked( b_Year[29] );
+    dialog.Year2021_checkBox->setChecked( b_Year[30] );
 
     // Options
     dialog.DecompressFiles_checkBox->setChecked( b_DecompressFiles );
@@ -639,6 +604,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
         b_Station[FUA]  = dialog.FUA_checkBox->isChecked();
         b_Station[GAN]  = dialog.GAN_checkBox->isChecked();
         b_Station[GCR]  = dialog.GCR_checkBox->isChecked();
+        b_Station[GIM]  = dialog.GIM_checkBox->isChecked();
         b_Station[GOB]  = dialog.GOB_checkBox->isChecked();
         b_Station[GUR]  = dialog.GUR_checkBox->isChecked();
         b_Station[GVN]  = dialog.GVN_checkBox->isChecked();
@@ -652,20 +618,25 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
         b_Station[LIN]  = dialog.LIN_checkBox->isChecked();
         b_Station[LLN]  = dialog.LLN_checkBox->isChecked();
         b_Station[LRC]  = dialog.LRC_checkBox->isChecked();
+        b_Station[LYU]  = dialog.LYU_checkBox->isChecked();
         b_Station[MAN]  = dialog.MAN_checkBox->isChecked();
         b_Station[MNM]  = dialog.MNM_checkBox->isChecked();
         b_Station[NAU]  = dialog.NAU_checkBox->isChecked();
         b_Station[NEW]  = dialog.NEW_checkBox->isChecked();
         b_Station[NYA]  = dialog.NYA_checkBox->isChecked();
+        b_Station[OHY]  = dialog.OHY_checkBox->isChecked();
         b_Station[PAL]  = dialog.PAL_checkBox->isChecked();
+        b_Station[PAR]  = dialog.PAR_checkBox->isChecked();
         b_Station[PAY]  = dialog.PAY_checkBox->isChecked();
         b_Station[PSA]  = dialog.PSA_checkBox->isChecked();
         b_Station[PSU]  = dialog.PSU_checkBox->isChecked();
         b_Station[PTR]  = dialog.PTR_checkBox->isChecked();
         b_Station[REG]  = dialog.REG_checkBox->isChecked();
         b_Station[RLM]  = dialog.RLM_checkBox->isChecked();
+        b_Station[RUN]  = dialog.RUN_checkBox->isChecked();
         b_Station[SAP]  = dialog.SAP_checkBox->isChecked();
         b_Station[SBO]  = dialog.SBO_checkBox->isChecked();
+        b_Station[SEL]  = dialog.SEL_checkBox->isChecked();
         b_Station[SMS]  = dialog.SMS_checkBox->isChecked();
         b_Station[SON]  = dialog.SON_checkBox->isChecked();
         b_Station[SOV]  = dialog.SOV_checkBox->isChecked();
@@ -678,6 +649,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
         b_Station[TIR]  = dialog.TIR_checkBox->isChecked();
         b_Station[TOR]  = dialog.TOR_checkBox->isChecked();
         b_Station[XIA]  = dialog.XIA_checkBox->isChecked();
+        b_Station[YUS]  = dialog.YUS_checkBox->isChecked();
         b_Station[ZVE]  = dialog.ZVE_checkBox->isChecked();
 
         // Month
@@ -723,6 +695,8 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
         b_Year[26]	= dialog.Year2017_checkBox->isChecked();
         b_Year[27]	= dialog.Year2018_checkBox->isChecked();
         b_Year[28]	= dialog.Year2019_checkBox->isChecked();
+        b_Year[29]	= dialog.Year2020_checkBox->isChecked();
+        b_Year[30]	= dialog.Year2021_checkBox->isChecked();
 
         b_DecompressFiles	= dialog.DecompressFiles_checkBox->isChecked();
         b_CheckFiles		= dialog.CheckFiles_checkBox->isChecked();

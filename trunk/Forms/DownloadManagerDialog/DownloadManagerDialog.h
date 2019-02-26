@@ -15,15 +15,22 @@ public:
 
 private slots:
     void BrowseDownloadDirectory();
+    void selectAllStations(bool selected);
+    void enableAllStations(bool enabled);
     void SelectAllStations();
     void SelectNoneStation();
+    void selectAllMonths(bool selected);
     void SelectAllMonth();
     void SelectNoneMonth();
+    void selectAllYears(bool selected);
     void SelectAllYears();
     void SelectNoneYear();
 
+    void enableAllYears(bool enabled);
     void EnableAllYears();
     void DisableAllYears();
+
+    void enableAllMonths(bool enabled);
     void EnableAllMonths();
     void DisableAllMonths();
 

@@ -25,6 +25,11 @@ int main( int argc, char *argv[] )
         app.setQuitOnLastWindowClosed( false );
     #endif
 
+        //new:
+            QStringList strList;
+            strList.append(app.applicationDirPath() + "/../PlugIns");
+            app.setLibraryPaths(strList);
+
     QCoreApplication::setOrganizationName("PANGAEA");
     QCoreApplication::setOrganizationDomain( "pangaea.de" );
     QCoreApplication::setApplicationName( "BSRN_Toolbox" );
@@ -141,7 +146,8 @@ int MainWindow::downloadFile( const QString &s_Curl, const QString &s_Url, const
 
     removeFile( s_Filename );
 
-    process.start( "\"" + QDir::toNativeSeparators( s_Curl ) + "\" -o \"" + QDir::toNativeSeparators( s_Filename ) + "\" \"" + s_Url + "\"" );
+    qInfo() << ((QString)("Downloading... " + QDir::toNativeSeparators( s_Curl ) + " -k -o " + QDir::toNativeSeparators( s_Filename ) + " " + s_Url + "")).replace("\\", "/");
+    process.start( "\"" + QDir::toNativeSeparators( s_Curl ) + "\" -k -o \"" + QDir::toNativeSeparators( s_Filename ) + "\" \"" + s_Url + "\"" );
     process.waitForFinished( -1 );
 
     return( _NOERROR_ );

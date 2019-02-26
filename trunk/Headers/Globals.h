@@ -128,6 +128,7 @@
     const int   FUA =  6;
     const int   GAN = 58; // 2017-10-16
     const int   GCR = 33;
+    const int   GIM = 78; // 2018-10-25
     const int   GOB = 20; // 2013-01-05
     const int   GUR = 56; // 2017-10-16
     const int   GVN = 13;
@@ -141,20 +142,25 @@
     const int   LIN = 12;
     const int   LLN = 54; // 2017-10-16
     const int   LRC = 49; // 2015-02-05
+    const int   LYU = 79; // 2018-10-25
     const int   MAN = 29;
     const int   MNM =  8;
     const int   NAU = 30;
     const int   NEW = 52; // 2017-10-16
     const int   NYA = 11;
+    const int   OHY = 80; // 2018-10-25
     const int   PAL = 63;
+    const int   PAR = 81; // 2018-10-25
     const int   PAY = 21;
     const int   PSA = 76; // 2014-09-09
     const int   PSU = 36;
     const int   PTR = 72;
     const int   REG =  5;
     const int   RLM = 73;
+    const int   RUN = 82; // 2018-10-25
     const int   SAP =  4;
     const int   SBO = 43;
+    const int   SEL = 83; // 2018-10-25
     const int   SMS = 70;
     const int   SON = 75; // 2013-03-06
     const int   SOV = 41;
@@ -167,5 +173,6 @@
     const int   TIR = 59; // 2017-10-16
     const int   TOR =  9;
     const int   XIA = 44;
+    const int   YUS = 84; // 2018-10-25
     const int   ZVE = 46;
 #endif

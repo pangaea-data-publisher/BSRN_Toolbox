@@ -8,7 +8,7 @@ macx {
     cache()
 
     # Set SDK
-    QMAKE_MAC_SDK = macosx10.13 # Xcode 9 - 2017-09-20
+    QMAKE_MAC_SDK = macosx10.14 # Xcode 9 - 2017-09-20
 
     # Only Intel binaries are accepted so force this
     CONFIG += x86_64
@@ -21,6 +21,18 @@ macx {
 
     # Replace default Info.plist
     QMAKE_INFO_PLIST = ./Resources/Info.plist
+
+
+    CONFIG += release
+
+    CONFIG += app_bundle
+
+    SUBDIRS = Frameworks Plugins Resources
+    app.depends = ./Plugins
+    app.depends = ./Frameworks
+    app.depends = ./Resources
+
+    STRIP_BITCODE_FROM_COPIED_FILES=NO
 
     QMAKE_CFLAGS += -gdwarf-2
     QMAKE_CXXFLAGS += -gdwarf-2
