@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "BSRN Toolbox"
-!define PRODUCT_VERSION "2.35"
+!define PRODUCT_VERSION "3.00"
 !define PRODUCT_PUBLISHER "PANGAEA"
 !define PRODUCT_WEB_SITE "http://www.pangaea.de"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\BSRN_Toolbox.exe"
@@ -20,7 +20,7 @@
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
 ; License page
-!insertmacro MUI_PAGE_LICENSE "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\License\License.txt"
+!insertmacro MUI_PAGE_LICENSE "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\License\License.txt"
 ; Directory page
 !insertmacro MUI_PAGE_DIRECTORY
 ; Instfiles page
@@ -38,7 +38,7 @@
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox_V2_Win.exe"
+OutFile "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\BSRN_Toolbox_Win.exe"
 InstallDir "$PROGRAMFILES\PANGAEA\BSRN Toolbox"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
@@ -47,27 +47,27 @@ RequestExecutionLevel admin
 
 Section "MainSection" SEC01
   SetOutPath "$INSTDIR"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\BSRN_Toolbox.exe"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\BSRN_fcheck.exe"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\curl.exe"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\gzip.exe"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\Qt5Core.dll"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\Qt5Gui.dll"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\Qt5Network.dll"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\Qt5Widgets.dll"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\libgcc_s_dw2-1.dll"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\libstdc++-6.dll"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\libwinpthread-1.dll"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\curl-ca-bundle.crt"
+  File "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\BSRN_Toolbox.exe"
+  File "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\BSRN_fcheck.exe"
+  File "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\curl.exe"
+  File "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\gzip.exe"
+  File "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\Qt5Core.dll"
+  File "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\Qt5Gui.dll"
+  File "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\Qt5Network.dll"
+  File "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\Qt5Widgets.dll"
+  File "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\libgcc_s_dw2-1.dll"
+  File "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\libstdc++-6.dll"
+  File "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\libwinpthread-1.dll"
+  File "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\curl-ca-bundle.crt"
 
 SetOutPath "$INSTDIR\platforms"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\platforms\qminimal.dll"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\platforms\qwindows.dll"
+  File "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\platforms\qminimal.dll"
+  File "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\platforms\qwindows.dll"
 
   SetOutPath "$INSTDIR\License"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\License\gpl-3.0.txt"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\License\License.txt"
-  File "C:\Users\rsieger\Documents\Development\Distribution\BSRN_Toolbox\License\Readme.txt"
+  File "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\License\gpl-3.0.txt"
+  File "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\License\License.txt"
+  File "C:\Users\bawagner\shared\Distribution_Win\BSRN_Toolbox\License\Readme.txt"
 
   CreateDirectory "$SMPROGRAMS\PANGAEA"
   CreateDirectory "$SMPROGRAMS\PANGAEA\BSRN Toolbox"

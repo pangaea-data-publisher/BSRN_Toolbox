@@ -34,19 +34,19 @@ void MainWindow::onError( const int err )
         QMessageBox::information( this, getApplicationName( true ), tr( "Can't open file.\nPossible locked by another application." ) );
         break;
     case -11:
-        QMessageBox::information( this, getApplicationName( true ), tr( "Can't open BSRN IDs database.\nPlease contact rsieger@pangaea.de" ) );
+        QMessageBox::information( this, getApplicationName( true ), tr( "Can't open BSRN IDs database.\nPlease contact roland.koppe@awi.de" ) );
         break;
     case -20:
-        QMessageBox::information( this, getApplicationName( true ), tr( "Can't create file.\nPlease contact rsieger@pangaea.de" ) );
+        QMessageBox::information( this, getApplicationName( true ), tr( "Can't create file.\nPlease contact roland.koppe@awi.de" ) );
         break ;
     case -30:
-        QMessageBox::information( this, getApplicationName( true ), tr( "Can't find BSRN_fcheck\nPlease contact rsieger@pangaea.de" ) );
+        QMessageBox::information( this, getApplicationName( true ), tr( "Can't find BSRN_fcheck\nPlease contact roland.koppe@awi.de" ) );
         break ;
     case -31:
-        QMessageBox::information( this, getApplicationName( true ), tr( "Can't find BSRN_fcheck.exe\nPlease contact rsieger@pangaea.de" ) );
+        QMessageBox::information( this, getApplicationName( true ), tr( "Can't find BSRN_fcheck.exe\nPlease contact roland.koppe@awi.de" ) );
         break ;
     case -32:
-        QMessageBox::information( this, getApplicationName( true ), tr( "Can't find BSRN_fcheck\nPlease contact rsieger@pangaea.de" ) );
+        QMessageBox::information( this, getApplicationName( true ), tr( "Can't find BSRN_fcheck\nPlease contact roland.koppe@awi.de" ) );
         break ;
     case -40:
         QMessageBox::information( this, getApplicationName( true ), tr( "Wrong format. Read the station-to-archive\nfile format description (hdl:10013/epic.42596)" ) );
@@ -55,7 +55,7 @@ void MainWindow::onError( const int err )
         QMessageBox::information( this, getApplicationName( true ), tr( "Wrong format. Please check filename\nand date of data in the second line." ) );
         break ;
     case -42:
-        QMessageBox::warning( this, getApplicationName( true ), tr( "The format of the BSRN IDs database is\nwrong. Please contact rsieger@pangaea.de" ) );
+        QMessageBox::warning( this, getApplicationName( true ), tr( "The format of the BSRN IDs database is\nwrong. Please contact roland.koppe@awi.de" ) );
         break;
     case -50:
         QMessageBox::information( this, getApplicationName( true ), tr( "Select more than one file!" ) );
@@ -73,13 +73,13 @@ void MainWindow::onError( const int err )
         QMessageBox::information( this, getApplicationName( true ), tr( "Download of BSRN reference IDs database\nfails. Please check your connection to the\ninternet and refresh the database again." ) );
         break;
     case -70:
-        QMessageBox::information( this, getApplicationName( true ), tr( "Maximum number of methods was reached.\nPlease contact rsieger@pangaea.de" ) );
+        QMessageBox::information( this, getApplicationName( true ), tr( "Maximum number of methods was reached.\nPlease contact roland.koppe@awi.de" ) );
         break;
     case -71:
-        QMessageBox::information( this, getApplicationName( true ), tr( "Maximum number of datasets was reached.\nPlease contact rsieger@pangaea.de" ) );
+        QMessageBox::information( this, getApplicationName( true ), tr( "Maximum number of datasets was reached.\nPlease contact roland.koppe@awi.de" ) );
         break;
     case -72:
-        QMessageBox::information( this, getApplicationName( true ), tr( "Maximum number of references was reached.\nPlease contact rsieger@pangaea.de" ) );
+        QMessageBox::information( this, getApplicationName( true ), tr( "Maximum number of references was reached.\nPlease contact roland.koppe@awi.de" ) );
         break;
 
     case NODATAFOUND:
@@ -129,7 +129,7 @@ void MainWindow::onError( const int err )
         break ;
 
     default :
-        QMessageBox::information( this, getApplicationName( true ), tr( "Unknown error.\nPlease contact rsieger@pangaea.de" ) );
+        QMessageBox::information( this, getApplicationName( true ), tr( "Unknown error.\nPlease contact roland.koppe@awi.de" ) );
         break ;
     }
 }

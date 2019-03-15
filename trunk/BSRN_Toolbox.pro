@@ -47,6 +47,8 @@ win32 {
 }
 
 linux-g++ {
+    SUBDIRS = Plugins
+    app.depends = ./Plugins
 }
 
 TARGET = BSRN_Toolbox

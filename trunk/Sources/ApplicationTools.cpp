@@ -324,7 +324,7 @@ int MainWindow::readBsrnIDs()
         writeDefaultIDsBSRN( IDsFilename );
         readBsrnIDs();
 
-        return( -42 ); // The format of the BSRN IDs database is wrong. Please contact rsieger@pangaea.de
+        return( -42 ); // The format of the BSRN IDs database is wrong. Please contact roland.koppe@awi.de
     }
 
     InputStr = tinIDs.readLine();
@@ -479,7 +479,7 @@ int MainWindow::readBsrnIDs()
     fIDs_old.remove();
 
     if ( i == MAX_NUM_OF_METHODS )
-        return( -70 ); // Maximum number of methods was reached. Please contact Rainer Sieger (rsieger@pangaea.de)
+        return( -70 ); // Maximum number of methods was reached. Please contact Roland Koppe (roland.koppe@awi.de)
 
     return( _NOERROR_ );
 }
@@ -542,7 +542,7 @@ int MainWindow::readBsrnReferenceIDs( const bool b_updateReferenceIDs )
         setNormalCursor();
         setStatusBar( tr( "Maximum number of datasets was reached" ), 2 );
 
-        return( -72 ); // Maximum number of datasets was reached. Please contact Rainer Sieger (rsieger@pangaea.de)
+        return( -72 ); // Maximum number of datasets was reached. Please contact Roland Koppe (roland.koppe@awi.de)
     }
 
     for ( int j=n; j>0; --j )
@@ -635,7 +635,7 @@ int MainWindow::readBsrnDatasetIDs()
 // **********************************************************************************************
 
     if ( i == MAX_NUM_OF_DATASETS )
-        return( -71 ); // Maximum number of datasets was reached. Please contact Rainer Sieger (rsieger@pangaea.de)
+        return( -71 ); // Maximum number of datasets was reached. Please contact Roland Koppe (roland.koppe@awi.de)
 
     return( _NOERROR_ );
 }

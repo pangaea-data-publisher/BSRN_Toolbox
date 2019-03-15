@@ -1794,7 +1794,7 @@ void MainWindow::about()
     dialog.newVersion->setTextFormat( Qt::RichText );
     dialog.newVersion->setOpenExternalLinks( true );
 
-    dialog.Contact->setText( "Contact: Rainer Sieger (<a href=\"mailto:rsieger@pangaea.de\">rsieger@pangaea.de</a>)" );
+    dialog.Contact->setText( "Contact: Roland Koppe (<a href=\"mailto:roland.koppe@awi.de\">roland.koppe@awi.de</a>)" );
     dialog.Contact->setTextFormat( Qt::RichText );
     dialog.Contact->setOpenExternalLinks( true );
 

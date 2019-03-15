@@ -9,4 +9,4 @@ Reference: Schmithüsen, Holger; Sieger, Rainer & König-Langlo, Gert (2012) BSRN 
 Alfred Wegener Institute for Polar and Marine Research (AWI)
 27515 Bremerhaven, Germany
 
-e-mail: info@pangaea.de
+e-mail: roland.koppe@awi.de
