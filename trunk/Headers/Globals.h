@@ -150,7 +150,7 @@
     const int   NYA = 11;
     const int   OHY = 80; // 2018-10-25
     const int   PAL = 63;
-    const int   PAR = 81; // 2018-10-25
+    const int   PAR = 66; // 2018-10-25
     const int   PAY = 21;
     const int   PSA = 76; // 2014-09-09
     const int   PSU = 36;
