@@ -134,7 +134,7 @@ void QualityCheckRecommendedV20OptionsDialog::ShowIqbal1983Info()
                                                                "described in:\n"
                                                                "Iqbal, Muhammad: An Introduction to Solar Radiation,\n"
                                                                "Academic Press Canada, 1983, ISBN 0-12-373750-8\n\n"
-                                                               "Solar constant used is 1376 W/m2. There is no\n"
+                                                               "Solar constant used is 1367 W/m2. There is no\n"
                                                                "atmospheric refraction taken into account."));
 }
 
@@ -147,7 +147,7 @@ void QualityCheckRecommendedV20OptionsDialog::ShowSolposInfo()
                                                             "Energy Laboratory, USA. The code and documentation\n"
                                                             "can be found at:\n"
                                                             "http://rredc.nrel.gov/solar/codesandalgorithms/solpos/\n\n"
-                                                            "Solar constant used is 1376 W/m2. The algorithm supports\n"
+                                                            "Solar constant used is 1367 W/m2. The algorithm supports\n"
                                                             "atmospheric refraction. For this, the input parameter\n"
                                                             "'Station pressure [hPa] (PoPoPoPo)' and\n"
                                                             "'Air temperature at 2 m height [°C] (T2)' are required."));

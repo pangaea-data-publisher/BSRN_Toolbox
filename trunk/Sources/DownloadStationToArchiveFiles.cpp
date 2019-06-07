@@ -33,7 +33,8 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
                                                        const bool b_CheckAvailability,
                                                        bool b_Station[MAX_NUM_OF_STATIONS+1],
                                                        bool b_Month[MAX_NUM_OF_MONTHS+1],
-                                                       bool b_Year[MAX_NUM_OF_YEARS+1] )
+                                                       bool b_Year[MAX_NUM_OF_YEARS+1],
+                                                       int& i_NumOfEmptyFiles,int& i_NumOfMissingFiles, int& i_numOfChecks)
 {
     int         i                   = 1;
     int         m                   = 0;
@@ -43,6 +44,7 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
     int         i_NumOfStations     = 0;
     int         i_NumOfYears        = 0;
     int         i_NumOfMonths       = 0;
+
 
     QString     s_EventLabel        = "";
     QString     s_Month             = "";
@@ -60,6 +62,8 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
     QStringList sl_ReportList;
 
     QProcess    process;
+
+    QString targetfile = "";
 
 //-----------------------------------------------------------------------------------------------------------------------
 
@@ -87,15 +91,17 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
 //-----------------------------------------------------------------------------------------------------------------------
 // calculate number of downloads
 
-        for ( int i=1; i<MAX_NUM_OF_STATIONS; i++ )
+        for ( int i=1; i<MAX_NUM_OF_STATIONS; i++ )  //100
             if ( b_Station[i] == true )
                 i_NumOfStations++;
 
-        for ( int i=1; i<MAX_NUM_OF_MONTHS; i++ )
+        //for ( int i=1; i<MAX_NUM_OF_MONTHS; i++ )
+        for ( int i=1; i<=MAX_NUM_OF_MONTHS; i++ )  //12
             if ( b_Month[i] == true )
                 i_NumOfMonths++;
 
-        for ( int i=1; i<MAX_NUM_OF_YEARS; i++ )
+        //for ( int i=1; i<MAX_NUM_OF_YEARS; i++ )
+          for ( int i=1; i<=MAX_NUM_OF_YEARS; i++ )  //30
             if ( b_Year[i] == true )
                 i_NumOfYears++;
 
@@ -114,6 +120,10 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
 //-----------------------------------------------------------------------------------------------------------------------
 
         i_NumOfDownloads = i_NumOfStations * i_NumOfYears * i_NumOfMonths;
+        i_numOfChecks = i_NumOfStations * i_NumOfYears * i_NumOfMonths;
+
+        //QString checks=QString("%1 Files are checked").arg(i_numOfChecks);
+        //QMessageBox::information( this, getApplicationName( true ), checks );
 
         initFileProgress( i_NumOfDownloads, "Start download of station-to-archive files", s_Message );
 
@@ -141,6 +151,8 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
                                 QFileInfo fi_DAT( s_DownloadPath + "/" + s_EventLabel + s_Month + s_Year + ".dat" );
                                 QFileInfo fi_REP( s_DownloadPath + "/" + s_EventLabel + s_Month + s_Year + ".rep" );
 
+                                targetfile="";
+                                targetfile=fi_DAT.absoluteFilePath();
                                 removeFile( fi_GZ.absoluteFilePath() );
                                 removeFile( fi_DAT.absoluteFilePath() );
                                 removeFile( fi_REP.absoluteFilePath() );
@@ -154,8 +166,10 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
 
                                 qDebug() << s_arg;
 
-                                process.start( s_arg );
+                                //start process, targetfile is: fi_DAT.absoluteFilePath()
+                                process.start( s_arg );                             
                                 process.waitForFinished( -1 );
+
 
                                 if ( ( b_DecompressFiles == true ) || ( b_CheckFiles == true ) )
                                 {
@@ -173,13 +187,46 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
                                     process.waitForFinished( -1 );
                                 }
 
-                                if ( ( b_DecompressFiles == true ) || ( b_CheckFiles == true ) )
-                                    sl_FilenameList.append( fi_DAT.absoluteFilePath() );
-                                else
-                                    sl_FilenameList.append( fi_DAT.absoluteFilePath() );
+                                if ( ( b_DecompressFiles == true ) || ( b_CheckFiles == true ) ){
+
+                                    QFileInfo fi( fi_DAT.absoluteFilePath());
+                                    if ( fi.exists() == true ){
+                                        sl_FilenameList.append( fi_DAT.absoluteFilePath() );
+                                        if ( fi.size() == 0 )
+                                        {
+                                            i_NumOfEmptyFiles++;
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        i_NumOfMissingFiles++;
+
+                                    }
+
+                                }
+                                else {
+
+                                    QFileInfo fi( fi_DAT.absoluteFilePath());
+                                    if ( fi.exists() == true ){
+                                        sl_FilenameList.append( fi_DAT.absoluteFilePath() );
+                                        if ( fi.size() == 0 )
+                                        {
+                                            i_NumOfEmptyFiles++;
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        i_NumOfMissingFiles++;
+
+                                    }
+
+                                }
 
                                 if ( b_CheckFiles == true )
                                     sl_ReportList.append( fi_REP.absoluteFilePath() );
+
 
                                 stopProgress = incFileProgress( i_NumOfDownloads, ++m );
                             }
@@ -216,13 +263,31 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
                 s_arg.append( " -o " + s_EventLabel + "_filelist.txt" );
                 s_arg.append( " ftp://" + s_FTPServer + "/" + s_EventLabel + "/" );
 
+                //looking for targetfile s_DownloadPath + s_EventLabel + "_filelist.txt":
+                targetfile="";
+                targetfile=s_DownloadPath + s_EventLabel + "_filelist.txt";
+
                 process.start( s_arg );
                 process.waitForFinished( -1 );
 
                 qDebug() << s_arg;
 
-                sl_FilenameList.append( s_DownloadPath + s_EventLabel + "_filelist.txt" );
+                QFileInfo fi( targetfile );
 
+                if ( fi.exists() == true )
+                    {
+                        if ( fi.size() == 0 )
+                        {
+                            i_NumOfEmptyFiles++;
+
+                        }
+                     sl_FilenameList.append( s_DownloadPath + s_EventLabel + "_filelist.txt" );
+                    }  //exists
+                else
+                {
+                    i_NumOfMissingFiles++;
+
+                }
                 stopProgress = incFileProgress( i_NumOfStations, ++m );
             }
 
@@ -250,6 +315,10 @@ void MainWindow::doDownloadStationToArchiveFiles()
 {
     int         err = _NOERROR_;
 
+    int   i_NumOfEmptyFiles = 0;
+    int   i_NumOfMissingFiles = 0;
+    int   i_numOfChecks = 0;
+
     QStringList sl_FilenameList;
 
 // **********************************************************************************************
@@ -261,9 +330,13 @@ void MainWindow::doDownloadStationToArchiveFiles()
     {
         sl_FilenameList = downloadStationToArchiveFiles( g_Station_ptr, gs_DownloadPath, gs_FTPServer, gs_User, gs_Password,
                                                          gb_DecompressFiles, gb_CheckFiles, gb_CheckAvailability,
-                                                         gb_Station, gb_Month, gb_Year );
+                                                         gb_Station, gb_Month, gb_Year, i_NumOfEmptyFiles, i_NumOfMissingFiles,i_numOfChecks  );
 
-        checkScriptResults( sl_FilenameList );
+
+        //QString miss=QString("cecks%1 empty%2  missing%3 Files have been downloaded").arg(i_numOfChecks).arg(i_NumOfEmptyFiles).arg(i_NumOfMissingFiles);
+        //QMessageBox::information( this, getApplicationName( true ), miss );
+
+        checkScriptResults( sl_FilenameList , i_NumOfEmptyFiles, i_NumOfMissingFiles,i_numOfChecks);
     }
 
 // **********************************************************************************************
@@ -278,11 +351,12 @@ void MainWindow::doDownloadStationToArchiveFiles()
 // **********************************************************************************************
 // 2016-08-13
 
-void MainWindow::checkScriptResults( const QStringList &sl_FilenameList )
+void MainWindow::checkScriptResults( const QStringList &sl_FilenameList, int i_NumOfEmptyFiles, int i_NumOfMissingFiles, int i_NumOfChecks )
 {
     int         i_NumOfFiles        = 0;
-    int         i_NumOfEmptyFiles   = 0;
-    int         i_NumOfMissingFiles = 0;
+    //int         i_NumOfEmptyFiles   = 0;
+    //int         i_NumOfMissingFiles = 0;
+    int         diff                = -1;
 
     bool        b_OK                = true;
 
@@ -291,8 +365,54 @@ void MainWindow::checkScriptResults( const QStringList &sl_FilenameList )
 // **********************************************************************************************
 
     i_NumOfFiles = sl_FilenameList.count();
+    diff = i_NumOfChecks-i_NumOfFiles;
 
-    for ( int i=0; i<i_NumOfFiles; i++ )
+    if( diff==0 )
+
+     {
+
+         //s_Message = tr( "All files  have been downloaded." );
+         QString succ=QString("All files (%1 from %2) have been downloaded.").arg(i_NumOfFiles).arg(i_NumOfChecks);
+         s_Message = succ;
+
+     }
+    else if(diff==i_NumOfChecks)
+    {
+
+         s_Message.append( tr( "No file has been downloaded. Please also check your account!" ) );
+     }
+    else
+    {
+
+        QString miss=QString("%1 from %2 possible Files have been downloaded. Before calling the support, please check the availability of files!").arg(i_NumOfFiles).arg(i_NumOfChecks);
+        s_Message = miss;
+        b_OK = false;
+    }
+
+
+    switch ( i_NumOfEmptyFiles )
+    {
+    case 0:
+        break;
+
+    case 1:
+        s_Message.append( tr( "Additional: One file is empty. " ) );
+        b_OK = false;
+        break;
+
+    default:
+        s_Message.append( tr( "Additional: Some files are empty. " ) );
+        b_OK = false;
+        break;
+    }
+
+
+
+QMessageBox::information( this, getApplicationName( true ), s_Message );
+
+
+////////////////////////////////////old  parts
+    /*for ( int i=0; i<i_NumOfFiles; i++ )
     {
         QFileInfo fi( sl_FilenameList.at( i ) );
 
@@ -309,14 +429,15 @@ void MainWindow::checkScriptResults( const QStringList &sl_FilenameList )
             i_NumOfMissingFiles++;
             b_OK = false;
         }
-    }
+    }*/
 
-    if ( b_OK == true )
-    {
-        switch ( i_NumOfFiles )
+    //if ( b_OK == true )
+    //{
+      /* switch ( i_NumOfFiles )
+
         {
         case 0:
-            s_Message.append( tr( "No file has been downloaded. " ) );
+            s_Message.append( tr( "No file has been downloaded. Please also check your account!" ) );
             break;
 
         case 1:
@@ -326,9 +447,13 @@ void MainWindow::checkScriptResults( const QStringList &sl_FilenameList )
         default:
             s_Message = tr( "All files have been downloaded." );
             break;
-        }
-    }
-    else
+        }*/
+    //}
+
+
+
+
+    /*else
     {
         s_Message = tr( "Something is wrong. " );
 
@@ -344,24 +469,7 @@ void MainWindow::checkScriptResults( const QStringList &sl_FilenameList )
         default:
             s_Message.append( tr( "Some Station-to-archive files are missing. " ) );
             break;
-        }
+        }*/
 
-        switch ( i_NumOfEmptyFiles )
-        {
-        case 0:
-            break;
 
-        case 1:
-            s_Message.append( tr( "One file is empty. " ) );
-            break;
-
-        default:
-            s_Message.append( tr( "Some files are empty. " ) );
-            break;
-        }
-
-        s_Message.append( tr( "Before calling the support, please check the availibilty of files." ) );
-    }
-
-    QMessageBox::information( this, getApplicationName( true ), s_Message );
 }

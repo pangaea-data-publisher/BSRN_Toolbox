@@ -148,7 +148,7 @@ int MainWindow::downloadFile( const QString &s_Curl, const QString &s_Url, const
 
     qInfo() << ((QString)("Downloading... " + QDir::toNativeSeparators( s_Curl ) + " -k -o " + QDir::toNativeSeparators( s_Filename ) + " " + s_Url + "")).replace("\\", "/");
     process.start( "\"" + QDir::toNativeSeparators( s_Curl ) + "\" -k -o \"" + QDir::toNativeSeparators( s_Filename ) + "\" \"" + s_Url + "\"" );
-    process.waitForFinished( -1 );
+    process.waitForFinished( -1 );  //waits, until result exists (synchron?)
 
     return( _NOERROR_ );
 }
