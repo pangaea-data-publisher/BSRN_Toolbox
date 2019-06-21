@@ -91,7 +91,7 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
 //-----------------------------------------------------------------------------------------------------------------------
 // calculate number of downloads
 
-        for ( int i=1; i<MAX_NUM_OF_STATIONS; i++ )  //100
+        for ( int i=1; i<=MAX_NUM_OF_STATIONS; i++ )  //100
             if ( b_Station[i] == true )
                 i_NumOfStations++;
 
@@ -114,8 +114,15 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
         if ( ( b_CheckFiles == false ) && ( b_DecompressFiles == true ) )
             s_Message = tr( "Download and decompress BSRN station-to-archive files" );
 
-        if ( b_CheckFiles == true )
+        else if (( b_CheckFiles == true ) && ( b_DecompressFiles == true ) )
             s_Message = tr( "Download, decompress, and check BSRN station-to-archive files" );
+
+        else if (( b_CheckFiles == false ) && ( b_DecompressFiles == false ))
+            s_Message = tr( "Download BSRN station-to-archive files" );
+
+        //impossible to download as zip and to check a zipped file!
+        else if (( b_CheckFiles == true ) && ( b_DecompressFiles == false ))
+            s_Message = tr( "Impossible, to check zipped BSRN station-to-archive files! Files will be unzipped!" );
 
 //-----------------------------------------------------------------------------------------------------------------------
 
@@ -188,7 +195,7 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
                                 }
 
                                 if ( ( b_DecompressFiles == true ) || ( b_CheckFiles == true ) ){
-
+                                    //decompress:
                                     QFileInfo fi( fi_DAT.absoluteFilePath());
                                     if ( fi.exists() == true ){
                                         sl_FilenameList.append( fi_DAT.absoluteFilePath() );
@@ -206,10 +213,10 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
 
                                 }
                                 else {
-
-                                    QFileInfo fi( fi_DAT.absoluteFilePath());
+                                    //get as zip files fi_GZ:
+                                    QFileInfo fi( fi_GZ.absoluteFilePath());
                                     if ( fi.exists() == true ){
-                                        sl_FilenameList.append( fi_DAT.absoluteFilePath() );
+                                        sl_FilenameList.append( fi_GZ.absoluteFilePath() );
                                         if ( fi.size() == 0 )
                                         {
                                             i_NumOfEmptyFiles++;
@@ -249,6 +256,8 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
     else
     {
         initFileProgress( i_NumOfStations, tr( "Check availability for station " ), tr( "Check Availability" ) );
+
+        i_numOfChecks = i_NumOfStations;
 
         while ( ( i < MAX_NUM_OF_STATIONS ) && ( stopProgress != _APPBREAK_ ) )
         {
@@ -336,7 +345,7 @@ void MainWindow::doDownloadStationToArchiveFiles()
         //QString miss=QString("cecks%1 empty%2  missing%3 Files have been downloaded").arg(i_numOfChecks).arg(i_NumOfEmptyFiles).arg(i_NumOfMissingFiles);
         //QMessageBox::information( this, getApplicationName( true ), miss );
 
-        checkScriptResults( sl_FilenameList , i_NumOfEmptyFiles, i_NumOfMissingFiles,i_numOfChecks);
+        checkScriptResults( sl_FilenameList , i_NumOfEmptyFiles, i_NumOfMissingFiles,i_numOfChecks, gb_CheckAvailability);
     }
 
 // **********************************************************************************************
@@ -351,7 +360,7 @@ void MainWindow::doDownloadStationToArchiveFiles()
 // **********************************************************************************************
 // 2016-08-13
 
-void MainWindow::checkScriptResults( const QStringList &sl_FilenameList, int i_NumOfEmptyFiles, int i_NumOfMissingFiles, int i_NumOfChecks )
+void MainWindow::checkScriptResults( const QStringList &sl_FilenameList, int i_NumOfEmptyFiles, int i_NumOfMissingFiles, int i_NumOfChecks, const  bool b_CheckAvailability )
 {
     int         i_NumOfFiles        = 0;
     //int         i_NumOfEmptyFiles   = 0;
@@ -367,7 +376,9 @@ void MainWindow::checkScriptResults( const QStringList &sl_FilenameList, int i_N
     i_NumOfFiles = sl_FilenameList.count();
     diff = i_NumOfChecks-i_NumOfFiles;
 
-    if( diff==0 )
+    if(b_CheckAvailability==false) {
+
+    if( diff==0 && i_NumOfChecks>0 )
 
      {
 
@@ -376,17 +387,60 @@ void MainWindow::checkScriptResults( const QStringList &sl_FilenameList, int i_N
          s_Message = succ;
 
      }
+    else if( diff==0 && i_NumOfChecks==0 )
+
+     {
+
+         //s_Message = tr( "All files  have been downloaded." );
+         QString succ=QString("No Checks - No Result\r\nPlease check your settings!").arg(i_NumOfFiles).arg(i_NumOfChecks);
+         s_Message = succ;
+
+     }
     else if(diff==i_NumOfChecks)
     {
 
-         s_Message.append( tr( "No file has been downloaded. Please also check your account!" ) );
+         s_Message.append( tr( "No file has been downloaded.\r\nPlease also check your account!" ) );
      }
     else
     {
 
-        QString miss=QString("%1 from %2 possible Files have been downloaded. Before calling the support, please check the availability of files!").arg(i_NumOfFiles).arg(i_NumOfChecks);
+        QString miss=QString("%1 from %2 possible files has/have been downloaded.\r\nBefore calling the support, please check the availability of files!").arg(i_NumOfFiles).arg(i_NumOfChecks);
         s_Message = miss;
         b_OK = false;
+    }
+
+    }  //b_CheckAvailability=false
+    else {
+
+            if( diff==0 && i_NumOfChecks>0 )
+            {
+
+                //s_Message = tr( "All files have been downloaded." );
+                QString succ=QString("All station filelists (%1 from %2) have been downloaded.").arg(i_NumOfFiles).arg(i_NumOfChecks);
+                s_Message = succ;
+
+            }
+            else if( diff==0 && i_NumOfChecks==0 )
+
+             {
+
+                 //s_Message = tr( "All files have been downloaded." );
+                 QString succ=QString("No Checks - No Result\r\nPlease check your settings!").arg(i_NumOfFiles).arg(i_NumOfChecks);
+                 s_Message = succ;
+
+             }
+            else if(diff==i_NumOfChecks)
+            {
+
+                s_Message.append( tr( "No station filelist has been downloaded.\r\nPlease also check your account!" ) );
+            }
+            else
+            {
+
+            QString miss=QString("%1 from %2 possible station filelists has/have been downloaded.\r\nBefore calling the support, please check the availability of files!").arg(i_NumOfFiles).arg(i_NumOfChecks);
+            s_Message = miss;
+            b_OK = false;
+            }
     }
 
 
@@ -396,12 +450,12 @@ void MainWindow::checkScriptResults( const QStringList &sl_FilenameList, int i_N
         break;
 
     case 1:
-        s_Message.append( tr( "Additional: One file is empty. " ) );
+        s_Message.append( tr( "\r\nIn addition: One file is empty. " ) );
         b_OK = false;
         break;
 
     default:
-        s_Message.append( tr( "Additional: Some files are empty. " ) );
+        s_Message.append( tr( "\r\nIn addition: Some files are empty. " ) );
         b_OK = false;
         break;
     }

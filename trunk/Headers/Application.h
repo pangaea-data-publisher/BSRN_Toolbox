@@ -319,7 +319,7 @@ private:
 // Station-to-archive
     QStringList downloadStationToArchiveFiles(structStation *Station_ptr, const QString &FilenameOut, const QString &FTPServer, const QString &User, const QString &Password, const bool DecompressFiles, const bool CheckFiles, const bool CheckAvailability, bool Station[MAX_NUM_OF_STATIONS+1], bool Month[MAX_NUM_OF_MONTHS+1],
         bool Year[MAX_NUM_OF_YEARS+1] , int &i_NumOfEmptyFiles, int &i_NumOfMissingFiles, int& i_numOfChecks);
-    void checkScriptResults( const QStringList &FilenameList , int i_NumOfEmptyFiles, int i_NumOfMissingFile, int i_numOfChecks);
+    void checkScriptResults( const QStringList &FilenameList , int i_NumOfEmptyFiles, int i_NumOfMissingFile, int i_NumOfChecks, const  bool b_CheckAvailability);
 // Metadata
     int FileIDConverter( const QString &FilenameIn, QStringList &FilenameOut, structStation *Station_ptr, const int NumOfFiles );
     int ScientistIDConverter( const QString &FilenameIn, QStringList &FilenameOut, structStaff *Staff_ptr, structStation *Station_ptr, const int NumOfFiles );
