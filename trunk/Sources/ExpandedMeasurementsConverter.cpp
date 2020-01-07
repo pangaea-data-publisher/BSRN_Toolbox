@@ -531,10 +531,11 @@ int MainWindow::ExpandedMeasurementsConverter( const bool b_Import, const QStrin
                     {
                         if ( InputStr.mid( 14, 5 ).simplified().toInt() > -9 )
                         {
-                            if ( InputStr.mid( 14, 5 ).simplified().toInt() == 10000 )
+                            //error in BSRN_Toolbox?
+                            /*if ( InputStr.mid( 14, 5 ).simplified().toInt() == 10000 )
                                 OutputStr += "\t99999";
-                            else
-                                OutputStr.append( "\t" + InputStr.mid( 14, 5 ).simplified() ); // cloud base height [m]
+                            else*/
+                            OutputStr.append( "\t" + InputStr.mid( 14, 5 ).simplified() ); // cloud base height [m]
 
                             b_Out = true;
                         }
