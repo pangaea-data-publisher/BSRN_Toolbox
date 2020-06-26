@@ -459,7 +459,7 @@ int MainWindow::readBsrnIDs()
                     g_Method_ptr[i].WRMCnumber	 = InputStr.section( ",", 2, 2 ).toInt();
                     g_Method_ptr[i].MethodID	 = InputStr.section( ",", 3, 3 ).toInt();
                 }
-            }
+             }
         }
 
         if ( ( tinIDs.atEnd() == false ) && ( i > 0 ) )

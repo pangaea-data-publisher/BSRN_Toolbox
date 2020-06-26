@@ -109,6 +109,15 @@ int MainWindow::BasicMeasurementsTest( const QString &s_FilenameIn, int *P, cons
                     if ( InputStr_LR0100.mid( 11, 4 ).simplified() != "-999" )
                         P[1] = 1;
 
+                    //Ausgang: Format F6.1, Ausfall: -999.9, nachfragen global radiation, gr
+                    /*if ( (InputStr_LR0100.mid( 11, 4 ).simplified() != "-999") && (InputStr_LR0100.mid( 9, 6 ).simplified() != "-999.9"))
+                        {//is a decimal point?
+                            if(InputStr_LR0100.mid( 11, 4 ).simplified().count(".")==0)
+                               P[1] = 1;
+                            else if (InputStr_LR0100.mid( 9, 6 ).simplified().count(".")==1)
+                                P[1] = 1; //9;
+                        }*/
+
                     if ( InputStr_LR0100.mid( 16, 5 ).simplified() != "-99.9" )
                         P[2] = 1;
 
@@ -120,6 +129,15 @@ int MainWindow::BasicMeasurementsTest( const QString &s_FilenameIn, int *P, cons
 
                     if ( InputStr_LR0100.mid( 34, 4 ).simplified() != "-999" )
                         P[5] = 1;
+
+                    //Ausgang: Format F6.1, Ausfall: -999.9, nachfragen direct radiation, dr
+                    /*if ( (InputStr_LR0100.mid( 34, 4 ).simplified() != "-999") && (InputStr_LR0100.mid( 32, 6 ).simplified() != "-999.9"))
+                        {//is a decimal point?
+                            if(InputStr_LR0100.mid( 34, 4 ).simplified().count(".")==0)
+                               P[5] = 1;  //34;
+                            else if (InputStr_LR0100.mid( 32, 6 ).simplified().count(".")==1)
+                                P[5] = 1;  //32;
+                        }*/
 
                     if ( InputStr_LR0100.mid( 39, 5 ).simplified() != "-99.9" )
                         P[6] = 1;
@@ -138,6 +156,15 @@ int MainWindow::BasicMeasurementsTest( const QString &s_FilenameIn, int *P, cons
                         if ( InputStr_LR0100.mid( 11, 4 ).simplified() != "-999" )
                             P[9] = 1;
 
+                        //Ausgang: Format F6.1, Ausfall: -999.9, nachfragen global radiation, gr
+                        /*if ( (InputStr_LR0100.mid( 11, 4 ).simplified() != "-999") && (InputStr_LR0100.mid( 9, 6 ).simplified() != "-999.9"))
+                            {//is a decimal point?
+                                if(InputStr_LR0100.mid( 11, 4 ).simplified().count(".")==0)
+                                   P[9] = 1;  //11;
+                                else if (InputStr_LR0100.mid( 9, 6 ).simplified().count(".")==1)
+                                   P[9] = 1;  //9;
+                            }*/
+
                         if ( InputStr_LR0100.mid( 16, 5 ).simplified() != "-99.9" )
                             P[10] = 1;
 
@@ -149,6 +176,15 @@ int MainWindow::BasicMeasurementsTest( const QString &s_FilenameIn, int *P, cons
 
                         if ( InputStr_LR0100.mid( 34, 4 ).simplified() != "-999" )
                             P[13] = 1;
+
+                        //Ausgang: Format F6.1, Ausfall: -999.9, nachfragen direct radiation, dr
+                        /*if ( (InputStr_LR0100.mid( 34, 4 ).simplified() != "-999") && (InputStr_LR0100.mid( 32, 6 ).simplified() != "-999.9"))
+                            {//is a decimal point?
+                                if(InputStr_LR0100.mid( 34, 4 ).simplified().count(".")==0)
+                                   P[13] = 34;
+                                else if (InputStr_LR0100.mid( 32, 6 ).simplified().count(".")==1)
+                                    P[13] = 32;
+                            }*/
 
                         if ( InputStr_LR0100.mid( 39, 5 ).simplified() != "-99.9" )
                             P[14] = 1;
@@ -1272,7 +1308,24 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
                             }
                             else
                                 OutputStr.append( "\t" );
-                        }
+
+                            /*if ( (InputStr_LR0100.mid( 11, 4 ).simplified() != "-999") && (InputStr_LR0100.mid( 9, 6 ).simplified() != "-999.9"))
+                                {//is a decimal point?
+                                    if(InputStr_LR0100.mid( 11, 4 ).simplified().count(".")==0)
+                                       { b_Out = true;
+                                        OutputStr.append( "\t" + InputStr_LR0100.mid( 11, 4 ).simplified() );
+
+                                        }
+                                    else if (InputStr_LR0100.mid( 9, 6 ).simplified().count(".")==1)
+                                    { b_Out = true;
+                                     OutputStr.append( "\t" + InputStr_LR0100.mid( 9, 6 ).simplified() );
+
+                                     }
+                                    else
+                                     OutputStr.append( "\t" );
+                                    }*/
+                         }
+
 
                         if ( P[2+offset] > 0 )
                         {
@@ -1319,6 +1372,22 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
                             }
                             else
                                 OutputStr.append( "\t" );
+
+                            /*if ( (InputStr_LR0100.mid( 34, 4 ).simplified() != "-999") && (InputStr_LR0100.mid( 32, 6 ).simplified() != "-999.9"))
+                                {//is a decimal point?
+                                    if(InputStr_LR0100.mid( 34, 4 ).simplified().count(".")==0)
+                                    {
+                                        b_Out = true;
+                                        OutputStr.append( "\t" + InputStr_LR0100.mid( 34, 4 ).simplified() );
+                                    }
+                                    else if (InputStr_LR0100.mid( 32, 6 ).simplified().count(".")==1)
+                                    {
+                                        b_Out = true;
+                                        OutputStr.append( "\t" + InputStr_LR0100.mid( 32, 6 ).simplified() );
+                                    }
+                                    else
+                                        OutputStr.append( "\t" );
+                                }*/
                         }
 
                         if ( P[6+offset] > 0 )
@@ -1362,7 +1431,7 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
                     { // Raw data format
                         if ( b_dif == true ) // diffuse radiation = 4
                         {
-                            if ( P[9+offset] > 0 )
+                           if ( P[9+offset] > 0 )
                             {
                                 if ( InputStr_LR0100.mid( 11, 4 ).simplified() != "-999" )
                                 {
@@ -1372,7 +1441,21 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
                                 else
                                     OutputStr.append( "\t" );
                             }
+                            /*if ( (InputStr_LR0100.mid( 11, 4 ).simplified() != "-999") && (InputStr_LR0100.mid( 9, 6 ).simplified() != "-999.9"))
+                                {//is a decimal point?
+                                    if(InputStr_LR0100.mid( 11, 4 ).simplified().count(".")==0)
+                                       { b_Out = true;
+                                        OutputStr.append( "\t" + InputStr_LR0100.mid( 11, 4 ).simplified() );
 
+                                        }
+                                    else if (InputStr_LR0100.mid( 9, 6 ).simplified().count(".")==1)
+                                    { b_Out = true;
+                                     OutputStr.append( "\t" + InputStr_LR0100.mid( 9, 6 ).simplified() );
+
+                                     }
+                                    else
+                                     OutputStr.append( "\t" );
+                                    }*/
                             if ( P[10+offset] > 0 )
                             {
                                 if ( InputStr_LR0100.mid( 16, 5 ).simplified() != "-99.9" )
@@ -1419,6 +1502,21 @@ int MainWindow::BasicMeasurementsConverter( const bool b_Import, const bool b_sh
                                 else
                                     OutputStr.append( "\t" );
                             }
+                            /*if ( (InputStr_LR0100.mid( 34, 4 ).simplified() != "-999") && (InputStr_LR0100.mid( 32, 6 ).simplified() != "-999.9"))
+                                {//is a decimal point?
+                                    if(InputStr_LR0100.mid( 34, 4 ).simplified().count(".")==0)
+                                    {
+                                        b_Out = true;
+                                        OutputStr.append( "\t" + InputStr_LR0100.mid( 34, 4 ).simplified() );
+                                    }
+                                    else if (InputStr_LR0100.mid( 32, 6 ).simplified().count(".")==1)
+                                    {
+                                        b_Out = true;
+                                        OutputStr.append( "\t" + InputStr_LR0100.mid( 32, 6 ).simplified() );
+                                    }
+                                    else
+                                        OutputStr.append( "\t" );
+                                }*/
 
                             if ( P[14+offset] > 0 )
                             {

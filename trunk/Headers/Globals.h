@@ -72,7 +72,7 @@
     const int   POPOPOPONOTFOUND        = 1014;
     const int   NODATAFOUND             = 1015;
 
-    const int	MAX_NUM_OF_METHODS		= 2000;
+    const int	MAX_NUM_OF_METHODS		= 3000;  //26.6.2020
     const int	MAX_NUM_OF_STAFFS		= 100;
     const int	MAX_NUM_OF_STATIONS		= 100;
     const int	MAX_NUM_OF_PARAMETER	= 300;
