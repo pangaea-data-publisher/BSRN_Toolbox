@@ -72,14 +72,14 @@
     const int   POPOPOPONOTFOUND        = 1014;
     const int   NODATAFOUND             = 1015;
 
-    const int	MAX_NUM_OF_METHODS		= 3000;  //26.6.2020
-    const int	MAX_NUM_OF_STAFFS		= 100;
-    const int	MAX_NUM_OF_STATIONS		= 100;
+    const int	MAX_NUM_OF_METHODS		= 3500;  // 3000 26.6.2020
+    const int	MAX_NUM_OF_STAFFS		= 200;   // 100 14.10.20
+    const int	MAX_NUM_OF_STATIONS		= 200;   // 100 14.10.20
     const int	MAX_NUM_OF_PARAMETER	= 300;
     const int	MAX_NUM_OF_MONTHS		= 12;
     const int	MAX_NUM_OF_YEARS		= 30;
-    const int   MAX_NUM_OF_DATASETS     = 50000; // 2016-05-03: 21,460 Datasets in BSRN_Datasets_IDs.txt
-    const int   MAX_NUM_OF_REFERENCES   = 20000; // 2016-05-03: 9.000 References
+    const int   MAX_NUM_OF_DATASETS     = 60000; // 14.10.20: 50000 2016-05-03: 21,460 Datasets in BSRN_Datasets_IDs.txt
+    const int   MAX_NUM_OF_REFERENCES   = 30000; // 14.10.20: 20000 2016-05-03: 9.000 References
 
     const int   LR0100                  = 1;
     const int   LR0300                  = 2;

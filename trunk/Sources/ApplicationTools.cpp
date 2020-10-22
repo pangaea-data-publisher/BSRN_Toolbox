@@ -288,6 +288,7 @@ int MainWindow::readBsrnIDs()
     QFile fIDs( IDsFilename );
     QFile fIDs_old( IDsFilenameOld );
 
+
     if ( ( fIDs.exists() == false ) || ( fIDs.size() == 0 ) )
     {
         setStatusBar( tr( "Reading of BSRN IDs database fails" ) );
@@ -311,6 +312,7 @@ int MainWindow::readBsrnIDs()
         return( -11 ); // Can't open BSRN IDs database.
 
     QTextStream tinIDs( &fIDs );
+
 
     InputStr = tinIDs.readLine();
     InputStr = tinIDs.readLine();
@@ -355,6 +357,7 @@ int MainWindow::readBsrnIDs()
             }
         }
 
+
         if ( InputStr.startsWith( "[Staff]" ) == true )
         {
             InputStr = tinIDs.readLine(); i = 0;
@@ -373,6 +376,7 @@ int MainWindow::readBsrnIDs()
                 }
             }
         }
+
 
         if ( InputStr.startsWith( "[Expanded]" ) == true )
         {
@@ -393,6 +397,7 @@ int MainWindow::readBsrnIDs()
                 }
             }
         }
+
 
         if ( InputStr.startsWith( "[Ozonesonde]" ) == true )
         {
@@ -416,6 +421,7 @@ int MainWindow::readBsrnIDs()
             }
         }
 
+
         if ( InputStr.startsWith( "[Radiosonde]" ) == true )
         {
             InputStr = tinIDs.readLine();  // Header
@@ -437,6 +443,7 @@ int MainWindow::readBsrnIDs()
                 }
             }
         }
+
 
         if ( InputStr.startsWith( "[Methods]" ) == true )
         {
@@ -466,15 +473,18 @@ int MainWindow::readBsrnIDs()
             InputStr = tinIDs.readLine();
     }
 
+
     fIDs.close();
 
     setNormalCursor();
+
 
     if ( InputStr.section( "\t", 0, 0 ) != "[END]" )
     {
         fIDs_old.copy( IDsFilename );
         return( -60 ); // Download of BSRN IDs database fails. Please check your connection to the internet and refresh the database again.
     }
+
 
     fIDs_old.remove();
 
