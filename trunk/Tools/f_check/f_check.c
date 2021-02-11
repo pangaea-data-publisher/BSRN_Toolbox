@@ -47,14 +47,14 @@ FILE *fout;			/* pointer to outputfile	      		*/
 int main(int narg, char *arg[])
 
 {
-int OS = 2;	/* Operating system: 1 = Windows, 2 = MacOS X, 3 = UNIX */
+int OS = 3;	/* Operating system: 1 = Windows, 2 = MacOS X, 3 = UNIX */
 
 char file_out[100];		/* name of report file				*/
 int sta_id;			/* station identification number		*/
 int month;			/* month in input file name			*/
 int year;			/* year in input file name			*/
 int year4;			/* 4 digit year in input file name		*/
-int year_min=1992,year_max=2020;/* min. and max. legal years			*/
+int year_min=1992,year_max=2030;/* min. and max. legal years			*/
 char buffer[120];		/* buffer for input line			*/
 int rec_num;			/* logical record number			*/
 char rec_name[20];		/* logical record name				*/

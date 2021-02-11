@@ -8,8 +8,10 @@
 // **********************************************************************************************
 // 2008-09-27
 
-/*! @brief Testet eine Liste von Dateien nacheinander mit dem Programm "BSRN_fcheck.exe". Dieses
-*   Programm muss sich im gleichen Verzeichnis befinden wie das Programm "BSRN Toolbox".
+/*! @brief Testet eine Liste von Dateien nacheinander mit dem Programm "BSRN_fcheck.exe".
+ *
+ *  Dieses   Programm muss sich im gleichen Verzeichnis befinden wie das Programm "BSRN Toolbox".
+ *
 */
 
 void MainWindow::doCheckStationToArchiveFiles()
