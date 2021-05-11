@@ -282,7 +282,7 @@ int MainWindow::readBsrnIDs()
 
     QFileInfo fi( getDataLocation() );
 
-    IDsFilename     = fi.absoluteFilePath() + "/" + "BSRN_IDs.txt";
+    IDsFilename     = fi.absoluteFilePath() + "/" + "BSRN_IDs.txt";   //+ "ohne_ZVE_BSRN_IDs.txt";
     IDsFilenameOld  = fi.absoluteFilePath() + "/" + "BSRN_IDs_old.txt";
 
     QFile fIDs( IDsFilename );
@@ -720,7 +720,7 @@ int MainWindow::writeDefaultIDsBSRN( const QString &s_Filename )
     tout << "43\tSBO\tSede Boqer\t2881" << endl;
     tout << "44\tXIA\tXianghe\t2875" << endl;
     tout << "45\tCNR\tCener\t3047" << endl;
-    tout << "46\tZVE\tZvenigrod\t2998" << endl;
+    //tout << "46\tZVE\tZvenigrod\t2998" << endl;
     tout << "47\tCOC\tCocos Island\t2894" << endl;
     tout << "49\tLRC\tLangley Research Center\t2891" << endl;
     tout << "50\tCAM\tCamborne\t2886" << endl;
@@ -737,6 +737,12 @@ int MainWindow::writeDefaultIDsBSRN( const QString &s_Filename )
     tout << "74\tDOM\tConcordia Station\t2963" << endl;
     tout << "76\tPSA\tPlataforma Solar de Almeria\t20296" << endl;
     tout << "77\tENA\tEastern North Atlantic\t99999" << endl;
+
+    tout << "85\tCYL\tCyI PROTEAS\t2999" << endl;
+    tout << "86\tABS\tAbashiri\t2999" << endl;
+    tout << "87\tNPT\tNakhon Pathom\t2999" << endl;
+    tout << "88\tMRS\tMagurele\t2999" << endl;
+    tout << "89\tTNB\tTerra Nova Bay\t2999" << endl;
 
     tout << "[Staff]" << endl;
     tout << "Station Scientist\tPANGAEA Staff ID\t\t" << endl;

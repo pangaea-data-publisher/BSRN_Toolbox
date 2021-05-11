@@ -91,7 +91,7 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
 //-----------------------------------------------------------------------------------------------------------------------
 // calculate number of downloads
 
-        for ( int i=1; i<=MAX_NUM_OF_STATIONS; i++ )  //100
+        for ( int i=1; i<=MAX_NUM_OF_STATIONS; i++ )  //82
             if ( b_Station[i] == true )
                 i_NumOfStations++;
 
@@ -101,7 +101,7 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
                 i_NumOfMonths++;
 
         //for ( int i=1; i<MAX_NUM_OF_YEARS; i++ )
-          for ( int i=1; i<=MAX_NUM_OF_YEARS; i++ )  //30
+          for ( int i=1; i<=MAX_NUM_OF_YEARS; i++ )  //31
             if ( b_Year[i] == true )
                 i_NumOfYears++;
 
@@ -136,7 +136,7 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
 
 //-----------------------------------------------------------------------------------------------------------------------
 
-        while ( ( i < MAX_NUM_OF_STATIONS ) && ( stopProgress != _APPBREAK_ ) )
+        while ( ( i <=MAX_NUM_OF_STATIONS ) && ( stopProgress != _APPBREAK_ ) )   //<= changed from <
         {
             if ( b_Station[i] == true )
             {
@@ -259,7 +259,7 @@ QStringList MainWindow::downloadStationToArchiveFiles( structStation *Station_pt
 
         i_numOfChecks = i_NumOfStations;
 
-        while ( ( i < MAX_NUM_OF_STATIONS ) && ( stopProgress != _APPBREAK_ ) )
+        while ( ( i <= MAX_NUM_OF_STATIONS ) && ( stopProgress != _APPBREAK_ ) )   //<= changed from <
         {
             if ( b_Station[i] == true )
             {

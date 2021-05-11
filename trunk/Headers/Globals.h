@@ -19,7 +19,7 @@
     const QString   _PROGRAMDOI_        = "doi:10.1594/PANGAEA.774827";
     const QString   _PROGRAMREADME_     = "https://wiki.pangaea.de/wiki/BSRN_Toolbox";
 
-    const QString   _VERSION_           = "2.8";                       // Version number, 2017-10-16
+    const QString   _VERSION_           = "2.9";                       // Version number, 2017-10-16
     const QString   _DOI_               = "doi:10.1594/PANGAEA.774827"; // Dataset
 
     // EOL
@@ -74,10 +74,10 @@
 
     const int	MAX_NUM_OF_METHODS		= 3500;  // 3000 26.6.2020
     const int	MAX_NUM_OF_STAFFS		= 200;   // 100 14.10.20
-    const int	MAX_NUM_OF_STATIONS		= 200;   // 100 14.10.20
+    const int	MAX_NUM_OF_STATIONS		= 89;   // 05.05.21, take always the exact last ID of stations!
     const int	MAX_NUM_OF_PARAMETER	= 300;
     const int	MAX_NUM_OF_MONTHS		= 12;
-    const int	MAX_NUM_OF_YEARS		= 30;
+    const int	MAX_NUM_OF_YEARS		= 31;    // 05.05.21, take always the exact number of checkboxes in dialog!
     const int   MAX_NUM_OF_DATASETS     = 60000; // 14.10.20: 50000 2016-05-03: 21,460 Datasets in BSRN_Datasets_IDs.txt
     const int   MAX_NUM_OF_REFERENCES   = 30000; // 14.10.20: 20000 2016-05-03: 9.000 References
 
@@ -174,5 +174,10 @@
     const int   TOR =  9;
     const int   XIA = 44;
     const int   YUS = 84; // 2018-10-25
-    const int   ZVE = 46;
+    //const int   ZVE = 46;
+    const int   CYL = 85; // 2021-04-30
+    const int   ABS = 86; // 2021-04-30
+    const int   NPT = 87; // 2021-04-30
+    const int   MRS = 88; // 2021-04-30
+    const int   TNB = 89; // 2021-04-30
 #endif
