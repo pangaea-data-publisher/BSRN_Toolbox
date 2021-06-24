@@ -75,6 +75,7 @@ int MainWindow::SYNOPTest( const QString &s_FilenameIn, int *P, const int i_NumO
             if ( fi.baseName().startsWith( "lin" ) == true ) i_Format = 1;
             if ( fi.baseName().startsWith( "sbo" ) == true ) i_Format = 1;
 
+            if ( fi.baseName().startsWith( "abs" ) == true ) i_Format = 2;
             if ( fi.baseName().startsWith( "fua" ) == true ) i_Format = 2;
             if ( fi.baseName().startsWith( "ish" ) == true ) i_Format = 2;
             if ( fi.baseName().startsWith( "mnm" ) == true ) i_Format = 2;
@@ -106,7 +107,7 @@ int MainWindow::SYNOPTest( const QString &s_FilenameIn, int *P, const int i_NumO
                         b_Stop = SYNOPTest1( InputStr.simplified(), P );
                         break;
 
-                    case 2: // FUA, ISH, MNM, SAP, SYO, TAT, TOR (new)
+                    case 2: // FUA, ISH, MNM, SAP, SYO, TAT, TOR (new), ABS (new)
                         b_Stop = SYNOPTest2( InputStr, P );
                         break;
 
@@ -223,7 +224,7 @@ bool MainWindow::SYNOPTest1( const QString &InputStr, int *P )
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
-// FUA, ISH, MNM, SAP, SYO, TAT, TOR (neu)
+// FUA, ISH, MNM, SAP, SYO, TAT, TOR (neu), ABS (neu)
 
 bool MainWindow::SYNOPTest2( const QString &InputStr, int *P )
 {
@@ -632,7 +633,7 @@ QStringList MainWindow::buildSYNOPDataDescriptionHeader1( int *P, const int i_PI
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
-// FUA, ISH, MNM, SAP, SYO, TAT, TOR (neu)
+// FUA, ISH, MNM, SAP, SYO, TAT, TOR (neu), ABS (neu)
 
 QStringList MainWindow::buildSYNOPDataDescriptionHeader2( int *P, const int i_PIID )
 {
@@ -903,7 +904,7 @@ QString MainWindow::buildSYNOPDataHeader1( int *P, const bool b_Import )
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
-// FUA, ISH, MNM, SAP, SYO, TAT, TOR (neu)
+// FUA, ISH, MNM, SAP, SYO, TAT, TOR (neu), ABS (neu)
 
 QString MainWindow::buildSYNOPDataHeader2( int *P, const bool b_Import )
 {
@@ -1511,7 +1512,7 @@ QString MainWindow::buildSYNOPDataOutputStr1( const QString s_EventLabel, const 
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
 // ***********************************************************************************************************************
-// FUA, ISH, MNM, SAP, SYO, TAT, TOR (neu)
+// FUA, ISH, MNM, SAP, SYO, TAT, TOR (neu), ABS (neu)
 
 QString MainWindow::buildSYNOPDataOutputStr2( const QString s_EventLabel, const QString DataStr, int *P, const int i_Year, const int i_Month, const float f_Latitude, const float f_Longitude, const bool b_Import )
 {
@@ -2941,7 +2942,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString &s_FilenameIn
             sl_Parameter.append( buildSYNOPDataDescriptionHeader1( P, i_PIID ) );
             break;
 
-        case 2: // FUA, ISH, MNM, SAP, SYO, TAT, TOR (neu)
+        case 2: // FUA, ISH, MNM, SAP, SYO, TAT, TOR (neu), ABS (neu)
             sl_Parameter.append( buildSYNOPDataDescriptionHeader2( P, i_PIID ) );
             break;
 
@@ -3005,7 +3006,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString &s_FilenameIn
                 tout << buildSYNOPDataHeader1( P, b_Import ) << eol;
                 break;
 
-            case 2: // FUA, ISH, MNM, SAP, SYO, TAT, TOR (neu)
+            case 2: // FUA, ISH, MNM, SAP, SYO, TAT, TOR (neu), ABS (neu)
                 tout << buildSYNOPDataHeader2( P, b_Import ) << eol;
                 break;
 
@@ -3043,7 +3044,7 @@ int MainWindow::SYNOPConverter( const bool b_Import, const QString &s_FilenameIn
                         tout << buildSYNOPDataOutputStr1( s_EventLabel, InputStr, P, i_Year, i_Month, f_Latitude, f_Longitude, b_Import ) << eol;
                         break;
 
-                    case 2: // FUA, ISH, MNM, SAP, SYO, TAT, TOR (neu)
+                    case 2: // FUA, ISH, MNM, SAP, SYO, TAT, TOR (neu), ABS (neu)
                         tout << buildSYNOPDataOutputStr2( s_EventLabel, InputStr, P, i_Year, i_Month, f_Latitude, f_Longitude, b_Import ) << eol;
                         break;
 
