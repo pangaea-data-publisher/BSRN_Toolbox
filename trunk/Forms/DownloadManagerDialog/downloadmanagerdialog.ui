@@ -283,9 +283,9 @@
              </widget>
             </item>
             <item row="5" column="0">
-             <widget class="QCheckBox" name="MRS_checkBox">
+             <widget class="QCheckBox" name="INO_checkBox">
               <property name="text">
-               <string>MRS</string>
+               <string>INO</string>
               </property>
              </widget>
             </item>

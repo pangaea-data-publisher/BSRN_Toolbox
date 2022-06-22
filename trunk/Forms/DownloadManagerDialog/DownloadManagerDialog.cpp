@@ -149,7 +149,7 @@ void DownloadManagerDialog::selectAllStations(bool selected) {
     ABS_checkBox->setChecked( selected );
     CYL_checkBox->setChecked( selected );
     NPT_checkBox->setChecked( selected );
-    MRS_checkBox->setChecked( selected );
+    INO_checkBox->setChecked( selected );
     TNB_checkBox->setChecked( selected );
 }
 
@@ -228,7 +228,7 @@ void DownloadManagerDialog::enableAllStations(bool selected) {
     ABS_checkBox->setEnabled( selected );
     CYL_checkBox->setEnabled( selected );
     NPT_checkBox->setEnabled( selected );
-    MRS_checkBox->setEnabled( selected );
+    INO_checkBox->setEnabled( selected );
     TNB_checkBox->setEnabled( selected );
 }
 
@@ -479,7 +479,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
     dialog.LYU_checkBox->setChecked( b_Station[LYU] );
     dialog.MAN_checkBox->setChecked( b_Station[MAN] );
     dialog.MNM_checkBox->setChecked( b_Station[MNM] );
-    dialog.MRS_checkBox->setChecked( b_Station[MRS] );
+    dialog.INO_checkBox->setChecked( b_Station[INO] );
     dialog.NAU_checkBox->setChecked( b_Station[NAU] );
     dialog.NEW_checkBox->setChecked( b_Station[NEW] );
     dialog.NPT_checkBox->setChecked( b_Station[NPT] );
@@ -647,7 +647,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
         b_Station[LYU]  = dialog.LYU_checkBox->isChecked();
         b_Station[MAN]  = dialog.MAN_checkBox->isChecked();
         b_Station[MNM]  = dialog.MNM_checkBox->isChecked();
-        b_Station[MRS]  = dialog.MRS_checkBox->isChecked();
+        b_Station[INO]  = dialog.INO_checkBox->isChecked();
         b_Station[NAU]  = dialog.NAU_checkBox->isChecked();
         b_Station[NEW]  = dialog.NEW_checkBox->isChecked();
         b_Station[NPT]  = dialog.NPT_checkBox->isChecked();
