@@ -741,7 +741,7 @@ int MainWindow::writeDefaultIDsBSRN( const QString &s_Filename )
     tout << "85\tCYL\tCyI PROTEAS\t2999" << endl;
     tout << "86\tABS\tAbashiri\t2999" << endl;
     tout << "87\tNPT\tNakhon Pathom\t2999" << endl;
-    tout << "88\tMRS\tMagurele\t2999" << endl;
+    tout << "88\tINO\tMagurele\t2999" << endl;
     tout << "89\tTNB\tTerra Nova Bay\t2999" << endl;
 
     tout << "[Staff]" << endl;

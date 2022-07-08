@@ -283,9 +283,9 @@
              </widget>
             </item>
             <item row="5" column="0">
-             <widget class="QCheckBox" name="MRS_checkBox">
+             <widget class="QCheckBox" name="INO_checkBox">
               <property name="text">
-               <string>MRS</string>
+               <string>INO</string>
               </property>
              </widget>
             </item>
@@ -1005,6 +1005,13 @@
              <widget class="QCheckBox" name="Year2022_checkBox">
               <property name="text">
                <string>2022</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="3">
+             <widget class="QCheckBox" name="Year2023_checkBox">
+              <property name="text">
+               <string>2023</string>
               </property>
              </widget>
             </item>

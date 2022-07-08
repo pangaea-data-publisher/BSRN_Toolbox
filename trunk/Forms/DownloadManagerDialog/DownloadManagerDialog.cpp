@@ -149,7 +149,7 @@ void DownloadManagerDialog::selectAllStations(bool selected) {
     ABS_checkBox->setChecked( selected );
     CYL_checkBox->setChecked( selected );
     NPT_checkBox->setChecked( selected );
-    MRS_checkBox->setChecked( selected );
+    INO_checkBox->setChecked( selected );
     TNB_checkBox->setChecked( selected );
 }
 
@@ -228,7 +228,7 @@ void DownloadManagerDialog::enableAllStations(bool selected) {
     ABS_checkBox->setEnabled( selected );
     CYL_checkBox->setEnabled( selected );
     NPT_checkBox->setEnabled( selected );
-    MRS_checkBox->setEnabled( selected );
+    INO_checkBox->setEnabled( selected );
     TNB_checkBox->setEnabled( selected );
 }
 
@@ -347,6 +347,7 @@ void DownloadManagerDialog::selectAllYears(bool selected) {
     Year2020_checkBox->setChecked( selected );
     Year2021_checkBox->setChecked( selected );
     Year2022_checkBox->setChecked( selected );
+    Year2023_checkBox->setChecked( selected );
 }
 void DownloadManagerDialog::enableAllYears(bool selected) {
     Year1992_checkBox->setEnabled( selected );
@@ -380,6 +381,7 @@ void DownloadManagerDialog::enableAllYears(bool selected) {
     Year2020_checkBox->setEnabled( selected );
     Year2021_checkBox->setEnabled( selected );
     Year2022_checkBox->setEnabled( selected );
+    Year2023_checkBox->setEnabled( selected );
 }
 void DownloadManagerDialog::SelectAllYears()
 {
@@ -479,7 +481,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
     dialog.LYU_checkBox->setChecked( b_Station[LYU] );
     dialog.MAN_checkBox->setChecked( b_Station[MAN] );
     dialog.MNM_checkBox->setChecked( b_Station[MNM] );
-    dialog.MRS_checkBox->setChecked( b_Station[MRS] );
+    dialog.INO_checkBox->setChecked( b_Station[INO] );
     dialog.NAU_checkBox->setChecked( b_Station[NAU] );
     dialog.NEW_checkBox->setChecked( b_Station[NEW] );
     dialog.NPT_checkBox->setChecked( b_Station[NPT] );
@@ -565,6 +567,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
     dialog.Year2020_checkBox->setChecked( b_Year[29] );
     dialog.Year2021_checkBox->setChecked( b_Year[30] );
     dialog.Year2022_checkBox->setChecked( b_Year[31] );
+    dialog.Year2023_checkBox->setChecked( b_Year[32] );
 
     // Options
     dialog.DecompressFiles_checkBox->setChecked( b_DecompressFiles );
@@ -647,7 +650,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
         b_Station[LYU]  = dialog.LYU_checkBox->isChecked();
         b_Station[MAN]  = dialog.MAN_checkBox->isChecked();
         b_Station[MNM]  = dialog.MNM_checkBox->isChecked();
-        b_Station[MRS]  = dialog.MRS_checkBox->isChecked();
+        b_Station[INO]  = dialog.INO_checkBox->isChecked();
         b_Station[NAU]  = dialog.NAU_checkBox->isChecked();
         b_Station[NEW]  = dialog.NEW_checkBox->isChecked();
         b_Station[NPT]  = dialog.NPT_checkBox->isChecked();
@@ -732,6 +735,7 @@ int MainWindow::doDownloadManagerDialog( QString &s_DownloadPath, QString &s_FTP
         b_Year[29]	= dialog.Year2020_checkBox->isChecked();
         b_Year[30]	= dialog.Year2021_checkBox->isChecked();
         b_Year[31]	= dialog.Year2022_checkBox->isChecked();
+        b_Year[32]	= dialog.Year2023_checkBox->isChecked();
 
         b_DecompressFiles	= dialog.DecompressFiles_checkBox->isChecked();
         b_CheckFiles		= dialog.CheckFiles_checkBox->isChecked();

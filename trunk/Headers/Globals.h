@@ -178,6 +178,6 @@
     const int   CYL = 85; // 2021-04-30
     const int   ABS = 86; // 2021-04-30
     const int   NPT = 87; // 2021-04-30
-    const int   MRS = 88; // 2021-04-30
+    const int   INO = 88; // 2021-04-30
     const int   TNB = 89; // 2021-04-30
 #endif
