@@ -1,0 +1,43 @@
+--------------------------------------------------------------------------------
+INSTALLATION OF DEPENDENCIES
+--------------------------------------------------------------------------------
+
+# WINDOWS
+* Download/Installation Python: 
+- Python3.x: https://www.python.org/download
+* Download/Installation via Python-Paketmanager pip (pip installs packages):
+- If pip is not in path ...
+  ... switch to Python pip folder (e.g. in win 10): cd C:/Users/<USERNAME>/AppData/Local/Programs/<PYTHON3>/Scripts
+- If Windows complains about missing file access rights ...
+	... start administration terminal: right mouse click on windows starter -> Terminal "administrator"
+- In Terminal: pip install pyqt5 openpyxl requests
+
+# MAC
+* Installation of package manager Homebrew
+- Terminal: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+* Installation Python3 (via Hombrew)
+- Terminal: brew install python3
+* Installation Python packages (via pip3)
+Terminal: pip3 install pyqt5 openpyxl requests
+
+# LINUX (UBUNTU)
+* Installation via apt
+- Terminal: sudo apt install python3 python3-pyqt5 python3-openpyxl python3-requests
+
+--------------------------------------------------------------------------------
+INSTALLATION OF THE PROGRAM
+--------------------------------------------------------------------------------
+
+# WINDOWS/MAC/LINUX
+- Copy the directory of this program wherever you want
+
+--------------------------------------------------------------------------------
+START
+--------------------------------------------------------------------------------
+
+# WINDOWS
+- Explorer: Go to the directory of the program and doubleclick on start.pyw
+
+# MAC/LINUX (UBUNTU)
+- Terminal: cd <path to the directory of the program>
+- Terminal: python3 start.pyw
