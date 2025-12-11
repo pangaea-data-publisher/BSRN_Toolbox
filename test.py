@@ -99,16 +99,9 @@ ldb.db_buffer_save_to_disk()
 
 #lst_files = ["bar0123.dat", "bar0223.dat.gz", "pay0123.dat.gz","gay0120.dat.gz"]
 #lst_files = ["bar0123.dat", "bar0123.dat", "bar0223", "pay0123.dat.gz","gay0120.dat.gz", "/Users/pkloss/_temp/bsrn_work/now/abs1223.dat.gz", "/Users/pkloss/_temp/bsrn_work/now/abs0123.dat.gz", "/Users/pkloss/_temp/bsrn_work/now/abs0190.dat.gz"]
-#lst_files = ['/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs1223.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs0523.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs0423.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs0823.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs0923.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs0223.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs0323.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs0623.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs0723.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs1123.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs1023.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs0123.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_15-10-55/abs1223.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_15-10-55/abs0523.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_15-10-55/abs0423.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_15-10-55/abs0823.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_15-10-55/abs0923.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_15-10-55/abs0223.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_15-10-55/abs0323.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_15-10-55/abs0623.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_15-10-55/abs0723.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_15-10-55/abs1123.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_15-10-55/abs1023.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_15-10-55/abs0123.dat.gz']
 #lst_files = ['/pfad1/abs1223.dat.gz', '/pfad2/abs1223.dat.gz', 'abs1223.dat.gz']
 # lst_files_bad = [ 'abs1230.dat.gz', "/pfad1/abs1230.dat.gz", "/pfad2/abs1230.dat.gz", "/xyz/abs0125.dat.gz"]
-# lst_files = ['/Users/pkloss/_temp/bsrn_work/test/pay0123.dat', '/Users/pkloss/_temp/bsrn_work/test/abs1223.dat.gz', '/Users/pkloss/_temp/bsrn_work/test/abs0123.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs1223.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs0523.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs0423.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs0823.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs0923.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs0223.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs0323.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs0623.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs0723.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs1123.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs1023.dat.gz', '/Users/pkloss/_temp/bsrn_work/bak/2025-09-12_14-51-44/abs0123.dat.gz']
 
-# lst_files = [
-#     "/Users/pkloss/_temp/bsrn_work/test/abs1223.dat.gz",
-#     "/Users/pkloss/_temp/bsrn_work/test/abs0123.dat.gz",
-#     "/Users/pkloss/_temp/bsrn_work/test/pay0120.dat.gz",
-#     "/Users/pkloss/_temp/bsrn_work/test/pay0123.dat.gz"]
 #
 # s_working_dir = Path(s_working_dir, "test_big")
 # sel = Selection(m)
@@ -152,12 +145,3 @@ print()
 #print(s_log)
 
 quit()
-
-
-
-
-
-
-
-
-
