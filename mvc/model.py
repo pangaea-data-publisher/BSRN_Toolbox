@@ -22,7 +22,7 @@ class Model:
 
         # Info about the program
         self.__s_prg_name = "BSRN Toolbox"
-        self.__s_prg_version = "1.0.0"
+        self.__s_prg_version = "3.0.0-0"
         self.__s_prg_contact = '<a href="https://www.awi.de" target="_blank">www.awi.de</a>'
         self.__s_prg_warranty = "BSD-3 license (<a href=\"https://opensource.org/licenses/BSD-3-Clause\">LICENSE</a>)"
         self.__s_prg_year = "2025"
