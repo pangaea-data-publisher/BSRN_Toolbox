@@ -1,1 +1,3 @@
-pyqt5 openpyxl requests
+pyqt5
+openpyxl
+requests
