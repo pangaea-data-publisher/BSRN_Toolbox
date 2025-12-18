@@ -13,6 +13,15 @@ indicating if the data are "physically possible," "extremely rare," or if
 solar zenith angle or global calculated from diffuse and direct can be
 output.
 
-Contact: Amelie Driemel (amelie.driemel@awi.de). The software is provided as
-freeware without warranty by the Alfred Wegener Institute, Helmholtz Centre
-for Polar and Marine Research, Bremerhaven.
+The software is provided open source without warranty by the Alfred Wegener
+Institute, Helmholtz Centre for Polar and Marine Research, Bremerhaven.
+You can report any issues [here](https://github.com/pangaea-data-publisher/BSRN_Toolbox/issues).
+
+Installation
+============
+
+You can install the BSRN toolbox on the following operating systems:
+
+- [GNU/Linux](./install/readme_linux.txt)
+- [macOS](./install/readme_mac.txt)
+- [Windows](./install/readme_win.txt)
